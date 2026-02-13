@@ -1,0 +1,250 @@
+<template>
+    <h1>My contacts</h1>
+    <hr style="margin-top: 5px;">
+
+    <p>As the Authorizing Official, you can invite others to join your account by creating contacts below:</p>
+    <p>1. Choose the account they should be linked to</p>
+    <p>2. Enter the contact information and email address of the person you want to invite</p>
+    <p>3. Select their role based on the access and permissions they should have</p>
+    <p>The "Resend" button on the contact record is exclusively designated for use by authorizing officials. Its primary purpose is to resend the welcome email to contacts who have previously been invited to the LITC Grants Salesforce Portal, where their prior initiation has expired.</p>
+    
+    <p><strong>Important:</strong></p>
+    <ul>
+        <li>Only authorized officials should use the "Resend" button.</li>
+        <li>This button ensures that the welcome email, containing essential information for accessing the LITC Grants Salesforce Portal, is delivered again to the selected contact.</li>
+    </ul>
+    <p><strong>How to Use the "Resend" Button:</strong></p>
+    <ol>
+        <li>Navigate to the contact record in the list view of the Salesforce Portal.</li>
+        <li>Identify the "Resend" button on the contact record. It will appear blue if the previous invitation has expired; otherwise, it will be grey.</li>
+        <li>Click on the "Resend" button to resend the welcome email to the contact.</li>
+    </ol>
+
+    <p><strong>Roles:</strong></p>
+    <ul>
+        <li>
+            Authorizing Official: This role has the highest level of permissions. The individual may sign on behalf of the applicant and legally bind the sponsoring organization. This role may also create and submit new applications and view, edit, and submit all forms. The AO may also manage the sponsoring organization’s account, which includes inviting new users and changing roles for existing users.
+        </li>
+        <li>
+            Electronic Business (EBiz) Point of Contact: This role is designated in SAM.gov and is responsible for authorizing personnel access into federal government electronic business systems. They will be able to manage the account, including inviting new users to join but will not be able to create and submit applications or edit and submit forms. This is the preferred individual to onboard the organization to the portal.
+        </li>
+        <li>
+            Program Staff: Previously General Staff, this role can create new applications and edit and view all forms except for the budget and financial forms. This role includes access to the application Standard Form 424 and the summary budget on the form but not the underlying budget line items and calculations.
+        </li>
+        <li>
+            Financial Staff: This role can view and edit the budget and financial forms only and will not have access to any of the other application or report forms.
+        </li>
+        <li>
+            View Only: This role can view all the organization’s applications, forms, and reports. 
+        </li>
+    </ul>
+
+    <p><strong>Additional notes:</strong></p>
+    <ul>
+        <li>Use Work Email: When adding new contacts to the portal, always enter their official work email address.</li>
+        <li>Sending Invitations: Ensure that the invitation is sent to the contact’s business email to maintain security and proper access.</li>
+        <li>Accuracy Check: Double-check the email addresses before sending invitations to prevent login issues.</li>
+    </ul>
+
+    <p>For any issues or further questions, please contact the support team at LITCGrants@treasury.gov.</p>
+
+    <div style="width: 50%;">
+        <lightning-combobox
+        label="Account"
+        value={childAccountValue}
+        placeholder="Select an account"
+        options={childAccounts}
+        onchange={handleAccountChange} >
+    </lightning-combobox>
+    </div>
+    <br/>
+
+    <template lwc:if={childAccountValue}>
+        <div class="slds-box">
+            <h2>Contacts</h2>
+            <template lwc:if={isAO}>
+                <br/>
+                <lightning-button variant="brand" onclick={openAddContactModal} label="Create new contact"></lightning-button>
+            </template>
+            <br/><br/>
+            <div class="myTable">
+                <lightning-datatable onrowaction={openEditContactModal} show-row-number-column key-field="Id" hide-checkbox-column data={contacts} columns={columns}></lightning-datatable>
+            </div>
+        </div>
+    </template>
+
+
+    <template if:true={showAddContactModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <lightning-record-edit-form object-api-name="Contact" onerror={handleError} onsuccess={handleSuccess} onsubmit={handleSubmitAddContact} class="contactForm">
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeAddContactModal} alternative-text="close"></lightning-button-icon>
+                        <h2 id="modal-heading-02" class="header">Create a new contact</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-3" style="overflow: initial;">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>First Name</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Last Name</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="FirstName" class="contactInfo"></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="LastName" class="contactInfo"></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Phone</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Email</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Title</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input-field required variant="label-hidden" field-name="Phone" class="contactInfo"></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input-field required variant="label-hidden" field-name="Email" class="contactInfo"></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input-field required variant="label-hidden" field-name="Title" class="contactInfo"></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Role</label>
+                                    <!-- <lightning-combobox required variant="label-hidden" options={roleOptions} onchange={handleRoleChange}></lightning-combobox> -->
+                                    <lightning-input-field required variant="label-hidden" field-name="LITC_Role_v2__c" onchange={handleRoleChange}></lightning-input-field>
+                                </div>
+                            </div>
+                    
+                            <br/><br/><br/><br/>
+                    </div> 
+                    <footer class="slds-modal__footer">
+                        <lightning-button style="margin-right:1rem" label="Cancel" type="button" variant="brand-outline" onclick={closeAddContactModal}></lightning-button> 
+                        <lightning-button label="Add New Contact" type="submit" variant="brand"></lightning-button> 
+                    </footer>
+                </lightning-record-edit-form>
+            </div>                      
+        </section>
+        
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={showEditContactModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <lightning-record-edit-form object-api-name="Contact" onerror={handleError} onsubmit={handleSubmitEditContact}>
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeEditContactModal} alternative-text="close"></lightning-button-icon>
+                        <h2 id="modal-heading-03" class="header">Edit contact</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-4" style="overflow: initial;">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>First Name</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Last Name</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="FirstName" class="contactInfo" value={selectedFirstName}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="LastName" class="contactInfo" value={selectedLastName}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Phone</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Email</label>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Title</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input-field required variant="label-hidden" field-name="Phone" class="contactInfo" value={selectedPhone}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input-field required variant="label-hidden" field-name="Email" class="contactInfo" disabled value={selectedEmail}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_4-of-12">
+                                    <lightning-input-field required variant="label-hidden" field-name="Title" class="contactInfo" value={selectedTitle}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Role</label>
+                                    <lightning-input-field required variant="label-hidden" field-name="LITC_Role_v2__c" value={selectedRole} disabled={disableRoleUpdate} onchange={handleRoleChange}></lightning-input-field>
+                                    <!-- <lightning-input-field required variant="label-hidden" field-name="LITC_Role__c" value={selectedRole} disabled={disableRoleUpdate} onchange={handleRoleChange}></lightning-input-field> -->
+                                </div>
+                            </div>
+                    
+                            <br/><br/><br/><br/>
+                    </div> 
+                    <footer class="slds-modal__footer">
+                        <lightning-button style="margin-right:1rem" label="Cancel" type="button" variant="brand-outline" onclick={closeEditContactModal}></lightning-button> 
+                        <lightning-button label="Save" type="submit" variant="brand"></lightning-button> 
+                    </footer>
+                </lightning-record-edit-form>
+            </div>                      
+        </section>
+        
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={showConfirmationDuplicate}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+            <div class="slds-modal__container">     
+                  <div class="slds-modal__content slds-var-p-around_large">
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeConfirmationDuplicateModal}></lightning-button-icon>
+                        <h2 id="modal-heading-06" class="header">Confirmation</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-6" style="max-height: 600px;">
+                        <p>This contact's email address already exists in the system. Would you like to add anyway?</p>
+                        <br/>
+                    </div> 
+                  </div>
+                  <div class="slds-modal__footer">
+                    <lightning-button label="Add" type="button" variant="brand" onclick={handleAddDuplicate}></lightning-button> 
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+</template>

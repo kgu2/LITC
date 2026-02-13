@@ -1,0 +1,1053 @@
+{
+    "records": [
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef1"
+            },
+            "Name": "Estimated_Funding_Program_Income__c",
+            "IsActive": true,
+            "Type": "Currency",
+            "ParentElementId": "@OmniProcessElementRef51",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"F. Program income\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":true,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":null,\"min\":null,\"max\":null,\"placeholder\":\"\",\"allowNegative\":false,\"hideGroupSep\":false,\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"displayCurrencyCode\":false}",
+            "SequenceNumber": 6,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef2"
+            },
+            "Name": "Estimated_Funding_Other__c",
+            "IsActive": true,
+            "Type": "Currency",
+            "ParentElementId": "@OmniProcessElementRef51",
+            "PropertySetConfig": "{\"displayCurrencyCode\":false,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"hideGroupSep\":false,\"allowNegative\":false,\"placeholder\":\"\",\"max\":null,\"min\":null,\"mask\":null,\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":true,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"E. Other\",\"controlWidth\":6}",
+            "SequenceNumber": 5,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef3"
+            },
+            "Name": "Legal_Name__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"Legal name\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":true,\"defaultValue\":null,\"help\":true,\"helpText\":\"Enter the name of the organization applying for the grant. The name of the applicant must match exactly the name used to register with the System for Award Management (SAM.gov). If a grant is awarded, the federal funds will be payable to the name listed in this section. Do not use an acronym unless it is the legal name. Information on registering with SAM is available in IRS Publication 3319.\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 8,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef4"
+            },
+            "Name": "Step1_FormSF424",
+            "IsActive": true,
+            "Type": "Step",
+            "PropertySetConfig": "{\"label\":\"\",\"validationRequired\":true,\"previousLabel\":\"Previous\",\"previousWidth\":3,\"nextLabel\":\"Next\",\"nextWidth\":\"0\",\"cancelLabel\":\"Cancel\",\"cancelMessage\":\"Are you sure?\",\"saveLabel\":\"Save for later\",\"saveMessage\":\"Are you sure you want to save it for later?\",\"completeLabel\":\"Complete\",\"completeMessage\":\"Are you sure you want to complete the script?\",\"instruction\":\"\",\"showPersistentComponent\":[true,false],\"remoteClass\":\"\",\"remoteMethod\":\"\",\"remoteTimeout\":30000,\"remoteOptions\":{},\"knowledgeOptions\":{\"language\":\"English\",\"publishStatus\":\"Online\",\"keyword\":\"\",\"dataCategoryCriteria\":\"\",\"remoteTimeout\":30000,\"typeFilter\":\"\"},\"show\":null,\"conditionType\":\"Hide if False\",\"HTMLTemplateId\":\"\",\"instructionKey\":\"\",\"chartLabel\":null,\"allowSaveForLater\":false,\"errorMessage\":{\"custom\":[],\"default\":null},\"wpm\":false,\"ssm\":false,\"message\":{\"omniJsonData\":\"%Step1_FormSF424%\"},\"pubsub\":true,\"businessCategory\":\"\",\"businessEvent\":\"\"}",
+            "SequenceNumber": 1,
+            "Level": 0,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef5"
+            },
+            "Name": "Block_Applicant_Information",
+            "IsActive": true,
+            "Type": "Block",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"Applicant information\",\"collapse\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"HTMLTemplateId\":\"\",\"hide\":false,\"headingLevel\":null}",
+            "SequenceNumber": 0,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef6"
+            },
+            "Description": "auto populate with 'Applied for' if no...",
+            "Name": "Organizational_UEI__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"Organizational UEI\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":true,\"helpText\":\"Enter the organizational Unique Entity Identifier (UEI) received from GSA via the SAM.gov system.\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":{\"group\":{\"operator\":\"AND\",\"rules\":[{\"data\":\"true\",\"condition\":\"<>\",\"field\":\"UEI_Sam_gov_Validation_Status__c\"},{\"field\":\"Do_you_have_a_UEI__c\",\"condition\":\"=\",\"data\":\"Yes\"}]}},\"conditionType\":\"Readonly if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 3,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef7"
+            },
+            "Name": "Employer_Taxpayer_Number__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"Enter the employer or taxpayer identification number (EIN or TIN) as assigned by the IRS. Do not enter a Social Security number. This number will be used to verify that the applicant is not suspended or debarred from receiving a federal award and is compliant with federal tax and nontax obligations. The EIN should be in the format of xx-xxxxxxx. It must match the EIN in the SAM.gov system.\",\"help\":true,\"defaultValue\":null,\"readOnly\":true,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":true,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"EIN/TIN\",\"controlWidth\":6}",
+            "SequenceNumber": 9,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef8"
+            },
+            "Name": "Street_1__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"Street 1\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":true,\"defaultValue\":null,\"help\":true,\"helpText\":\"Enter the same address of the applicant organization that is in the SAM.gov system.\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 10,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef9"
+            },
+            "Name": "Street_2__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"Enter the same address of the applicant organization that is in the SAM.gov system.\",\"help\":true,\"defaultValue\":null,\"readOnly\":true,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Street2\",\"controlWidth\":6}",
+            "SequenceNumber": 11,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef10"
+            },
+            "Name": "City__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"City\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":true,\"defaultValue\":null,\"help\":true,\"helpText\":\"Enter the same address of the applicant organization that is in the SAM.gov system.\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 12,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef11"
+            },
+            "Name": "County__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"Enter the same address of the applicant organization that is in the SAM.gov system.\",\"help\":true,\"defaultValue\":null,\"readOnly\":true,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"County\",\"controlWidth\":4,\"lwcComponentOverride\":\"\"}",
+            "SequenceNumber": 14,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef12"
+            },
+            "Name": "Zip_Postal_Code__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"Zip/Postal code\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":true,\"defaultValue\":null,\"help\":true,\"helpText\":\"Enter the same address of the applicant organization that is in the SAM.gov system.\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 15,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef13"
+            },
+            "Name": "Country__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"Enter the same address of the applicant organization that is in the SAM.gov system.\",\"help\":true,\"defaultValue\":null,\"readOnly\":true,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":true,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Country\",\"controlWidth\":4}",
+            "SequenceNumber": 16,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef14"
+            },
+            "Name": "Province__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"Province\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":true,\"defaultValue\":null,\"help\":true,\"helpText\":\"Enter the same address of the applicant organization that is in the SAM.gov system.\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 17,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef15"
+            },
+            "Name": "State__c",
+            "IsActive": true,
+            "Type": "Select",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"State\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":true,\"defaultValue\":null,\"help\":true,\"helpText\":\"Enter the same address of the applicant organization that is in the SAM.gov system.\",\"helpTextPos\":\"\",\"options\":[],\"optionSource\":{\"type\":\"SObject\",\"source\":\"Application_for_Federal_Assistance__c.State__c\"},\"controllingField\":{\"element\":\"\",\"type\":\"\",\"source\":\"\"},\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false}",
+            "SequenceNumber": 13,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef16"
+            },
+            "Name": "DataMapperExtractAction1",
+            "IsActive": true,
+            "Type": "DataRaptor Extract Action",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"DataMapperExtractAction1\",\"bundle\":\"LITCGetFieldsSF424\",\"ignoreCache\":false,\"dataRaptor Input Parameters\":[{\"element\":\"ContextId\",\"inputParam\":\"ContextId\"}],\"remoteTimeout\":30000,\"responseJSONPath\":\"\",\"responseJSONNode\":\"\",\"inProgressMessage\":\"In Progress\",\"postMessage\":\"Done\",\"failureNextLabel\":\"Continue\",\"failureAbortLabel\":\"Abort\",\"failureGoBackLabel\":\"Go Back\",\"failureAbortMessage\":\"Are you sure?\",\"validationRequired\":\"Step\",\"redirectPageName\":\"\",\"redirectTemplateUrl\":\"vlcAcknowledge.html\",\"redirectNextLabel\":\"Next\",\"redirectNextWidth\":3,\"redirectPreviousLabel\":\"Previous\",\"redirectPreviousWidth\":3,\"showPersistentComponent\":[true,false],\"show\":null,\"HTMLTemplateId\":\"\",\"wpm\":false,\"ssm\":false,\"message\":{\"SF424Get\":\"%Step1_FormSF424%\"},\"pubsub\":true,\"errorMessage\":{\"custom\":[],\"default\":null},\"enableDefaultAbort\":false,\"enableActionMessage\":false,\"businessCategory\":\"\",\"businessEvent\":\"\"}",
+            "SequenceNumber": 0,
+            "Level": 0,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef17"
+            },
+            "Name": "DataMapperPostAction1",
+            "IsActive": true,
+            "Type": "DataRaptor Post Action",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"controlWidth\":2,\"label\":\"Save\",\"bundle\":\"LITCSubmitFormSF424\",\"remoteTimeout\":30000,\"postTransformBundle\":\"\",\"sendJSONPath\":\"\",\"sendJSONNode\":\"\",\"inProgressMessage\":\"In Progress\",\"postMessage\":\"Done\",\"failureNextLabel\":\"Continue\",\"failureAbortLabel\":\"Abort\",\"failureGoBackLabel\":\"Go Back\",\"failureAbortMessage\":\"Are you sure?\",\"validationRequired\":\"None\",\"redirectPageName\":\"\",\"redirectTemplateUrl\":\"vlcAcknowledge.html\",\"redirectNextLabel\":\"Next\",\"redirectNextWidth\":3,\"redirectPreviousLabel\":\"Previous\",\"redirectPreviousWidth\":3,\"showPersistentComponent\":[true,false],\"show\":null,\"HTMLTemplateId\":\"\",\"wpm\":false,\"ssm\":false,\"message\":{\"sf424Results\":\"%Step1_FormSF424%\"},\"pubsub\":true,\"errorMessage\":{\"custom\":[{\"path\":\"\",\"value\":\"\",\"message\":\"\"}],\"default\":\"Error - Invalid format. Please ensure all values are in the correct format\"},\"enableDefaultAbort\":false,\"enableActionMessage\":false,\"businessCategory\":\"\",\"businessEvent\":\"\"}",
+            "SequenceNumber": 12,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef18"
+            },
+            "Name": "LineBreak4",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"label\":\"LineBreak4\",\"padding\":15,\"show\":{\"group\":{\"operator\":\"AND\",\"rules\":[{\"data\":\"Yes\",\"condition\":\"=\",\"field\":\"Do_you_have_a_UEI__c\"}]}},\"HTMLTemplateId\":\"\"}",
+            "SequenceNumber": 4,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef19"
+            },
+            "Name": "UEI_Sam_gov_Validation_Status__c",
+            "IsActive": true,
+            "Type": "Checkbox",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"Checkbox1\",\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":true,\"defaultValue\":false,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"checkLabel\":\"Sam.Gov Validated\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false}",
+            "SequenceNumber": 7,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef20"
+            },
+            "Name": "SetValues_Unvalidate",
+            "IsActive": true,
+            "Type": "Set Values",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":null,\"label\":\"Unvalidate\",\"elementValueMap\":{\"UEI_Sam_gov_Validation_Status__c\":false},\"showPersistentComponent\":[true,false],\"show\":{\"group\":{\"operator\":\"AND\",\"rules\":[{\"data\":\"true\",\"condition\":\"=\",\"field\":\"UEI_Sam_gov_Validation_Status__c\"},{\"field\":\"Do_you_have_a_UEI__c\",\"condition\":\"=\",\"data\":\"Yes\"}]}},\"HTMLTemplateId\":\"\",\"wpm\":false,\"ssm\":false,\"message\":{},\"pubsub\":false}",
+            "SequenceNumber": 6,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef21"
+            },
+            "Name": "Block_Organization_Unit",
+            "IsActive": true,
+            "Type": "Block",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"Organization unit\",\"collapse\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"HTMLTemplateId\":\"\",\"hide\":false}",
+            "SequenceNumber": 2,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef22"
+            },
+            "Name": "Block_Type_Of_Applicant",
+            "IsActive": true,
+            "Type": "Block",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"hide\":false,\"HTMLTemplateId\":\"\",\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"collapse\":false,\"label\":\"Type of applicant\",\"controlWidth\":12}",
+            "SequenceNumber": 4,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef23"
+            },
+            "Name": "Block_Project_Info",
+            "IsActive": true,
+            "Type": "Block",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"Project areas affected/ Congressional districts\",\"collapse\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"HTMLTemplateId\":\"\",\"hide\":false}",
+            "SequenceNumber": 6,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef24"
+            },
+            "Name": "Block_Authorized_Representative",
+            "IsActive": true,
+            "Type": "Block",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"hide\":false,\"HTMLTemplateId\":\"\",\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"collapse\":false,\"label\":\"Authorized representative\",\"controlWidth\":12}",
+            "SequenceNumber": 10,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef25"
+            },
+            "Name": "LineBreak3",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"label\":\"LineBreak3\",\"padding\":15,\"show\":null,\"HTMLTemplateId\":\"\"}",
+            "SequenceNumber": 1,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef26"
+            },
+            "Name": "LineBreak5",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"HTMLTemplateId\":\"\",\"show\":null,\"padding\":15,\"label\":\"LineBreak3\"}",
+            "SequenceNumber": 3,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef27"
+            },
+            "Name": "LineBreak6",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"label\":\"LineBreak3\",\"padding\":15,\"show\":null,\"HTMLTemplateId\":\"\"}",
+            "SequenceNumber": 5,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef28"
+            },
+            "Name": "LineBreak7",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"HTMLTemplateId\":\"\",\"show\":null,\"padding\":15,\"label\":\"LineBreak3\"}",
+            "SequenceNumber": 7,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef29"
+            },
+            "Name": "LineBreak8",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"label\":\"LineBreak3\",\"padding\":25,\"show\":null,\"HTMLTemplateId\":\"\"}",
+            "SequenceNumber": 11,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef30"
+            },
+            "Name": "First_Name__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"First name\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 2,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef31"
+            },
+            "Name": "Last_Name__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":false,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":true,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Last name\",\"controlWidth\":4}",
+            "SequenceNumber": 4,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef32"
+            },
+            "Name": "Department_Name__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":false,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Department name\",\"controlWidth\":6}",
+            "SequenceNumber": 8,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef33"
+            },
+            "Name": "Division_Name_c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"Division name\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 9,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef34"
+            },
+            "Name": "Suffix__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":false,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Suffix\",\"controlWidth\":3}",
+            "SequenceNumber": 5,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef35"
+            },
+            "Name": "Organizational_Affliation__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":false,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Organizational affiliation\",\"controlWidth\":4}",
+            "SequenceNumber": 7,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef36"
+            },
+            "Name": "Organization_Unit_Title__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"Title\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 6,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef37"
+            },
+            "Name": "Middle_Name__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":false,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Middle name\",\"controlWidth\":4}",
+            "SequenceNumber": 3,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef38"
+            },
+            "Name": "Fax__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"Fax\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 12,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef39"
+            },
+            "Name": "Type_of_Applicant_1__c",
+            "IsActive": true,
+            "Type": "Multi-select",
+            "ParentElementId": "@OmniProcessElementRef22",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"Type of applicant\",\"required\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"horizontalMode\":false,\"defaultValue\":null,\"help\":true,\"helpText\":\"For a nonprofit legal aid, select a nonprofit designation and the ‘Other’ category. In the text field, note whether the legal aid is Legal Services Corporation (LSC) funded or non-LSC funded.\",\"helpTextPos\":\"\",\"options\":[],\"optionSource\":{\"type\":\"SObject\",\"source\":\"Application_for_Federal_Assistance__c.Type_of_Applicant_1__c\"},\"controllingField\":{\"element\":\"\",\"type\":\"\",\"source\":\"\"},\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"HTMLTemplateId\":\"\",\"hide\":false,\"optionWidth\":100,\"optionHeight\":100,\"imageCountInRow\":3,\"enableCaption\":true,\"disOnTplt\":false}",
+            "SequenceNumber": 1,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef40"
+            },
+            "Name": "Type_of_Application_1_Other__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef22",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"Please specify if 'Other' is selected\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":{\"group\":{\"operator\":\"AND\",\"rules\":[{\"data\":\"true\",\"condition\":\"=\",\"field\":\"Formula_Type_Of_Applicant_Other\"}]}},\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 5,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef41"
+            },
+            "Name": "Formula_Type_Of_Applicant_Other",
+            "IsActive": true,
+            "Type": "Formula",
+            "ParentElementId": "@OmniProcessElementRef22",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"Formula for Other\",\"showInputWidth\":false,\"inputWidth\":12,\"expression\":\"CONTAINS(%Type_of_Applicant_1__c%, \\\"X. Other (specify)\\\")\",\"hide\":true,\"show\":null,\"mask\":null,\"dataType\":\"Boolean\",\"hideGroupSep\":false,\"dateFormat\":\"MM-dd-yyyy\",\"HTMLTemplateId\":\"\",\"disOnTplt\":false}",
+            "SequenceNumber": 2,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef42"
+            },
+            "Name": "Auth_Rep_First_Name__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef24",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"First name\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 0,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef43"
+            },
+            "Name": "Auth_Rep_Middle_Name__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef24",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":false,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Middle name\",\"controlWidth\":4}",
+            "SequenceNumber": 1,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef44"
+            },
+            "Name": "Auth_Rep_Last_Name__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef24",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"Last name\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 2,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef45"
+            },
+            "Name": "Auth_Rep_Suffix__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef24",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":false,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Suffix\",\"controlWidth\":3}",
+            "SequenceNumber": 3,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef46"
+            },
+            "Name": "Auth_Rep_Title__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef24",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"Title\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 4,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef47"
+            },
+            "Name": "Auth_Rep_Fax__c",
+            "IsActive": true,
+            "Type": "Text",
+            "ParentElementId": "@OmniProcessElementRef24",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"mask\":\"\",\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":false,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Fax\",\"controlWidth\":4}",
+            "SequenceNumber": 7,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef48"
+            },
+            "Name": "TextBlock2",
+            "IsActive": true,
+            "Type": "Text Block",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"TextBlock2\",\"text\":\"<p>Please provide contact information for the individual at your organization who is able to resolve issues or respond to questions the LITC Program staff may have about the appilcation.</p>\",\"show\":null,\"dataJSON\":false,\"HTMLTemplateId\":\"\",\"textKey\":\"\",\"sanitize\":false}",
+            "SequenceNumber": 0,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef49"
+            },
+            "Name": "LineBreak9",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"label\":\"LineBreak9\",\"padding\":10,\"show\":null,\"HTMLTemplateId\":\"\"}",
+            "SequenceNumber": 1,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef50"
+            },
+            "Name": "CustomLWC1",
+            "IsActive": true,
+            "Type": "Custom Lightning Web Component",
+            "ParentElementId": "@OmniProcessElementRef23",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"CustomLWC1\",\"show\":null,\"conditionType\":\"Hide if False\",\"hide\":false,\"lwcName\":\"litcCountyMapping\",\"bStandalone\":true,\"customAttributes\":[{\"name\":\"record-id\",\"source\":\"%ContextId%\"}]}",
+            "SequenceNumber": 0,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef51"
+            },
+            "Name": "Block_Estimated_Funding",
+            "IsActive": true,
+            "Type": "Block",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"Estimated funding\",\"collapse\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"HTMLTemplateId\":\"\",\"hide\":false}",
+            "SequenceNumber": 8,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef52"
+            },
+            "Name": "LineBreak11",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef4",
+            "PropertySetConfig": "{\"label\":\"LineBreak3\",\"padding\":15,\"show\":null,\"HTMLTemplateId\":\"\"}",
+            "SequenceNumber": 9,
+            "Level": 1,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef53"
+            },
+            "Name": "TextBlock1",
+            "IsActive": true,
+            "Type": "Text Block",
+            "ParentElementId": "@OmniProcessElementRef51",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"TextBlock1\",\"text\":\"<p><strong>Note: Estimated funding values will be populated on completion of the 13424-J Form.</strong></p>\",\"show\":null,\"dataJSON\":false,\"HTMLTemplateId\":\"\",\"textKey\":\"\",\"sanitize\":false}",
+            "SequenceNumber": 0,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef54"
+            },
+            "Name": "CustomLWC3",
+            "IsActive": true,
+            "Type": "Custom Lightning Web Component",
+            "ParentElementId": "@OmniProcessElementRef22",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"Tax Exempt Determination Letter or Other Proof of Non-Profit Status\",\"show\":{\"group\":{\"operator\":\"AND\",\"rules\":[{\"data\":\"true\",\"condition\":\"=\",\"field\":\"Formula_Type_Of_Applicant_FileA\"}]}},\"conditionType\":\"Hide if False\",\"hide\":false,\"lwcName\":\"fileLoader\",\"bStandalone\":true,\"customAttributes\":[{\"name\":\"disable-edits\",\"source\":\"\"},{\"name\":\"my-record-id\",\"source\":\"%ContextId%\"},{\"name\":\"dynamic-accepted-format\",\"source\":\"['.pdf', '.doc', '.docx', '.docb','.tif']\"},{\"name\":\"hide-uploads\",\"source\":\"\"},{\"name\":\"file-prefix\",\"source\":\"SF424-Type-of-applicant_MN\"},{\"name\":\"upload-label\",\"source\":\"Upload required document(s) for Tax Exempt Determination Letter or Other Proof of Non-Profit Status\"}]}",
+            "SequenceNumber": 7,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef55"
+            },
+            "Name": "CustomLWC4",
+            "IsActive": true,
+            "Type": "Custom Lightning Web Component",
+            "ParentElementId": "@OmniProcessElementRef22",
+            "PropertySetConfig": "{\"customAttributes\":[{\"name\":\"disable-edits\",\"source\":\"\"},{\"name\":\"my-record-id\",\"source\":\"%ContextId%\"},{\"name\":\"dynamic-accepted-format\",\"source\":\"['.pdf', '.doc', '.docx', '.docb','.tif']\"},{\"name\":\"hide-uploads\",\"source\":\"\"},{\"name\":\"file-prefix\",\"source\":\"SF424-Type-of-applicant_HOTUV\"},{\"name\":\"upload-label\",\"source\":\"Upload required document(s) for Proof of Academic Accreditation\"}],\"bStandalone\":true,\"lwcName\":\"fileLoader\",\"hide\":false,\"conditionType\":\"Hide if False\",\"show\":{\"group\":{\"operator\":\"AND\",\"rules\":[{\"data\":\"true\",\"condition\":\"=\",\"field\":\"Formula_Type_Of_Applicant_FileB\"}]}},\"label\":\"Tax Exempt Determination Letter or Other Proof of Non-Profit Status\",\"controlWidth\":12}",
+            "SequenceNumber": 9,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef56"
+            },
+            "Name": "LineBreak13",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef22",
+            "PropertySetConfig": "{\"label\":\"LineBreak13\",\"padding\":20,\"show\":null,\"HTMLTemplateId\":\"\"}",
+            "SequenceNumber": 6,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef57"
+            },
+            "Name": "LineBreak14",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef22",
+            "PropertySetConfig": "{\"HTMLTemplateId\":\"\",\"show\":{\"group\":{\"operator\":\"AND\",\"rules\":[{\"data\":\"true\",\"condition\":\"=\",\"field\":\"Formula_Type_Of_Applicant_FileA\"},{\"field\":\"Formula_Type_Of_Applicant_FileB\",\"condition\":\"=\",\"data\":\"true\"}]}},\"padding\":20,\"label\":\"LineBreak13\"}",
+            "SequenceNumber": 8,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef58"
+            },
+            "Name": "Auth_Rep_Email__c",
+            "IsActive": true,
+            "Type": "Email",
+            "ParentElementId": "@OmniProcessElementRef24",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"Email\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 6,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef59"
+            },
+            "Name": "Telephone_Number__c",
+            "IsActive": true,
+            "Type": "Telephone",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"Telephone number\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":\"(999) 999-9999\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":10,\"maxLength\":10,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 10,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef60"
+            },
+            "Name": "Email__c",
+            "IsActive": true,
+            "Type": "Email",
+            "ParentElementId": "@OmniProcessElementRef21",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"Email\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 11,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef61"
+            },
+            "Name": "Auth_Rep_Number__c",
+            "IsActive": true,
+            "Type": "Telephone",
+            "ParentElementId": "@OmniProcessElementRef24",
+            "PropertySetConfig": "{\"controlWidth\":4,\"label\":\"Telephone number\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":\"(999) 999-9999\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":10,\"maxLength\":10,\"placeholder\":\"\",\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 5,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef62"
+            },
+            "Name": "CustomLWC5",
+            "IsActive": true,
+            "Type": "Custom Lightning Web Component",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":null,\"label\":\"CustomLWC5\",\"show\":{\"group\":{\"operator\":\"AND\",\"rules\":[{\"data\":\"true\",\"condition\":\"<>\",\"field\":\"UEI_Sam_gov_Validation_Status__c\"},{\"field\":\"Do_you_have_a_UEI__c\",\"condition\":\"=\",\"data\":\"Yes\"}]}},\"conditionType\":\"Hide if False\",\"hide\":false,\"lwcName\":\"omniscriptCustomSaveButton\",\"bStandalone\":false,\"customAttributes\":[{\"name\":\"label\",\"source\":\"Validate UEI\"},{\"name\":\"dr-name\",\"source\":\"LITCGetFieldsSF424\"}]}",
+            "SequenceNumber": 5,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef63"
+            },
+            "Name": "Formula_Type_Of_Applicant_FileA",
+            "IsActive": true,
+            "Type": "Formula",
+            "ParentElementId": "@OmniProcessElementRef22",
+            "PropertySetConfig": "{\"disOnTplt\":false,\"HTMLTemplateId\":\"\",\"dateFormat\":\"MM-dd-yyyy\",\"hideGroupSep\":false,\"dataType\":\"Boolean\",\"mask\":null,\"show\":null,\"hide\":true,\"expression\":\"OR(CONTAINS(%Type_of_Applicant_1__c%, \\\"M. Nonprofit with 501(c) status\\\"), CONTAINS(%Type_of_Applicant_1__c%, \\\"N. Nonprofit without 501(c) status\\\"))\",\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Formula FileA\",\"controlWidth\":3}",
+            "SequenceNumber": 3,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef64"
+            },
+            "Name": "Formula_Type_Of_Applicant_FileB",
+            "IsActive": true,
+            "Type": "Formula",
+            "ParentElementId": "@OmniProcessElementRef22",
+            "PropertySetConfig": "{\"controlWidth\":3,\"label\":\"Formula File B\",\"showInputWidth\":false,\"inputWidth\":12,\"expression\":\"CONTAINS(%Type_of_Applicant_1__c%, \\\"H. Public/State Controlled Institution of Higher Education\\\") || CONTAINS(%Type_of_Applicant_1__c%, \\\"O. Private Institution of Higher Education\\\") || CONTAINS(%Type_of_Applicant_1__c%, \\\"T. Historically Black Colleges and Universities (HBCUs)\\\") || CONTAINS(%Type_of_Applicant_1__c%, \\\"U. Tribally Controlled Colleges and Universities (TCCUs)\\\") || CONTAINS(%Type_of_Applicant_1__c%, \\\"V. Alaska Native and Native Hawaiian Serving Institutions\\\")\",\"hide\":true,\"show\":null,\"mask\":null,\"dataType\":\"Boolean\",\"hideGroupSep\":false,\"dateFormat\":\"MM-dd-yyyy\",\"HTMLTemplateId\":\"\",\"disOnTplt\":false}",
+            "SequenceNumber": 4,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef65"
+            },
+            "Name": "Estimated_Funding_Applicant__c",
+            "IsActive": true,
+            "Type": "Currency",
+            "ParentElementId": "@OmniProcessElementRef51",
+            "PropertySetConfig": "{\"displayCurrencyCode\":false,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"hideGroupSep\":false,\"allowNegative\":false,\"placeholder\":\"\",\"max\":null,\"min\":null,\"mask\":null,\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":true,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"B. Applicant\",\"controlWidth\":6}",
+            "SequenceNumber": 2,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef66"
+            },
+            "Name": "State_Not_Used",
+            "IsActive": true,
+            "Type": "Currency",
+            "ParentElementId": "@OmniProcessElementRef51",
+            "PropertySetConfig": "{\"displayCurrencyCode\":false,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"hideGroupSep\":false,\"allowNegative\":false,\"placeholder\":\"\",\"max\":null,\"min\":null,\"mask\":null,\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":0,\"readOnly\":true,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"C. State\",\"controlWidth\":6}",
+            "SequenceNumber": 3,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef67"
+            },
+            "Name": "Local_Not_Used",
+            "IsActive": true,
+            "Type": "Currency",
+            "ParentElementId": "@OmniProcessElementRef51",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"D. Local\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":false,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":true,\"defaultValue\":0,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"mask\":null,\"min\":null,\"max\":null,\"placeholder\":\"0\",\"allowNegative\":false,\"hideGroupSep\":false,\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"displayCurrencyCode\":false}",
+            "SequenceNumber": 4,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef68"
+            },
+            "Name": "Formula_Total_Estimated",
+            "IsActive": true,
+            "Type": "Formula",
+            "ParentElementId": "@OmniProcessElementRef51",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"G. Total\",\"showInputWidth\":false,\"inputWidth\":12,\"expression\":\"%Estimated_Funding_Applicant__c% +%Estimated_Funding_Other__c% + %Estimated_Funding_Program_Income__c% + %Estimated_Funding_Federal__c%\",\"hide\":false,\"show\":null,\"mask\":null,\"dataType\":\"Currency\",\"hideGroupSep\":false,\"dateFormat\":\"MM-dd-yyyy\",\"HTMLTemplateId\":\"\",\"disOnTplt\":false}",
+            "SequenceNumber": 7,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef69"
+            },
+            "Name": "Estimated_Funding_Federal__c",
+            "IsActive": true,
+            "Type": "Currency",
+            "ParentElementId": "@OmniProcessElementRef51",
+            "PropertySetConfig": "{\"displayCurrencyCode\":false,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":null,\"hideGroupSep\":false,\"allowNegative\":false,\"placeholder\":\"\",\"max\":null,\"min\":null,\"mask\":null,\"helpTextPos\":\"\",\"helpText\":\"Enter the amount of federal grant funds requested for 2024, regardless of whether the applicant is applying for a single year or multi year grant. As no more than $200,000 can be awarded, the amount should not exceed $200,000.\",\"help\":false,\"defaultValue\":null,\"readOnly\":true,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":false,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"A. Federal\",\"controlWidth\":6}",
+            "SequenceNumber": 1,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef70"
+            },
+            "Name": "TextBlock3",
+            "IsActive": true,
+            "Type": "Text Block",
+            "ParentElementId": "@OmniProcessElementRef22",
+            "PropertySetConfig": "{\"controlWidth\":12,\"label\":\"TextBlock3\",\"text\":\"<div>\\n<div>Note: Up to 3 values may be selected for Type of applicant</div>\\n</div>\",\"show\":null,\"dataJSON\":false,\"HTMLTemplateId\":\"\",\"textKey\":\"\",\"sanitize\":false}",
+            "SequenceNumber": 0,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef71"
+            },
+            "Name": "Do_you_have_a_UEI__c",
+            "IsActive": true,
+            "Type": "Select",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"controlWidth\":6,\"label\":\"Do you have a UEI?\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"options\":[],\"optionSource\":{\"type\":\"SObject\",\"source\":\"Application_for_Federal_Assistance__c.Do_you_have_a_UEI__c\"},\"controllingField\":{\"element\":\"\",\"type\":\"\",\"source\":\"\"},\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false}",
+            "SequenceNumber": 0,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef72"
+            },
+            "Name": "Effort_on_obtaining_a_UEI__c",
+            "IsActive": true,
+            "Type": "Text Area",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"autocomplete\":null,\"disOnTplt\":false,\"hide\":false,\"HTMLTemplateId\":\"\",\"debounceValue\":0,\"accessibleInFutureSteps\":false,\"conditionType\":\"Hide if False\",\"show\":{\"group\":{\"operator\":\"AND\",\"rules\":[{\"data\":\"No\",\"condition\":\"=\",\"field\":\"Do_you_have_a_UEI__c\"}]}},\"placeholder\":\"\",\"maxLength\":255,\"minLength\":0,\"ptrnErrText\":\"\",\"pattern\":\"\",\"helpTextPos\":\"\",\"helpText\":\"\",\"help\":false,\"defaultValue\":null,\"readOnly\":false,\"repeatLimit\":null,\"repeatClone\":false,\"repeat\":false,\"required\":true,\"inputWidth\":12,\"showInputWidth\":false,\"label\":\"Please provide a statement concerning your efforts to obtain a UEI.\",\"controlWidth\":7}",
+            "SequenceNumber": 1,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef73"
+            },
+            "Name": "LineBreak1",
+            "IsActive": true,
+            "Type": "Line Break",
+            "ParentElementId": "@OmniProcessElementRef5",
+            "PropertySetConfig": "{\"label\":\"LineBreak1\",\"padding\":0,\"show\":null,\"HTMLTemplateId\":\"\"}",
+            "SequenceNumber": 2,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef74"
+            },
+            "Name": "Is_Applicant_Delinquent_on_Federal_Debt__c",
+            "IsActive": true,
+            "Type": "Select",
+            "ParentElementId": "@OmniProcessElementRef51",
+            "PropertySetConfig": "{\"controlWidth\":10,\"label\":\"Is the Applicant Delinquent on any Federal Debt?\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":true,\"helpText\":\"This question applies to the applicant organization. When an explanation is needed, instead of attaching a response, please use the text box provided. In your response, include the category of federal debt and any actions taken to address the debt. If you are reporting a federal tax debt and working with someone at the IRS to resolve the issue, please provide the IRS contact’s name, office in which they work, and phone number..\",\"helpTextPos\":\"\",\"options\":[],\"optionSource\":{\"type\":\"SObject\",\"source\":\"Application_for_Federal_Assistance__c.Is_Applicant_Delinquent_on_Federal_Debt__c\"},\"controllingField\":{\"element\":\"\",\"type\":\"\",\"source\":\"\"},\"show\":null,\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false}",
+            "SequenceNumber": 8,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        },
+        {
+            "attributes": {
+                "type": "OmniProcessElement",
+                "referenceId": "OmniProcessElementRef75"
+            },
+            "Name": "Federal_debt_explanation__c",
+            "IsActive": true,
+            "Type": "Text Area",
+            "ParentElementId": "@OmniProcessElementRef51",
+            "PropertySetConfig": "{\"controlWidth\":7,\"label\":\"If yes, include an explanation\",\"showInputWidth\":false,\"inputWidth\":12,\"required\":true,\"repeat\":false,\"repeatClone\":false,\"repeatLimit\":null,\"readOnly\":false,\"defaultValue\":null,\"help\":false,\"helpText\":\"\",\"helpTextPos\":\"\",\"pattern\":\"\",\"ptrnErrText\":\"\",\"minLength\":0,\"maxLength\":255,\"placeholder\":\"\",\"show\":{\"group\":{\"operator\":\"AND\",\"rules\":[{\"data\":\"Yes\",\"condition\":\"=\",\"field\":\"Is_Applicant_Delinquent_on_Federal_Debt__c\"}]}},\"conditionType\":\"Hide if False\",\"accessibleInFutureSteps\":false,\"debounceValue\":0,\"HTMLTemplateId\":\"\",\"hide\":false,\"disOnTplt\":false,\"autocomplete\":null}",
+            "SequenceNumber": 9,
+            "Level": 2,
+            "OmniProcessId": "@OmniProcessRef1"
+        }
+    ]
+}

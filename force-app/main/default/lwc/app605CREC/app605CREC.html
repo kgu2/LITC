@@ -1,0 +1,131 @@
+<template>
+    <!-- <template if:true={errors}>
+        <c-error-accordion record-id={recordId}  accordion-errors={errors} show-error-pannel={errors}>
+        </c-error-accordion>
+    </template> -->
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Submitting...." size="medium"></lightning-spinner>
+    </template>
+
+      <h1 style="font-size:24pt">Certification Regarding Economic Conditions</h1>
+      <br/>
+
+      <h2>Certification Status - <span style={formStyle}>{currentStatus}</span></h2>
+      <br/>
+
+    <template if:false={isSubmitted}>
+        <lightning-record-edit-form object-api-name="X605_Application__c" record-id={recordId} onerror={handleError}>
+            <lightning-input-field value='Docusign' required disabled={disableEdits} variant="label-hidden" field-name="Submission_Source__c" onchange={handleSubmissionSourceChange} class="slds-hide submissionSource"></lightning-input-field>
+        </lightning-record-edit-form>
+        <p>The designated Authorized Representative must sign the form below to certify the need for an award from the Department of the Treasury under the Local Assistance and Tribal Consistency Fund to provide services to members of the Tribe and others in its service community.</p>
+        <br/>
+        <p>Such services may include, but are not limited to, clean water, housing, child care, workforce development, the management of land and wildlife, and other examples of permissible uses of the award as outlined in Treasury's guidance.</p>
+        <br/>
+    </template>
+
+    <template if:true={isDraft}>
+        <template if:true={docusignCertification}>
+            <ul class="ulOne">
+                <li>The certification will be emailed directly to the Authorized Representative with instructions to electronically sign and submit the document with DocuSign.</li>
+            </ul>
+
+            <p style="margin-top:20px;font-weight:bold;">
+                When the Authorized Representative signs the certification, the designated contact person will receive an email notification that your submission has been received and will begin the submission review process.  
+            </p>
+            <br/>
+            
+            <div class="slds-box">
+                <p>Check the box below to affirm that all information is complete and accurate</p>
+                <br/>
+                <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                <label>By checking this box, I affirm that all information provided is complete and accurate.</label>
+                <br/>
+                <template if:true={certCheckboxChecked}>
+                    <br/>
+                    <button onclick={handleSubmitDocusign} class="slds-button slds-button_brand">Submit with DocuSign</button>
+                </template>
+            </div>
+            <div style="float: right;">
+                <lightning-button variant="base" label="Click here to certify manually" onclick={handleManualClick}></lightning-button>
+            </div>
+        </template>
+
+        <template if:false={docusignCertification}>
+            <p>
+                Eligible grantees MUST also complete and execute the certification to receive
+                payment from Treasury. Please click on the download link below to generate a filled pdf
+                of the certification.
+            </p>
+            <br />
+            <p>
+                An authorized representative of the eligible grantee with legal authority to bind. The eligible grantee must sign the certification. There are multiple signatures required, please review the entire document, attach a copy of the signed and scanned document below.
+            </p> <br />
+
+            <div class="slds-box">
+                <h2>
+                    Manual Certification Option
+                </h2>
+                <br />
+                <button onclick={handleDownloadAwardTermFile} class="slds-button slds-button_brand">Download Certification</button>
+                <br /> <br /> <br />
+                <label>Upload Certification Below: </label> <br />
+                <c-file-loader my-record-id={recordId} file-prefix="CREC"></c-file-loader>
+            </div>
+            <br />
+            <div class="slds-box">
+                <p>Check the box below to affirm that all information is complete and accurate</p>
+                <br/>
+                <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                <label >By checking this box, I affirm that all information provided is complete and accurate.</label>
+                <br/>
+                <template if:true={certCheckboxChecked}>
+                    <br/>
+                    <button onclick={submitManual} class="slds-button slds-button_brand">Submit Certification</button>
+                </template>
+            </div>
+            <div style="float: right;">
+                <lightning-button variant="base" label="Click here to certify with DocuSign" onclick={handleDocusignClick}></lightning-button>
+            </div>
+        </template>
+
+    </template>
+
+    <template if:true={isAwaitingSignature}>
+        <br/>
+        <p>Docusign has been sent to Authorized Representative...Waiting to sign</p>
+    </template>
+
+    <template if:true={isSubmitted}>
+        <br/>
+        <p>Thank you for submitting! Once both certifications have been submitted you will receive an email! (Confirmation Text here)</p>
+    </template>
+
+    <br/><br/>
+    <p style="font-size: 13pt;margin-top:20px;">
+        PAPERWORK REDUCTION ACT NOTICE
+        The information collected will be used for the U.S. Government to process requests for
+        support. The estimated burden associated with this collection of information is one
+        hour per response. Comments concerning the accuracy of this burden estimate and
+        suggestions for reducing this burden should be directed to the Office of Privacy,
+        Transparency and Records, Department of the Treasury, 1500 Pennsylvania Ave., N.W.,
+        Washington, D.C. 20220. DO NOT send the form to this address. An agency may not
+        conduct or sponsor, and a person is not required to respond to, a collection of
+        information unless it displays a valid control number assigned by OMB.
+    </p> 
+    
+    <br /><br />
+
+      <table>
+        <tr>
+            <td style="text-align: left;" width="33%">
+                <lightning-button type="button" label="Back: 605 Form" onclick={handleNav} name="form"></lightning-button>
+            </td>
+            <td style="text-align: right;" width="33%">
+              <lightning-button type="button" label="Next: Certification" onclick={handleNav} name="certification"></lightning-button>
+            </td>
+        </tr>
+    </table>
+
+    <br /><br />
+
+</template>

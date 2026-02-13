@@ -1,0 +1,58 @@
+<template>
+
+    <template if:true={isLoading}>
+        <lightning-spinner size="large" variant="brand"></lightning-spinner>
+    </template>
+
+
+    <lightning-button variant="brand" label="Initiate budget period closeout" disabled={isCloseoutStarted} onclick={handleRunChecks} icon-name="utility:play" icon-position="left"></lightning-button>
+    
+    <lightning-button variant="brand" label="Mark budget closeout complete" disabled={isCloseoutCompleteDisabled} onclick={openConfirmationModal} icon-name="utility:check" icon-position="left" style="margin-left: 2rem;"></lightning-button>
+
+    <lightning-button variant="brand-outline" label="Request review" disabled={isCloseoutReviewNeededDisabled} onclick={handleRequestReview} icon-name="utility:preview" icon-position="left" style="float: right"></lightning-button>
+
+
+
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+            <div class="slds-modal__container">     
+                  <div class="slds-modal__content slds-var-p-around_large">
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeModal}></lightning-button-icon>
+                        <h2 id="modal-heading-06" class="header">Confirmation</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-6" style="max-height: 600px;">
+                        <p>You are about to complete the Budget Period Closeout for this Funding Award.  Select "Confirm" to proceed.</p>
+                        <br/>
+                    </div> 
+                  </div>
+                  <div class="slds-modal__footer">
+                    <lightning-button label="Confirm" type="button" variant="brand" onclick={handleFinalizeCloseout}></lightning-button> 
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+    <template if:true={showModalTwo}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+            <div class="slds-modal__container">     
+                  <div class="slds-modal__content slds-var-p-around_large">
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeModalTwo}></lightning-button-icon>
+                        <h2 id="modal-heading-02" class="header">Final award?</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-2" style="max-height: 600px;">
+                        <p>Is this the final funding award for the project period? Selecting "Yes" will allow for the start of the Project Period Closeout.</p>
+                        <br/>
+                    </div> 
+                  </div>
+                  <div class="slds-modal__footer">
+                    <lightning-button label="No" type="button" variant="brand" onclick={closeModalTwo} style="float: left"></lightning-button> 
+                    <lightning-button label="Yes" type="button" variant="brand" onclick={handleModalTwo}></lightning-button> 
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>

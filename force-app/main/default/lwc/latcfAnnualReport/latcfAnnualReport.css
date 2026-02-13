@@ -1,0 +1,133 @@
+.animatedText{
+    margin: auto;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: center;
+    width: 24em;
+    font-size:1.25rem;
+    animation: type 1s steps(60, end); 
+  }
+
+  @keyframes type{ 
+    from { width: 0; } 
+  } 
+
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+
+  @keyframes slideInLeft {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }  
+
+  @keyframes slideInTop {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+
+  .fade{ 
+    animation: 1s ease-in-out 0s 1 fadeIn;
+  }
+
+
+* {
+    font-size: 1rem;
+}
+
+:host{
+  --lwc-inputStaticFontSize: 1rem;
+}
+
+.infobox{
+  --lwc-inputStaticFontSize: .75rem;
+}
+
+.slds-box{
+  background-color:#E0EEFD;
+  border-width: 0;
+  padding: 28px;
+}
+
+/*  Typography  */
+p {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  max-width: 88ex;
+}
+
+li {
+  margin-bottom: .5rem;
+  max-width: 88ex;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 400;
+}
+
+/*  Tables  */
+td {
+  padding: 8px;
+  vertical-align: top;
+}
+
+th {
+  vertical-align: top;
+  padding: 8px;
+}
+
+tr {
+  font-size: .9375rem;
+}
+
+footer {
+  height: 500px;
+}
+
+button:disabled {
+  background: #F5F5F5;
+  color : #C3C3C3;
+}
+
+.containerInfobox{ 
+    position: fixed; 
+    width: 15%; 
+    height: 100%;
+    background-color: #F5F5F5;
+    padding-top: 10rem;
+    margin-top: -8rem;
+}
+
+.containerCollapsed{ 
+  width: 2%; 
+  height: 100%;
+  background-color: #F5F5F5;
+  margin-top: -8rem;
+  position: absolute;
+  right:0;
+  z-index: -1;
+}

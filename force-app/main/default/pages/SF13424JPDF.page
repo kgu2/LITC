@@ -1,0 +1,289 @@
+<apex:page standardController="Application_for_Federal_Assistance__c" extensions="SF13424JController" renderAs="pdf" name="Form 13424-J.pdf" showHeader="false" sidebar="false" applyHtmlTag="false" docType="html-5.0">
+    <html>
+        <head>
+            <style type="text/css">
+                body{
+                    font-size:10pt;
+                }
+                p{
+                    font-size:10pt;
+                }
+        
+                h1{ 
+                    font-family: sans-serif;
+                    font-weight: bold;
+                    font-size: 22pt;
+                    color: rgb(80, 133, 165);
+                }
+        
+                h2{ 
+                    font-family: sans-serif;
+                    font-weight: bold;
+                    font-size: 14pt;
+                    color: rgb(80, 133, 165);
+                }
+        
+                .hr{ 
+                    width:100%; height:2px; background:#DADADA;
+                }
+        
+                .header{ 
+                    font-size: 10pt;
+                    color: #AFAFAF;
+                    font-family: sans-serif;
+                }
+                .space{ 
+                    margin-top: 20px; margin-bottom: 5px
+                }
+            </style>
+        </head>
+        <body>
+            <table>
+                <tr>
+                    <td style="width: 80%;">
+                        <apex:image url="{!$Resource.LITCPDFTitleIcon}" width="200px" height="60px"/>
+                    </td>
+                    <td style="font-size: 12pt; font-weight: bold; font-family: sans-serif;">
+                    
+                        {!Application_for_Federal_Assistance__c.Legal_Name__c}<br/>
+                        {!budgetPeriod}
+                     
+                    </td>
+                </tr>
+            </table>
+        
+            <h1><u>Form 13424-J</u></h1>
+        
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Expense category</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Federal</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Match</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        <tr>
+                            <td style="border: 1px solid black;">A. Personnel</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Personnel_Dollar_Federal_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Personnel_Dollar_Match_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Personnel_Total_Formula__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;">B. Fringe benefits</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Fringe_Dollar_Federal_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Fringe_Dollar_Match_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Fringe_benefits_Total_Formula__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;">C. Travel</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Travel_Federal_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Travel_Match_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Travel_Total_Formula__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;">D. Equipment</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Equipment_Federal_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Equipment_Match_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Equipment_Total_Formula__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;">E. Supplies</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Supplies_Federal_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Supplies_Match_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Supplies_Total_Formula__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;">F. Contractual</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Contractual_Federal_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Contractual_Match_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Contractual_Total_formula__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid black;">G. Construction</td>
+                            <td style="border: 1px solid black; background-color: #e0e0e0;"></td>
+                            <td style="border: 1px solid black; background-color: #e0e0e0;"></td>
+                            <td style="border: 1px solid black; background-color: #e0e0e0;"></td>
+                        </tr>      
+                        <tr>
+                            <td style="border: 1px solid black;">H. Other expenses</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Other_expenses_Federal_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Other_Expenses_Match_Total__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Other_Expenses_Total_Formula__c}</td>
+                        </tr>         
+                        <tr>
+                            <td style="border: 1px solid black;">I. Total direct charges</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Total_Direct_Charges_Federal_Formula__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Total_Direct_Charges_Match_Formula__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Total_Direct_Charges_Total_Formula__c}</td>
+                        </tr>         
+                        <tr>
+                            <td style="border: 1px solid black;">J. Indirect charges</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Indirect_Expenses_Federal_Total__c}</td>
+                            <td style="border: 1px solid black; background-color: #e0e0e0;"></td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Indirect_Expenses_Federal_Total__c}</td>
+                        </tr>              
+                        <tr>
+                            <td style="border: 1px solid black;">K. Totals</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Total_Federal_Expenses__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Total_Match_Expenses__c}</td>
+                            <td style="border: 1px solid black;">${!Application_for_Federal_Assistance__c.Total_Expenses__c}</td>
+                        </tr>                                                                              
+                </tbody>
+            </table>
+
+            <h2>Personnel</h2>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Name</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Position</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">LITC FTE</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Total allocated salary</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Dollar federal</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Dollar match</th>
+        
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!formattedLineItemsP}" var="item">
+                        <tr>
+                            <td style="border: 1px solid black;">{!item['Personnel_Name__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Position__c']}</td>
+                            <td style="border: 1px solid black;">{!item['LITC_FTE__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Total_Allocated_Salary__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Dollar_Federal__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Dollar_Match__c']}</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>    
+            
+            <br/>
+
+            <h2>Fringe</h2>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Description</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Total allocated Cost</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Dollar federal</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Dollar match</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Notes</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!formattedLineItemsF}" var="item">
+                        <tr>
+                            <td style="border: 1px solid black;">{!item['Description__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Total_Allocated_Cost__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Dollar_Federal__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Dollar_Match__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Notes__c']}</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+
+            <br/>
+
+            <h2>Supplies, contractual, travel, equipment, and other expenses</h2>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Category</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Description</th>    
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Total cost</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Dollar federal</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Dollar match</th>     
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!formattedLineItemsSCTOE}" var="item">
+                        <tr>
+                            <td style="border: 1px solid black;">{!item['Category__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Description__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Total_Allocated_Cost__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Dollar_Federal__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Dollar_Match__c']}</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+
+            <br/>
+            <h2>Donated goods and services</h2>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Description</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Quantity</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">U/M</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Cost per unit</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!formattedLineItemsGDS}" var="item">
+                        <tr>
+                            <td style="border: 1px solid black;">{!item['Description__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Quantity__c']}</td>
+                            <td style="border: 1px solid black;">{!item['U_M__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Cost_per_Unit__c']}</td>
+                            <td style="border: 1px solid black;">{!item['FormattedTotal']}</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+
+            <br/>
+
+            <h2>Matching funds</h2>
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Type</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Description</th>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!formattedLineItemsMF}" var="item">
+                        <tr>
+                            <td style="border: 1px solid black;">{!item['Matching_Funds_Type__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Description__c']}</td>
+                            <td style="border: 1px solid black;">{!item['Matching_Funds_Amont__c']}</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+
+            <br/>
+            <h2>Indirect expenses</h2>
+            
+
+            <apex:repeat value="{!formattedLineItemsIE}" var="item">
+                <table style="width: 100%; line-height: 2;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            Indirect cost rate type: <b>{!item['Indirect_Cost_Rate_Type__c']}</b><br/>
+                            Agency who issued ICRA: <b>{!item['Agency_who_issued_ICRA__c']}</b><br/>
+                            ICRA to date (expiration date): <b>{!item['ICRA_To_Date__c']}</b><br/>
+                            Modified total direct cost: <b>{!item['Modified_Direct_Cost__c']}</b><br/>
+            
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            Indirect cost rate: <b>{!item['Indirect_Cost_Rate__c']}</b><br/>
+                            Dollar federal indirect cost: <b>{!item['Indirect_Cost_Federal__c']}</b><br/>
+                            <!-- Notes: <b>{!item['Notes__c']}</b><br/> -->
+                        </td>
+                    </tr>
+                </table> 
+            </apex:repeat>
+
+            <br/>
+        </body>
+    </html>
+      
+</apex:page>

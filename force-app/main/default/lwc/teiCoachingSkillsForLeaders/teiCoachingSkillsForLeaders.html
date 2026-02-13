@@ -1,0 +1,131 @@
+<template>
+  <div class="tei">
+    <div class="page">
+      <section class="panel">
+          <template for:each={data} for:item="section">
+            <div key={section.title}>
+              <div class="page-title">{section.title}</div>
+              <br/>
+              <p class="body">{section.description}</p>
+
+              <template if:true={section.AssessYourSelf.hasLink}>
+                <div class="link-wrap"><a class="link" href={section.AssessYourSelf.value} target="_blank">{section.AssessYourSelf.label}</a></div>
+              </template>
+
+              <template if:true={section.Read.length}>
+                <h3 class="subsection">Read 📖</h3>
+                <ul class="list">
+                  <template for:each={section.Read} for:item="item">
+                    <template if:true={item.hasLink}>
+                      <li key={item.label}><a class="link" href={item.value} target="_blank">{item.label}</a></li>
+                    </template>
+                    <template if:false={item.hasLink}>
+                      <li key={item.label}>{item.label}</li>
+                    </template>
+                  </template>
+                </ul>
+              </template>
+
+              <template if:true={section.Listen.length}>
+                <h3 class="subsection">Listen 🎧</h3>
+                <ul class="list">
+                  <template for:each={section.Listen} for:item="item">
+                    <template if:true={item.hasLink}>
+                      <li key={item.label}><a class="link" href={item.value} target="_blank">{item.label}</a></li>
+                    </template>
+                    <template if:false={item.hasLink}>
+                      <li key={item.label}>{item.label}</li>
+                    </template>
+                  </template>
+                </ul>
+              </template>
+
+              <template if:true={section.Watch.length}>
+                <h3 class="subsection">Watch 👁️</h3>
+                <ul class="list">
+                  <template for:each={section.Watch} for:item="item">
+                    <template if:true={item.hasLink}>
+                      <li key={item.label}><a class="link" href={item.value} target="_blank">{item.label}</a></li>
+                    </template>
+                    <template if:false={item.hasLink}>
+                      <li key={item.label}>{item.label}</li>
+                    </template>
+                  </template>
+                </ul>
+
+                <template if:true={section.Video.hasLink}>
+                  <div class="video">
+                    <iframe
+                      src={section.Video.url}
+                      title="Leadership Video"
+                      frameborder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                      allowfullscreen
+                      referrerpolicy="strict-origin-when-cross-origin"
+                    ></iframe>
+                  </div>
+                </template>
+              </template>
+
+              <template if:true={section.Act.length}>
+                <h3 class="subsection">Act 👍</h3>
+                <ul class="list">
+                  <template for:each={section.Act} for:item="item">
+                    <template if:true={item.hasLink}>
+                      <li key={item.label}><a class="link" href={item.value} target="_blank">{item.label}</a></li>
+                    </template>
+                    <template if:false={item.hasLink}>
+                      <li key={item.label}>{item.label}</li>
+                    </template>
+                  </template>
+                </ul>
+              </template>
+
+              <template if:true={section.Tools.length}>
+                <h3 class="subsection">Tools ❄️</h3>
+                <ul class="list">
+                  <template for:each={section.Tools} for:item="item">
+                    <template if:true={item.hasLink}>
+                      <li key={item.label}><a class="link" href={item.value} target="_blank">{item.label}</a></li>
+                    </template>
+                    <template if:false={item.hasLink}>
+                      <li key={item.label}>{item.label}</li>
+                    </template>
+                  </template>
+                </ul>
+              </template>
+
+              <template if:true={section.AdditionalMaterials.length}>
+                <h3 class="subsection">Reference Materials</h3>
+                <ul class="list">
+                  <template for:each={section.AdditionalMaterials} for:item="item">
+                    <template if:true={item.hasLink}>
+                      <li key={item.label}><a class="link" href={item.value} target="_blank">{item.label}</a></li>
+                    </template>
+                    <template if:false={item.hasLink}>
+                      <li key={item.label}>{item.label}</li>
+                    </template>
+                  </template>
+                </ul>
+              </template>
+
+              <template if:true={section.hasMilitaryReference}>
+                <h3 class="subsection">Reference Materials For Military Service Members &amp; Veterans:</h3>
+                <ul class="list">
+                  <template for:each={section.MilitaryReference} for:item="item">
+                    <template if:true={item.hasLink}>
+                      <li key={item.label}><a class="link" href={item.value} target="_blank">{item.label}</a></li>
+                    </template>
+                    <template if:false={item.hasLink}>
+                      <li key={item.label}>{item.label}</li>
+                    </template>
+                  </template>
+                </ul>
+              </template>
+            </div>
+          </template>
+        
+      </section>
+    </div>
+  </div>
+</template>

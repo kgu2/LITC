@@ -1,0 +1,38 @@
+<template>
+  <slot>
+    <template if:true={_isBtn}>
+      <div class="nds-is-relative nds-p-around_x-small nds-m-bottom_x-small">
+        <c-button type="button"
+                  variant="brand"
+                  onclick={execute}
+                  theme={_theme}
+                  label={_propSetMap.label}
+                  extraclass={extraclass}>
+        </c-button>
+        <template if:true={isBtnLoading}>
+          <c-spinner variant="brand"
+                     alternative-text="Loading..."
+                     theme={_theme}
+                     size="small">
+          </c-spinner>
+        </template>
+      </div>
+      <template if:true={_isDesignMode}>
+        <template if:true={_isActionBlock}>
+          <p>{allCustomLabelsUtil.ODCActionBlockDrop4ElementsBelow}</p>
+          <div class="nds-m-top_small nds-p-around_small omni-designer-action-container">
+            <slot name="actionBlockDesignTimeChildren"></slot>
+          </div>
+        </template>
+      </template>
+    </template>
+    <template if:true={isPageLoading}>
+      <c-spinner variant="brand"
+                 alternative-text="Loading..."
+                 theme={_theme}
+                 message={spinnerActionMessage}
+                 size="medium">
+      </c-spinner>
+    </template>
+  </slot>
+</template>

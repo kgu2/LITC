@@ -1,0 +1,123 @@
+<template>
+      <div class="pageContainer">
+        <!-- <div class="slds-float_right">
+          <lightning-icon icon-name="utility:question" style="cursor:pointer; display:inline-block" onclick={togglePopover}></lightning-icon>
+      
+          <template if:true={showHelpPopover}>
+            <br/>
+            <div style="height: 2em;"></div>
+            <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_top-right" role="dialog" style="position: absolute; right:0;">
+              <lightning-button-icon class="slds-float_right slds-popover__close" icon-name="utility:close" onclick={togglePopover} variant="bare-inverse" size="medium"></lightning-button-icon>
+              <header class="slds-popover__header">
+                <h2 id="dialog-heading-id-3" style="font-size: 14pt;">Help</h2>
+              </header>
+              <div id="popover-body-id" class="slds-popover__body">
+                <p style="font-size: 12pt;">
+                  For assistance on your submission and other questions, contact 
+                  <br/>
+                  <a href="mailto:covidreliefitsupport@treasury.gov" target="_blank">Covid IT Relief Support</a> 
+              </p>
+              </div>
+            </section>
+          </template>
+        </div> -->
+        
+        <div class="slds-grid slds-wrap" style="font-size:14pt">
+          <div class="slds-col slds-size_1-of-1 slds-medium-size_7-of-8" style="margin:auto;">
+            <div class="slds-grid slds-wrap slds-gutters_direct slds-grid_align-space">
+
+              <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-8">
+                  <div style="height: 2rem;"></div>
+                  <div class="headerImg"><img src={slfrfCard}></div>
+                  <div style="height: 2rem;"></div>
+
+                  <lightning-tabset active-tab-value={activeTab} variant="vertical" >       
+                    <lightning-tab onactive={handleOnActive} label="Instructions" value="instructions"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="Payment Information" value="form"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label={certTabText} value="certification" ></lightning-tab>
+                </lightning-tabset>
+              </div>
+
+              <div class="slds-col slds-size_1-of-1 slds-small-size_7-of-8" style="margin-top:2rem;">
+                <div class="slds-grid slds-gutters_direct slds-wrap slds-grid_reverse slds-grid_align-center">
+                  <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-5 slds-grow-none">
+
+                      <template if:false={isForm}>
+                        <template if:false={errors}>
+                          <c-app-605-info-box ongettabname={handleErrorClick} status={status} object-name='X605_Application__c' fields={recordFields} record-id={recordId}></c-app-605-info-box > 
+                        </template> 
+                        <template if:true={errors}>
+                          <c-app-605-info-box ongettabname={handleErrorClick} accordion-errors={errors} status={status} object-name='X605_Application__c' fields={recordFields} record-id={recordId}></c-app-605-info-box > 
+                        </template> 
+  
+                      </template>
+                      <template if:true={isForm}>
+                        <div class="progressContainer" style={notForm}>
+                            <div style="height: 12rem;"></div>
+                            <h2 style="display: inline-block;">Progress</h2>
+                            <br/> <br/>
+                            <lightning-progress-ring direction="drain" value={progress} variant="base-autocomplete" size="large" class="progress-ring"> </lightning-progress-ring>
+                            <br/> <br/> <br/>
+                            <div style="text-align: center;">
+                              <template if:true={isComplete}>
+                                <div style="color: green;">Complete</div>
+                              </template>
+                              <template if:false={isComplete}>
+                                <template if:true={isSaved}>
+                                  <div style="color: green;">Saved</div>
+                                </template>
+                              </template>
+                              <template if:true={isSaving}>
+                                  <lightning-dynamic-icon style={progressStyle} type="eq" option="play" alternative-text="Saving..."></lightning-dynamic-icon>
+                              </template>
+                            </div>
+                        </div>
+                      </template>
+                   
+
+                  </div>
+                  <div class="slds-col slds-size_1-of-1 slds-small-size_4-of-5">
+                    <c-app-605-instructions disable-edits={disableEdits} onchangetab={handleChangeTab} class={instructions} recip-type={recipType} second-tranche={X2Tranche}></c-app-605-instructions>
+                    <c-app-605-form record-id={recordId} is-saved={isSaved} disable-edits={disableEdits} onchangetab={handleChangeTab} ongetprogress={handleProgress} onissaving={handleGetSave} class={form} recip-type={recipType} second-tranche={X2Tranche}></c-app-605-form>
+                    <c-app-605-certification ongeterrors={handleGetErrors} record-id={recordId} disable-edits={disableEdits} onchangetab={handleChangeTab} class={certification} recip-type={recipType} second-tranche={X2Tranche}></c-app-605-certification>
+                </div>
+                </div>
+              </div>
+            </div>
+      
+          </div>
+        </div>
+
+
+        <template if:true={showWelcome}>
+          <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+              <div class="slds-modal__container">
+                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeWelcome} style="margin-right: 2rem">
+                      <lightning-icon icon-name="utility:close"
+                      alternative-text="close"
+                      variant="inverse"
+                      size="small" ></lightning-icon>
+                  <span class="slds-assistive-text">Close</span>
+                  </button>
+                 
+                    <div class="slds-modal__content slds-var-p-around_large" style={splash}>
+                      <div style="color:#083c6f; margin-top:7rem; background-color:white; width: 85%; border-radius: 10px; padding-top:inherit; margin-left: auto; margin-right: auto;">
+                        <h2 style="text-align: center; font-size:20pt">Welcome!</h2>
+                        <br/> 
+                        <p style="padding-left: 4rem; padding-right:4rem; font-size:12pt">Welcome to the Treasury Submission Portal for the Local Assistance and Tribal Consistency Fund (LATCF)</p>
+                        <br/>
+                        <p style="padding-left: 4rem; padding-right:4rem; font-size:12pt"><b>Introducing auto-save</b>, an effort to improve your experience. Look for the progress indicator ring–to the right side of the page which will update as you complete each field.</p>
+                
+                        <br/>
+                        <lightning-input type="checkbox" label="Don't Show this again" onchange={handleDontShow} style="text-align: center;"> </lightning-input>
+                        <br/>
+                      </div>
+                    </div>
+      
+              </div>
+          </section>
+          <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+      </div>
+
+</template>

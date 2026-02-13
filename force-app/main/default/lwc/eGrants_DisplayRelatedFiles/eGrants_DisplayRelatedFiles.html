@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Files" icon-name="standard:file">
+
+        <div style="height: 300px;">
+        <lightning-datatable
+                key-field="id"
+                data={data}
+                columns={columnsToDisplay}
+                hide-checkbox-column
+                onrowaction={handleRowAction}
+                >
+        </lightning-datatable>
+   </div>
+        <!-- <c-lwc-datatable-for-community
+            records={data} 
+            total-records={wireDataLength} 
+            columns={recColumns}
+            key-field="Id"
+            show-search-box="false"            
+            max-row-selection={wireDataLength}
+            onpaginatorchange={handlePaginatorChange}
+            onsetselectedrecords={handleAllSelectedRows}
+            pre-selected-items={selectedRows}
+            table-height="400">
+        </c-lwc-datatable-for-community> -->
+    
+</lightning-card>
+</template>

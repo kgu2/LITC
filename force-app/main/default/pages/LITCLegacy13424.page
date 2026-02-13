@@ -1,0 +1,574 @@
+<apex:page standardController="Legacy_13424_Application__c" renderAs="pdf" name="13424.pdf'}" showHeader="false" sidebar="false" applyHtmlTag="false" docType="html-5.0">
+    <head>
+        <style type="text/css">
+            body{
+                font-size:10pt;
+            }
+            p{
+                font-size:10pt;
+            }
+
+            h1{ 
+                font-family: sans-serif;
+                font-weight: bold;
+                font-size: 22pt;
+                color: rgb(80, 133, 165);
+            }
+
+            h2{ 
+                font-family: sans-serif;
+                font-weight: bold;
+                font-size: 14pt;
+                color: rgb(80, 133, 165);
+            }
+
+            .hr{ 
+                width:100%; height:2px; background:#DADADA;
+            }
+
+            .header{ 
+                font-size: 10pt;
+                color: #AFAFAF;
+                font-family: sans-serif;
+            }
+            .space{ 
+                margin-top: 20px; margin-bottom: 5px
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <apex:image url="{!$Resource.LITCPDFTitleIcon}" width="200px" height="60px"/>
+                </td>
+            </tr>
+        </table>
+
+        <h1><u>Form 13424</u></h1>
+
+        <h2>
+            Applicant information
+        </h2>
+
+        <div class='hr'></div>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Legal name of sponsoring org: <b>{!Legacy_13424_Application__c.Legal_name_of_sponsoring_organization__c}</b><br/>
+                    Prefix: <b>{!Legacy_13424_Application__c.Prefix__c}</b><br/>
+                    Last name: <b>{!Legacy_13424_Application__c.Last_Name__c}</b><br/>
+                    First name: <b>{!Legacy_13424_Application__c.First_Name__c}</b><br/>
+                    Middle initial: <b>{!Legacy_13424_Application__c.Middle_initial__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    Suffix: <b>{!Legacy_13424_Application__c.Suffix__c}</b><br/>
+                    Title: <b>{!Legacy_13424_Application__c.Title__c}</b><br/>
+                    Phone number: <b>{!Legacy_13424_Application__c.Phone_number__c}</b><br/>
+                    Fax number: <b>{!Legacy_13424_Application__c.FAX_number__c}</b><br/>
+                    Email address: <b>{!Legacy_13424_Application__c.Email_address__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <h2>
+            Applicant mailing address
+        </h2>
+
+        <div class='hr'></div>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Street: <b>{!Legacy_13424_Application__c.Street__c}</b><br/>
+                    Street address line 2: <b>{!Legacy_13424_Application__c.Street_address_line_2__c}</b><br/>
+                    City: <b>{!Legacy_13424_Application__c.City__c}</b><br/>
+                    State: <b>{!Legacy_13424_Application__c.State__c}</b><br/>
+                    Zip+4 code: <b>{!Legacy_13424_Application__c.ZIP_4_code__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <h2>
+            Clinic information
+        </h2>
+
+        <div class='hr'></div>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Name of clinic: <b>{!Legacy_13424_Application__c.Name_of_clinic__c}</b><br/>
+                    Public telephone number: <b>{!Legacy_13424_Application__c.Public_telephone_number__c}</b><br/>
+                    Toll-Free telephone number: <b>{!Legacy_13424_Application__c.Toll_Free_telephone_number_if_applicabl__c}</b><br/>
+                    Fax number: <b>{!Legacy_13424_Application__c.Clinic_FAX_number__c}</b><br/>
+                    Website address (if applicable): <b>{!Legacy_13424_Application__c.Website_address_if_applicable__c}</b><br/>
+                    Languages served in addition to English: <b>{!Legacy_13424_Application__c.Languages_served_in_addition_to_English__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <h2>
+            Clinic address
+        </h2>
+
+        <div class='hr'></div>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Street: <b>{!Legacy_13424_Application__c.Clinic_Street__c}</b><br/>
+                    City: <b>{!Legacy_13424_Application__c.Clinic_City__c}</b><br/>
+                    State: <b>{!Legacy_13424_Application__c.Clinic_State__c}</b><br/>
+                    ZIP + 4 code: <b>{!Legacy_13424_Application__c.Clinic_ZIP_4_code__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    Mailing street: <b>{!Legacy_13424_Application__c.Clinic_Mailing_Street__c}</b><br/>
+                    Mailing city: <b>{!Legacy_13424_Application__c.Clinic_Mailing_City__c}</b><br/>
+                    Mailing state: <b>{!Legacy_13424_Application__c.Clinic_Mailing_State__c}</b><br/>
+                    Mailling ZIP + 4 code: <b>{!Legacy_13424_Application__c.Clinic_Mailing_Zip_4_code__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <div style="page-break-before:always;"></div>
+        <h2>
+            Clinic director information
+        </h2>
+
+        <div class='hr'></div>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Prefix: <b>{!Legacy_13424_Application__c.Clinic_Director_Prefix__c}</b><br/>
+                    Last name: <b>{!Legacy_13424_Application__c.Clinic_Director_Last_Name__c}</b><br/>
+                    First name: <b>{!Legacy_13424_Application__c.Clinic_Director_First_Name__c}</b><br/>
+                    Middle initial: <b>{!Legacy_13424_Application__c.Clinic_Director_Middle_Name__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    Suffix: <b>{!Legacy_13424_Application__c.Clinic_Director_Suffix__c}</b><br/>
+                    Telephone number: <b>{!Legacy_13424_Application__c.Clinic_Director_Telephone_number__c}</b><br/>
+                    Email address: <b>{!Legacy_13424_Application__c.Clinic_Director_Email_address__c}</b><br/>
+                    Licenses/Certifications: <b>{!Legacy_13424_Application__c.Clinic_Director_Licenses_Certifications__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <h2>
+            Qualified tax expert (QTE)
+        </h2>
+
+        <div class='hr'></div>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Prefix: <b>{!Legacy_13424_Application__c.QTE__c}</b><br/>
+                    Last name: <b>{!Legacy_13424_Application__c.QTE_Last_name__c}</b><br/>
+                    First name: <b>{!Legacy_13424_Application__c.QTE_First_name__c}</b><br/>
+                    Middle initial: <b>{!Legacy_13424_Application__c.QTE_Middle_initial__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    Suffix: <b>{!Legacy_13424_Application__c.QTE_Suffix__c}</b><br/>
+                    Telephone number: <b>{!Legacy_13424_Application__c.QTE_Telephone_number__c}</b><br/>
+                    Email address: <b>{!Legacy_13424_Application__c.QTE_Email_address__c}</b><br/>
+                    Licenses/Certifications: <b>{!Legacy_13424_Application__c.QTE_Licenses_Certifications__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <h2>
+            Qualified business administrator (QBA)
+        </h2>
+
+        <div class='hr'></div>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Prefix: <b>{!Legacy_13424_Application__c.QBA_Prefix__c}</b><br/>
+                    Last name: <b>{!Legacy_13424_Application__c.QBA_Last_name__c}</b><br/>
+                    First name: <b>{!Legacy_13424_Application__c.QBA_First_name__c}</b><br/>
+                    Middle initial: <b>{!Legacy_13424_Application__c.QBA_Middle_initial__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    Suffix: <b>{!Legacy_13424_Application__c.QBA_Suffix__c}</b><br/>
+                    Telephone number: <b>{!Legacy_13424_Application__c.QBA_Telephone_number__c}</b><br/>
+                    Email address: <b>{!Legacy_13424_Application__c.QBA_Email_address__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        
+        <h2>
+            Tax compliance officer
+        </h2>
+
+        <div class='hr'></div>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Prefix: <b>{!Legacy_13424_Application__c.TCO_Prefix__c}</b><br/>
+                    Last name: <b>{!Legacy_13424_Application__c.TCO_Last_name__c}</b><br/>
+                    First name: <b>{!Legacy_13424_Application__c.TCO_First_name__c}</b><br/>
+                    Middle initial: <b>{!Legacy_13424_Application__c.TCO_Middle_initial__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    Suffix: <b>{!Legacy_13424_Application__c.TCO_Suffix__c}</b><br/>
+                    Title: <b>{!Legacy_13424_Application__c.TCO_Title__c}</b><br/>
+                    Telephone number: <b>{!Legacy_13424_Application__c.TCO_Telephone_number__c}</b><br/>
+                    Email address: <b>{!Legacy_13424_Application__c.TCO_Email_address__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        
+        <div style="page-break-before:always;"></div>
+        <table>
+            <tr>
+                <td>
+                    <apex:image url="{!$Resource.LITCPDFTitleIcon}" width="200px" height="60px"/>
+                </td>
+            </tr>
+        </table>
+
+        <h1><u>Form 13424-M</u></h1>
+
+
+        <h2>
+            Experience
+        </h2>
+        <div class='hr'></div>
+        <div class="space">
+            A. Describe the applicant's experience in operating an LITC program:
+        </div>
+        <b>{!Legacy_13424_Application__c.Applicant_Experience__c}</b>
+
+        <div class="space">
+            B. List the applicant’s existing affiliations with organizations, such as schools, governmental bodies, or other charitable organizations:
+        </div>
+        <b>{!Legacy_13424_Application__c.Applicant_Affliations__c}</b>
+
+        <div class="space">
+            C. Describe the applicant’s experience supervising staff, students, and volunteers and provide examples of how supervision is provided
+        </div>
+        <b>{!Legacy_13424_Application__c.Applicant_Supervising_Experience__c}</b>
+
+        <div class="space">
+            D. Describe the applicant’s experience networking with their affiliates and other community-based organizations with which it can work to reach taxpayers and experience providing technical assistance to other organizations
+        </div>
+        <b>{!Legacy_13424_Application__c.Applicant_Networking_Experience__c}</b>
+
+        <h2>
+            Financial responsibility
+        </h2>
+
+        <div class='hr'></div>
+
+        <div class="space">
+            1. Describe accounting procedures and accounting support staff
+        </div>
+        <b>{!Legacy_13424_Application__c.Accounting_Procedures_and_Support_Staff__c}</b>
+
+        <div class="space">
+            2. Describe the method for tracking and verifying expenditures to ensure that LITC grant funds and matching funds will be used solely for qualifying LITC activities
+        </div>
+        <b>{!Legacy_13424_Application__c.Exp_Tracking_and_Verifying_Method__c}</b> 
+
+        <div class="space">
+            i. Does the applicant operate a VITA Site
+        </div>
+        <b>{!Legacy_13424_Application__c.VITA_Site__c}</b> 
+
+        <div class="space">
+            ii. If yes, specifically identify how the applicant will ensure LITC funds are not utilized for VITA activities
+        </div>
+        <b>{!Legacy_13424_Application__c.VITA_activities__c}</b> 
+
+        <div class="space">
+            3. Describe the plans for audits and controls
+        </div>
+        <b>{!Legacy_13424_Application__c.Audits_and_Controls_Plans__c}</b> 
+
+        <div class="space">
+            4. With regard to the financial statements submitted with this application or those uploaded to Single Audit Warehouse, provide the following information:
+        </div>
+        <b>{!Legacy_13424_Application__c.Financial_Statement__c}</b> 
+
+        <div class="space">
+            i. If audited, was the audit a single audit conducted in accordance with 2 CFR 200.501
+        </div>
+        <b>{!Legacy_13424_Application__c.Single_Audit__c}</b> 
+
+        <div class="space">
+            ii. If audit was conducted in accordance with 2 CFR 200.501, was the audit report uploaded to the clearinghouse
+        </div>
+        <b>{!Legacy_13424_Application__c.Audit_Report_Loaded__c}</b> 
+
+        <div class="space">
+            iii. Indicate whether the auditor provided an
+        </div>
+        <b>{!Legacy_13424_Application__c.Auditor_Opinion__c}</b> 
+
+        <div class="space">
+            iv. If you answered anything other than unmodified, provide an explanation as to the reason for the type of opinion provided
+        </div>
+        <b>{!Legacy_13424_Application__c.Opinion_Reason_Explanation__c}</b> 
+
+        <div class="space">
+            v. Indicate the year-end date of the financial statements submitted
+        </div>
+        <b><apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!Legacy_13424_Application__c.Year_end_Date_of_Financials__c}"/></apex:outputText></b> 
+
+        <div class="space">
+            5. Provide the name and describe the qualifications and relevant expertise of the Qualified Business Administrator (QBA)
+        </div>
+        <b>{!Legacy_13424_Application__c.QBA_Name_and_Qualifications__c}</b> 
+
+
+        <h2>
+            Program staff
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            1. The Qualified Tax Expert (QTE)
+        </div>
+        <b>{!Legacy_13424_Application__c.Qualified_Tax_Expert_QTE__c}</b>
+
+        <div class="space">
+            2. The Clinic Director
+        </div>
+        <b>{!Legacy_13424_Application__c.Clinic_Director__c}</b> 
+
+        <div class="space">
+            B. List the titles, responsibilities, and qualifications of clinic staff other than the Clinic Director, QTE, or QBA
+        </div>
+        <b>{!Legacy_13424_Application__c.Clinic_Staff__c}</b> 
+
+        <div class="space">
+            C. Number of students per semester and type
+        </div>
+        <b>{!Legacy_13424_Application__c.Student_s_Per_Semester_Type__c}</b> 
+
+        <div class="space">
+            1. If using students, will the clinic obtain a special appearance authorizing students to represent taxpayers before the IRS; and
+        </div>
+        <b>{!Legacy_13424_Application__c.Student_Special_Appearance_Authorizing__c}</b> 
+
+        <div class="space">
+            2. Will permission be obtained from the United States Tax Court for students to practice before the Court
+        </div>
+        <b>{!Legacy_13424_Application__c.Student_Permission_to_be_Obtained__c}</b> 
+
+        <div class="space">
+            D. Identify clinic staff authorized to represent taxpayers before the IRS and identify whether each is an attorney, Certified Public Accountant, or Enrolled Agent
+        </div>
+        <b>{!Legacy_13424_Application__c.Clinic_Staff_Authorized_to_Represent__c}</b> 
+
+        <div class="space">
+            E. Identify clinic staff admitted to practice before the U.S. Tax Court and include each individual's Tax Court bar number
+        </div>
+        <b>{!Legacy_13424_Application__c.Clinic_Staff_Admitted_to_Practice__c}</b> 
+
+        <div class="space">
+            F. Explain the method used to track staff time, student time, and how the type of activity is tracked and coded
+        </div>
+        <b>{!Legacy_13424_Application__c.Time_Tracking__c}</b> 
+
+        <h2>
+            Taxpayer services
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            1. Geographic areas
+        </div>
+        <b>{!Legacy_13424_Application__c.Geographic_Area_and_Target_Audience__c}</b>
+
+        <div class="space">
+            2. Describe the type of representation services to be provided
+        </div>
+        <b>{!Legacy_13424_Application__c.Representation_Services_Type__c}</b> 
+
+        <div class="space">
+            i. Method to track 90/250 income requirement
+        </div>
+        <b>{!Legacy_13424_Application__c.X90_250_Income_Req_Tracking_Method__c}</b> 
+
+        <div class="space">
+            ii. Describe the method used to track the amount in controversy for any taxable year and state the policy that will be used to accept cases when the amount in controversy exceeds the amount specified in IRC § 7463 (currently $50,000)
+        </div>
+        <b>{!Legacy_13424_Application__c.Amount_in_Controversy_Tracking_Method__c}</b> 
+
+        <div class="space">
+            iii. Briefly describe the procedures for intake, assignment, and monitoring of representation cases
+        </div>
+        <b>{!Legacy_13424_Application__c.Representation_Cases_Intake_Process__c}</b> 
+
+        <div class="space">
+            B. Describe the consultation services to be provided and how they will be made available to taxpayers
+        </div>
+        <b>{!Legacy_13424_Application__c.Consulation_Service_to_be_provided__c}</b> 
+
+        <div class="space">
+            C. Description of educational activities to be provided
+        </div>
+        <b>{!Legacy_13424_Application__c.Educational_Activities_to_be_provided__c}</b> 
+
+        <h2>
+            Clinic operations
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            A. Describe plans for tracking the delivery of services to low income and ESL taxpayers and how that data will be used to assess and shape future service delivery
+        </div>
+        <b>{!Legacy_13424_Application__c.Service_Delivery_Tracking_Plans__c}</b>
+
+        <div class="space">
+            B. Describe plans to protect taxpayer privacy
+        </div>
+        <b>{!Legacy_13424_Application__c.Protecting_Taxpayer_Privacy__c}</b> 
+
+        <div class="space">
+            C. Describe the clinic’s publicity plan
+        </div>
+        <b>{!Legacy_13424_Application__c.Publicity_and_Outreach_Methods__c}</b> 
+
+        <div class="space">
+            D. Clinic operations
+        </div>
+        <b>{!Legacy_13424_Application__c.Clinic_Operation_Hours__c}</b> 
+
+        <div class="space">
+            E. Describe the clinic’s plans for charging nominal fees, if any, and the amount
+        </div>
+        <b>{!Legacy_13424_Application__c.Nominal_Fee__c}</b> 
+
+        <h2>
+            Volunteers
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            A. Pro bono panel and how panel members will be identified and recruited
+        </div>
+        <b>{!Legacy_13424_Application__c.Volunteer_Pro_Bono_Panel__c}</b>
+
+        <div class="space">
+            B. Describe case assignment and monitoring procedures
+        </div>
+        <b>{!Legacy_13424_Application__c.Cases_Assignment_Procedures__c}</b> 
+
+        <div class="space">
+            C. Detail the method used to track volunteer time
+        </div>
+        <b>{!Legacy_13424_Application__c.Volunteer_Time_Tracking__c}</b> 
+
+        <h2>
+            Training and resources
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            A. Describe the in house training to be provided to clinic staff, students, and volunteers including a description of the training topics, and the qualifications of trainer(s) and person(s) creating the materials
+        </div>
+        <b>{!Legacy_13424_Application__c.In_house_Training__c}</b>
+
+        <div class="space">
+            B. Identify the continuing professional education (CPE) activities the clinic staff and volunteers anticipate attending
+        </div>
+        <b>{!Legacy_13424_Application__c.Continuing_Professional_Education_CPE__c}</b> 
+
+        <div class="space">
+            C. Describe the clinic’s tax library and any plans to provide access to other research resources
+        </div>
+        <b>{!Legacy_13424_Application__c.Tax_Library_and_Research_Resources__c}</b> 
+
+        <h2>
+            Program monitoring, evaluation, and reporting
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            A. Describe the strategy for monitoring and evaluating program results (in short and long-term), including how success will be defined and measured
+        </div>
+        <b>{!Legacy_13424_Application__c.Strategy_for_Monitoring_Program_Results__c}</b>
+
+        <div class="space">
+            B. Indicate how the clinic intends to measure and address client satisfaction
+        </div>
+        <b>{!Legacy_13424_Application__c.Indicate_Measure_Client_Satisfaction__c}</b> 
+
+        <h2>
+            Program numerical goals
+        </h2>
+        <div class='hr'></div>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 100%; vertical-align: top;">
+                    A. New representation cases opened in the calendar year: 
+                    <b><apex:outputText value="{0, number, integer}">
+                        <apex:param value="{!Legacy_13424_Application__c.New_representation_cases_First_Year__c}" />
+                    </apex:outputText></b><br/>
+                    B. Consultations with low income and ESL taxpayers;: <b>
+                        <apex:outputText value="{0, number, integer}">
+                        <apex:param value="{!Legacy_13424_Application__c.Consulta_w_Low_Income_ESL_First_Year__c}" />
+                    </apex:outputText>
+                   </b><br/>
+                    C. Educational activities to low income and ESL taxpayers; and: <b>
+                        <apex:outputText value="{0, number, integer}">
+                        <apex:param value="{!Legacy_13424_Application__c.Educa_Activ_to_Low_Income_First_Year__c}" />
+                    </apex:outputText>
+                  </b><br/>
+                    D. Low Income and ESL taxpayers to be reached in educational activities: <b>
+                        <apex:outputText value="{0, number, integer}">
+                        <apex:param value="{!Legacy_13424_Application__c.Low_Income_ESL_to_be_reached_First_Year__c}" />
+                    </apex:outputText>
+                    </b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <h2>
+            Civil rights review
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            A. A list of active lawsuits or complaints naming the applicant which allege discrimination on the basis of race, color, national origin, age, sex, or disability with respect to service or benefits being provided. The list should include the date the lawsuit or complaint was filed; a summary of the allegation; and the status of the lawsuit or complaint, including whether the parties to a lawsuit have entered into a consent decree
+        </div>
+        <b>{!Legacy_13424_Application__c.Active_Lawsuits_or_Complaints__c}</b>
+
+        <div class="space">
+            B. A description of all pending applications for financial assistance and all financial assistance currently provided by other federal agencies
+        </div>
+        <b>{!Legacy_13424_Application__c.Federal_Financial_Assistance__c}</b> 
+
+        <div class="space">
+            C. A summary of all civil rights compliance review activities conducted in the last three years. The summary shall include the purpose or reason for the review; a summary of the findings and recommendations of the review; and a report on the status or disposition of such findings and recommendations
+        </div>
+        <b>{!Legacy_13424_Application__c.Civil_Rights_Review_Activity__c}</b>
+
+        <div class="space">
+            D. Description for LEP/Accommodation
+        </div>
+        <b>{!Legacy_13424_Application__c.Reasonable_Accommodations__c}</b>
+
+        <div class="space">
+            E. Does the applicant agree to compile and maintain all required records, as appropriate, according to the agency's guidelines
+        </div>
+        <b>{!Legacy_13424_Application__c.Data_Compilation_and_Maintenance__c}</b>
+
+        <div class="space">
+            F. Does the applicant agree to display Publication 4053, IRS Civil Rights Poster
+        </div>
+        <b>{!Legacy_13424_Application__c.Public_Display_of_Civil_Rights_Poster__c}</b>
+  
+    </body>
+</apex:page>

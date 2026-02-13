@@ -1,0 +1,107 @@
+<template>
+    <!-- <div><br/><br/></div> -->
+    <lightning-card title="Session Attendance">
+
+        <!-- CASE: No sessions -->
+        <template if:true={noSessions}>
+            <p class="slds-p-around_medium">This class doesn’t have any sessions.</p>
+        </template>
+
+        <!-- CASE: Multiple sessions (picklist first) -->
+        <template if:true={hasMultipleSessions}>
+            <lightning-combobox
+                name="session"
+                label="Select Session"
+                value={selectedSession}
+                placeholder="Choose a session"
+                options={sessionOptions}
+                onchange={handleSessionChange}>
+            </lightning-combobox>
+            <div><br/><br/></div>
+        </template>
+
+        <!-- Show the chosen session as a link -->
+        <template if:true={selectedSessionLink}>
+            <div class="slds-p-around_small">
+                <p>
+                    <a href={selectedSessionLink.url} target="_blank">{selectedSessionLink.label}</a>
+                </p>
+            </div>
+        </template>
+        
+        <!-- CASE: One session -->
+        <template if:true={hasSingleSession}>
+            <div class="slds-p-around_small">
+                <p>
+                    <!-- {singleSessionTitle} -->
+                    <a href={singleSessionTitle.url} target="_blank">{singleSessionTitle.label}</a>
+                </p>
+                <br/><br/>
+            </div>
+        </template>
+
+        <!-- CASE: Single or selected session -->
+        <template if:true={showRegistrants}>
+            
+            <!-- Read-only table -->
+            <template if:false={editMode}>
+                <lightning-datatable 
+                    key-field="Id"
+                    data={registrantsData}
+                    columns={readonlyColumns}
+                    hide-checkbox-column>
+                </lightning-datatable>
+
+                <div class="slds-m-top_medium slds-align_absolute-center">
+                    <lightning-button 
+                        variant="brand" 
+                        label="Enter Attendance" 
+                        onclick={enableEditMode}>
+                    </lightning-button>
+                </div>
+            </template>
+
+            <!-- Edit mode table -->
+            <template if:true={editMode}>
+                <table class="slds-table slds-table_cell-buffer slds-table_bordered slds-m-top_small">
+                    <thead>
+                        <tr>
+                            <th style="width:3rem;"></th>
+                            <th>Registrant Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template for:each={registrantsData} for:item="r">
+                            <tr key={r.Id}>
+                                <td>
+                                    <lightning-input 
+                                        type="checkbox" 
+                                        variant="label-hidden"
+                                        checked={r.isCompleted}
+                                        data-id={r.Id}
+                                        onchange={handleCheckboxChange}>
+                                    </lightning-input>
+                                </td>
+                                <td>{r.ContactName}</td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <div class="slds-m-top_medium slds-align_absolute-center">
+                    <lightning-button 
+                        variant="neutral" 
+                        label="Cancel" 
+                        onclick={cancelEditMode}
+                        class="slds-m-right_small">
+                    </lightning-button>
+                    <lightning-button 
+                        variant="brand" 
+                        label="Submit Attendance" 
+                        onclick={handleSubmit}>
+                    </lightning-button>
+                </div>
+            </template>
+        </template>
+    </lightning-card>
+</template>

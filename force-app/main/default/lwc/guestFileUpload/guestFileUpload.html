@@ -1,0 +1,19 @@
+<template>
+    <template lwc:if={uploadFinish}>
+        <p><b>File uploaded succesfully</b></p>
+    </template>
+    <template lwc:else>
+        <span style="font-size: 0.8rem;">Accepted formats: {acceptedFormats}</span>
+        <lightning-file-upload
+            accept={acceptedFormats}
+            label="Attach File(s)"
+            name="UploadFile"
+            record-id={recId}
+            onuploadfinished={handleUploadFinished}
+            multiple
+            file-field-name="Guest_Record_File_Upload__c"
+            file-field-value={recId}>
+        </lightning-file-upload>
+    </template>
+    
+</template>

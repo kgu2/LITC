@@ -1,0 +1,40 @@
+<template>
+    <lightning-file-upload
+        label={uploadLabel}
+        name="fileUploader"
+        record-id={myRecordId}
+        title = "Upload files"
+        onuploadfinished={handleUploadFinished}
+        file-field-name="File_Prefix__c"
+        file-field-value={encryptedToken}
+        accept={acceptedFormats}
+        required
+        >
+    </lightning-file-upload>
+    
+    <template if:false={disableEdits}>
+        <template if:true={removeFiles}>
+
+            <lightning-button-group class="slds-align_absolute-center slds-m-around_x-small">
+                <lightning-button label="Delete Files" variant="destructive" icon-name="utility:delete" onclick={deleteSelected}></lightning-button>
+            </lightning-button-group>
+
+        </template>
+    </template>
+
+    <template if:false={hideUploads}>
+        <template if:true={data}>
+            <div style="width: auto;margin-top:10px;">
+                <lightning-datatable
+                        data={data}
+                        columns={columns}
+                        onrowaction={generateURLS}
+                        key-field="id"
+                        onrowselection={getSelectedRecords}
+                        data-id={data.ContentDocumentId}
+                        accept={acceptedFormats}>
+                </lightning-datatable>
+            </div>
+        </template>
+    </template>
+</template>

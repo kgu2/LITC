@@ -1,0 +1,309 @@
+<template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <template lwc:if={isAuthorizedOfficial}>
+
+        <div style="display: flex; justify-content: center;">
+
+            <div style="width: 190px; margin-right: 2rem;">
+
+                <div style="height: 1.25rem;"></div>
+                <div style="height: 2rem;"></div>
+            
+                <lightning-tabset active-tab-value={activeTab} variant="vertical" >       
+                    <lightning-tab onactive={handleOnActive} label="Instructions" value="instructions"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="Detailed expenditures worksheet" value="jForm"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="Statement of grant expenditures" value="form"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="Submission" value="submission" ></lightning-tab>
+                </lightning-tabset>
+            </div>
+
+            <div style="margin-top:2rem; width: 100%;">
+                <div class="slds-grid slds-wrap slds-gutters_direct">
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_9-of-12">
+                        
+                        <div class={instructions} style="max-width: 70rem;">
+                                <h1>Instructions</h1>
+                                <hr style="margin-top: 5px;">
+                                <b><p>Reporting form 13424-L</p></b>
+
+                                <p>Form 13424-L, Statement of Grant Expenditures and Narrative Explanations, is used to report how federal grant funds and matching funds were spent by the clinic during the reporting period. This form is also used to provide supporting information to explain how each expense was calculated and the sources and valuation of matching funds. All expenses must be reasonable, necessary, and allocable to the LITC grant. See 2 CFR Part 200, 2 CFR Part 1000, and Publication 3319 for additional guidance on costs and matching funds.</p>
+                                
+                                <p>Please read the questions carefully and report all information completely and accurately. Helper text is provided for some items and will display when you hover over this icon (insert icon here). Users will be involuntarily exited from the portal due to inactivity after 15 minutes and any unsaved work will be lost. 
+                                If you would like to download a copy of the report in draft form or after submission, clink the download button on the reports list screen. </p>
+
+                                <p>
+                                    Additional items to keep in mind when completing this form:
+                                </p>
+                                <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                                  <li>Each expense does not require a dollar-for-dollar match, but the total matching funds must equal or exceed the total federal funds spent. </li>
+                                  <li>Federal funds are those funds the applicant received from the IRS. Non-federal funds are those from other, non-federal sources that the applicant spent in support of the LITC. These are considered matching funds.</li>
+                                  <li>Round figures to whole dollars, if possible. The form allows for reporting of cents if needed.</li>
+                                  <li>See the following document for examples of commonly reported expenses: <lightning-button variant="base" label="Line item examples" onclick={handleClick} data-url={fileLink}></lightning-button> </li>
+                                </ul>
+
+                                <p>If you have any questions, please contact the clinic’s assigned budget analyst for assistance. </p>
+
+                                <br/>  <br/>
+
+                                <div style="width: 100%; margin-top: 15px;">
+                                    <div style="float: right;">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="jForm" label="Next"></lightning-button>
+                                    </div>
+                                </div>
+                                <footer></footer> 
+                        </div>
+
+                        <div class={jForm}>
+                            <h1>Form 13424-L</h1>
+                            <br/>
+                            <template lwc:if={showOldTable}>
+                                <c-litc-line-item-rollup-table record-id={appId}></c-litc-line-item-rollup-table>
+                                <lightning-button type="button" variant="base" onclick={handleToggle} label="Show current totals" style="float:right"></lightning-button>
+                            </template>
+                            <template lwc:else>
+                                <c-litc-line-item-rollup-table report-id={recordId}></c-litc-line-item-rollup-table>
+                                <lightning-button type="button" variant="base" onclick={handleToggle} label="Show totals from approved budget" style="float:right"></lightning-button>
+                            </template>
+                            
+                            <br/><br/><br/>
+                            <div class="slds-box">
+                                <h2 style="display: inline;">Donated goods and services</h2>    
+                                <lightning-helptext content="Enter each donated good or service on a separate line. This includes all in-kind services provided by volunteers. For in-kind services, the unit of measure will be the hour and the cost per unit will be the in-kind value for each hour. For more information about how to value in-kind volunteer services, see IRS Publication 3319 https://www.irs.gov/pub/irs-pdf/p3319.pdf. Also include any donated software or electronic research tools and subscriptions. Use the note field to provide any other information related to the item, including the value provided."></lightning-helptext> 
+                                <br/><br/>   
+                                <c-litc-reporting-datatable-l selected-type="Donated Goods and Services" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable-l>
+                            </div>
+                            <br/>
+                            <div class="slds-box">
+                                <h2 style="display: inline;">Matching funds</h2>  
+                                <lightning-helptext content="Enter each source of matching funds that will make up the total dollar-for-dollar match needed for the federal award provided. If the clinic’s match includes donated goods and services, you do not need to enter those items again here. They will be carried over from that section and included in the match total that will tally as sources of match are added."></lightning-helptext>     
+                                <br/><br/>
+                                <c-litc-reporting-datatable-l selected-type="Matching Funds" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable-l>
+                            </div>
+                            <br/>
+                            <div class="slds-box">
+                                <h2 style="display: inline;">Personnel</h2>     
+                                <lightning-helptext content="Enter how many hours equal a full-time equivalent (FTE) in your organization. Next, enter information for each induvial who will be paid by federal or match funds. The LITC FTE is the percentage of time each individual will be allocated to the LITC grant. If the individual works 20 hours per week for an organization where one FTE is 40 hours and all that time will be spent on the LITC grant, that individual’s FTE on the grant is 0.50. If a key position is “to be hired,” enter TBH in the name field and use the rate or salary that you plan to pay the individual to be hired. Use the note field for each individual to include any other information related to the allocation and calculation for that expense.  "></lightning-helptext>     
+                                <br/><br/>
+
+                                <lightning-record-edit-form object-api-name='LITC_Reporting_Form__c' record-id={recordId} onerror={handleError}>
+                                    <label>How many hours does one full-time equivalent work in your organization each year?</label>
+                                    <br/>
+                                    <div class="slds-grid slds-gutters slds-wrap">
+                                        <div class="slds-col slds-medium-size_1-of-6 slds-size_1-of-1">
+                                            <lightning-input-field field-name="Full_Time_Equivalent_Hours__c" variant="label-hidden" onchange={autosave}></lightning-input-field>
+                                        </div>
+                                    </div>
+                                </lightning-record-edit-form>
+                                <br/>
+                                <c-litc-reporting-datatable-l selected-type="Personnel" record-id={recordId} class="table" disable-edits={disableEdits}></c-litc-reporting-datatable-l>
+                            </div>
+                            <br/>
+                            <div class="slds-box">
+                                <h2 style="display: inline;">Fringe</h2>  
+                                <lightning-helptext content="Enter each type of fringe paid by federal or match grant funds for individuals working on the LITC grant. Be sure to complete all the required fields and use the note field to include any additional information related to the allocation and calculation for each expense."></lightning-helptext>      
+                                <br/><br/>
+                                <c-litc-reporting-datatable-l selected-type="Fringe" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable-l>
+                            </div>
+                            <br/>
+                            <div class="slds-box">
+                                <h2 style="display: inline;">Supplies, contractual, travel, equipment, and other expenses</h2>    
+                                <lightning-helptext content="Select the supplies category for any supplies or equipment costing less than $10,000 that will be used in operating the LITC. Select the equipment category only for individual items that cost more than $10,000. (Equipment expenses are rare under the LITC.) Travel expenses are travel costs, including costs associated with attendance at the Annual LITC Grantee Conference and other travel expenses directly related to conducting LITC business or activities. Other expenses are those that do not fit into any of the preceding categories but were incurred in operating the LITC. Enter each item on a separate line and complete all the required fields."></lightning-helptext>       
+                                <br/><br/>
+                                <c-litc-reporting-datatable-l selected-type="Supplies, Contractual, Travel, and Other Expenses" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable-l>
+                            </div>
+                            <br/>
+                            <div class="slds-box">
+                                <h2 style="display: inline;">Indirect expenses</h2>  
+                                <lightning-helptext content="These are expenses that are not directly related to the LITC grant but are incurred as part of the general overhead and administration of the sponsoring organization. Examples of indirect expenses include: salaries and wages of administrative and support staff; related employee benefits; and facility occupancy costs such as utilities, security, and maintenance. Organizations may use a negotiated indirect cost rate agreement (ICRA) approved by the organization’s cognizant agency. If the organization has never obtained an ICRA or the agreement has expired, it may elect to apply the de minimis rate of fifteen percent. More information about indirect expenses can be found in IRS Publication 3319 "></lightning-helptext>   
+                                <br/><br/>
+                                <c-litc-reporting-datatable-l selected-type="Indirect Expenses" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable-l>
+                            </div>
+
+                            <br/>
+                            <br/>
+                            <div style="float: left;">
+                                <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="instruction" label="Back"></lightning-button>
+                            </div>
+                            <div style="float: right; margin-right: 0">
+                                <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form" label="Next"></lightning-button>
+                            </div>  
+                        </div>
+
+                        <lightning-record-edit-form object-api-name='LITC_Reporting_Form__c' record-id={recordId} onerror={handleError} onsuccess={handleSuccess}>
+                            <div class={form}>
+                                <h1>Form 13424-L</h1>
+                                <hr style="margin-top: 5px;">
+
+                                <div class="slds-box">
+                                    <h2>Statement</h2>
+                                    <p>Statement of grant expenditures</p>
+                                    <br/>
+
+                                    <template lwc:if={isYearEnd}>
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>Do you wish to return grant funds?</label>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field required field-name="Return_Grant_Funds__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <template lwc:if={showReturnFundsYes}>
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                             <label>Fund balance</label>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_2-of-8">
+                                                    <lightning-input-field required field-name="Amount_Being_Returned__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <br/>
+
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            <label>Please provide a brief explanation for why funds are being returned. </label>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_4-of-8">
+                                                    <lightning-input-field required field-name="Funds_Returned_Explanation__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                        </template>
+
+                                    </template>
+                                    <template lwc:else>
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>Do you wish to request additional funds?</label>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field required field-name="Request_additional_funds__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <template lwc:if={showRequestFundsYes}>
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            <label>Total amount of federal funds requested</label>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_2-of-8">
+                                                    <lightning-input-field required field-name="Total_Amount_Requested__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <br/>
+
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            <label>Provide the amount requested broken down by expense category (Personnel, Fringe, Travel, Equiptment, Supplies, Contractual or Indirect Cost). Provide the amount and source of match equal to the amount requested. Provide an explanation of the need for the additional funding.</label>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_8-of-8">
+                                                    <lightning-input-field required field-name="Amount_Requested_Explanation__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                        </template>
+
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>Do you wish to return grant funds?</label>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field required field-name="Return_Grant_Funds__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <template lwc:if={showReturnFundsYes}>
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                             <label>Fund balance</label>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_2-of-8">
+                                                    <lightning-input-field required field-name="Amount_Being_Returned__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <br/>
+
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            <label>Please provide a brief explanation for why funds are being returned. </label>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_4-of-8">
+                                                    <lightning-input-field required field-name="Funds_Returned_Explanation__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                        </template>
+
+                                    </template>
+                                </div>
+
+
+            
+                                <br/>
+                                <br/>
+                                <div style="float: left;">
+                                    <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="jForm" label="Back"></lightning-button>
+                                </div>
+                                <div style="float: right; margin-right: 0">
+                                    <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="submission" label="Next"></lightning-button>
+                                </div>  
+                            
+                                <footer></footer>
+                            </div>
+
+                            <div class={submission}>
+                    
+                                <h1>Submission</h1>
+                                <hr style="margin-top: 5px;">   
+
+                                <template lwc:if={isSubmitted}>
+                                    <p>Thank you for submitting!</p>
+                                    <p>If you need to make changes you may unsubmit at any time before the deadline.</p>
+                                </template>
+
+                                <template if:false={disableEdits}>
+                                    <div class="slds-box">
+                                        <h2>Submission</h2>
+                                        <p>By submitting this report, I certify that the statements herein are true, complete, and accurate to the best of my knowledge. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001). </p>
+                                        <br/>
+                                        <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                                        <label>By checking this box, I affirm that I am authorized to submit this information on behalf of the sponsoring organization and all information provided is complete and accurate.</label>
+                                        <br/><br/>
+                                    </div>
+                                </template>
+                
+                                <br>
+                                <div style="float: left;">
+                                    <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form" label="Back"></lightning-button>
+                                </div>
+                                <template if:false={disableEdits}>
+                                    <div style="float: right; margin-right: 0">
+                                        <lightning-button variant="brand" disabled={anyErrors} label="Certify and submit" onclick={handleSubmit} type="submit"></lightning-button>
+                                    </div>  
+                                </template> 
+
+                                <footer></footer>
+                            </div>
+                        </lightning-record-edit-form>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_3-of-12">
+                        <div style="min-width: 245px; max-width: 215px; margin-top:5rem; display:block; display:block;">
+                            <lightning-button variant="base" label="Return to LITC Portal" onclick={navigateFooter} icon-name="utility:redo"></lightning-button> 
+                            <c-form-infobox accordion-errors={submissionErrors} status={status} status-field-name='Status__c' ongettabname={handleErrorClick} object-name='LITC_Reporting_Form__c' fields={recordFields} record-id={recordId} show-unsubmit="true" deadline-passed={deadlinePassed}></c-form-infobox> 
+                        </div>
+                        
+                       
+                    </div>
+                </div>
+            </div>
+
+        </div>  
+
+    </template>
+
+    <template lwc:if={isNotAuthorizedOfficial}>
+        <br/>
+        You do not have the necessary role to view this page.
+    </template>
+
+
+
+</template>

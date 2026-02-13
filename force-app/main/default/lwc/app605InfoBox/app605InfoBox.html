@@ -1,0 +1,118 @@
+<html lang="en">
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Unsubmiting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <lightning-record-view-form object-api-name={objectName} record-id={recordId}>
+        <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} onsectiontoggle={test}>
+            <lightning-accordion-section name="Help" label="Help" class="helpSection">
+                <p style="font-size: 1rem; margin-left: 10px;">
+                    For assistance on your submission and other questions, contact 
+                    <br>
+                    <template if:true={isCPF}>
+                        <a href="mailto:CapitalProjectsFund@treasury.gov" target="_blank">Covid IT Relief Support</a>
+                        <br/>
+                        or the Contact Center (844) 529-9527
+                    </template>
+                    <template if:false={isCPF}>
+                        <a href="mailto:covidreliefitsupport@treasury.gov" target="_blank">Covid IT Relief Support</a> 
+                    </template>
+                </p>
+                <br> 
+            </lightning-accordion-section>
+            <template if:true={showLegend}>
+                <lightning-accordion-section name="Legend" label="Legend" class="helpSection">
+                    <lightning-icon icon-name="action:check" size="x-small" style="background-color: #2E8540; border-radius: 5px;"></lightning-icon>
+                    &nbsp;= Complete&nbsp;
+                    <lightning-helptext content="For Project Status, this indicates all required fields have been answered. For subaward and expenditure status, this indicates that at least one subaward or expenditure entry has been made."></lightning-helptext>
+                    <br> <br>
+
+                    <lightning-icon icon-name="action:edit" size="x-small" style="background-color: #D8BE0E; border-radius: 5px;"></lightning-icon>
+                    &nbsp;= Warning&nbsp;
+                    <lightning-helptext content="For Project Status, this indicates that the project needs to be verified.You may verify by clicking on the icon. For expenditure status, This indicates that the sum of all obligation or expenditure amounts associated with the project is not equal to that project's total obligations or total expenditures. You may check the amounts by clicking on the icon. "></lightning-helptext>
+                    <br> <br>
+
+                    <lightning-icon icon-name="action:edit" size="x-small" style="background-color: #930012; border-radius: 5px;"></lightning-icon>
+                    &nbsp;= Not complete&nbsp;
+                    <lightning-helptext content="For project status, this indicates that not all required fields have been answered. For subaward and expenditure status, this indicates that no subaward or expenditure entry has been made."></lightning-helptext>
+                </lightning-accordion-section>
+            </template>
+            <lightning-accordion-section name="Record-Details" label="Record details" class="recordDetailSection">
+                <template if:false={hideStatus}>
+                    <div style="margin-left:10px">
+                        <label style="font-size: .8125rem; margin-bottom: 1rem; color: #858585">
+                            Status
+                        </label>
+                        <div style={formStyle}>
+                            {status}
+                        </div>
+                    </div>
+                </template>
+
+                <template for:each={fields} for:item="field">
+                    <div style = "margin-left:10px; margin-top:10px;" key={field}> 
+                        <label style="font-size: .8125rem; color: #858585">
+                            {field.label}
+                        </label>
+                        <template if:true={field.fieldName}>
+                            <lightning-output-field variant="label-hidden" field-name={field.fieldName} style="font-size: 1rem;"></lightning-output-field>
+                            <div style="margin-top: 10px;"></div>
+                        </template>
+                        <template if:false={field.fieldName}>
+                            <br>
+                            {field.noField}
+                        </template>
+                        <div style="margin-top: 10px;"></div>
+                    </div>
+                </template>
+
+                <template if:true={statusSubmitted}>
+                    <template if:false={deadlinePassed}>
+                        <template if:true={showUnsubmit}>
+                            <div style="margin: auto; width:40%">
+                                <lightning-button style="margin-left:auto" variant="brand-outline" label="Unsubmit" onclick={openUnsubmitModal}></lightning-button>
+                                <br><br>
+                            </div>
+                        </template>
+                    </template>
+                </template>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="Errors" label="Errors" class="errorsAccordian slds-hide">
+                <h1>Please verify the following errors in the corresponding sections:</h1>
+                <br>
+                <lightning-accordion allow-multiple-sections-open={showMultipleSections} onsectiontoggle={handleSectionToggle} active-section-name={activeSection}>
+                    <template for:each={accordionErrors} for:item="entry">
+                        <template if:true={entry.showList}>
+                            <lightning-accordion-section label={entry.label} class="accordionSection" key={entry.label} onclick={handleErrorClick} data-name={entry.label}>
+                                <template for:each={entry.errList} for:item="error">
+                                    <div data-name={entry.label} key={entry.label}>{error}</div>
+                                    <br key={error}/>
+                                </template>
+                            </lightning-accordion-section>
+                        </template>
+                    </template>
+                </lightning-accordion>
+            </lightning-accordion-section>
+        </lightning-accordion>
+    </lightning-record-view-form>
+
+    <template if:true={showUnsubmitModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+        aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container" style="color: black">
+                <div class="slds-modal__content slds-var-p-around_large" style="min-height:250px;">
+                    <h1 style="text-align: center; margin-top:100px;">
+                        Are you sure you want to unsubmit? You will have to recertify.
+                     </h1>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeUnsubmitModal}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleUnsubmit}>Unsubmit</button>
+                </footer>
+            </div>
+        </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
+</html>

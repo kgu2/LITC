@@ -1,0 +1,358 @@
+<!-- <template>
+
+    <div if:false={isMobile}>
+        <div class="slds-grid  slds-wrap">
+            <div class="slds-col slds-size_1-of-6">{monthName}<br/>{dayNumber}</div>  
+            <div class="slds-col slds-size_3-of-6">
+                <strong>Session Details</strong><br/>
+                {formattedRange}<br/>
+                <span style="color: red;">Register by {formattedDeadline}</span><br/>
+                {accessMethod}, {provider}
+            </div>
+            <div class="slds-col slds-size_2-of-6 ">
+                /* <lightning-button variant="brand" style="width:50px" label={showDetailsLabel} onclick={handleViewDetails}></lightning-button><br/><br/> */ 
+                <div if:false={showDetails}>            
+                    <a href="javascript:void(0);" onclick={handleViewDetails}><strong><u>View Details</u></strong></a>
+                </div>
+                <div if:true={showDetails}>            
+                    <a href="javascript:void(0);" onclick={handleViewDetails}><strong><u>Hide Details</u></strong></a>
+                </div>
+                <br/> 
+                <div if:true={canRegister}>
+                    <div if:true={showRegister}>
+                        <lightning-button variant="brand" style="width:50px" label={registerLabel} onclick={handleRegister}></lightning-button>
+                    </div>
+                </div>
+                <div if:false={canRegister}>
+                    Registrarion for this session is now closed.
+                </div>
+                <br/>
+                <div if:false={showRegister}>
+                    <div if:true={registered}>
+                        <div if:false={showTeiWithdraw}>
+                            <lightning-button variant="brand" style="width:50px" label={withdrawLabel} onclick={handleWithdraw}></lightning-button>
+                        </div>
+                    </div>
+                    <div if:false={registered}>
+                        This session is full.
+                    </div>
+                </div>
+            </div>
+            <br/><br/> 
+        </div>
+        <div if:true={showDetails}>
+            <br/>
+            <div class="slds-grid  slds-wrap">
+                <div class="slds-col slds-size_1-of-6"></div>
+                <div class="slds-col slds-size_5-of-6">{registrationsMaximum} registrations maximum  </div>
+                <br/><br/>          
+                <div class="slds-col slds-size_1-of-6"></div>
+                <div class="slds-col slds-size_1-of-6">Topic</div>  
+                <div class="slds-col slds-size_4-of-6">{topicStr}</div>
+                <br/> 
+                <div class="slds-col slds-size_1-of-6"></div>
+                <div class="slds-col slds-size_1-of-6">Target Audience</div>  
+                <div class="slds-col slds-size_4-of-6">{targetAudienceStr}</div>
+                <br/>
+                <div class="slds-col slds-size_1-of-6"></div>
+                <div class="slds-col slds-size_1-of-6">Access Method</div>  
+                <div class="slds-col slds-size_4-of-6">{accessMethod}</div>
+                <br/>
+                <div class="slds-col slds-size_1-of-6"></div>
+                <div class="slds-col slds-size_1-of-6">Contact Hours</div>  
+                <div class="slds-col slds-size_4-of-6">{sessionDuration}</div>
+                <br/> 
+                <div class="slds-col slds-size_1-of-6"></div>
+                <div class="slds-col slds-size_1-of-6">Alignment</div>  
+                <div class="slds-col slds-size_4-of-6">{alignmentStr}</div>
+            </div>
+            <br/><br/>
+        </div>
+
+        <div if:true={showTeiWithdraw}>
+            <br/>
+            <div class="slds-grid  slds-wrap">
+                <div class="slds-col slds-size_1-of-6"></div>
+                <div class="slds-col slds-size_3-of-6">                    
+                    <c-tei-withdraw                        
+                        registrant-id={registrantId}
+                        show-tei-withdraw={showTeiWithdraw}
+                        onupdate={handleUpdate}> 
+                    </c-tei-withdraw> 
+                </div>
+                <div class="slds-col slds-size_2-of-6 "></div>
+            </div>
+        </div>
+    </div>
+
+    /* **************************************************************************************************** */
+
+    <div if:true={isMobile}>
+        
+        <strong>
+            {monthName} {dayNumber}<br/>             
+            Session Details
+        </strong><br/>
+        {formattedRange}<br/>
+        <span style="color: red;">Register by {formattedDeadline}</span><br/>
+        {accessMethod}<br/>{provider}<br/>
+        /* <lightning-button variant="brand" label={showDetailsLabel} onclick={handleViewDetails}></lightning-button>   */
+        <div if:false={showDetails}>            
+            <a href="javascript:void(0);" onclick={handleViewDetails}><strong><u>View Details</u></strong></a>
+        </div><br/> 
+        
+        <div if:true={showDetails}>            
+                {registrationsMaximum} registrations maximum  
+                <br/><br/>          
+                <strong>Topic</strong><br/>  
+                {topicStr}<br/>
+                <strong>Target Audience</strong><br/>  
+                {targetAudienceStr}<br/>                
+                <strong>Access Method</strong><br/>  
+                {accessMethod}<br/>
+                <strong>Contact Hours</strong><br/>  
+                {sessionDuration}<br/> 
+                <strong>Alignment</strong><br/>  
+                {alignmentStr}<br/> 
+                <a href="javascript:void(0);" onclick={handleViewDetails}><strong><u>Hide Details</u></strong></a> 
+                <br/><br/>          
+        </div>
+        <div if:true={showRegister}>
+            <div if:true={canRegister}>
+                <div if:true={showRegister}>
+                    <lightning-button variant="brand" style="width:50px" label={registerLabel} onclick={handleRegister}></lightning-button>
+                </div>
+            </div>
+            <div if:false={canRegister}>
+                Registrarion for this session is now closed.
+            </div>
+        </div>
+        <div if:false={showRegister}>
+            <div if:true={registered}>
+                <div if:false={showTeiWithdraw}>
+                    <lightning-button variant="brand" style="width:50px" label={withdrawLabel} onclick={handleWithdraw}></lightning-button>
+                </div>
+            </div>
+            <div if:false={registered}>
+                This session is full.
+            </div>
+        </div>
+
+        <div if:true={showTeiWithdraw}>
+            <c-tei-withdraw                        
+                registrant-id={registrantId}
+                show-tei-withdraw={showTeiWithdraw}
+                onupdate={handleUpdate}> 
+            </c-tei-withdraw> 
+        </div>
+    </div>    
+    
+</template> -->
+
+<template>
+
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <div class="slds-box slds-p-around_medium slds-m-bottom_medium panel">
+        <div class="slds-grid slds-wrap slds-gutters_medium">
+            <!-- Column 1: Date -->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6 slds-m-bottom_small">
+                <strong>{monthName} {dayNumber}</strong>
+            </div>
+
+            <!-- Column 2: Session Details -->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-6 slds-m-bottom_small">
+                <div><strong>Session Details</strong></div>
+                <div>{formattedRange}</div>
+                <div class="slds-text-color_error">Register by {formattedDeadline}</div>
+                <div>{accessMethod}, {provider}</div>
+            </div>
+
+            <!-- Column 3: Actions -->
+            <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-6 slds-m-bottom_small">
+                <div>
+                    <a href="javascript:void(0);" onclick={handleViewDetails}>
+                        <strong><u>{showDetailsLabel}</u></strong>
+                    </a>
+                </div>
+                <br />
+
+                <template if:true={canRegister}>
+                    <template if:true={showRegister}>
+                        <!-- <lightning-button variant="brand" label={registerLabel} onclick={handleRegister}></lightning-button> -->
+                        <div class="tile tile-blue" tabindex="0" onclick={handleRegister} role="button" aria-label={registerLabel}>
+                            <span class="label">{registerLabel}</span>
+                        </div>
+                        <!-- <button class="button-dark" onclick={handleRegister}>{registerLabel}</button> -->
+                    </template>
+                </template>
+
+                <template if:false={canRegister}>
+                    <!-- <div class="slds-text-color_weak">Registration for this session is now closed.</div> -->
+                    <div class="subtitle">Registration for this session is now closed.</div>
+                </template>
+
+                <br />
+
+                <template if:false={showRegister}>
+                    <template if:true={registered}>
+                        <template if:true={canRegister}>
+                            <!-- <template if:false={showTeiWithdraw}> -->
+                            <template if:true={waitlisted}>
+                                <!-- <lightning-button variant="brand" label={withdrawLabel} onclick={handleWithdraw}></lightning-button> -->
+                                <div class="tile tile-blue" tabindex="0" onclick={handleWithdraw} role="button" aria-label={withdrawLabel}>
+                                    <span class="label">{withdrawLabel}</span>
+                                </div>
+                                <!-- <button class="button-dark" onclick={handleWithdraw}>{withdrawLabel}</button> -->
+                            </template>
+                        </template>
+                        <div class="dropdown" if:false={waitlisted}>
+                            <!-- <button class="launch-main" 
+                                data-id={classId} 
+                                data-type="Event" 
+                                data-registrantid={registrantId} 
+                                onclick={handleNavToSelection}>
+                                {dropDownButtonLabel}
+                            </button> -->
+                            <button class="tile tile-blue" 
+                                data-id={classId} 
+                                data-type="Event" 
+                                data-registrantid={registrantId} 
+                                onclick={handleNavToSelection}>
+                                {dropDownButtonLabel}
+                            </button>
+                            <!-- <div class="tile tile-blue" 
+                                tabindex="0" 
+                                data-id={classId} 
+                                data-type="Event" 
+                                data-registrantid={registrantId} 
+                                onclick={handleNavToSelection} 
+                                role="button" 
+                                aria-label={withdrawLabel}>
+                                <span class="label">{dropDownButtonLabel}</span>
+                            </div> -->
+                            <button class="btn-secondary dropdown-toggle" 
+                                data-id={registrantId}  
+                                onclick={toggleDropdown}>▼</button>    
+                            <template if:true={isDropdownOpen}>
+                                <div class="dropdown-menu">
+                                <ul>
+                                    <template for:each={dropDownValue} for:item="dropDownObj">
+                                        <li key={dropDownObj} data-classid={classId} data-sessionid={sessionId} data-registrantid={registrantId} data-label={dropDownObj} onclick={handleActionSelection}>{dropDownObj}</li>
+                                    </template>
+                                </ul>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                    <template if:false={registered}>
+                        <!-- <div class="slds-text-color_weak">This session is full.</div> -->
+                        <div class="subtitle">This session is full.</div>                        
+                    </template>
+                </template>
+            </div>
+        </div>
+
+        <!-- Expanded Details -->
+        <template if:true={showDetails}>
+            <div class="slds-grid slds-wrap slds-m-top_medium">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6"></div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_5-of-6">
+                    <p><strong>Max Registrations:</strong> {registrationsMaximum}</p>
+                    <p><strong>Topic:</strong> {topicStr}</p>
+                    <p><strong>Target Audience:</strong> {targetAudienceStr}</p>
+                    <p><strong>Access Method:</strong> {accessMethod}</p>
+                    <p><strong>Contact Hours:</strong> {sessionDuration}</p>
+                    <p><strong>Alignment:</strong> {alignmentStr}</p>
+                </div>
+            </div>
+        </template>
+
+        <!-- Withdraw Component -->
+        <template if:true={showTeiWithdraw}>
+            <div class="slds-grid slds-wrap slds-m-top_medium">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-6"></div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-6">
+                    <c-tei-withdraw
+                        registrant-id={registrantId}
+                        show-tei-withdraw={showTeiWithdraw}
+                        is-series={isSeries}
+                        from-where={fromWhere}
+                        onupdate={handleUpdate}>
+                    </c-tei-withdraw>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_2-of-6"></div>
+            </div>
+        </template>
+    </div>
+
+    <template if:true={isModalOpen}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-modal="true">
+            <div class="slds-modal__container">
+    
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-modal__close" title="Close" onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+                    </button>
+                    <h2 class="slds-text-heading_medium" style="color: black !important;">Move Training to Archived Transcript</h2>
+                </header>
+    
+                <div class="slds-modal__content slds-p-around_medium">
+                    <p style="color: black !important;">You have indicated that you would live to archive this training. This will move the training from your Active Transcript into your Archive Transcript. The purpose of the Archive Transcript is to store training that you no longer need to access.</p>
+                    <p class="slds-m-top_medium" style="color: black !important;">
+                        <strong>
+                            <u>The act of moving training to the Archive does not remove any responsibility that you may have in completing this training.</u>
+                        </strong>
+                    </p>
+                </div>
+    
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                    <lightning-button variant="brand" label="Archive" onclick={handleMoveToArchive} class="slds-m-left_small"></lightning-button>
+                    <!-- <div class="tile tile-blue" tabindex="0" onclick={handleNotifyMe} role="button" aria-label="Notify Me">
+                        <span class="label">Notify Me</span>
+                    </div>
+                    <div class="tile tile-blue" tabindex="0" onclick={handleNotifyMe} role="button" aria-label="Notify Me">
+                        <span class="label">Notify Me</span>
+                    </div> -->
+                </footer>
+            </div>
+        </section>
+    
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    
+    </template>
+</template>
+
+<!-- <template if:true={isModalOpen}>
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-modal="true">
+        <div class="slds-modal__container">
+
+            <header class="slds-modal__header">
+                <button class="slds-button slds-modal__close" title="Close" onclick={closeModal}>
+                    <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+                </button>
+                <h2 class="slds-text-heading_medium">Move Training to Archived Transcript</h2>
+            </header>
+
+            <div class="slds-modal__content slds-p-around_medium">
+                <p>You have indicated that you would like to archive this training. This will move the training from your Active Transcript into your Archive transcript. The purpose of the Archive Transcript is to store training that the user no longer needs to access.</p>
+                <p class="slds-m-top_medium">
+                    <strong>
+                        <u>The act of moving training to the Archive does not remove any responsibility the user may have in completing this training.</u>
+                    </strong>
+                </p>
+            </div>
+
+            <footer class="slds-modal__footer">
+                <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+                <lightning-button variant="brand" label="Archive" onclick={handleMoveToArchive} class="slds-m-left_small"></lightning-button>
+            </footer>
+        </div>
+    </section>
+
+    <div class="slds-backdrop slds-backdrop_open"></div>
+
+</template> -->

@@ -1,0 +1,227 @@
+<template>
+  <template if:true={renderTemplate}>
+    <template if:true={canShowKbOnStep}>
+      <div class="slds-form-element slds-lookup vlc-slds-knowledge-component slds-card"
+           data-select="single"
+           data-scope="single"
+           if:false={_isStepChartTop}>
+
+        <div class="slds-page-header__title slds-truncate omni-stepchart-heading slds-p-bottom_small slds-p-top_small">{displayLabel}</div>
+
+        <div class="slds-input-has-icon slds-input-has-icon_right">
+
+          <c-input label={_customLabelsUtil.OmniKnowledgeSearchLabel}
+                   tabindex="0"
+                   type="text"
+                   onkeypress={searchKnowledgeArticle}
+                   value={inputSearchKeyword}
+                   placeholder={_customLabelsUtil.OmniScriptSearch}>
+          </c-input>
+
+          <span class="slds-icon_container slds-input__icon_right">
+            <c-icon class="slds-input__icon slds-icon-text-default"
+                    variant="default"
+                    size="x-small"
+                    alternative-text={_customLabelsUtil.OmniKnowledgeSearchIcon}
+                    icon-name="utility:search"></c-icon>
+          </span>
+
+        </div>
+
+        <ul class="vlc-slds-knowledge-item"
+            aria-live="polite">
+          <template class="slds-item"
+                    for:each={articlesResults}
+                    for:item="item"
+                    for:index="articleIndex">
+
+            <li key={item.title}>
+              <div class="vlc-slds-knowledge-list-item">
+                <div class="vlc-slds-control-action__container">
+                  <p onclick={redirectToArticleUrl}
+                     data-info={articleIndex}
+                     tabindex="0"
+                     onkeydown={handleKeydownRedirect}>{item.title}</p>
+
+                  <button onclick={openInOmniscript}
+                          data-info={articleIndex}
+                          aria-label={_customLabelsUtil.OmniScriptOpen}
+                          if:true={_openInOmniEnable}
+                          tabindex="0">
+                    <c-icon class="slds-icon__eye"
+                            variant="default"
+                            size="x-small"
+                            icon-name="utility:preview"
+                            alternative-text={_customLabelsUtil.OmniScriptOpen}></c-icon>
+                    <small>{_customLabelsUtil.OmniScriptOpen}</small>
+                  </button>
+
+                  <button onclick={openModal}
+                          aria-label={_customLabelsUtil.OmniScriptModal}
+                          data-info={articleIndex}
+                          tabindex="0">
+                    <c-icon class="slds-icon__eye"
+                            variant="default"
+                            size="x-small"
+                            icon-name="utility:expand"
+                            alternative-text={_customLabelsUtil.OmniScriptModal}></c-icon>
+                    <small>{_customLabelsUtil.OmniScriptModal }</small>
+                  </button>
+                </div>
+
+                <h3>{item.summary}</h3>
+                <h3 class='vlc-slds-lastpubdate'>{item.displayType} | {_customLabelsUtil.OmniScriptLastPublished}
+                  {item.lastPubDate}</h3>
+              </div>
+            </li>
+          </template>
+        </ul>
+      </div>
+
+      <div if:true={_isStepChartTop}
+           class={classToggleWidth}
+           data-select="single"
+           data-scope="single"
+           chart-top={_isStepChartTop}>
+
+        <button if:false={isToggled}
+                title={_customLabelsUtil.OmniKnowledgeExpand}
+                class="slds-form-element__label slds-knowledge-expand"
+                onclick={toggleKb}
+                onkeydown={handleKeyToggle}
+                tabindex="0"
+                aria-expanded={isToggled}
+                aria-controls="wrapper">{kbLabel}</button>
+
+        <div if:true={isToggled}
+             id="wrapper"
+             class="slds-knowledge-data_wrapper">
+          <div class="slds-page-header__title slds-truncate omni-stepchart-heading slds-p-bottom_small slds-p-top_small">{kbLabel}</div>
+          <div class="slds-knowledge-data_cont">
+            <button class="slds-button slds-button_icon slds-button_icon-bare"
+                    title={_customLabelsUtil.OmniKnowledgeCollapse}
+                    tabindex="0"
+                    onclick={toggleKb}
+                    onkeydown={handleKeyToggle}
+                    aria-expanded={isToggled}
+                    aria-controls="wrapper">
+              <c-icon class="slds-input__icon slds-icon-text-default"
+                      variant="default"
+                      size="x-small"
+                      icon-name="utility:chevronright"
+                      alternative-text={_customLabelsUtil.OmniKnowledgeCollapse}
+                      theme={_themeKB}></c-icon>
+            </button>
+          </div>
+
+          <div class="slds-input-has-icon slds-input-has-icon--right">
+            <c-input type="text"
+                     label={_customLabelsUtil.OmniKnowledgeSearchLabel}
+                     onkeypress={searchKnowledgeArticle}
+                     value={inputSearchKeyword}
+                     data-focusable-input="true"
+                     placeholder={_customLabelsUtil.OmniScriptSearch}>
+            </c-input>
+            <span class="slds-icon_container">
+              <c-icon class="slds-input__icon slds-icon-text-default"
+                      alternative-text={_customLabelsUtil.OmniKnowledgeSearchIcon}
+                      variant="default"
+                      size="x-small"
+                      icon-name="utility:search"></c-icon>
+            </span>
+          </div>
+
+          <ul class="vlc-slds-knowledge-item"
+              aria-live="polite">
+            <template class="slds-item"
+                      for:each={articlesResults}
+                      for:item="item"
+                      for:index="articleIndex">
+
+              <li key={item.title}>
+                <div class="vlc-slds-knowledge-list-item">
+                  <div class="vlc-slds-control-action__container">
+                    <p onclick={redirectToArticleUrl}
+                       data-info={articleIndex}
+                       tabindex="0"
+                       onkeydown={handleKeydownRedirect}>{item.title}</p>
+
+                    <button onclick={openInOmniscript}
+                            aria-label={_customLabelsUtil.OmniScriptOpen}
+                            data-info={articleIndex}
+                            tabindex="0">
+                      <c-icon class="slds-icon__eye"
+                              variant="default"
+                              size="x-small"
+                              icon-name="utility:preview"
+                              alternative-text={_customLabelsUtil.OmniScriptOpen}></c-icon>
+                      <small>{_customLabelsUtil.OmniScriptOpen}</small>
+                    </button>
+
+                    <button onclick={openModal}
+                            aria-label={_customLabelsUtil.OmniScriptModal}
+                            data-info={articleIndex}
+                            tabindex="0">
+                      <c-icon class="slds-icon__eye"
+                              variant="default"
+                              size="x-small"
+                              icon-name="utility:expand"
+                              alternative-text={_customLabelsUtil.OmniScriptModal}></c-icon>
+                      <small>{_customLabelsUtil.OmniScriptModal }</small>
+                    </button>
+                  </div>
+
+                  <h3>{item.summary}</h3>
+                  <h3>{item.displayType} | {_customLabelsUtil.OmniScriptLastPublished} {item.lastPubDate}</h3>
+                </div>
+              </li>
+            </template>
+          </ul>
+
+        </div>
+      </div>
+
+
+      <template if:true={_kbModal}>
+        <slot>
+          <div class={_modalContainerClass}
+               onkeydown={handleKeyDown}>
+            <section role="dialog"
+                     tabindex="-1"
+                     aria-modal="true"
+                     aria-describedby="modal-content"
+                     aria-labelledby="modal-heading"
+                     class={_modalClasses}>
+              <div class="slds-modal__container">
+                <header tabindex="0"
+                        class={_headerClasses}>
+                  <h1 id="modal-heading">{articleBodyResults.articleTitle}</h1>
+                </header>
+
+                <div class="slds-modal__content slds-p-around_medium"
+                     id="modal-content">
+                  <c-omniscript-formatted-rich-text value={articleBodyResults.articleBody}>
+                  </c-omniscript-formatted-rich-text>
+                </div>
+
+                <footer class={_footerClasses}>
+                  <div slot="footer">
+                    <c-button type="button"
+                              variant="brand"
+                              data-button
+                              onclick={closeModal}
+                              theme={_themeKB}
+                              label={_customLabelsUtil.OmnipostMessage}
+                              extraclass='slds-m-left_medium'>
+                    </c-button>
+                  </div>
+                </footer>
+              </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+          </div>
+        </slot>
+      </template>
+    </template>
+  </template>
+</template>

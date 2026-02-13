@@ -1,0 +1,30 @@
+<template>
+    <header class="navbar"></header>
+
+    <div class="container">
+        <ul class="nav-links">
+            <li><a onclick={handleNav} data-name="overview">Overview</a></li>
+            <li><a onclick={handleNav} data-name="sf424">Standard Form 424</a></li>
+            <li><a onclick={handleNav} data-name="form13424J">Form 13424-J</a></li>
+            <li><a onclick={handleNav} data-name="form13424M">Form 13424-M</a></li>
+            <li><a onclick={handleHelpClick}>Help</a>
+                <template if:true={showHelpPopover}>
+                    <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_top-left" role="dialog" style="position: absolute; margin-left: -2rem; margin-top: 2.5rem">
+                        <lightning-button variant="base" label="" title="close" icon-name="utility:close" icon-position="right" class="slds-m-left_x-small slds-float_right slds-popover__close" onclick={closePopover} style="margin-right: 1rem;"></lightning-button>
+                        <div id="popover-body-id-2" class="slds-popover__body">
+                            <br/>
+                            <p style="font-size: 1rem;">
+                                    For assistance on your submission and other questions, contact 
+                                    <br>
+                                    <a href="mailto:LITCGrants@treasury.gov" target="_blank">LITCGrants@treasury.gov</a>  
+                            </p>
+                      </div>
+                    </section>
+                </template>
+            </li>
+            <li><a onclick={navigateFooter}>Return to LITC Portal</a></li>
+        </ul>
+    </div>
+
+
+</template>

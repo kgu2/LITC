@@ -1,0 +1,693 @@
+<template>
+    <template lwc:if={readOnly}></template>
+    <template lwc:else>
+        <lightning-button variant="brand" label="Add line item" icon-name="utility:add" onclick={openAddLineItemModal} disabled={disableIndirectExpense}></lightning-button>
+        <br/>  <br/>
+    </template>
+
+    <template lwc:if={showTable}>
+        <lightning-datatable wrap-table-header={wrapTableHeader} class="myTable" onrowaction={openEditLineItemModal} show-row-number-column key-field="Id" hide-checkbox-column data={lineItemsByType} columns={columnsLineItems}></lightning-datatable>
+        <template lwc:if={selectedTypeA}>
+            <div class="sumRow">
+                <div style="font-weight: 400; margin-right:450px">         
+                    Total
+                </div>
+                <div style="margin-right: 160px">
+                    <lightning-formatted-number value={totalDonatedGoods} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                </div>
+            </div>
+        </template>
+        <template lwc:if={selectedTypeB}>
+            <div class="sumRow">
+                <div style="font-weight: 400; margin-right:320px">         
+                    Total
+                </div>
+                <div style="margin-right: 115px">
+                    <lightning-formatted-number value={totalPersonnelFederal} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                </div>
+                <div style="margin-right: 160px">
+                    <lightning-formatted-number value={totalPersonnelMatch} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                </div>
+            </div>
+        </template>
+        <template lwc:if={selectedTypeC}>
+            <div class="sumRow">
+                <div style="font-weight: 400; margin-right:320px">         
+                    Total
+                </div>
+                <div style="margin-right: 115px">
+                    <lightning-formatted-number value={totalFringeFederal} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                </div>
+                <div style="margin-right: 160px">
+                    <lightning-formatted-number value={totalFringeMatch} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                </div>
+            </div>
+        </template>
+        <template lwc:if={selectedTypeD}>
+            <div class="sumRow">
+                <div style="font-weight: 400; margin-right:320px">         
+                    Total
+                </div>
+                <div style="margin-right: 115px">
+                    <lightning-formatted-number value={totalSuppliesFederal} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                </div>
+                <div style="margin-right: 160px">
+                    <lightning-formatted-number value={totalSuppliesMatch} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                </div>
+            </div>
+        </template>
+        <template lwc:if={selectedTypeE}>
+            <div class="sumRow">
+                <div style="font-weight: 400; margin-right:450px">         
+                    Total
+                </div>
+                <div style="margin-right: 160px">
+                    <lightning-formatted-number value={totalIndirect} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                </div>
+            </div>
+        </template>
+        <template lwc:if={selectedTypeF}>
+            <div class="sumRow">
+                <div style="font-weight: 400; margin-right:450px">         
+                    Total
+                </div>
+                <div style="margin-right: 160px">
+                    <lightning-formatted-number value={totalMatchingFunds} format-style="currency" currency-code="USD"></lightning-formatted-number>
+                </div>
+            </div>
+        </template>
+    </template>
+    <template lwc:else>
+        You have no records.
+    </template>
+
+    <template lwc:if={selectedTypeF}>
+        <br/><br/>
+        <label>Total matching funds</label>
+        <lightning-helptext content="sum of total of donated goods and services above and total matching funds"></lightning-helptext>
+        <br/>
+        <lightning-formatted-number value={totalMatchingFundsFormula} format-style="currency" currency-code="USD"></lightning-formatted-number>
+    </template>
+   
+
+    <template lwc:if={showLineItemModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <lightning-record-edit-form object-api-name="X13424_J_Line_Item__c" onerror={handleError} onsuccess={handleSuccess} record-id={selectedLineItem} record-type-id={selectedRecordType}>
+
+                    <lightning-input-field required variant="label-hidden" field-name="Application_for_Federal_Assistance__c" class="slds-hide" value={recordId}></lightning-input-field>
+
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeEditLineItemModal}></lightning-button-icon>
+                        <h2 id="modal-heading-03" class="header">{selectedTypeDisplay}</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-4" style="max-height: 600px;">
+                        <template lwc:if={selectedTypeA}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Description</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Description__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/> 
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Quantity</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Unit of Measure</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Cost per Unit</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Quantity__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="U_M__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Cost_per_Unit__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <label>Notes</label>
+                                    <lightning-helptext content="Enter information about how you determined the fair market value for this item."></lightning-helptext>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field variant="label-hidden" field-name="Notes__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/> 
+                        </template>
+                        <template lwc:if={selectedTypeB}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Name</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Personnel_Name__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Position(s)</label>
+                                    <lightning-helptext content="Select the right arrow to move your selections to the column on the right"></lightning-helptext>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <lightning-input-field required variant="label-hidden" field-name="Position__c" disabled={disableEdits} class="large"></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Does this person directly work with taxpayers on their cases?</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Primary_Role__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Pay Type</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Pay Rate</label>
+                                    <lightning-helptext content="If this is an employee paid hourly, enter the hourly rate. If this an employee paid a salary, enter the total amount paid to the employee for the year from all sources."></lightning-helptext>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="Pay_Type__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="Pay_Rate__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>LITC Hours</label>
+                                    <lightning-helptext content="How many hours does this person work on LITC matters?"></lightning-helptext>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Total Hours</label>
+                                    <lightning-helptext content="How many hours does this person work for your organization?"></lightning-helptext>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="LITC_Hours__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Total_Hours__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <template lwc:if={showPercent}>
+                                <lightning-button type="button" variant="base" onclick={handleToggle} label="Enter federal funding as percent"></lightning-button>
+                            </template>
+                            <template lwc:else>
+                                <lightning-button type="button" variant="base" onclick={handleToggle} label="Enter federal funding as dollar amount"></lightning-button>
+                            </template>
+
+                            <br/><br/>
+
+                            <template lwc:if={showPercent}>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>$ Federal</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>$ Match</label>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-input-field required variant="label-hidden" field-name="Entered_Dollar_Federal__c" disabled={disableEdits} onchange={handleFedChange}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-input-field required variant="label-hidden" field-name="Entered_Dollar_Match__c" disabled={disableEdits} onchange={handleMatchChange}></lightning-input-field>
+                                    </div>
+                                </div>
+                                <br/>
+                            </template>
+                            <template lwc:else>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>% Federal</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>% Match</label>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-input-field required variant="label-hidden" field-name="Percent_Federal__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <lightning-input-field required variant="label-hidden" field-name="Percent_Match__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                </div>
+                                <br/>
+                            </template>
+                            
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <label>Notes</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field variant="label-hidden" field-name="Notes__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+                        <template lwc:if={selectedTypeC}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Description</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="Description__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Cost Base</label>
+                                    <lightning-helptext content="If this item is for an individual fringe expense (e.g., unemployment insurance, FICA, etc.), enter the total amount paid for the expense. If you are applying a fringe benefit rate, enter the cost base for the rate (e.g., an employee’s salary, total personnel costs, etc.)"></lightning-helptext>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Fringe Allocation %</label>
+                                    <lightning-helptext content="Enter the fringe benefit rate here. If this is a line item such as FICA or unemployment insurance, it may be 100%."></lightning-helptext>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Cost_Base__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Fringe_Allocation_Percent__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+
+                            <template lwc:if={showPercent}>
+                                <lightning-button type="button" variant="base" onclick={handleToggle} label="Enter federal funding as percent"></lightning-button>
+                            </template>
+                            <template lwc:else>
+                                <lightning-button type="button" variant="base" onclick={handleToggle} label="Enter federal funding as dollar amount"></lightning-button>
+                            </template>
+                            <br/><br/>
+
+                            <template lwc:if={showPercent}>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>LITC Allocation %</label>
+                                        <lightning-helptext content="If this item is for an individual fringe expense, enter 100. Otherwise, enter the fringe benefit rate here"></lightning-helptext>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>$ Federal</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>$ Match</label>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="LITC_Allocation_Percent__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="Entered_Dollar_Federal__c" disabled={disableEdits} onchange={handleFedChange}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="Entered_Dollar_Match__c" disabled={disableEdits} onchange={handleMatchChange}></lightning-input-field>
+                                    </div>
+                                </div>
+                                <br/>
+                            </template>
+                            <template lwc:else>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>LITC Allocation %</label>
+                                        <lightning-helptext content="If this item is for an individual fringe expense, enter 100. Otherwise, enter the fringe benefit rate here"></lightning-helptext>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>% Federal</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>% Match</label>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="LITC_Allocation_Percent__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="Percent_Federal__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="Percent_Match__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                </div>
+                                <br/>
+                            </template>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <label>Notes</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field variant="label-hidden" field-name="Notes__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+                        <template lwc:if={selectedTypeD}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Description</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="Description__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Category</label>
+                                    <lightning-helptext content="Equipment means tangible personal property having a useful life of more than one year and a per-unit cost that equals or exceeds $10,000"></lightning-helptext>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Category__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Total Cost</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <!-- <template lwc:if={litcAllocationValue}>
+                                        <label>LITC Allocation %</label>
+                                        <lightning-helptext content="This is the percentage of the total cost that will be paid for by the grant (including both federal and match dollars.)"></lightning-helptext>
+                                    </template> -->
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Total_Cost_Supplies_Contr_Other__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <template lwc:if={litcAllocationValue}>
+                                        <lightning-input-field variant="label-hidden" field-name="LITC_Allocation_Percent__c" disabled='true' class="litcAllocation slds-hide" value={litcAllocationValue}></lightning-input-field>
+                                    </template>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <template lwc:if={showPercent}>
+                                <lightning-button type="button" variant="base" onclick={handleToggle} label="Enter federal funding as percent"></lightning-button>
+                            </template>
+                            <template lwc:else>
+                                <lightning-button type="button" variant="base" onclick={handleToggle} label="Enter federal funding as dollar amount"></lightning-button>
+                            </template>
+
+                            <br/><br/>
+
+                            <template lwc:if={showPercent}>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>$ Federal</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>$ Match</label>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="Entered_Dollar_Federal__c" disabled={disableEdits} onchange={handleFedChange}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="Entered_Dollar_Match__c" disabled={disableEdits} onchange={handleMatchChange}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </template>
+                            <template lwc:else>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>% Federal</label>
+                                        <lightning-helptext content="The percentage of the total amount that will be paid with federal funds."></lightning-helptext>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>% Match</label>
+                                        <lightning-helptext content="The percentage total amount that was paid with matching funds."></lightning-helptext>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="Percent_Federal__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="Percent_Match__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </template>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Unit of Measure</label>
+                                    <lightning-helptext content="If this expense is allocated across multiple programs, select the allocation basis.  Otherwise, select Ea. for a standard, non-allocated expense."></lightning-helptext>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Units Attributable to LITC</label>
+                                    <lightning-helptext content="Enter the number of units of the allocation basis that are attributable to the LITC program. Enter 1 for non-allocated expenses."></lightning-helptext>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Total Units</label>
+                                    <lightning-helptext content="Enter the total number of units across all programs for the selected allocation basis. Enter 1 for non-allocated expenses."></lightning-helptext>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="U_M__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Attributable_to_LITC__c" disabled={disableEdits} class="attributable" onchange={handleAllocationChange}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Total_Units__c" disabled={disableEdits} class="totalUnits" onchange={handleAllocationChange}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label>Notes</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field variant="label-hidden" field-name="Notes__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                        </template>
+                        <template lwc:if={selectedTypeE}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Indirect Cost Rate</label>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Modified Total Direct Cost</label>
+                                    <lightning-helptext content="MTDC includes all direct salaries and wages, applicable fringe benefits, materials and supplies, services, and travel. MTDC excludes equipment, capital expenditures, rental costs, tuition remission, scholarships and fellowships, and participant support costs. Other items may only be excluded when necessary to avoid a serious inequity in the distribution of indirect costs, and with the approval of the cognizant agency for indirect costs. See 2 CFR § 200.1."></lightning-helptext>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Indirect_Cost_Rate__c" disabled={disableEdits} onchange={handleRateChange}></lightning-input-field>
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Modified_Direct_Cost__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <template lwc:if={showRateFields}>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>ICRA From Date</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>ICRA To Date</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>Agency who issued ICRA</label>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="ICRA_From_Date__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="ICRA_To_Date__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="Agency_who_issued_ICRA__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                </div>
+                                <br/>
+
+                            </template>
+
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Indirect Cost Rate Type</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="Indirect_Cost_Rate_Type__c" disabled={disableEdits} onchange={handleRateTypeChange}></lightning-input-field>
+                                </div>
+                            </div>
+                            <template lwc:if={showIEUploadFile}>
+                            <br/>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Upload a copy of your approved indirect cost rate agreement</label>
+                            <c-file-loader my-record-id={recordId} file-prefix={filePrefix} dynamic-accepted-format ={dynamicAcceptedFormat}></c-file-loader>
+                            </template>
+
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <label>Extension Requested?</label>
+                                    <lightning-helptext content="Answer if your indirect cost rate agreement is expired"></lightning-helptext>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field variant="label-hidden" field-name="Extension_Requested__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                        </template>
+                        <template lwc:if={selectedTypeF}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Type</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Matching_Funds_Type__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Description</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="Description__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Amount</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <lightning-input-field required variant="label-hidden" field-name="Matching_Funds_Amont__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+                        <br/>
+                    </div> 
+                    <div class="slds-modal__footer">
+                        <template lwc:if={selectedLineItem}>
+                            <lightning-button style="float:left" label="Delete" type="button" variant="destructive " onclick={handleDelete}></lightning-button> 
+                        </template>
+                        <lightning-button label="Submit information" type="submit" variant="brand"></lightning-button> 
+                    </div>
+                </lightning-record-edit-form>
+            </div>                      
+        </section>
+        
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+
+    </template>
+</template>

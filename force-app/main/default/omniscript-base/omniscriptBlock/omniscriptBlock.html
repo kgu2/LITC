@@ -1,0 +1,79 @@
+<template>
+  <ul class="slds-accordion">
+    <li class="slds-accordion__list-item">
+      <section class={blockClasses}>
+        <div class="slds-accordion__summary">
+          <div class="slds-accordion__summary-heading">
+            <template if:true={_propSetMap.repeat}>
+              <button if:true={blockLabel}
+                      aria-controls="content"
+                      tabindex="0"
+                      aria-expanded={expandContent}
+                      class="slds-button slds-button_reset slds-accordion__summary-action"
+                      onclick={toggleContent}>
+                <c-icon extraclass="slds-accordion__summary-action-icon slds-m-right_x-small"
+                        iconposition="left"
+                        icon-name="utility:switch"
+                        size="x-small">
+                </c-icon>
+                <h3 class="slds-truncate"
+                    role="status">
+                  {blockLabel}
+                </h3>
+              </button>
+            </template>
+            <template if:false={_propSetMap.repeat}>
+              <button if:true={blockLabel}
+                      aria-controls="content"
+                      tabindex="0"
+                      aria-expanded={expandContent}
+                      class="slds-button slds-button_reset slds-accordion__summary-action"
+                      onclick={toggleContent}>
+                <c-icon extraclass="slds-accordion__summary-action-icon slds-m-right_x-small"
+                        iconposition="left"
+                        icon-name="utility:switch"
+                        size="x-small">
+                </c-icon>
+                <h3 class="slds-truncate"
+                    role="status">
+                  {blockLabel}
+                </h3>
+              </button>
+            </template>
+          </div>
+          <template if:true={_propSetMap.repeat}>
+            <div class="slds-button-group slds-p-right_large"
+                 role="group">
+              <c-button if:true={canRepeat}
+                        variant="base"
+                        onclick={handleAdd}
+                        label={allCustomLabelsUtil.OmniAdd}
+                        aria-label={_addAriaLabel}>
+              </c-button>
+              <c-button if:true={canRemove}
+                        variant="base"
+                        onclick={handleRemove}
+                        label={allCustomLabelsUtil.OmniDelete}
+                        class="slds-m-left_x-small"
+                        aria-label={_removeAriaLabel}>
+              </c-button>
+            </div>
+          </template>
+        </div>
+        <div if:true={showValidation}
+             class="slds-has-error">
+          <div class="slds-form-element__help">
+            <span class="slds-text-link_faux"
+                  onclick={toggleContent}>
+              {allCustomLabelsUtil.OmniBlockError}
+            </span>
+          </div>
+        </div>
+        <div id="content"
+             class={_blockContentContainer}>
+          <slot></slot>
+        </div>
+      </section>
+    </li>
+  </ul>
+</template>

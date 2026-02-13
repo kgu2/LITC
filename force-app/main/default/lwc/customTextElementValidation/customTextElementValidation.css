@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  background-color: lightgray;
+  transition: 0.5s background-color;
+  padding-left: 0.5rem;
+  position: relative;
+}
+
+:host::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 0.5rem;
+  background-color: dimgray;
+}
+
+.custom-text {
+  padding: 1.5rem;
+
+}

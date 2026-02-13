@@ -1,0 +1,36 @@
+<template>
+  <div class={_modalContainerClass}
+       style="display:none">
+    <section role="dialog"
+             tabindex="-1"
+             aria-modal="true"
+             aria-describedby="modal-content"
+             class={_modalClasses}>
+      <div class={_modalContentContainerClass}
+           style="height: 80vh">
+        <template if:false={hideHeader}>
+          <header class={_headerClasses}>
+            <slot name="header">
+            </slot>
+          </header>
+        </template>
+
+
+        <div class={_contentClasses}>
+          <slot name="content"
+                id="modal-content"
+                aria-live="assertive">
+          </slot>
+        </div>
+
+        <template if:false={hideFooter}>
+          <footer class={_footerClasses}>
+            <slot name="footer">
+            </slot>
+          </footer>
+        </template>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </div>
+</template>

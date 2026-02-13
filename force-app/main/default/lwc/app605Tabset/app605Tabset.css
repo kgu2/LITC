@@ -1,0 +1,135 @@
+@media (min-width: 20px) and (max-width: 750px) {
+    .formQuestionText { 
+    font-size: 24px;
+    }
+    .usa-button_formsheader {
+        display: none;
+    }
+    .time {
+        font-size: 24px;
+    }
+}
+
+.tab{
+    margin-bottom: 10px; 
+    background-color: #F5F5F5; 
+    width: 55%; 
+    height: 18rem; 
+    text-align: center;
+}
+
+.tab:hover{
+    background-color: #efefef!important;
+    cursor: pointer;
+}
+
+label {
+    color: #3D3D3D;
+    src: url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@100&display=swap'); 
+    font-family: "Public Sans", sans-serif;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 24px;
+  }
+
+.formHeaderText {
+    text-align: left;
+    color: #3D3D3D;
+    src: url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@100&display=swap'); 
+    font-family: "Public Sans", sans-serif;
+    font-size: 32px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 24px;
+}
+
+.formSubText {
+    text-align: left;
+    color: #3D3D3D;
+    src: url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@100&display=swap'); 
+    font-family: "Public Sans", sans-serif;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 24px;
+}
+
+.disabled .slds-tabs_default__link:hover{
+    cursor: not-allowed;
+}
+
+.usa-button_formsoutline {
+    font-family: Source Sans Pro Web,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
+    font-size: 1.06rem;
+    line-height: .9;
+    background-color: #0053A2;
+    box-shadow: inset 0 0 0 2px #005ea2;
+    color: #fff;
+    appearance: none;
+    border: 0;
+    border-radius: .25rem;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 700;
+    margin-right: .5rem;
+    padding: .75rem 1.25rem;
+    text-align: center;
+}
+
+.buttonLink {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    /* font-family: "Public Sans", sans-serif; */
+    color: #069;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 18px !important;
+    outline: none;
+  }
+.pageContainer{
+    position: relative;
+    /* transform: rotate(0deg); */
+    min-height: 100vh;
+}
+@media (min-width: 480px) {
+    .content{
+        /* position: fixed;
+        top: 2em; */
+    }    
+}
+@media (max-width: 479px){
+    .contentParent{
+        transform: rotate(0deg);
+    }
+    .content{
+        position: absolute;
+        top: 7em;
+        left: 0em;
+    }
+    .headerImg{
+        width:max-content;
+    }
+}
+
+.progress-ring {
+    transform: scale(2.5) translate(0.5em,0.5em);
+    margin-left: 10px;
+    position: fixed;
+}
+
+.progressContainer{ 
+    position: fixed;
+    margin-left: 1rem;
+}
+
+/* .padded {
+    cursor: pointer;
+} */
+
+p {
+    font-size: 16pt;
+}
+
+h2 {
+    font-size: 18pt;
+}

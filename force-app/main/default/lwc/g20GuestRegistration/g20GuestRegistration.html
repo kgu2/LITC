@@ -1,0 +1,397 @@
+<template>
+    <div class="slds-grid slds-wrap slds-grid_align-center">
+        <div class="slds-col slds-size_1-of-1 slds-medium-size_10-of-12">
+            <template lwc:if={isSessionValid}>
+                <div class="slds-box">
+                    <h2>Start a new registration</h2>
+                    <br/>
+                
+                    <lightning-progress-indicator current-step={currentStep} type="base" variant="base">
+                        <lightning-progress-step label="Delegate Information" value="1" onclick={handleNavigatePrevent}></lightning-progress-step>
+                        <lightning-progress-step label="Passport Upload" value="2" onclick={handleNavigatePrevent}></lightning-progress-step>
+                        <lightning-progress-step label="Emergency Contact Information" value="3" onclick={handleNavigatePrevent}></lightning-progress-step>
+                        <lightning-progress-step label="Travel Information" value="4" onclick={handleNavigatePrevent}></lightning-progress-step>
+                    </lightning-progress-indicator>
+                    <br/>
+                    <div class={currentStepOne}>
+                        <h3>Delegate Information</h3>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>First/Given Name</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="DI_First_Name__c" class="tab1" value={firstName}></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Middle Name</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input variant="label-hidden" data-field="DI_Middle_Name__c" value={middleName}></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Last/Family Name</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="DI_Last_Name__c" class="tab1" value={lastName}></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Title</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox variant="label-hidden" required options={titleOptions} onchange={handleTitleChange} value={title} class="tab1" data-field="DI_Title__c"></lightning-combobox>
+                            </div>
+                        </div>
+                        <br/>
+                        <template lwc:if={showTitleOther}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Please specify</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <lightning-input variant="label-hidden" data-field="Title_Other__c"></lightning-input>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Sex</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox variant="label-hidden" required options={genderOptions} onchange={handleGenderChange} value={gender} class="tab1" data-field="DI_Gender__c"></lightning-combobox>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Email</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="DI_Email__c" class="tab1" disabled value={email} type="email"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Phone number</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="DI_Phone_Number__c" class="tab1" value={phone} type="tel"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Delegation/International Organization</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input variant="label-hidden" data-field="Delegation_International_Organization__c" value={delegation} disabled></lightning-input>
+                                <!-- <lightning-combobox  variant="label-hidden" required  onchange={handleDelegationChange} class="tab1" data-field="Delegation_International_Organization__c" value={delegation} disabled></lightning-combobox> -->
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Ministry of Finance/Central Bank</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox  variant="label-hidden" required options={ministryOptions} onchange={handleMinistryChange} class="tab1" data-field="Ministry_of_Finance_Central_Bank__c"></lightning-combobox>
+                            </div>
+                        </div>
+                        <br/>
+                        <template lwc:if={showMinistryOther}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Please specify</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <lightning-input variant="label-hidden" data-field="Ministry_Other__c"></lightning-input>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Job Title</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="DI_Job_Title__c" class="tab1"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>G20 Role</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox variant="label-hidden" required options={g20RoleOptions} onchange={handleG20RoleChange} class="tab1" data-field="G20_Role__c" value={role} disabled></lightning-combobox>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Dietary Restrictions/Allergies</label>
+                                <lightning-helptext content="please provide any dietary restrictions, if not applicable please indicate none"></lightning-helptext>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="Dietary_Restrictions__c" class="tab1"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <br/><br/>
+                        <lightning-button variant="brand" onclick={handleNavigate} label="Next" value="2" style="float:right"></lightning-button>
+                    </div>
+                    <div class={currentStepTwo}>
+                        <h3>Photo Upload</h3>
+                        <br/>
+                        <p>Please upload a passport sized photo for your credential.</p>
+                        <br/>
+                        <c-guest-file-upload rec-id={registrationId} onfileloaded={handleFileLoaded}></c-guest-file-upload>
+                        <br/><br/>
+                        <lightning-button variant="brand-outline" onclick={handleNavigate} label="Previous" value="1" style="float:left"></lightning-button>
+                        <lightning-button variant="brand" onclick={handleNavigate} label="Next" value="3" style="float:right"></lightning-button>
+                    </div>
+                    <div class={currentStepThree}>
+                        <h3>Emergency Contact Information</h3>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>First/Given Name</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="EC_First_Name__c" class="tab3"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Middle Name</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input variant="label-hidden" data-field="EC_Middle_Name__c"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Last/Family Name</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="EC_Last_Family_Name__c" class="tab3"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Email</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="EC_Email__c" class="tab3" type="email"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Phone number</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="EC_Phone__c" class="tab3" type="tel"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+            
+                        <br/><br/>
+                        <lightning-button variant="brand-outline" onclick={handleNavigate} label="Previous" value="2" style="float:left"></lightning-button>
+                        <lightning-button variant="brand" onclick={handleNavigate} label="Next" value="4" style="float:right"></lightning-button>
+                    </div>
+                    <div class={currentStepFour}>
+                        <h3>Travel Information</h3>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Passport Number</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="Passport_Number__c" class="tab4"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Passport Issuing Jurisdiction</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox variant="label-hidden" required options={countryOptions} onchange={handleCountryChange} class="tab4" data-field="Passport_Jurisdiction__c"></lightning-combobox>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Country of Birth</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-combobox variant="label-hidden" required options={countryOptions} onchange={handleCountryChange} class="tab4" data-field="Country_of_Birth_v2__c"></lightning-combobox>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Date of Birth</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input required variant="label-hidden" data-field="Date_of_Birth__c" class="tab4" type="date"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Flight Number</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input variant="label-hidden" data-field="Flight_Number__c"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Arrival Airport code</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input variant="label-hidden" data-field="Arrival_Airport_Code__c" maxlength="3"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Arrival Date and Time</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input variant="label-hidden" data-field="Arrival_Date_Time__c" type="datetime"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Departure Airport code</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input variant="label-hidden" data-field="Departure_Airport_Code__c" maxlength="3"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Departure Date and Time</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input variant="label-hidden" data-field="Departure_Date_Time__c" type="datetime"></lightning-input>
+                            </div>
+                        </div>
+                        <br/>
+                
+                        <br/><br/>
+                        <lightning-button variant="brand-outline" onclick={handleNavigate} label="Previous" value="3" style="float:left"></lightning-button>
+                        <lightning-button variant="brand" type="submit" label="Submit" style="float:right" onclick={handleSubmitRegistration}></lightning-button>
+                    </div>   
+                    <br/>
+                </div>
+            </template>
+            <template lwc:if={showErrorMessage}>
+                <p><b>You do not have access to this site, or the link you are trying to use has expired. If you believe this is an error, contact G20finance.Logistics@treasury.gov for assistance.</b></p>
+            </template>
+            <template lwc:else>
+                <template lwc:if={isStatusSubmitted}>
+                    <p><b>Your registration has been submitted. You may exit this page.</b></p>
+                </template>
+            </template>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,114 @@
+<template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <c-litc-header ongetpage={handleGetPage} current-page={currentPage}></c-litc-header>
+
+    <c-litc-custom-event-listener ongetresultssf={handleResultsSF} ongetresults13424={handleResultsForm13424} version={version} ongetresultslegacy13424={handleResultsFormLegacy13424} ongetresultslegacy13424m={handleResultsFormLegacy13424M}></c-litc-custom-event-listener>
+
+    <c-signature-capture record-id={recordId} onsuccess={handleSignatureSuccess}></c-signature-capture>
+
+    <template lwc:if={currentPageOverview}>
+        <div style="width: 190px;"></div>
+        <br/>
+        <h1>Overview</h1>
+  
+        <h2 style="margin-top: 2rem;">General instructions</h2>
+        <p>The information collected with these forms will be closely evaluated when reviewing and scoring the grant application. Please answer all the questions carefully and report all information completely and accurately. Please also review the instructions on each of the forms. The Form 13424-M is an interactive form and answers you provide about the type of application and program plan will determine what questions you are asked as you go through the form. Pay close attention to these early responses to ensure you are prompted with the questions that pertain to your clinic’s program plan. Also, all three forms must be completed before the application can be submitted. </p>
+
+        <br/>
+        <div style="display:flex">
+          <div class="slds-box card" onclick={handleFormBoxClick} data-name="sf424">
+            <div class="subText">Standard Form 424: Application for Federal Assistance</div>
+            <br/>
+            <template lwc:if={disableEditsSF424}>
+              <lightning-badge label={sf424Status} class="slds-theme_success" style="font-size:0.8rem"></lightning-badge>
+            </template>
+            <template lwc:else>
+              <lightning-badge label={sf424Status} class="slds-theme_warning" style="font-size:0.8rem"></lightning-badge>
+            </template>
+          </div>
+          <div class="slds-box card" onclick={handleFormBoxClick} data-name="form13424J">
+            <div class="subText">Form 13424-J: Detailed Budget Worksheet and Narrative Explanations</div>
+            <br/>
+            <template lwc:if={disableEdits13424J}>
+              <lightning-badge label={form13424JStatus} class="slds-theme_success" style="font-size:0.8rem"></lightning-badge>
+            </template>
+            <template lwc:else>
+              <lightning-badge label={form13424JStatus} class="slds-theme_warning" style="font-size:0.8rem"></lightning-badge>
+            </template>
+          </div>
+          <div class="slds-box card" onclick={handleFormBoxClick} data-name="form13424M">
+            <div class="subText">Form 13424-M: Low Income Taxpayer Clinic (LITC) Application Narrative</div>
+            <br/>
+            <template lwc:if={disableEdits13424M}>
+              <lightning-badge label={form13424MStatus} class="slds-theme_success" style="font-size:0.8rem"></lightning-badge>
+            </template>
+            <template lwc:else>
+              <lightning-badge label={form13424MStatus} class="slds-theme_warning" style="font-size:0.8rem"></lightning-badge>
+            </template>
+          </div>
+        </div>
+
+        <br/>
+
+        <template lwc:if={isAppSubmitted}>
+          <p>Thank you for submitting! Click <a onclick={handleSurveyNav}>here</a> to complete a survey.</p>
+          <template lwc:if={showUnsubmitApp}>
+            <p>You may unsubmit your application at any time before the submission deadline by clicking <a onclick={showUnsubmit}>here</a>. Note: you will need to resubmit both forms if you unsubmit your application</p>
+          </template>
+          <p></p>
+          <br/>
+        </template>
+        <template lwc:else>
+          <p>Note: you must complete all forms to submit your application.</p>
+          <lightning-button type="button" variant="brand" disabled={disableSubmitButton} label="Submit application" onclick={handleSubmit}></lightning-button>
+        </template>
+
+        <footer></footer> 
+    </template>
+    <template lwc:if={currentPageSF424}>
+      <c-sf424 record-id={recordId} disable-edits={disableEditsSF424} status={sf424Status} record-fields={recordFields} deadline-passed={deadlinePassed} results={sf424Results} areas-project={areasAffectedProject}></c-sf424>
+    </template>
+    <template lwc:if={currentPageForm13424J}>
+      <c-form-13424-j record-id={recordId} disable-edits={disableEdits13424J} status={form13424JStatus} record-fields={recordFields} deadline-passed={deadlinePassed} app-status={status}></c-form-13424-j>
+    </template>
+    <template lwc:if={currentPageForm13424M}>
+      <c-form-13424 record-id={recordId} disable-edits={disableEdits13424M} status={form13424MStatus} record-fields={recordFields} deadline-passed={deadlinePassed} results={form13424Results} application-type={applicationType} version={version} legacy-app-id={legacyAppId} legacy-results={formLegacy13424Results} legacy-results-m={formLegacy13424MResults} app-status={status}></c-form-13424>
+    </template>
+
+    <template if:true={showSubmissionNotification}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+            <div class="slds-modal__container">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeWelcome} style="margin-right: 2rem">
+                    <lightning-icon icon-name="utility:close"
+                    alternative-text="close"
+                    variant="inverse"
+                    size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+                </button>
+               
+                  <div class="slds-modal__content slds-var-p-around_large" style={splash}>
+                    <div style="color:#083c6f; margin-top:7rem; background-color:white; width: 85%; border-radius: 10px; padding-top:inherit; margin-left: auto; margin-right: auto;">
+                      <h2 style="text-align: center; font-size:20pt" class="animate__animated animate__bounceIn">Application submission</h2>
+                      <br/> 
+                      <p style="padding-left: 4rem; padding-right:4rem; font-size:12pt" class="animate__animated animate__bounceIn">You may now submit your application!</p>
+                      <br/>
+                      <p style="padding-left: 4rem; padding-right:4rem; font-size:12pt" class="animate__animated animate__bounceIn">Go to the overview tab to submit your application</p>
+              
+                      <br/>
+                        <div style="text-align: center;"> 
+                            <lightning-button type="button" variant="brand" onclick={closeWelcome} label="Continue"></lightning-button>
+                        </div>
+                      <br/>
+                    </div>
+                  </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+
+
+</template>

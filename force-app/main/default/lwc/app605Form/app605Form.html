@@ -1,0 +1,355 @@
+<template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="medium"></lightning-spinner>
+    </template>
+
+    <!-- <template if:true={errors}>
+      <div style="text-align: center;">
+        <p>You must address the following issues before you can submit:</p><br />
+        <template for:each={errors} for:item="err">
+          <p style="font-weight:bold;color:red;padding-bottom: 4px;" key={err}>{err}</p>
+        </template>
+        <div style="height:15px;"></div>
+      </div>
+    </template> -->
+
+
+    <lightning-record-edit-form object-api-name="X605_Application__c" record-id={recordId} onsubmit={handleSubmit} onsuccess={handleSuccess} onerror={handleError}>
+          <h1 style="font-size:24pt">Local Assistance and Tribal Consistency Fund</h1>
+          <br/>
+          <p>Eligible entities, which include eligible revenue sharing counties, eligible revenue sharing consolidated governments, and eligible Tribal governments, under the Local Assistance and Tribal Consistency Fund, authorized by section 605 of the Social Security Act, as added by section 9901 of the American Rescue Plan Act of 2021, Pub. L. No. 117-2 (Mar. 11, 2021), and as amended by Section 103 of Division LL of the Consolidated Appropriations Act, 2023, may receive direct payment from Treasury by providing the following payment information. </p>
+          <!-- <br/>
+          <p>
+            An eligible revenue sharing county is (A) a county, parish or borough that is (i) independent of any unit of local government; and (ii) that, as determined by the Secretary, is the principal provider of government services for the area within its jurisdiction; and (iii) for which, as determined by the Secretary, there is a negative revenue impact due to implementation of a Federal program or changes to such program; and (B) the District of Columbia, the Commonwealth of Puerto Rico, Guam, and the United States Virgin Islands. 
+          </p> -->
+          <br/>
+
+          <template if:false={secondTranche}>
+            <p>
+              An eligible Tribal government is the recognized governing body of any Indian or Alaska Native tribe, band, nation, pueblo, village, community, component band, or component reservation, individually identified (including parenthetically) in the list published most recently as of March 11, 2021 pursuant to section 104 of the Federally Recognized Indian Tribe List Act of 1994 (25 U.S.C. 5131). 
+            </p>
+            <br/>
+          </template>
+          <h2>Information Import Option</h2>
+          <br/>
+
+          <template if:true={secondTranche}>
+            <p>For your convenience, you may now opt to complete the 'LATCF Form' (below) by importing information from your existing LATCF First Tranche submission </p>
+            <br/>
+       
+            <template if:false={disableEdits}>
+              <lightning-button type="button" variant="neutral" label="Import Information from LATCF First Tranche Submission " onclick={openImportModal} ></lightning-button>
+            </template>
+          </template>
+          <template if:false={secondTranche}>
+            <p>For your convenience, you may now opt to complete the 'LATCF Form' (below) by importing the information from your existing State and Local Fiscal Recovery Funds (SLFRF) application.</p>
+            <br/>
+       
+            <template if:false={disableEdits}>
+              <lightning-button type="button" variant="neutral" label="Import Information from SLFRF Application" onclick={openImportModal} ></lightning-button>
+            </template>
+          </template>
+
+          <br/><br/><br/>
+            <div class="slds-box">
+              <h2 style="display: inline-block;">Recipient</h2>          
+              <br/> <br/>
+              <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                  <label>Recipient Name</label>
+                  <lightning-input-field variant="label-hidden" disabled='true' field-name="Recipient_Name__c" data-name="Recipient_Name__c" onchange={autosave} tabindex="0" onfocus={handleInputFocus}></lightning-input-field>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                  <label>UEI Number (12 Digits)</label>
+                  <lightning-input-field  variant="label-hidden" disabled='true' field-name="Recipient_UEI__c" data-name="Unique_Entity_Identifier__c" onchange={autosave} class="ueiField"></lightning-input-field>
+                  <template if:true={ueiError}>
+                    <div class="slds-form-element__help" style="color: #930012;">UEI Number must be 12 digits</div>
+                  </template>     
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">  
+                  <label>Taxpayer ID Number (9 Digits)</label>
+                  <lightning-input-field variant="label-hidden" disabled='true' field-name="Recipient_s_Taxpayer_ID_Number__c" data-name="Recipient_s_Taxpayer_ID_Number__c" onchange={autosave} class="tin"></lightning-input-field> 
+                  <template if:true={tinError}>
+                    <div class="slds-form-element__help" style="color: #930012;">Taxpayer ID Number must be 9 digits</div>
+                  </template>             
+                </div>   
+              </div>
+                <br />
+                <label>Street Address</label>
+                <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                  <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Street__c" data-name="Address__c" data-nametwo="X2T_Address__c" onchange={autosave}></lightning-input-field>
+                </div>
+                <br />
+                <div class="slds-grid slds-gutters slds-wrap">
+                  <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1">
+                      <label>City</label>
+                      <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="City__c" data-name="City__c" data-nametwo="X2T_City__c" onchange={autosave}></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1">  
+                    <label>State/Territory</label>
+                    <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="State__c" onchange={autosave}></lightning-input-field>
+                  </div>
+                  <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1">  
+                    <label>Postal Code +4 (xxxxx-xxxx)</label>
+                    <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Postal_Code__c" data-name="Postal_Code_4__c" data-nametwo="X2T_Postal_Code_4_XXXXX_XXXX__c" onchange={autosave} class="postCode"></lightning-input-field>
+                    <template if:true={postalError}>
+                      <div class="slds-form-element__help" style="color: #930012;">Postal Code + 4 must be entered in its correct format</div>
+                    </template>    
+                  </div>
+                </div>
+                <br/>
+                <div class="slds-grid slds-gutters slds-wrap">
+                    <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                      <label>Type of recipient (choose one):</label>
+                      <lightning-input-field  variant="label-hidden" disabled='true' field-name="Recipient_Type__c" onchange={autosave} value={recipType}></lightning-input-field>
+                    </div>
+                </div>
+            <br><br />
+            <h2>Authorized Representative for the Recipient</h2>
+            <br/>
+            <div class="slds-grid slds-gutters slds-wrap">
+              <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1">  
+                <label>First Name</label>
+                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="First_Name_of_Authorized_Representative__c" data-name="First_Name_of_Authorized_Representative__c" data-nametwo="X2T_1st_Name_of_Authorized_Representativ__c" onchange={autosave}></lightning-input-field>
+              </div>
+              <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1">  
+                <label>Last Name</label>
+                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Last_Name_of_Authorized_Representative__c" data-name="Last_Name_of_Authorized__c" data-nametwo="X2TLast_Name_of_Authorized_Representativ__c" onchange={autosave}></lightning-input-field>
+              </div>
+              <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1">  
+                <label>Title</label>
+                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Title_of_Authorized_Representative__c" data-name="Title_of_Authorized_Representative__c" data-nametwo="X2T_Title_of_Authorized_Representative__c" onchange={autosave}></lightning-input-field>
+              </div>
+            </div>
+            <br />
+            <div class="slds-grid slds-gutters slds-wrap">
+              <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1"> 
+                  <label>Phone</label>
+                  <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Authorized_Representative_Phone__c" data-name="Authorized_Individual_Phone__c" data-nametwo="X2T_Authorized_Individual_Phone__c" onchange={autosave}></lightning-input-field>
+                </div>
+                <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1"> 
+                  <label>Email</label>
+                  <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Authorized_Representative_Email__c" data-name="Authorized_Individual_Email__c" data-nametwo="X2T_Authorized_Individual_Email__c" onchange={autosave}></lightning-input-field>
+                </div>
+            </div>
+            <br/><br />
+              <h2>Contact Person</h2>
+              <br/>
+              <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1"> 
+                  <label>First Name</label>
+                  <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Contact_Person_First_Name__c" data-name="Contact_Person_First_Name__c" data-nametwo="X2T_Contact_Person_First_Name__c" onchange={autosave}></lightning-input-field>
+                </div>
+                <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1"> 
+                  <label>Last Name</label>
+                  <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Contact_Person_Last_Name__c" data-name="Contact_Person_Last_Name__c" data-nametwo="X2T_Contact_Person_Last_Name__c" onchange={autosave}></lightning-input-field>
+                </div>
+                <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1"> 
+                  <label>Title</label>
+                  <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Contact_Person_Title__c" data-name="Contact_Person_Title__c" data-nametwo="X2T_Contact_Person_Title__c" onchange={autosave}></lightning-input-field>
+                </div>
+              </div>
+              <br/>
+              <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1"> 
+                  <label>Phone</label>
+                  <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Contact_Person_Phone__c" data-name="Contact_Person_Phone__c" data-nametwo="X2T_Contact_Person_Phone__c" onchange={autosave} class="contactPhone"></lightning-input-field>
+                  <template if:true={conPhoneError}>
+                    <div class="slds-form-element__help" style="color: #930012;">Contact Phone must be at least 10 digits.</div>
+                  </template>    
+                </div>
+                <div class="slds-col slds-medium-size_1-of-3 slds-size_1-of-1"> 
+                  <label>Email</label>
+                  <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Contact_Person_Email__c" data-name="Contact_Person_Email__c" data-nametwo="X2T_Contact_Person_Email__c" onchange={autosave}></lightning-input-field>
+                </div>
+            </div>
+          </div>
+          <br/>
+          <div class="slds-box">
+
+            <h2 style="display:inline-block;">Financial Institution Information</h2>
+            <lightning-icon icon-name="custom:custom16" alternative-text="Connected" size="medium" title="large size" style="margin-left: 10px;"></lightning-icon>
+            <br/>   <br/>
+            <div class="slds-grid slds-gutters slds-wrap">
+                <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                    <label >Routing Transit Number (ACH)</label>
+                    <lightning-helptext content="Please fill in your Wire and ACH Routing Number. ACH Routing Number is required."></lightning-helptext>
+                    <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Routing_Transit_Number_ACH__c" data-name="Routing_Transit_Number_ACH__c" data-nametwo="X2T_Routing_Transit_Number_ACH__c" onpaste={handlePaste} onchange={autosave} class="ach"></lightning-input-field>
+                    <template if:true={achError}>
+                      <div class="slds-form-element__help" style="color: #930012;">Routing Number (ACH) must be 9 digits.</div>
+                    </template>    
+                </div>
+                <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                    <label >Confirm Routing Transit Number (ACH)</label>
+                    <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Confirm_Routing_Number_ACH__c" onpaste={handlePaste} onchange={autosave} class="confirmACH"></lightning-input-field>
+                    <template if:true={confirmACHError}>
+                      <div class="slds-form-element__help" style="color: #930012;">Routing Numbers (ACH) must match</div>
+                    </template>    
+                </div>  
+            </div>
+            <br/>
+            <div class="slds-grid slds-gutters slds-wrap">
+              <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                  <label >Routing Transit Number (WIRE)<i>(Optional)</i></label>
+                  <lightning-helptext content="Please fill in your Wire and ACH Routing Number. Wire Routing Number is optional."></lightning-helptext>
+                  <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Routing_Transit_Number_WIRE__c" data-name="Routing_Transit_Number_Wire__c" data-nametwo="X2T_Routing_Transit_Number_Wire__c" onpaste={handlePaste} onchange={autosave} class="wire"></lightning-input-field>
+                  <template if:true={wireError}>
+                    <div class="slds-form-element__help" style="color: #930012;">Routing Number (Wire) must be 9 digits.</div>
+                  </template>    
+              </div>
+              <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                  <label >Confirm Routing Transit Number (WIRE)</label>
+                  <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Confirm_Routing_Number_WIRE__c" onpaste={handlePaste} onchange={autosave} class="confirmWire"></lightning-input-field>
+                  <template if:true={confirmWireError}>
+                    <div class="slds-form-element__help" style="color: #930012;">Routing Numbers (Wire) must match.</div>
+                  </template>    
+              </div>
+            </div>
+            <br/>
+            <div class="slds-grid slds-gutters slds-wrap">
+              <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <label >Recipient’s Account Number</label>
+                <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Recipient_Account_Number__c" data-name="Recipient_s_Account_Number__c" data-nametwo="X2T_Recipient_s_Account_Number__c" onpaste={handlePaste} onchange={autosave} class="acctNum"></lightning-input-field>
+                <template if:true={acctError}>
+                  <div class="slds-form-element__help" style="color: #930012;">Recipient Account Number must be at least 4 digits</div>
+                </template>    
+              </div>
+              <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <label >Confirm Recipient’s Account Number</label>
+                  <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Confirm_Recipient_Account_Number__c" onpaste={handlePaste} onchange={autosave} class="confirmAcct"></lightning-input-field>
+                  <template if:true={confirmAcctError}>
+                    <div class="slds-form-element__help" style="color: #930012;">Account Numbers must match</div>
+                  </template>    
+              </div>
+            </div>
+            <br/>
+            <div class="slds-grid slds-gutters slds-wrap">
+              <div class="slds-col slds-size_1-of-2 slds-size_1-of-1">
+                <label >Financial Institution Name</label>
+                <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Financial_Institution_Name__c" data-name="Financial_Institution_Name__c" data-nametwo="X2T_Financial_Institution_Name__c" onchange={autosave}></lightning-input-field>
+              </div>
+              <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <label >Financial Institution Telephone Number</label>
+                <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Financial_Institution_Phone_Number__c" data-name="Financial_Institution_Telephone_Number__c" data-nametwo="X2T_Financial_Institution_Telephone_Numb__c" onchange={autosave} class="finPhone"></lightning-input-field>
+                <template if:true={finPhoneError}>
+                  <div class="slds-form-element__help" style="color: #930012;">Financial Institution Telephone Number must be at least 10 digits.</div>
+                </template>    
+              </div>
+            </div>
+            <br/>
+            <div class="slds-grid slds-gutters slds-wrap">
+              <div class="slds-col slds-size_1-of-1 slds-size_1-of-1">
+                <label >Financial Institution Address</label>
+                <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Financial_Institution_Address__c" data-name="Financial_Institution_Address__c" data-nametwo="X2T_Financial_Institution_Address__c" onchange={autosave}></lightning-input-field>
+              </div>
+            </div>
+            <br/>
+            
+            <!-- <div class="slds-grid slds-gutters  slds-wrap">
+              <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <label >Financial Institution Street</label>
+                <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Financial_Institution_Street__c" data-name="Financial_Institution_Address__c" onchange={autosave}></lightning-input-field>
+              </div>
+              <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <label >Financial Institution City</label>
+                <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Financial_Institution_City__c" data-name="Financial_Institution_Address__c" onchange={autosave}></lightning-input-field>
+              </div>
+            </div> 
+            <br/>
+            <div class="slds-grid slds-gutters slds-wrap">
+              <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <label >Financial Institution State</label>
+                <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Financial_Institution_State__c" onchange={autosave}></lightning-input-field>
+              </div>
+              <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <label >Financial Institution Postal Code</label>
+                <lightning-input-field variant="label-hidden" disabled={disableEdits} field-name="Financial_Institution_Postal_Code__c" data-name="Financial_Institution_Address__c" onchange={autosave}></lightning-input-field>
+              </div>
+            </div>            -->
+          </div>
+
+          <p style="font-size: 13pt;margin-top:20px;">
+            PAPERWORK REDUCTION ACT NOTICE
+            The information collected will be used for the U.S. Government to process requests for
+            support. The estimated burden associated with this collection of information is one
+            hour per response. Comments concerning the accuracy of this burden estimate and
+            suggestions for reducing this burden should be directed to the Office of Privacy,
+            Transparency and Records, Department of the Treasury, 1500 Pennsylvania Ave., N.W.,
+            Washington, D.C. 20220. DO NOT send the form to this address. An agency may not
+            conduct or sponsor, and a person is not required to respond to, a collection of
+            information unless it displays a valid control number assigned by OMB.
+          </p> 
+            <br/>      <br/>
+
+            <table>
+              <tr>
+                  <td style="text-align: left;" width="33%">
+                    <lightning-button type="button" label="Back: Instructions" onclick={handleNav} name="instructions"></lightning-button>
+                  </td>
+                  <td style="text-align: center;" width="33%">
+                    <template if:true={showReturnToDraft}>
+                      <lightning-button class="slds-m-top_small" type="button" variant="brand" label="Return to Draft" onclick={openReturnDraftModal}></lightning-button>
+                    </template>
+                    <template if:false={showReturnToDraft}>
+                      <template if:true={isSaved}>
+                        <div style="color: green;"> Your Progress is Saved!</div>
+                      </template>
+                    </template>
+                  </td>
+                  <td style="text-align: right;" width="33%">
+                    <template if:true={secondTranche}>
+                      <lightning-button type="button" label='Next: Affirmation' onclick={handleNav} name="certification"></lightning-button>
+                    </template>
+                    <template if:false={secondTranche}>
+                      <lightning-button type="button" label={certTabText} onclick={handleNav} name="certification"></lightning-button>
+                    </template>
+                  </td>
+              </tr>
+          </table>
+        
+    </lightning-record-edit-form>
+
+    <br/><br/><br/><br/>
+
+    <template if:true={showModalImport}>
+      <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+      aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+          <div class="slds-modal__container" style="color: black">
+              <div class="slds-modal__content slds-var-p-around_large" style="min-height:250px;">
+                  <h1 style="text-align: center; margin-top:100px;">
+                    <template if:true={secondTranche}>
+                      Are you sure you want import data from your LATCF First Tranche Submission?
+                    </template>
+                    <template if:false={secondTranche}>
+                      Are you sure you want import data from your State and Local Fiscal Recovery Fund Application? 
+                    </template>
+                  </h1>
+              </div>
+              <footer class="slds-modal__footer">
+                  <button class="slds-button slds-button_neutral" type="button" onclick={closeImportModal}>No</button>
+                  <button class="slds-button slds-button_brand" onclick={handleImport}>Yes</button>
+              </footer>
+          </div>
+      </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+  <template if:true={showModalReturnDraft}>
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+    aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+        <div class="slds-modal__container" style="color: black">
+            <div class="slds-modal__content slds-var-p-around_large" style="min-height:250px;">
+                <h1 style="text-align: center; margin-top:100px;">
+                    Are you sure you want return to draft? You will have to resubmit.
+                </h1>
+            </div>
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={closeReturnDraftModal}>No</button>
+                <button class="slds-button slds-button_brand" onclick={returnToDraft}>Yes</button>
+            </footer>
+        </div>
+    </section>
+  <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+
+</template>

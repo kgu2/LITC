@@ -1,0 +1,50 @@
+<template>
+  <div class='slds-grid slds-wrap'>
+    <div class='slds-box slds-grid slds-grid_vertical slds-p-around_small slds-m-bottom_large slds-m-right_small'>
+      <button onclick={triggerRemote}
+              class='slds-p-vertical_medium slds-p-horizontal_xx_small'>
+        Click me for Remote Action
+      </button>
+      <button onclick={triggerQueueable}
+              class='slds-p-vertical_medium slds-p-horizontal_xx_small'>
+        Click me for Remote Action with Queueable
+      </button>
+      <button onclick={triggerContinuation}
+              class='slds-p-vertical_medium slds-p-horizontal_xx_small'>
+        Click me for Remote Action with Continuation
+      </button>
+      <button onclick={triggerChainable}
+              class='slds-p-vertical_medium slds-p-horizontal_xx_small'>
+        Click me for Chainable through IP
+      </button>
+      <button onclick={triggerFuture}
+              class='slds-p-vertical_medium slds-p-horizontal_xx_small'>
+        Click me for Future through IP
+      </button>
+    </div>
+
+    <div class='slds-box slds-grid slds-grid_vertical slds-p-around_small slds-m-bottom_large slds-m-right_small'>
+      <button onclick={triggerRemote2}
+              class='slds-p-vertical_medium slds-p-horizontal_xx_small'>
+        Click me for Remote Action using omniRemoteCall in omniscript base mixin
+      </button>
+    </div>
+
+    <template if:true={spinnerEnabled}>
+      <div class="slds-spinner-container__wrapper">
+        <c-spinner variant="brand"
+                   alternative-text="Loading.."
+                   size="medium">
+        </c-spinner>
+      </div>
+    </template>
+    <template if:true={omniSpinnerEnabled}>
+      <div class="slds-spinner-container__wrapper">
+        <c-spinner variant="brand"
+                   alternative-text="Loading.."
+                   size="medium">
+        </c-spinner>
+      </div>
+    </template>
+  </div>
+</template>

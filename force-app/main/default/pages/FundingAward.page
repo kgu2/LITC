@@ -1,0 +1,933 @@
+<apex:page standardController="FundingAward" extensions="FundingAwardPDFController" renderAs="pdf" name="test.pdf" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <head>
+        <style type="text/css">
+
+            * {
+                font-family: sans-serif;
+                font-size: 12px;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box; 
+            }
+
+            table {
+                border-collapse: collapse;
+                /* border: 1px solid black; */
+                border-spacing: 0;
+                margin: 0;
+                width: 100%;
+            }
+
+            td, th {
+                border: 0.5px solid black;
+                border-collapse: collapse;
+                padding: 5px;
+                margin: 0;
+            }
+            th{
+                background-color: #dcf5fa;
+                font-weight: bold;
+                text-align: center;
+            }
+            .value{ 
+                color : #3083cf;
+                font-weight: bold;
+                word-wrap: break-word;
+                white-space: normal;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div class="header">
+            <div style="float: left">
+                <h2 style="font-size: 15px">Taxpayer Advocate Service</h2>
+                <br/>
+                <p style="color: #3083cf; font-size: 15px">Your Voice at the IRS</p>
+            </div>
+            <div style="float: right">
+                <h2 style="font-size: 15px">Notice of Award</h2>
+                <br/>
+                <p>Award #: {!FundingAward.Award_Number__c}</p>
+                <p>FAIN #: {!FundingAward.FAIN__c}</p>
+                <p>Federal Award Date: &nbsp;<apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!FundingAward.CreatedDate}"/></apex:outputText></p>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <br/><br/>
+
+        <div style="width: 35%; margin-left: 1px; float: left;">
+            <div style="width: 100%;">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Recipient Information</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                1. Recipient Name
+                                <br/>
+                                <span class="value">{!FundingAward.Application_for_Federal_Assistance__r.Legal_Name__c}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                2. Congressional District of Recipient
+                                <br/>
+                                <span class="value">{!congressionalDistrict}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                3. Payment System Identifier (ID)
+                                <br/>
+                                <span class="value">1{!FundingAward.Application_for_Federal_Assistance__r.Employer_Taxpayer_Number__c}{!FundingAward.Payment_System_Identifier__c}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                4. Employer Identification Number (EIN)
+                                <br/>
+                                <span class="value">{!FundingAward.Application_for_Federal_Assistance__r.Employer_Taxpayer_Number__c}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                5. Data Universal Numbering System (DUNS)
+                                <br/>
+                                <!-- <span class="value">value</span> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                6. Recipient's Unique Entity Identifier (UEI)
+                                <br/>
+                                <span class="value">{!FundingAward.Application_for_Federal_Assistance__r.Organizational_UEI__c}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                7. Project Director or Principal Investigator
+                                <br/>
+                                <span class="value">{!legacyApp.Clinic_Director_First_Name__c} {!legacyApp.Clinic_Director_Last_name__c}</span> 
+                                <br/>
+                                <span class="value">{!legacyApp.Clinic_Director_Email_address__c}</span>
+                                <br/>
+                                <span class="value">{!legacyApp.Clinic_Director_Telephone_number__c}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                8. Authorized Official
+                                <br/>
+                                <span class="value">{!FundingAward.Application_for_Federal_Assistance__r.Auth_Rep_First_Name__c} {!FundingAward.Application_for_Federal_Assistance__r.Auth_Rep_Last_Name__c}</span>
+                                <br/>
+                                <span class="value">{!FundingAward.Application_for_Federal_Assistance__r.Auth_Rep_Email__c}</span>
+                                <br/>
+                                <span class="value">{!FundingAward.Application_for_Federal_Assistance__r.Auth_Rep_Number__c}</span> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Federal Agency Information
+                                <br/>
+                                <span class="value">LITC Grants Office</span>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                9. Awarding Agency Contact Information
+                                <br/>
+                                <span class="value">{!FundingAward.GMO_Assignment__r.Name}</span>
+                                <br/>
+                                <span class="value">{!FundingAward.GMO_Assignment__r.Email}</span>
+                                <br/>
+                                <span class="value">{!FundingAward.GMO_Assignment__r.Phone}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                10.Program Official Contact Information
+                                <br/>
+                                <span class="value">{!FundingAward.AA_Assignment__r.Name}</span>
+                                <br/>
+                                <span class="value">Advocacy Analyst</span>
+                                <br/>
+                                <span class="value">{!FundingAward.AA_Assignment__r.Email}</span>
+                                <br/>
+                                <span class="value">{!FundingAward.AA_Assignment__r.Phone}</span>
+                            </td>
+                        </tr>
+                    </tbody>      
+                </table>
+            </div>
+        </div>
+
+        <div style="width: 62%; float: left; margin-left: 10px;">
+            <div style="width: 100%;">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Federal Award Information</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                11. Award Number
+                                <br/>
+                                <span class="value">{!FundingAward.Award_Number__c}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                12. Unique Federal Award Identification Number (FAIN)
+                                <br/>
+                                <span class="value">{!FundingAward.FAIN__c}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                13. Statutory Authority
+                                <br/>
+                                <span class="value">Internal Revenue Code, as amended, 26 U.S.C 7526</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                14. Federal Award Project Title
+                                <br/>
+                                <span class="value">Low Income Taxpayer Clinics</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                15. Assistance Listing Number
+                                <br/>
+                                <span class="value">{!FundingAward.Assistance_Listing_Number__c}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                16. Assistance Listing Program Title
+                                <br/>
+                                <span class="value">Low Income Taxpayer Clinics</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                17. Award Action Type
+                                <br/>
+                                <span class="value">{!FundingAward.Award_Action_Type__c}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                18. Is the Award R&amp;D?
+                                <br/>
+                                <span class="value">{!FundingAward.RD__c}</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Summary Federal Award Financial Information</th>
+                        </tr>
+                        <tr>
+                            <td>
+                                19. Budget Period Date: <span class="value"><apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!FundingAward.Budget_Period_Start_Date__c}"/></apex:outputText></span> - <span class="value"><apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!FundingAward.Budget_Period_End_Date__c}"/></apex:outputText></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- current disbursement amount -->
+                                20. Total Amount of Federal Funds Obligated by this Action: <span class="value">
+                                    <!-- <apex:outputText value="{0, Number, Currency}"><apex:param value="{!disbursement.Amount}"/> -->
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Federal_Funds_Obligated_This_Action_v2__c}"/>
+                                </apex:outputText></span>
+                                <br/>
+                                <div style="margin-left: 15px">
+                                    20a. Direct Cost Amount: <span class="value"><apex:outputText value="{0, Number, Currency}">
+                                        <!-- <apex:param value="{!FundingAward.X20a_Direct_Cost_Amount__c}"/> -->
+                                        <apex:param value="{!directCost20a}"/>
+                                    </apex:outputText></span>
+                                    <br/>
+                                    20b. Indirect Cost Amount: <span class="value"><apex:outputText value="{0, Number, Currency}">
+                                        <!-- <apex:param value="{!FundingAward.X20b_Indirect_Cost_Amount__c}"/> -->
+                                        <apex:param value="{!indirectCost20b}"/>
+                                    </apex:outputText></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                21. Authorized Carryover: <span class="value"><apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Authorized_Carryover__c}"/></apex:outputText></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                22. Offset: <span class="value"><apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Offset__c}"/></apex:outputText></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- disbursement rollup on FA  -->
+                                23. Total Amount of Federal Funds Obligated this budget period: <span class="value"><apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Total_Amount_of_Federal_Funds_Obligated2__c}"/></apex:outputText></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- total match expenses from either application or L form -->
+                                24. Total Approved Cost Sharing or Matching, where applicable: <span class="value"><apex:outputText value="{0, Number, Currency}"><apex:param value="{!field24}"/></apex:outputText></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- 25 = 23 (disbursement rollup) + 24 (Total match expenses) -->
+                                25. Total Federal and Non-Federal Approved this Budget Period: <span class="value"><apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Total_Federal_and_Non_Federal_Approved__c}"/></apex:outputText></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                26. Period of Performance Date: <span class="value"><apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Project_Start_Date_Formula__c}"/></apex:outputText></span> - <span class="value"><apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Project_End_Date_Formula__c}"/></apex:outputText></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <!-- Sum of all (25) all NOAs for that cycle-->
+                                27. Total Amount of the Federal Award including Approved Cost Sharing or Matching this Period of Performance: <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}">
+                                         <apex:param value="{!disbursementTotals}"/>
+                                </apex:outputText>
+                            </span>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                28. Authorized Treatment of Program Income
+                                <br/>
+                                <span class="value">Matching</span>
+                            </td>
+                        </tr>
+                       <tr>
+                            <td>
+                                29. Grants Management Officer - Signature
+                                <br/>
+                                <span class="value">{!FundingAward.GMO_Signature__c}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- <br/><br/>
+        <div style="width: 98%; margin-left: 1px; float: left; margin-top:10px">
+            <div style="width: 100%;">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th>Remarks</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            30. Remarks
+                            <br/>
+                            <span style="font-size:10px">
+                                This is the first notice of award (NOA) for grant year 2025. The amount noted on line 20, "Total Amount of Federal Funds Obligated by this Action" is the amount of the
+                                award that is currently available for release. The amount of your grant award may change depending on the level of funding Congress ultimately appropriates. We will finalize
+                                grant amounts when the final appropriation is approved. The budget submitted with the application amendment package, however, should be based on the conditional award
+                                amount of $177,711.
+                                To complete processing of this award:
+                                The Authorizing Official must accept the NOA in GrantSolutions at their earliest convenience; and
+                                2. The organization must complete and submit the Application Amendment package in GrantSolutions within 21 days of the issuance of the NOA.
+                                The application amendment project abstract must include:
+                                The clinic's four numerical goals (new cases, consultations, educational activities, and taxpayers educated), regardless of whether they have changed. An explanation about
+                                any anticipated changes to the clinic's program plan, including the numerical goals, budget, and key personnel. If no changes are anticipated, a negative response is required,
+                                "Not applicable" is not a sufficient response. Information needed to respond to any civil rights review issues.
+                                Ifthere were budget errors or discrepancies in the initial 2025 application budget, you will be contacted by your assigned Budget Analyst to resolve when revising the Form
+                                13424-J (budget) for the Application Amendment package. If you have any program related questions, contact the clinic's assigned advocacy analyst (see line 10).
+                                For questions or issues related to GrantSolutions, contact Michael Condict at Michael.J.Condict@irs.gov.
+                            </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div> -->
+
+        <div style="page-break-before:always;"></div>
+        <div class="header">
+            <div style="float: left">
+                <h2 style="font-size: 15px">Taxpayer Advocate Service</h2>
+                <br/>
+                <p style="color: #3083cf; font-size: 15px">Your Voice at the IRS</p>
+            </div>
+            <div style="float: right">
+                <h2 style="font-size: 15px">Notice of Award</h2>
+                <br/>
+                <p>Award #: {!FundingAward.Award_Number__c}</p>
+                <p>FAIN #: {!FundingAward.FAIN__c}</p>
+                <p>Federal Award Date: &nbsp;<apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!FundingAward.CreatedDate}"/></apex:outputText></p>
+            </div>
+        </div>
+        <div style="clear: both;"></div>
+        <br/><br/>
+
+        <div style="width: 35%; float: left;">
+            <div style="width: 100%; margin-left: 1px; float: left;">
+                <div style="width: 100%;">
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>Recipient Information</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    Recipient Name
+                                    <br/>
+                                    <span class="value">{!FundingAward.Application_for_Federal_Assistance__r.Legal_Name__c}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Congressional District of Recipient
+                                    <br/>
+                                    <span class="value">{!congressionalDistrict}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Payment Account Number and Type
+                                    <br/>
+                                    <!-- <span class="value">value</span> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Employer Identification Number (EIN) 
+                                    <br/>
+                                    <span class="value">{!FundingAward.Application_for_Federal_Assistance__r.Employer_Taxpayer_Number__c}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Data Universal Numbering System (DUNS)
+                                    <br/>
+                                    <!-- <span class="value">value</span> -->
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    Recipient's Unique Entity Identifier (UEI)
+                                    <br/>
+                                    <span class="value">{!FundingAward.Application_for_Federal_Assistance__r.Organizational_UEI__c}</span>
+                                </td>
+                            </tr>
+                        </tbody>      
+                    </table>
+                </div>
+            </div>
+            <br/><br/>
+            <div style="clear: left;"></div>
+            <div style="width: 100%; margin-left: 1px; float: left; margin-top:10px">
+                <div style="width: 100%;">
+                    <table border="1">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    31. Assistance Type
+                                    <br/>
+                                    <span class="value">Project Grant</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    32. Type of Award
+                                    <br/>
+                                    <span class="value">Other</span>
+                                </td>
+                            </tr>
+                        </tbody>      
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div style="width: 62%; float: left; margin-left: 10px;">
+            <div style="width: 100%;">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th colspan="2">Budget Information</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td colspan="2">
+                                33. Approved Budget (Excludes Direct Assistance)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                I. Financial Assistance from the Federal Awarding Agency Only
+                                <br/>
+                                II. Total project costs including grant funds and all other financial participation
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+                                a. Salaries and Wages
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Personnel_Dollar_Federal_Total__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                b. Fringe Benefits
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Fringe_Dollar_Federal_Total__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                c. Total Personnel Costs
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Total_Personnel_Costs__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                d. Equipment
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Equipment_Federal_Total__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                e. Supplies
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Supplies_Federal_Total__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                f. Travel
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Travel_Federal_Total__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                g. Construction
+                            </td>
+                            <td>
+                                <!-- <span class="value">{!FundingAward.test}</span> -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                h. Other
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Other_expenses_Federal_Total__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                i. Contractual
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Contractual_Federal_Total__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                j. Total Direct Costs
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Total_Direct_Charges_Federal_Formula__c}"/></apex:outputText>
+                                    
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                k. Indirect Costs
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Indirect_Expenses_Federal_Total__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                l. Total Approved Budget
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Total_Federal_Expenses__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                m. Federal Share
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Total_Federal_Expenses__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                               n. Non-Federal Share
+                            </td>
+                            <td>
+                                <span class="value">
+                                    <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Application_for_Federal_Assistance__r.Total_Match_Expenses__c}"/></apex:outputText>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div style="clear: both;"></div>
+        <br/><br/>
+        <div style="width: 98%; margin-left: 1px; float: left; margin-top:10px">
+            <div style="width: 100%;">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th colspan="7">34. Accounting Classification Codes</th>
+                        </tr>
+                    </thead>
+                    <tr>
+                        <td>
+                            FY-ACCOUNT NO. 
+                        </td>
+                        <td>
+                            DOCUMENT NO. 
+                        </td>
+                        <td>
+                            ADMINISTRATIVE COD
+                        </td>
+                        <td>
+                            OBJECT CLASS
+                        </td>
+                        <td>
+                            ASSISTANCE LISTING
+                        </td>
+                        <td>
+                            AMT ACTION FINANCIAL A ASSISTANCE 
+                        </td>
+                        <td>
+                            APPROPRIATION
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="value">{!FundingAward.FY_Account_Number__c}</span>
+                        </td>
+                        <td>
+                            <span class="value">{!FundingAward.Document_Number__c}</span>
+                        </td>
+                        <td>
+                            <span class="value">{!FundingAward.Administrative_Code__c}</span>
+                        </td>
+                        <td>
+                            <span class="value">{!FundingAward.Object_Class__c}</span>
+                        </td>
+                        <td>
+                            <span class="value">{!FundingAward.Assistance_Listing_Number__c}</span>
+                        </td>
+                        <td>
+                            <span class="value">
+                                <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Federal_Funds_Obligated_This_Action__c}"/></apex:outputText>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="value">{!FundingAward.Appropriation__c}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div style="page-break-before:always;"></div>
+
+        <apex:outputPanel rendered="{!FundingAward.Remarks__c != null}" layout="none">
+            <p><u>Remarks</u>:</p>
+            <br/>
+            <apex:outputField value="{!FundingAward.Remarks__c}"/>
+
+            <br/><br/>
+        
+        </apex:outputPanel>
+
+        <p><u>Terms and Conditions</u>:</p>
+        <br/>
+
+        <apex:outputField value="{!FundingAward.General_Terms_and_Conditions__c}"/>
+
+        <br/><br/>
+
+        <p><u>Special Terms and Conditions</u>:</p>
+        <br/>
+        <apex:outputField value="{!FundingAward.Special_Terms_and_Conditions__c}"/>
+
+        <!-- <br/>
+        <p>By accepting funds under this grant, the Grant Recipient agrees to comply with the following terms and conditions for the grant:</p>
+        <br/>
+        <p>(1) Requirements and limitations set forth in 26 U.S.C. ß 7526 and legislation appropriating federal funds for this award.</p>
+        <br/>
+        <p>(2) The Uniform Guidance at 2 C.F.R. Part 200 (April 2024 Revision), and the Treasury Department’s implementation of the Uniform Guidance at 2 C.F.R. Part 1000 (December 2014 and June 2, 2021). </p>
+        <br/>
+        <p>(3) IRS Publication 3319, 2025 Grant Application Package and Guidelines found at <a href="https://www.irs.gov/pub/irs-pdf/p3319.pdf" target="_blank">https://www.irs.gov/pub/irs-pdf/p3319.pdf;</a></p>
+        <br/>
+        <p>(4) Assurances found in Publication 3319, pages 15, 65, and in Standard Form 424, Assurances and Certifications and Authorized Representative</p>
+        <br/>
+        <p>(5) <b>Period of Performance.</b> The approved Period of Performance is the approved length of the project which may be 1, 2, or 3 years. It is found on line 26. See 2 C.F.R. ß 200.1, Definitions.</p>
+        <br/>
+        <p>(6) <b>Budget Period.</b> The budget period covers the current calendar grant year only. It is found on line 19 . See 2 C.F.R. ß 200.1, Definitions.</p>
+        <br/>
+        <p>(7) <b>Funding for Future Budget Periods.</b> or grantees with an approved multi-year period of performance, funding for future budget periods is not guaranteed. Future funding is subject to the availability of federal funds and continued program authority as well as grantee’s satisfactory performance and compliance with the terms and conditions of the federal award. </p>
+        <br/>
+        <p>(8) <b>Match Funding.</b> Funds used to meet the required dollar for dollar match may not be used as matching funds in support of any other federal program. Generally, federal funds may not be used as matching funds by the grant recipient for the LITC program. </p>
+        <br/>
+        <p>(9) <b>Prohibition on use of funds for certain purchases.</b> Compliance with 2 C.F.R. ß 200.216, prohibits the use of federal funds on certain telecommunications and video surveillance services or equipment.</p>
+        <br/>
+        <p>(10) <b>Requirement regarding deposit account.</b> The Grant Recipient must maintain advance payments of federal awards in interest-bearing accounts, unless certain exceptions found at 2 C.F.R. ß 200.305(b)(8) apply. </p>
+        <br/>
+        <p>(11) <b>Timing of requests for Disbursements.</b> Recipients must limit request of advance payments to the minimum amounts needed and be timed with actual, immediate cash requirements of the recipient to carry out the purpose of the approved project.</p>
+        <br/>
+        <p>(12) <b>Termination.</b> The IRS may terminate this agreement for reasons of default or failure of the Grant Recipient to perform their obligations under this agreement, as well as for malfeasance, illegal conduct, and/or management practices by the Grant Recipient that jeopardize the ethical operations
+            and implementation of this agreement. In any of the above cases, the IRS will notify the Grant
+            Recipient in writing of its intent to terminate the agreement and the causes for such a decision. Grant
+            Recipients should be aware that 2 C.F.R. ß 200.340 strengthens the ability of the IRS to terminate
+            federal awards, to the greatest extent authorized by law, when the federal award no longer
+            effectuates the program goals.
+        </p>
+        <br/>
+        <p><b>Specific Registration and Additional Reporting Requirements</b></p>
+        <br/>
+        <p>(13) <b>Requirement for Sam.gov Registration.</b> Unless exempted from this requirement under 2 C.F.R. ß
+            25.110, he Grant Recipient must maintain current information in the System for Award Management.
+            This includes information on the Grant Recipient’s immediate and highest-level owner and subsidiaries,
+            as well as on all of the Grant Recipient’s predecessors that have been awarded a federal contract or
+            federal financial assistance within the last three years, if applicable, until the Grant Recipient submits
+            the final financial report required under this federal award or receives the final payment, whichever is
+            later. This requires that the Grant Recipient review and update the information at least annually after
+            the initial registration, and more frequently if required by changes in the Grant Recipient’s information
+            or another Federal award term. See Appendix A to 2 C.F.R. Part 25.Definitions. For the purposes of this
+            award term: System for Award Management (SAM.gov) means the Federal repository into which a
+            recipient must provide the information required for the conduct of business as a recipient. Additional
+            information about registration procedures may be found in SAM.gov (currently at
+            https://www.sam.gov). Unique entity identifier means the universal identifier assigned by SAM.gov to
+            uniquely identify an entity. Entity is defined at 2 CFR 25.400 and includes all of the following types as
+            defined in 2 CFR 200.1:](1) Non-Federal entity; (2) Foreign organization;(3) Foreign public entity;(4)
+            Domestic for-profit organization; and (5) Federal agency. [89 FR 30111, Apr. 22, 2024, as amended at 89
+            FR 79732, Oct. 1, 2024] [Provisions related to sub-awards are omitted as generally sub-awards are not
+            authorized under this program.]
+        </p>
+        <br/>
+        <p>
+            (14) <b>Reporting of Recipient Integrity and Performance.</b>
+            <br/>
+            (a) General reporting requirements.
+            <br/>
+            <div style="margin-left: 20px">
+                (1) If the total value of your active grants, cooperative agreements, and procurement contracts from all Federal
+                agencies exceeds $10,000,000 for any period of time during the period of performance of this Federal award, then
+                you as the recipient must ensure the information available in the responsibility/qualification records through the
+                System for Award Management (SAM.gov), about civil, criminal, or administrative proceedings described in paragraph
+                (b) of this award term is current and complete. This is a statutory requirement under section 872 of Public Law 110-
+                417, as amended (41 U.S.C. 2313). As required by section 3010 of Public Law 111-212, all information posted in
+                responsibility/qualification records in SAM.gov on or after April 15, 2011 (except past performance reviews required
+                for Federal procurement contracts) will be publicly available.
+            </div>
+            (b) Proceeding about Which You Must Report
+            <div style="margin-left: 20px">
+                (1) You must submit the required information about each proceeding that—
+                <div style="margin-left: 20px">
+                    (i) Is in connection with the award or performance of a grant, cooperative agreement, or procurement contract from the Federal Government;
+                </div>
+                <div style="margin-left: 20px">
+                    (ii) Reached its final disposition during the most recent five-year period; and
+                </div>
+                <div style="margin-left: 20px">
+                    (iii) Is one of the following—
+                    <div style="margin-left: 20px">
+                        (A) A criminal proceeding that resulted in a conviction;
+                    </div>
+                    <div style="margin-left: 20px">
+                        (B) A civil proceeding that resulted in a finding of fault and liability and payment of a monetary fine, penalty, reimbursement, restitution, or damages of $5,000 or more;
+                    </div>
+                    <div style="margin-left: 20px">
+                        (C) An administrative proceeding that resulted in a finding of fault and liability and your payment of either a monetary fine or penalty of $5,000 or more or reimbursement, restitution, or damages in excess of $100,000; or
+                    </div>
+                    <div style="margin-left: 20px">
+                        (D) Any other criminal, civil, or administrative proceeding if—
+                        <div style="margin-left: 20px"> 
+                            (1) It could have led to an outcome described in paragraph (b)(1)(iii)(A) through (C);
+                        </div>
+                        <div style="margin-left: 20px">
+                            (2) It had a different disposition arrived at by consent or compromise with an acknowledgment of fault on your part; and
+                        </div>
+                        <div style="margin-left: 20px">
+                            (3) The requirement in this award term to disclose information about the proceeding does not conflict with applicable laws and regulations.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p>
+        <br/>
+        <p>
+            Enter the required information in SAM.gov for each proceeding described in paragraph (b) of this award term. You do
+            not need to submit the information a second time under grants and cooperative agreements that you received if you
+            already provided the information in SAM.gov because you were required to do so under Federal procurement
+            contracts that you were awarded.
+        </p>
+        <br/>
+        <p>
+            (d) Reporting Frequency. During any period of time when you are subject to the requirement in paragraph (a) of this
+            award term, you must report proceedings information in SAM.gov for the most recent five-year period, either to
+            report new information about a proceeding that you have not reported previously or affirm that there is no new
+            information to report. If you have Federal contract, grant, and cooperative agreement awards with a cumulative total
+            value greater than $10,000,000, you must disclose semiannually any information about the criminal, civil, and
+            administrative proceedings.
+            <br/>
+            (e) Definitions. For purposes of this award term—Administrative proceeding means a non-judicial process that is
+            adjudicatory in nature to make a determination of fault or liability (for example, Securities and Exchange Commission
+            Administrative proceedings, Civilian Board of Contract Appeals proceedings, and Armed Services Board of Contract
+            Appeals proceedings). This includes proceedings at the Federal and State level but only in connection with the
+            performance of a federal contract or grant. It does not include audits, site visits, corrective plans, or inspection of
+            deliverables. Conviction means a judgment or conviction of a criminal offense by any court of competent jurisdiction,
+            whether entered upon a verdict or a plea, and includes a conviction entered upon a plea of nolo contendere. Total
+            value of currently active grants, cooperative agreements, and procurement contracts includes the value of the Federal
+            share already received plus any anticipated Federal share under those awards (such as continuation funding).
+        </p>
+        <br/>
+        <p>
+            (15) <b>Reporting Subawards and Executive Compensation.</b> [As generally the LITC does not allow subawards, provisions
+            related to subawards are omitted but can be found at Appendix A to Part 170, Title 2]. (b) Reporting total
+            compensation of recipient executives for entities —
+            <div style="margin-left: 20px">
+                (1) Applicability. The recipient must report the total compensation for each of the recipient's five most highly compensated executives for the preceding completed fiscal year if:
+                <div style="margin-left: 20px">
+                    (i) The total Federal funding authorized to date under this Federal award equals or exceeds $30,000;
+                </div>
+                <div style="margin-left: 20px">
+                    (ii) in the preceding fiscal year, the recipient received:
+                    <div style="margin-left: 20px">
+                        (A) 80 percent or more of the recipient's annual gross revenues from Federal procurement contracts (and subcontracts) and Federal awards (and subawards) subject to the Transparency Act; and
+                    </div>
+                    <div style="margin-left: 20px">
+                        (B) $25,000,000 or more in annual gross revenues from Federal procurement contracts (and subcontracts) and Federal awards (and subawards) subject to the Transparency Act; and,
+                    </div>
+                </div>
+                <div style="margin-left: 20px">
+                    (iii) The public does not have access to information about the compensation of the executives through periodic
+                    reports filed under section 13(a) or 15(d) of the Securities Exchange Act of 1934 (15 U.S.C. 78m(a), 78o(d)) or section
+                    6104 of the Internal Revenue Code of 1986 after receiving this subaward. (To determine if the public has access to the
+                    compensation information, see the U.S. Security and Exchange Commission total compensation filings at
+                    http://www.sec.gov/answers/execomp.htm.)
+                </div>
+            </div>
+            <div style="margin-left: 20px">
+                (2) Reporting Requirements. The recipient must report executive total compensation described in paragraph (b)(1) of this appendix:
+                <div style="margin-left: 20px">
+                    (i) As part of the recipient's registration profile at https://www.sam.gov.(ii) No later than the month following the
+                    month in which this Federal award is made, and annually after that. (For example, if this Federal award was made on
+                    November 7, 2025, the executive total compensation must be reported by no later than December 31, 2025.)
+                </div>
+            </div>
+        </p> -->
+
+        <div style="page-break-before:always;"></div>
+
+        <h2 style="font-size: 20px">Funding amount</h2>
+        <br/>
+        <span class="value" style="font-size: 15px">${!FundingAward.Amount}</span>
+
+        <br/><br/><br/><br/>
+
+        <h2 style="font-size: 20px">Disbursements</h2>
+        <br/>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!disbursements}" var="item">
+                    <tr>
+                        <td>{!item['Name']}</td>
+                        <td>{!item['Status']}</td>
+                        <td>
+                            <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!item['DisbursementDate']}"/></apex:outputText>
+                        </td>
+                        <td>
+                            <apex:outputText value="{0, Number, Currency}"><apex:param value="{!item['Amount']}"/></apex:outputText>
+                        </td>
+                    </tr>
+                </apex:repeat>
+                <tr>
+                    <td colspan="3" style="text-align:center">
+                        <b>Disbursement total</b>
+                    </td>
+                    <td>
+                        <b>
+                            <apex:outputText value="{0, Number, Currency}"><apex:param value="{!FundingAward.Disbursement_Total__c}"/></apex:outputText>
+                        </b>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </body>
+</apex:page>

@@ -1,0 +1,8 @@
+.omni-editblock-table-row {
+  cursor: pointer;
+}
+
+.omni-editblock-table-row[data-is-selected=true],
+.omni-editblock-table-row:hover {
+  background-color: #f4f6f9;
+}

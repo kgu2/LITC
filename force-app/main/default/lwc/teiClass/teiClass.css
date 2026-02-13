@@ -1,0 +1,270 @@
+/* :host {
+  --bg: #0b1020;
+  --panel: #121935;
+  --panel-2: #0f1530;
+  --text: #eaf0ff;
+  --muted: #b7c1e6;
+  --accent: #6aa7ff;
+  --accent-2: #8e7bff;
+  --green: #2db36c;
+  --blue: #4d86ff;
+  --radius: 8px;
+  --shadow: 0 10px 25px rgba(0,0,0,.25);
+  display: block;
+  background:
+    radial-gradient(1200px 800px at 15% -10%, #1f2a55 0%, transparent 60%),
+    radial-gradient(900px 700px at 100% 0%, #1a2350 0%, transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+.tei {
+  min-height: 100%;
+  background: radial-gradient(1200px 600px at 20% -10%, rgba(138,126,255,.18), transparent 60%),
+              radial-gradient(800px 500px at 100% 0%, rgba(106,167,255,.18), transparent 60%),
+              var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.page-header { margin-bottom: 16px; }
+  
+.page-title {
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.3px;
+}
+
+.panel {
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid #b7c1e6;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 12px;
+  overflow: visible;
+}
+
+.body { color: var(--muted); margin: 4px 0 12px; }
+
+.usa-prose > h1,
+.usa-prose > h2,
+.usa-prose > h3,
+.usa-prose > h4,
+.usa-prose > h5,
+.usa-prose > h6 {
+  color: #000;
+}
+
+.usa-prose > h1 {
+  font-size: 2.5rem;
+}
+.usa-prose > h1,
+.usa-prose > h2 {
+  font-family: Merriweather Web, Georgia, Cambria, Times New Roman, Times, serif;
+  line-height: 1.2;
+}
+.usa-prose > h2 {
+  font-size: 2.0rem;
+}
+
+.details {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.dark-blue-button .slds-button_brand {
+  background-color: #003366 !important;  
+  border-color: #003366 !important;
+  color: white !important;              
+}
+
+.button-dark {
+  background: #003366;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.tiles{ display:grid; grid-template-columns: 1fr; gap: 10px; }
+.tile{
+  display:flex; align-items:center; gap:12px;
+  padding: 14px 14px;
+  border-radius: 12px;
+  border: 1px solid white;
+  background: linear-gradient(180deg, #10183a, #0e1533);
+  transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+  cursor:pointer;
+  width: 250px;
+}
+.tile:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.35); border-color:#3851b8; }
+.tile .label{ font-weight:700; align-items:center;}
+.tile-blue{ background: linear-gradient(135deg, rgba(77,134,255,.18), transparent 45%), linear-gradient(180deg, #10183a, #0e1533); }
+.tile-green{ background: linear-gradient(135deg, rgba(45,179,108,.18), transparent 45%), linear-gradient(180deg, #10183a, #0e1533); }
+.tile .icon lightning-icon{ --sds-c-icon-color-foreground-default: var(--text); }
+
+
+@media (max-width: 37.5em) {
+  .usa-prose > h2 {
+    font-size: 1.1844rem;
+  }
+} */
+
+:host {
+  --bg: #f9fafc;
+  --panel: #ffffff;
+  --panel-2: #f9fafc;
+  --text: #1a1a1a;
+  --muted: #6b7280;
+  --accent: #0053a3;
+  --accent-2: #4a81d8;
+  --green: #2db36c;
+  --blue: #0053a3;
+  --radius: 8px;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  display: block;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.tei {
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* ===== Page Header ===== */
+.page-header {
+  margin-bottom: 16px;
+}
+
+.page-title {
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: 0.3px;
+}
+
+/* ===== Panels ===== */
+.panel {
+  background: var(--panel);
+  border: 1px solid #e5e7f2;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  overflow: visible;
+}
+
+.body {
+  color: var(--text);
+  margin: 4px 0 12px;
+}
+
+/* ===== USWDS Headings ===== */
+.usa-prose > h1,
+.usa-prose > h2,
+.usa-prose > h3,
+.usa-prose > h4,
+.usa-prose > h5,
+.usa-prose > h6 {
+  color: #1a1a1a;
+}
+
+.usa-prose > h1 {
+  font-size: 2.5rem;
+}
+
+.usa-prose > h1,
+.usa-prose > h2 {
+  font-family: Merriweather Web, Georgia, Cambria, 'Times New Roman', Times, serif;
+  line-height: 1.2;
+}
+
+.usa-prose > h2 {
+  font-size: 2rem;
+}
+
+/* ===== Details Text ===== */
+.details {
+  font-size: 1rem;
+  font-weight: bold;
+  color: #1a1a1a;
+}
+
+/* ===== Buttons ===== */
+.dark-blue-button .slds-button_brand {
+  background-color: #0053a3 !important;
+  border-color: #0053a3 !important;
+  color: white !important;
+}
+
+.button-dark {
+  background: #0053a3;
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 0.75rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* ===== Tiles ===== */
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7f2;
+  background: #ffffff;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  width: 250px;
+  color: var(--text);
+}
+
+.tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  border-color: #bfc5d4;
+}
+
+.tile .label {
+  font-weight: 700;
+  align-items: center;
+  color: #1a1a1a;
+}
+
+.tile-blue {
+  background: linear-gradient(135deg, rgba(0, 83, 163, 0.08), transparent 45%), #ffffff;
+}
+
+.tile-green {
+  background: linear-gradient(135deg, rgba(45, 179, 108, 0.1), transparent 45%), #ffffff;
+}
+
+.tile .icon lightning-icon {
+  --sds-c-icon-color-foreground-default: #0053a3;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 37.5em) {
+  .usa-prose > h2 {
+    font-size: 1.1844rem;
+  }
+}

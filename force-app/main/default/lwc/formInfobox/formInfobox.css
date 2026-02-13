@@ -1,0 +1,11 @@
+* {
+    font-size: 1rem;
+}
+
+.infobox{
+    position: fixed;
+}
+
+:host{
+    --lwc-inputStaticFontSize: 1rem !important;
+ }

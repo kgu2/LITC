@@ -1,0 +1,192 @@
+<template>
+  <template if:true={isLoading}>
+    <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+  </template>
+
+  <template if:true={showWithdraw}>
+    <c-tei-withdraw
+      registrant-id={currentRegistrantIdForArchived}
+      is-series={isSeries}
+      from-where="Transcript"
+      onbacktotranscript={handleResetWithdraw}>
+    </c-tei-withdraw>
+  </template>
+
+  <template if:false={showWithdraw}>
+    <!-- Themed background + click to close dropdowns -->
+    <div class="container" onclick={closeAllDropDown}>
+      <section class="section transcript">
+        <!-- Top bar -->
+        <div class="topbar">
+          <div class="page-title">Transcript: {userName}</div>
+
+          <!-- Kebab menu -->
+          <div class="dropdown-container">
+            <lightning-button-icon
+              icon-name="utility:threedots"
+              variant="border-filled"
+              alternative-text="Show menu"
+              title="Show menu"
+              onclick={toggleMenu}
+              class="menu-button">
+            </lightning-button-icon>
+
+            <template if:true={isMenuOpen}>
+              <div class="menu-options">
+                <div class="menu-item" onclick={handleExportPDF}>Export to PDF</div>
+              </div>
+            </template>
+          </div>
+        </div>
+
+        <hr class="divider" />
+
+        <!-- Info callout -->
+        <div class="info">
+          <div class="info-title"><b>Wondering where your training has gone?</b></div>
+          <div class="info-text">
+            Training that is completed moves to the <b>Completed</b> section within your Transcript. Click the <b>Training Status</b> dropdown below to switch to your Completed transcript view.
+          </div>
+        </div>
+
+        <!-- Metrics -->
+        <div class="metrics">
+          <div class="metric">
+            <span class="metric-icon">
+              <lightning-icon icon-name="utility:check" size="x-small"></lightning-icon>
+            </span>
+            <!-- <span class="metric-value">{completions}</span> -->
+            <span class="metric-value">{completionsTotal}</span>
+            <span class="metric-label">Completions</span>
+          </div>
+          <div class="metric">
+            <span class="metric-icon">
+              <lightning-icon icon-name="utility:hourglass" size="x-small"></lightning-icon>
+            </span>
+            <span class="metric-value">{completionsHours}</span>
+            <span class="metric-label">Total Hours</span>
+          </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+          <div class="filter-group">
+            <label>Training Status</label>
+            <select onchange={handleStatusPicklistChange} value={statusFilter}>
+              <template for:each={statusOptions} for:item="opt">
+                <option style="background:#101431;color:white;" key={opt.value} value={opt.value}>{opt.label}</option>
+              </template>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Sort By</label>
+            <select onchange={handleSortPicklistChange} value={sortOption}>
+              <template for:each={sortOptions} for:item="opt">
+                <option style="background:#101431;color:white;" key={opt.value} value={opt.value}>{opt.label}</option>
+              </template>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <label>Search Keyword</label>
+            <input
+              type="search"
+              value={searchKeyword}
+              oninput={handleSearchPicklistChange} />
+          </div>
+        </div>
+
+        <!-- Training Cards -->
+        <template for:each={filteredTraining} for:item="item">
+          <article key={item.id}
+                   data-id={item.classId}
+                   class="training-card card"
+                   onclick={handleNavToClass}
+                   role="button"
+                   tabindex="0"
+                   aria-label={item.title}>
+            <div class="icon" aria-hidden="true">&#9658;</div>
+
+            <div class="training-info">
+              <div class="title">{item.title}</div>
+              <div class="details">
+                <!--Reg: {item.id}--> • Status: {item.registrantStatus} • Type: {item.type} {item.completionDate}
+              </div>
+            </div>
+
+            <!-- Split launch button + dropdown -->
+            <!-- <div class="split-actions" if:false={isWaitlist}> -->
+            <div class="split-actions">
+              <button class="btn launch-main"
+                      data-id={item.classId}
+                      data-type={item.type}
+                      data-reg={item.regType}
+                      data-series={item.isSeries}
+                      data-registrantid={item.id}
+                      data-label={item.dropDownButtonLabel}
+                      onclick={handleNavToSelection}>
+                {item.dropDownButtonLabel}
+              </button>
+
+              <button class="btn-secondary dropdown-toggle"
+                      data-id={item.id}
+                      onclick={toggleDropdown}
+                      title="More actions"
+                      aria-label="More actions">
+                ▼
+              </button>
+
+              <template if:true={item.isDropdownOpen}>
+                <div class="dropdown-menu">
+                  <ul>
+                    <template for:each={item.dropDownValue} for:item="dropDownObj">
+                      <li key={dropDownObj}
+                          data-classid={item.classId}
+                          data-videoid={item.videoId}
+                          data-registrantid={item.id}
+                          data-label={dropDownObj}
+                          data-series={item.isSeries}
+                          onclick={handleActionSelection}>
+                        {dropDownObj}
+                      </li>
+                    </template>
+                  </ul>
+                </div>
+              </template>
+            </div>
+          </article>
+        </template>
+      </section>
+    </div>
+  </template>
+
+  <!-- SLDS modal preserved as-is -->
+  <template if:true={isModalOpen}>
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open" aria-modal="true">
+      <div class="slds-modal__container" style="color:black;">
+        <header class="slds-modal__header">
+          <button class="slds-button slds-modal__close" title="Close" onclick={closeModal}>
+            <lightning-icon icon-name="utility:close" alternative-text="Close" size="small"></lightning-icon>
+          </button>
+          <h2 class="slds-text-heading_medium">Move Training to Archived Transcript</h2>
+        </header>
+
+        <div class="slds-modal__content slds-p-around_medium">
+          <p>You have indicated that you would live to archive this training. This will move the training into your Archive Transcript. The purpose of the Archive Transcript is to store training that you no longer need to access.</p>
+          <p class="slds-m-top_medium">
+            <strong>
+              <u>The act of moving training to the Archive does not remove any responsibility that you may have in completing this training.</u>
+            </strong>
+          </p>
+        </div>
+
+        <footer class="slds-modal__footer">
+          <lightning-button label="Cancel" onclick={closeModal}></lightning-button>
+          <lightning-button variant="brand" label="Archive" onclick={handleMoveToArchive} class="slds-m-left_small"></lightning-button>
+        </footer>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </template>
+</template>

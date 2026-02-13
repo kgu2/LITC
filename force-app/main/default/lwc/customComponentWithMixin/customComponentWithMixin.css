@@ -1,0 +1,65 @@
+:host {
+  background-color: #FFFFFF;
+}
+
+.product {
+  width: 350px;
+  background-color: #FFFFFF;
+}
+
+.device-image {
+  width: 35%;
+}
+
+.device {
+  width: 65%;
+  justify-content: center;
+}
+
+.device .slds-text-heading_large {
+  margin-bottom: auto;
+  font-size: 1.5rem;
+}
+
+.device .price {
+  margin-bottom: auto;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.device .price>* {
+  width: 45%;
+  padding: 0.5rem 0;
+  text-align: center;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  background-color: #F0F0F0;
+}
+
+.device .price .slds-box:hover {
+  cursor: pointer;
+}
+
+.device .price .slds-box.selected {
+  border: 1px solid blue;
+}
+
+.deals {
+  color: mediumslateblue;
+  margin-top: auto;
+}
+
+.cart-button {
+  border: 1px solid #E5E5E5;
+  color: black;
+  width: 100px;
+  border-radius: 5px;
+}
+
+.cart-button:hover {
+  border-color: #0070c9;
+}
+
+.cart-button.remove {
+  border-color: #0070c9;
+}

@@ -1,0 +1,96 @@
+<template>
+  <template if:true={isLoading}>
+    <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+  </template>
+  <div class="container">
+    <div class="tei-wrapper">
+        <div class="tei-card">
+        <h1 class="page-title">Search for Courses</h1>
+        <div class="muted">Use filters below to find training, events, and learning materials</div>
+
+        <div class="tei-search-grid">
+            <lightning-input
+            type="search"
+            variant="label-hidden"
+            label="Search"
+            placeholder="Enter Search Term"
+            value={searchTerm}
+            onchange={handleSearchInput}
+            onkeydown={handleKeyDown}
+            ></lightning-input>
+
+            <div class="tei-subcategory">
+                <div class="muted small-label">Select a subcategory</div>
+                <div class="comboBoxContainer">
+                    <lightning-checkbox-group
+                        name="Checkbox Group"
+                        options={subCategoryOptions}
+                        value={searchSubCategory}
+                        onchange={handleSubCategoryChange}
+                    ></lightning-checkbox-group>
+                </div>
+            </div>
+
+            <div class="tei-date-grid">
+               <div class="comboBoxContainer">
+                    <lightning-input
+                        type="date"
+                        label="Start Date"
+                        value={startDate}
+                        onchange={handleStartDateChange}
+                    ></lightning-input>
+                    <lightning-input
+                        type="date"
+                        label="End Date"
+                        value={endDate}
+                        onchange={handleEndDateChange}
+                    ></lightning-input>
+                
+
+                    <!-- <lightning-combobox
+                    class="dropdown"
+                    label="Location"
+                    name="Location"
+                    value={locationValue}
+                    options={locationOptions}
+                    onchange={handleLocationChange}
+                    ></lightning-combobox> -->
+                </div>
+            </div>
+            <div>
+            <lightning-button label="Search" variant="brand" onclick={handleSearch}></lightning-button>
+            </div>
+        </div>
+
+        <template if:true={results.length}>
+            <div class="results-info">Training results ({results.length})</div>
+            <hr />
+            <template for:each={paginatedResults} for:item="item">
+            <div key={item.id} class="tei-result" data-id={item.id} onclick={handleNav}>
+                <div class="result-title">{item.title}</div>
+                <div class="result-meta">{item.type}</div>
+                <div class="result-description">
+                    <lightning-formatted-rich-text value={item.shortenDescription}></lightning-formatted-rich-text>
+                </div>
+            </div>
+            </template>
+
+            <div class="tei-pagination">
+            <lightning-button-icon
+                icon-name="utility:chevronleft"
+                onclick={handlePrevPage}
+                disabled={isFirstPage}
+            ></lightning-button-icon>
+            <span>Page {currentPage} of {totalPages}</span>
+            <lightning-button-icon
+                icon-name="utility:chevronright"
+                onclick={handleNextPage}
+                disabled={isLastPage}
+            ></lightning-button-icon>
+            </div>
+        </template>
+        </div>
+    </div>
+  </div>
+
+</template>

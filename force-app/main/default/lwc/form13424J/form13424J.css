@@ -1,0 +1,165 @@
+* {
+    font-size: 1rem;
+}
+
+:host{
+  --lwc-inputStaticFontSize: 1rem;
+}
+
+.infobox{
+  --lwc-inputStaticFontSize: .75rem;
+}
+
+
+p {
+  color: #383B53;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  max-width: 88ex;
+  
+}
+
+li {
+  margin-bottom: .5rem;
+  max-width: 88ex;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #383B53;
+}
+
+h2 {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #383B53;
+}
+
+h3 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #383B53;
+}
+
+label{ 
+  color: #383B53;
+}
+
+/*  Tables  */
+td {
+  padding: 8px;
+  vertical-align: top;
+}
+
+th {
+  vertical-align: top;
+  padding: 8px;
+}
+
+tr {
+  font-size: .9375rem;
+}
+
+footer {
+  height: 100px;
+}
+
+button:disabled {
+  background: #F5F5F5;
+  color : #C3C3C3;
+}
+
+hr{ 
+  max-width: 800px;
+  height: 3px;
+  border: none;
+  background: linear-gradient(to bottom, #2D247C, #ffffff);
+}
+
+hr.half{ 
+  width: 100vw;
+  position: relative;
+  height: 3px;
+  border: none;
+  background: linear-gradient(to bottom, #2D247C, #ffffff);
+}
+
+
+hr.full{ 
+  width: 100vw;
+  height: 3px;
+  position: relative;
+  left: 50%;
+  margin: 0;
+  transform: translateX(-50%);
+  border: none;
+  background: linear-gradient(to bottom, #2D247C, #ffffff);
+}
+
+
+a{ 
+  color: rgb(0, 95, 178);
+  text-decoration: underline;
+}
+
+.sumRow{
+  height: 35px;
+  background-color: #2D247C;
+  color: white;
+  line-height: 35px;
+  font-size: 11pt;
+  font-weight: 600;
+  display: flex;
+  text-align: right;
+  justify-content: end;     
+}
+
+
+
+td {
+  padding: 5px;
+  background-color: white;
+}
+
+.darkBlue td{ 
+  padding: 5px; 
+  background-color: #083C6F;
+}
+
+.lightBlue td{
+  padding: 5px;
+	background-color: #2D8FE8;
+  color: white;
+}
+
+.blue td{
+  padding: 5px;
+	background-color: #2D247C;
+  color: white;
+}
+
+.black td{
+  padding: 5px;
+	background-color: #1c2936;
+  color: white;
+}
+
+.gray td{
+	background-color: #DADADA;
+}
+
+
+
+th {
+  background-color: #DADADA;
+  padding: 5px;
+  margin-top: 15px;
+  font-size: 1rem;
+}
+
+tr {
+  font-size: 1rem;
+  background-color: #E0EEFD;
+}
+

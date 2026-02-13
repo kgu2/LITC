@@ -1,0 +1,362 @@
+<template>
+    <lightning-button variant="brand" label="Add line item" icon-name="utility:add" onclick={openAddLineItemModal} disabled={disableEdits}></lightning-button>
+    <br/>  <br/>
+
+     <template lwc:if={showTable}>
+        <lightning-datatable class="myTable" onrowaction={openEditLineItemModal} show-row-number-column key-field="Id" hide-checkbox-column data={lineItemsByType} columns={columnsLineItems}></lightning-datatable>
+    </template>
+
+    <template lwc:if={showLineItemModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <lightning-record-edit-form object-api-name="LITC_Reporting_Line_Item__c" onerror={handleError} onsuccess={handleSuccess} record-id={selectedLineItem} record-type-id={selectedRecordType}>
+
+                    <lightning-input-field required variant="label-hidden" field-name="LITC_Reporting_Form__c" class="slds-hide" value={recordId}></lightning-input-field>
+
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeEditLineItemModal}></lightning-button-icon>
+                        <h2 id="modal-heading-03" class="header">{selectedType}</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-4" style="max-height: 600px;">
+                        <template lwc:if={selectedTypeA}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Explain why the clinic made an exception to the general amount in controversy limitation. Include a description of the controversy and briefly describe the taxpayers' general circumstances. Do not include specific taxpayer identifying information.</label>
+                            <br/>
+                            <lightning-input-field required variant="label-hidden" field-name="Exception_explanation__c" disabled={disableEdits}></lightning-input-field>
+                            <br/>
+                        </template>
+
+                        <template lwc:if={selectedTypeB}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Issue</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Case_Issue__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Result</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Case_Result__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+
+                        <template lwc:if={selectedTypeC}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>City</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Trial_Location_City__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>State</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Trial_Location_State__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+
+                        <template lwc:if={selectedTypeD}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Date</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Activity_Date__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Venue/Organization/Primary Audience</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Venue_Organization__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Type</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Activity_Type__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+
+                        <template lwc:if={selectedTypeE}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Date</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Activity_Date__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Presenter</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Presenter__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Type</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Activity_Type__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Venue/Organization</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Venue_Organization__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Attendees</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Attendees__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Topic(s)</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Topics__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Language</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Language__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Primary Audience</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Primary_Audience__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+
+                        <template lwc:if={selectedTypeF}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Type</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Activity_Type__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Clinician</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Clinician_Staff_Member__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Brief Description</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Description__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+
+                        <template lwc:if={selectedTypeG}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Impediment</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Impediment__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Efforts Made to Overcome</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Efforts_Made_to_Overcome__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+
+                        <template lwc:if={selectedTypeH}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Issue</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Issue__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Description</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Description__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+
+                        <template lwc:if={selectedTypeI}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Case/Activity</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Case_Activity__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Description</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Description__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+
+                        <template lwc:if={selectedTypeJ}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Staff Member</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Staff_Member__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Details</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Details__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+
+                        <template lwc:if={selectedTypeK}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Trainee</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Trainee__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Topic</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Topic__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Training Hours</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Training_Hours__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Provider</label>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Provider__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            
+                        </template>
+                        <br/>
+                    </div> 
+                    <div class="slds-modal__footer">
+                        <template lwc:if={selectedLineItem}>
+                            <lightning-button style="float:left" label="Delete" type="button" variant="destructive " onclick={handleDelete} disabled={disableEdits}></lightning-button> 
+                        </template>
+                        <lightning-button label="Submit" type="submit" variant="brand" disabled={disableEdits}></lightning-button> 
+                    </div>
+                </lightning-record-edit-form>
+            </div>                      
+        </section>
+        
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+
+    </template>
+
+</template>

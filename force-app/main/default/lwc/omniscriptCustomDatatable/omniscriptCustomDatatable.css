@@ -1,0 +1,11 @@
+.sumRow{
+    height: 35px;
+    background-color: #2D247C;
+    color: white;
+    line-height: 35px;
+    font-size: 11pt;
+    font-weight: 600;
+    display: flex;
+    text-align: right;
+    justify-content: end;     
+  }

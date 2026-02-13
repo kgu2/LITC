@@ -1,0 +1,41 @@
+<template>
+    <div>
+        <template if:true={isModalOpen}>
+            <section class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <div class="slds-modal__header">
+                        <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" onclick={closeModal}>
+                            <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse"></lightning-icon>
+                        </button>
+                        <h2 class="slds-text-heading_medium">Capture signature</h2>
+                        <template lwc:if={manual}>
+                           
+                        </template>
+                        <template lwc:else>
+                            Use your mouse to draw your signature in the box below
+                        </template>
+                    </div>
+                    <div class="slds-modal__content slds-p-around_medium">
+                        <template lwc:if={manual}>
+                            <br/>
+                            <div style="width: 70%; margin: 0 auto; display: flex; justify-content: center;" >
+                                <lightning-input label="Enter full name" ></lightning-input>
+                            </div>
+                            <br/>      <br/>
+                        </template> 
+                        <template lwc:else>
+                            <canvas lwc:dom="manual" class="signature-pad" onmousedown={startDrawing} onmousemove={draw} onmouseup={stopDrawing}></canvas>
+                        </template>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label={label} onclick={changeType} style="float: left;"></lightning-button>
+
+                        <lightning-button label="Clear" onclick={clearSignature} style="margin-right:15px"></lightning-button>
+                        <lightning-button label="Save" variant="brand" onclick={saveSignature}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </div>
+</template>

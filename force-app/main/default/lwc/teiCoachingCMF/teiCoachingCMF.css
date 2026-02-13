@@ -1,0 +1,92 @@
+.tei {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    min-height: 100vh;
+    padding: 40px 0 80px;
+  }
+  
+  /* Page wrapper */
+  .page {
+    max-width: 1100px; /* wider like Cancellation Policy */
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+  
+  /* Header */
+  .page-header {
+    margin-bottom: 18px;
+  }
+  .page-title {
+    font-weight: 800;
+    font-size: clamp(24px, 2.2vw, 30px);
+    margin: 0 0 8px;
+    color: var(--text);
+  }
+  .subtitle {
+    margin: 0;
+    color: var(--muted);
+    font-size: 15px;
+    line-height: 1.6;
+    max-width: 900px;
+  }
+  
+  /* Card / Panel */
+  .panel {
+    background: #ffffff; /* FIX: always visible white card */
+    border: 1px solid #e5e7f2;
+    border-radius: var(--radius, 12px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+    padding: 26px 32px;
+    color: #1a1a1a;
+    line-height: 1.7;
+    font-size: 15px;
+  }
+  
+  /* Paragraphs & spacing */
+  .panel p {
+    margin-bottom: 14px;
+  }
+  .panel strong {
+    color: #000;
+    font-weight: 700;
+  }
+  
+  /* Links */
+  .panel a {
+    color: #0053a3;
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .panel a:hover {
+    text-decoration: underline;
+  }
+  
+  /* Subtle divider line */
+  .page-header::after {
+    content: '';
+    display: block;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #cfcfcf, transparent);
+    margin-top: 14px;
+  }
+  
+  /* Responsive */
+  @media (max-width: 768px) {
+    .page {
+      max-width: 95%;
+      padding: 0 16px;
+    }
+    .panel {
+      padding: 20px;
+    }
+  }
+
+  .panel ul.bullets {
+    list-style: disc;        /* round bullets */
+    padding-left: 1.25rem;   /* indent so bullets are visible */
+    margin: 0;
+  }
+  .panel ul.bullets li {
+    margin-bottom: 12px;     /* spacing between items */
+  }

@@ -1,0 +1,197 @@
+/* .launch-main {
+    border-radius: 4px 0 0 4px;
+    background: #003366;  
+    color: #fff;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    font-weight: bold;
+    cursor: pointer;    
+  } */
+
+  /*
+  .panel {
+    background: linear-gradient(180deg, var(--panel), var(--panel-2));
+    border: 1px solid #b7c1e6;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 12px;
+    overflow: visible;
+  }
+  
+.tiles{ display:grid; grid-template-columns: 1fr; gap: 10px; }
+.tile{
+  display:flex; align-items:center; gap:12px;
+  padding: 14px 14px;
+  border-radius: 12px;
+  border: 1px solid #cdd6ff;
+  background: linear-gradient(180deg, #10183a, #0e1533);
+  transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+  cursor:pointer;
+  width: 200px;
+}
+.tile:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.35); border-color:#3851b8; }
+.tile .label{ font-weight:700; }
+.tile-blue{ background: linear-gradient(135deg, rgba(77,134,255,.18), transparent 45%), linear-gradient(180deg, #10183a, #0e1533); }
+.tile-green{ background: linear-gradient(135deg, rgba(45,179,108,.18), transparent 45%), linear-gradient(180deg, #10183a, #0e1533); }
+.tile .icon lightning-icon{ --sds-c-icon-color-foreground-default: var(--text); }
+
+.btn-secondary{
+  display:flex; align-items:center; gap:12px;
+  padding: 14px 14px; 
+  border-radius: 12px; 
+  border: 1px solid #cdd6ff;
+  cursor:pointer;
+  transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+  color: #cdd6ff; 
+  background: linear-gradient(180deg, #10183a, #0e1533);
+  width: 40px;
+}
+.btn-secondary:hover{ transform: translateY(-2px); box-shadow: 0 12px 28px rgba(0,0,0,.35); border-color:#3851b8; }
+
+.dropdown-menu{
+  position: absolute; 
+  top: 100%;
+  left: 0; 
+  z-index: 10;
+  background: #0f1530; 
+  color: var(--text);
+  border: 1px solid #2c3a7f; 
+  border-radius: 12px;
+  box-shadow: 0 12px 26px rgba(0,0,0,.35);
+  width: 240px;   
+}
+.dropdown-menu ul{ list-style: none; margin: 0; padding: 6px 0; }
+.dropdown-menu li{
+  padding: 10px 14px; cursor: pointer; font-size: 14px;
+}
+.dropdown-menu li:hover{ background: rgba(138,155,255,.1); }
+
+.dropdown-toggle{ width: 40px; }
+.dropdown {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+*/
+
+/* ===== Panel (Main Card) ===== */
+.panel {
+  background: #ffffff;
+  border: 1px solid #e5e7f2;
+  border-radius: var(--radius, 12px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  padding: 20px 24px;
+  color: #1a1a1a;
+  line-height: 1.6;
+  font-size: 15px;
+  overflow: visible;
+}
+
+/* ===== Sidebar Tiles ===== */
+.tiles {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7f2;
+  background: #ffffff;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  width: 200px;
+  color: #1a1a1a;
+}
+
+.tile:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  border-color: #cfd4e1;
+}
+
+.tile .label {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+/* Accent color versions (subtle gradients for variety) */
+.tile-blue {
+  background: linear-gradient(135deg, rgba(0, 83, 163, 0.06), transparent 45%), #ffffff;
+}
+
+.tile-green {
+  background: linear-gradient(135deg, rgba(45, 179, 108, 0.06), transparent 45%), #ffffff;
+}
+
+.tile .icon lightning-icon {
+  --sds-c-icon-color-foreground-default: #1a1a1a;
+}
+
+/* ===== Per-card Dropdown Button ===== */
+.btn-secondary {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 14px;
+  border-radius: 12px;
+  border: 1px solid #e5e7f2;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  color: #1a1a1a;
+  background: #ffffff;
+  width: 40px;
+}
+
+.btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+  border-color: #cfd4e1;
+}
+
+/* ===== Dropdown Menu ===== */
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 10;
+  background: #ffffff;
+  color: #1a1a1a;
+  border: 1px solid #e5e7f2;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  width: 240px;
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+}
+
+.dropdown-menu li {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #1a1a1a;
+  transition: background 0.1s ease;
+}
+
+.dropdown-menu li:hover {
+  background: rgba(0, 83, 163, 0.08);
+}
+
+/* ===== Dropdown Container ===== */
+.dropdown-toggle {
+  width: 40px;
+}
+
+.dropdown {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}

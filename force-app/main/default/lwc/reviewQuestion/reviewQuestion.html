@@ -1,0 +1,143 @@
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading" variant="brand" size="large"></lightning-spinner>
+    </template>
+
+    <div class="slds-box" style="padding: 20px; margin-right: 15px; margin-bottom: 15px; width: 400px;">
+        <h2><a onclick={handleNavigateAnswer}>{question.Question_ID__c}</a></h2>      
+        <br/>
+        <p><b>{question.Review_Question__r.Name}</b></p>
+
+        <lightning-accordion allow-multiple-sections-open active-section-name={activeSections} style="background: white">
+            <lightning-accordion-section name="Description" label="Description">
+                <p style="font-size: 0.75rem; height: 270px; overflow-y:auto">
+                    <lightning-formatted-rich-text value={question.Review_Question__r.Description__c}></lightning-formatted-rich-text>
+                </p>
+            </lightning-accordion-section>
+            <lightning-accordion-section name="Fields" label="Field(s)">
+                <template if:true={appData}>
+                    <template for:each={appData} for:item="field">
+                        <a data-field={field.key} data-value={field.value} onmouseover={openPopover} key={field.key} onclick={handleNavigateToRecord}>{field.key}</a>
+                        <br key={field.key}/>
+                    </template>
+
+                    <template if:true={showPopover}>           
+                        <section id="popoverWindow" style="position: absolute; left: 10rem; margin-top: -3rem" aria-modal="true" aria-label="Dialog title" aria-describedby="popover-body-id" class="popover slds-popover" role="dialog">    
+                            <lightning-button 
+                                variant="base" 
+                                title="close" 
+                                icon-name="utility:close" 
+                                icon-position="right" 
+                                style="float: right;"
+                                class="slds-m-left_x-small slds-popover__close closebutton" 
+                                onclick={closePopover}>
+                            </lightning-button>
+    
+                            <div id="popover-body-id" class="slds-popover__body popover__body_small" style="max-height: 400px; overflow-y: auto;">
+                                Field value
+                                <br/>
+                                <p style="font-size: .75rem;">
+                                    <b>{fieldValue}</b>
+                                </p>
+                            </div>
+                        </section>
+                    </template>
+                </template>
+
+                <template if:true={licensesA}>
+                    <template for:each={licensesA} for:item="field">
+                        <a data-field={field.Id} data-value={field.Id} key={field.Id} onclick={handleNavRelatedRecord}>{field.Licensure__c}</a>
+                        <br key={field.Id}/>
+                    </template>
+                </template>
+                <template if:true={licensesB}>
+                    <template for:each={licensesB} for:item="field">
+                        <a data-field={field.Id} data-value={field.Id} key={field.Id} onclick={handleNavRelatedRecord}>{field.Licensure__c}</a>
+                        <br key={field.Id}/>
+                    </template>
+                </template>
+                <template if:true={licensesC}>
+                    <template for:each={licensesC} for:item="field">
+                        <a data-field={field.Id} data-value={field.Id} key={field.Id} onclick={handleNavRelatedRecord}>{field.Licensure__c}</a>
+                        <br key={field.Id}/>
+                    </template>
+                </template>
+                <template if:true={otherStaff}>
+                    <template for:each={otherStaff} for:item="field">
+                        <a data-field={field.Id} data-value={field.Id} key={field.Id} onclick={handleNavRelatedRecord}>{field.Other_Staff_First_Name__c} {field.Other_Staff_Last_Name__c}</a>
+                        <br key={field.Id}/>
+                    </template>
+                </template>
+            </lightning-accordion-section>
+
+            <lightning-accordion-section name="Score" label="Score">
+                <lightning-icon icon-name="utility:info" style="cursor:pointer; margin-bottom: 4px; margin-left: 2px" size="x-small" onclick={togglePopover}></lightning-icon>   
+                <!-- <lightning-button 
+                variant="base" 
+                icon-name="utility:question" 
+                label="Info" 
+                onclick={togglePopover} icon-position="right">
+            </lightning-button> -->
+
+                <template if:true={showPopoverHelp}>
+                  <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_top-left" role="dialog" style="position: absolute; right:0;">
+                    <div style="padding: 10px;">
+                        0. No answer <br/>
+                        1. Limited <br/>
+                        2. Adequate <br/>
+                        3. Average <br/>
+                        4. Solid <br/>
+                        5. Excellent <br/>
+                    </div>
+                  </section>
+                </template>
+
+                <br/>
+
+                <div class="score-container">
+                    <input type="radio" id="score0" name={question.Question_ID__c} value="0" data-value="No Answer" onchange={handleRatingChange} disabled={disableEdits}>
+                    <label for="score0" class="score-label">0</label>
+
+                    <input type="radio" id="score1" name={question.Question_ID__c} value="1" data-value="Bad Answer" onchange={handleRatingChange} disabled={disableEdits}>
+                    <label for="score1" class="score-label">1</label>
+            
+                    <input type="radio" id="score2" name={question.Question_ID__c} value="2" data-value="Better Answer" onchange={handleRatingChange} disabled={disableEdits}>
+                    <label for="score2" class="score-label">2</label>
+            
+                    <input type="radio" id="score3" name={question.Question_ID__c} value="3" data-value="Good Answer" onchange={handleRatingChange} disabled={disableEdits}>
+                    <label for="score3" class="score-label">3</label>
+            
+                    <input type="radio" id="score4" name={question.Question_ID__c} value="4" data-value="Best Answer" onchange={handleRatingChange} disabled={disableEdits}>
+                    <label for="score4" class="score-label">4</label>
+            
+                    <input type="radio" id="score5" name={question.Question_ID__c} value="5" data-value="Flawless" onchange={handleRatingChange} disabled={disableEdits}>
+                    <label for="score5" class="score-label">5</label>
+                </div>
+                <div style="float: right">
+                    <lightning-button variant="base" label="Clear" onclick={handleReset}></lightning-button>
+                </div>
+                <br/>
+                <p style="font-size: unset;">Evaluation: <b>{question.Score__c} - {question.Evaluation__c}</b>  </p>
+            </lightning-accordion-section>
+<!-- 
+            <lightning-accordion-section name="Additional" label="Additional info">
+                <br/>
+                <lightning-record-edit-form object-api-name='Review_Answer__c' record-id={question.Id}>
+                    <label>Strengths</label>
+                    <br/>
+                    <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Strengths__c" onchange={autosave}></lightning-input-field>
+                    <br/>
+                    <label>Weaknesses</label>
+                    <br/>
+                    <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Weaknesses__c" onchange={autosave}></lightning-input-field>
+                    <br/>
+                    <label>Notes</label>
+                    <br/>
+                    <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Notes__c" onchange={autosave}></lightning-input-field>
+                </lightning-record-edit-form>
+            </lightning-accordion-section> -->
+        </lightning-accordion>
+        <br />
+    </div>  
+
+</template>

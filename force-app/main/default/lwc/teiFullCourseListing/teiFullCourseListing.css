@@ -1,0 +1,164 @@
+/* ===== Theme tokens (light TEI look) ===== */
+:host {
+  --bg: #f5f5f5;     /* page background */
+  --panel: #F5F5F5;  /* light panel surface */
+  --panel-2: #F5F5F5;
+  --text: #111;      /* primary text */
+  --muted: #55607a;  /* secondary text */
+  --accent: #4d86ff; /* brand blue */
+  --accent-2: #8e7bff;
+  --radius: 14px;
+  --shadow: 0 10px 25px rgba(0,0,0,.16);
+  display: block;
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* ===== Layout wrappers ===== */
+.container {
+  width: 100%;
+  background: var(--bg);
+  padding: 10px 0 96px;
+}
+
+.tei-wrapper {
+  width: 100%;
+  background: var(--bg);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+}
+
+/* ===== Card / Panel ===== */
+.tei-card {
+  background: var(--panel);
+  color: var(--text);
+  padding: 2rem;
+  width: 100%;
+  max-width: 1000px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  border: 1px solid var(--panel); /* subtle edge like homepage */
+}
+
+/* ===== Controls & inputs ===== */
+.tei-search-grid {
+  display: grid;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.tei-subcategory {
+  display: flex;
+  flex-direction: column;
+}
+
+.tei-date-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+/* Checkbox group / input framing */
+.comboBoxContainer {
+  padding: 1rem;
+  border-radius: 10px;
+  background-color: #fff;          /* white card look */
+  border: 1px solid #e5e7f2;
+}
+
+/* Give SLDS inputs a matching feel (where supported) */
+lightning-input,
+lightning-checkbox-group,
+lightning-combobox,
+lightning-button {
+  --slds-c-input-color-text: var(--text);
+  --slds-c-input-color-border: #d9e0f2;
+  --slds-c-input-radius-border: 12px;
+}
+
+/* ===== Typography ===== */
+.page-title {
+  font-weight: 800; letter-spacing: .2px;
+  font-size: clamp(22px, 2.2vw, 28px);
+  margin: 0 0 6px;
+  color: var(--text);              /* solid black title */
+}
+.muted {
+  color: var(--muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+.small-label { font-size: 12px; color: var(--muted); }
+
+/* ===== Results list ===== */
+.results-info {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.tei-card hr {
+  height: 1px; border: 0;
+  background: linear-gradient(90deg, transparent, #cfcfcf, transparent);
+  margin: 12px 0 16px;
+}
+
+/* Result card */
+.tei-result {
+  background: #fff;
+  border: 1px solid #e5e7f2;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: var(--radius);
+  color: var(--text);
+  transition: none;                /* no hover bulge */
+}
+
+/* Hover: subtle color only; no lift/shadow change */
+.tei-result:hover {
+  background: #f7f9ff;
+  border-color: #d6dbf1;
+  cursor: pointer;
+}
+
+.result-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text);
+}
+.result-meta {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 2px;
+}
+.result-description {
+  font-size: 0.95rem;
+  color: var(--text);
+  margin-top: 6px;
+}
+
+/* ===== Pagination ===== */
+.tei-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  color: var(--text);
+  margin-top: 1rem;
+}
+
+/* ===== Responsive ===== */
+@media screen and (max-width: 600px) {
+  .tei-search-grid { display: flex; flex-direction: column; }
+  .tei-pagination { flex-direction: column; align-items: flex-start; }
+}
+
+/* ===== No-bulge safety net (keeps hover perfectly flat) ===== */
+.tei-result,
+.tei-result * {
+  transform: none !important;
+  box-shadow: none !important;
+  transition: none !important;
+}

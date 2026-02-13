@@ -1,0 +1,632 @@
+<template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <!-- <template lwc:if={showCloseoutModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+            <div class="slds-modal__container">
+                <button type="button" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeFinalCloseoutModal} style="margin-right: 2rem">
+                    <lightning-icon icon-name="utility:close"
+                    alternative-text="close"
+                    variant="inverse"
+                    size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+                </button>
+                    <div class="slds-modal__content slds-var-p-around_large" style={splash}>
+                    <div style="color:#083c6f; margin-top:5rem; background-color:white; width: 85%; border-radius: 10px; padding-top:inherit; margin-left: auto; margin-right: auto; padding:4rem">
+                        <h2 style="text-align: center;">Ready for closeout</h2>
+                        <br> 
+                        <p style="font-size:1rem">
+                            Thank you for your submission. You may now certify and submit your Closeout Report. Click the button below to view and submit your Closeout Report(s).
+                        </p>
+                        <br>
+            
+
+                        <div style="margin-top: 20px; text-align:center">
+
+                    
+                            <button type="button" style="display:inline-block" class="slds-button slds-button_neutral" onclick={navigateToHome} name="Yes">Go to closeout</button>
+                    
+                        </div>
+
+                    
+                        <br>
+                    </div>
+                    </div>
+    
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template> -->
+
+
+    <div style="display: flex; justify-content: center;">
+
+        <div style="width: 190px; margin-right: 2rem;">
+
+            <div style="height: 2rem;"></div>
+            <div class="headerImg"><img src={slfrfCard}></div>
+            <div style="height: 2rem;"></div>
+        
+            <lightning-tabset active-tab-value={activeTab} variant="vertical" >       
+                <lightning-tab onactive={handleOnActive} label="Instructions" value="instructions"></lightning-tab>
+                <lightning-tab onactive={handleOnActive} label="Recipient information" value="recipient"></lightning-tab>
+                <lightning-tab onactive={handleOnActive} label="Reporting category" value="form"></lightning-tab>
+                <lightning-tab onactive={handleOnActive} label="Certify and submit" value="certification" ></lightning-tab>
+            </lightning-tabset>
+        </div>
+
+        <div style="margin-top:2rem; width: 80%">
+            <div class="slds-grid slds-wrap slds-gutters_direct">
+                <div class="slds-col slds-size_1-of-1 slds-small-size_10-of-12 container fade">
+                  <div class={instructions} style="max-width: 70rem;">
+
+                        <h1>Instructions</h1>
+                        <hr style="margin-top: 5px;">
+                        <p style="font-size: 1.3rem; font-weight: 300;">Welcome to the Local Assistance and Tribal Consistency Fund (LATCF) Annual Report.</p>
+
+                        <p>As outlined in the <a href="https://home.treasury.gov/system/files/136/Local-Assistance-Tribal-Consistency-Fund-Reporting-Guidance_202302.pdf" target="_blank">LATCF Reporting Guidance</a> recipients are required to report annually on obligations and expenditures made using their LATCF award. This page will outline 5 quick steps for you to complete and submit this report. </p>
+                        <p><b>Step 1:</b> On the “Reporting category” page, recipients are required to report on the following for each of the 22 government purpose reporting categories: </p>
+                        <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                            <li>Cumulative obligations in dollar amounts </li>
+                            <li>Current period obligations in dollar amounts (Note: for the 2023 Annual Report this value should be identical to the cumulative obligations) </li>
+                            <li>Cumulative expenditures in dollar amounts </li>
+                            <li>Current period expenditures in dollar amounts (Note: for the 2023 Annual Report this value should be identical to the cumulative obligations) </li>
+                            <li>Checkbox to identify whether the obligation/expenditure was for an infrastructure project (check if "YES") </li>
+                        </ul>
+                        </p>
+                        <p>Recipients should select the appropriate governmental purpose reporting category based on the nature of the obligations and expenditures. </p>
+                        <p><b>Step 2:</b> On the bottom of the “Reporting category” page, please review the calculated totals and make sure there are no identified validation errors. If there are errors, please read the error message carefully to identify where to make corrections. </p>
+                        <p><b>Step 3:</b> On the “Certify and submit” page, review the summary totals of reported data and confirm it is accurate. If any of the values are inaccurate, please return to the “Reporting Category” page to make updates. </p>
+                        <p><b>Step 4:</b> On the “Certify and submit” page, please answer Yes or No to the following question: </p>
+                        <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                            <li>Has the recipient spent any LATCF funds on lobbying activities as outlined in the Ineligible Uses section of Treasury’s Guidance for the Local Assistance and Tribal Consistency Fund? </li>
+                        </ul>
+                        </p>
+                        <p><b>Step 5:</b> On the “Certify and submit” page, please read the certification statement and select “Certify and submit” button on the bottom right corner of the page. </p>
+                        <p>If you have any questions please visit the <a href="https://home.treasury.gov/policy-issues/coronavirus/assistance-for-state-local-and-tribal-governments/local-assistance-and-tribal-consistency-fund/latcf-self-service-resources" target="_blank">LATCF Self-Help page</a> or contact us at using the “Help” tab on the top right side-bar of this page. </p>
+                        <hr>
+
+                        <div style="width: 100%; margin-top: 15px;">
+                            <div style="float: right;">
+                                <button
+                                style="width:6rem"
+                                type="button"
+                                class="slds-button slds-button_neutral"
+                                onclick={handleChangeTab}
+                                name="recipient">Next
+                                </button>
+                            </div>
+                        </div>
+                        <footer></footer> 
+                  </div>
+
+                  <div class={recipient}>
+                    <lightning-record-edit-form record-id={recordId} object-api-name="Recipient__c" onerror={handleError}>
+                        <h1>Recipient information</h1>
+                        <hr style="margin-top: 5px;">
+                        <p> 
+                            Please verify that you are an authorized user of the prime recipient and confirm the accuracy of your organization's program profile.
+                        </p>
+                        <div class="slds-box">
+                            <h2>Recipient information</h2>
+
+                            <div class="slds-grid slds-gutters slds-wrap">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <div class="slds-grid slds-gutters slds-wrap">
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>UEI</label>
+                                            <lightning-helptext content="The Unique Entity Identification number for the recipient organization of the recipient's SLFRF funds."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Unique_Entity_Identifier__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>TIN</label>
+                                            <lightning-helptext content="The Recipient's Internal Revenue Service (IRS) Taxpayer Identification Number."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="EIN__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>Legal Entity Name</label>
+                                            <lightning-helptext content="The name of the recipient organization."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Legal_Entity_Name__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>Type</label>
+                                            <lightning-helptext content="A collection of indicators of different types of recipient organizations."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Recipient_Type_Translated__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>FAIN</label>
+                                            <lightning-helptext content="The Federal Award Identification Number (FAIN) is the unique identifying number assigned to all financial assistance awards or grants."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="FAIN_No__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>CFDA No.</label>
+                                            <lightning-helptext content="The 5-digit number assigned in the awarding document to a Federal Award."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="CFDA_No__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                                    </div>
+                
+                                </div>
+                
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <div class="slds-grid slds-wrap slds-gutters">
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>Address</label>
+                                            <lightning-helptext content="First line of the recipient organization's address."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Address__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>Address 2</label>
+                                            <lightning-helptext content="Second line of the recipient organization's address."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Address_2__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>Address 3</label>
+                                            <lightning-helptext content="Third line of the recipient organization's address."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Address_3__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>City</label>
+                                            <lightning-helptext content="Name of city in which the recipient organization is located."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="City__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>State/Territory</label>
+                                            <lightning-helptext content="United States Postal Service (USPS) two-letter abbreviation for the state or territory in which the recipient organization is located."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="State_Abbreviated__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>Zip5</label>
+                                                <lightning-helptext content="United States ZIP code (5 digits)"></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Zip__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <label>Zip+4</label>
+                                            <lightning-helptext content="An additional +4 ZIP digits that USPS appends to standard 5-digit ZIP codes to identify a specific geographic segment within an area."></lightning-helptext>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Zip_4__c"></lightning-output-field>
+                                            <div style="height:2rem"></div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                
+                        <div style="width: 100%; margin-top: 30px;">
+                            <div style="float: left;">
+                                <button
+                                style="width:6rem"
+                                type="button"
+                                class="slds-button slds-button_neutral"
+                                onclick={handleChangeTab}
+                                name="instructions">Back
+                                </button>
+                            </div>
+                            <div style="float: right;">
+                                <button
+                                style="width:6rem"
+                                type="button"
+                                class="slds-button slds-button_neutral"
+                                onclick={handleChangeTab}
+                                name="form">Next
+                                </button>
+                            </div>
+                        </div>
+                        <footer></footer>
+                    </lightning-record-edit-form>
+                  </div>
+
+
+                  <div class={form}>
+                    <template if:false={isWaiting}>
+                        <lightning-spinner alternative-text="Loading...." size="large" variant="brand"></lightning-spinner>
+                      </template>
+                    <c-latcf-annual-report-project record-id={recordId} report-id={reportId} allocation-amount={allocationAmount} disable-edits={disableEdits} ongettotals={handleGetTotal} ongetwait={handleGetWait} ongeterrors={handleGetErrors}></c-latcf-annual-report-project>
+
+                    <table>
+                        <tr>
+                            <td style="text-align: left;" width="33%">
+                                <button
+                                style="width:6rem"
+                                type="button"
+                                class="slds-button slds-button_neutral"
+                                onclick={handleChangeTab}
+                                name="recipient">Back
+                                </button>
+                            </td>
+                            <td style="text-align: center;" width="33%">
+                                <button
+                                style="width:6rem"
+                                class="slds-button slds-button_brand"
+                                onclick={handleSave}
+                                name="save">Save
+                                </button>
+                            </td>
+                            <td style="text-align: right;" width="33%">
+                                <button
+                                style="width:6rem"
+                                type="button"
+                                class="slds-button slds-button_neutral"
+                                onclick={handleChangeTab}
+                                name="certification">Next
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <footer></footer>
+                </div>
+
+                  <div class={certification}>
+                    <template if:false={isWaiting}>
+                        <lightning-spinner alternative-text="Loading...." size="large" variant="brand"></lightning-spinner>
+                      </template>
+
+                      <lightning-record-edit-form object-api-name='SLT_Compliance_Report__c' record-id={reportId} onerror={handleError} onsuccess={handleSubmit}>
+
+                        <h1>Certify and submit</h1>
+                        <hr style="margin-top: 5px;">
+
+                        <template if:true={showError}>
+                            <p style="color:#930012; max-width:100%">
+                                <lightning-icon icon-name="utility:warning" variant="error" class="animate__animated animate__bounce"></lightning-icon>&nbsp;
+                                There are errors with your submission, please verify all status icons are complete and there are no errors on previous tab.
+                            </p>
+                            <br>
+                        </template>
+                        
+                        <div class="slds-box">
+                            <h2>Overview</h2>
+                            <br>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <label>Cumulative obligations:</label>
+                                    <br><lightning-formatted-number value={cumulativeObl} format-style="currency"></lightning-formatted-number>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <label>Cumulative expenditures:</label>
+                                    <br><lightning-formatted-number value={cumulativeExp} format-style="currency"></lightning-formatted-number>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <label>Current period obligations:</label>
+                                    <br><lightning-formatted-number value={currentPeriodObl} format-style="currency"></lightning-formatted-number>
+                                </div>
+                                <div class="slds-col slds-size_1-of-2">
+                                    <label>Current period expenditures:</label>
+                                    <br><lightning-formatted-number value={currentPeriodExp} format-style="currency"></lightning-formatted-number>
+                                </div>
+                            </div>
+                            <br>
+                            <template if:true={showCheckboxCertify}>
+                                <label style="display: flex;">
+                                    <!-- <lightning-input type="checkbox" value={checkboxValue} onchange={handleCheckbox} disabled={disableEdits}> </lightning-input> -->
+                                    <!-- Check here if you believe your jurisdiction has expended all of it’s LATCF funds. -->
+                                </label>
+                            </template>
+                            <br>  
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_6-of-8">
+                                    <label>Has the recipient spent any LATCF funds on lobbying activities as outlined in the ineligible uses section of Treasury’s guidance for the Local Assistance and Tribal Consistency Fund?</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-8">
+                                    <lightning-input-field field-name="LATCF_Spent_Funds_Lobbying__c" disabled={disableEdits} variant="label-hidden" onchange={handleLobbyingChange} required class="lobbyField"> </lightning-input-field>
+                                </div>
+                            </div>          
+                        </div>
+
+                        <template lwc:if={is2023}>
+                            <br>
+                            <div class="slds-box">
+                                <h2>Federal Audit Clearinghouse (FAC) Audit</h2>
+                                <br>
+                                <label>Have you expended $750,000 or more in federal award funds during your most recently completed fiscal year?</label>
+                                <lightning-helptext content="If an entity expends $750,000 or more in Federal awards during its fiscal year, it is required to conduct an audit for that year per 2 C.F.R. § 200.501(a)."></lightning-helptext>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-8">
+                                        <lightning-input-field field-name="Audit_Expended_750000_More__c" disabled={disableEdits} variant="label-hidden" required onchange={autosave} value={q1Value}></lightning-input-field>
+                                    </div>
+                                </div>
+    
+                                <template lwc:if={q1Yes}>
+                                    <br/>
+                                    <label>Have you submitted a single audit or program specific audit report to the Federal Audit Clearinghouse (FAC)?</label>
+                                    <lightning-helptext content="The Federal Audit Clearinghouse (FAC) website at https://www.fac.gov/ is where an entity may submit the single audit or and program-specific audit report of its Federal award expenditures."></lightning-helptext>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-8">
+                                            <lightning-input-field field-name="Submitted_Single_Audit__c" disabled={disableEdits} variant="label-hidden" required onchange={autosave}></lightning-input-field>
+                                        </div>
+                                    </div>
+
+                                    <template lwc:if={q2No}>
+                                        <br/>
+                                        <label>Please explain why you did not submit an audit to the FAC.</label>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <lightning-input-field field-name="No_Audit_Explanation__c" disabled={disableEdits} variant="label-hidden" required onchange={autosave}></lightning-input-field>
+                                            </div>
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+                        </template>
+
+                 
+
+                        <br>
+                        <div class="slds-box">
+                            <template if:false={disableEdits}>
+                                <h2>Statement</h2>
+                                <p>
+                                    The undersigned, on behalf of {userName} (“recipient”) specified below, hereby makes the following certifications to the U.S. Department of the Treasury as of the date of this certification: 
+                                </p>
+                                <br>
+                                <p>
+                                    1. The information, certifications, attachments, and other information provided by the recipient to the U.S. Department of the Treasury related to the Local Assistance and Tribal Consistency Fund (“LATCF”) are true and correct and do not contain any materially false, fictitious, or fraudulent statement, nor any concealment or omission of any material fact; 
+                                </p>
+                                <br>    
+                                <p>
+                                    2. The recipient is utilizing LATCF funds in accordance with all applicable legal, regulatory, and other program requirements, including as provided under Section 605 of the Social Security Act, as added by Section 9901 of the American Rescue Plan Act of 2021, and any guidance released by the U.S. Department of the Treasury; 
+                                </p>
+                                <br>       
+                                <p>
+                                    3. To the extent applicable to the recipient’s award, the recipient is in compliance with Treasury guidance on the application of Build America and Buy America to LATCF funds and any waivers issued by Treasury with regards to the application of BABA requirements to this program; and 
+                                </p>
+                                <br>    
+                                <p>
+                                    4. The undersigned has authority to execute and deliver this certification on behalf of the recipient. 
+                                </p>    
+                                <br>        
+                                <p><strong>Name of Current Login User</strong></p>
+                                <br>
+                                <p><strong>The information for the currently signed in user will populate as the Authorizer of this submittal. Only those in Role of Account Administrator, Authorized Representative for Reporting, or Authorized Representative on the Submission record will have access to Certify and Submit.</strong></p>
+                                <br>
+                
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label>Name:</label>
+                                        <br><lightning-formatted-text value={userName} ></lightning-formatted-text>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label>Telephone:</label>
+                                        <br><lightning-formatted-phone value={userPhone} ></lightning-formatted-phone>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label>Title:</label>
+                                        <br><lightning-formatted-text value={userTitle} ></lightning-formatted-text>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label>Email:</label>
+                                        <br><lightning-formatted-email value={userEmail} ></lightning-formatted-email>
+                                    </div>
+                                </div>
+                                <br> 
+                            </template>
+            
+                            <template if:true={disableEdits}>
+                                <p>Thank you for submitting! </p>
+                                <p>Click <a onclick={handleSurveyNav}>HERE</a> to complete a survey.</p>
+
+                                <br>
+                                <p><strong>Name of submitted user</strong></p>
+                                <br>
+                    
+                                <lightning-record-view-form object-api-name="SLT_Compliance_Report__c" onerror={handleError} record-id={reportId}> 
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <label>Name:</label>
+                                            <br>
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Submitted_Auth_Rep_Name__c"></lightning-output-field>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <label>Telephone:</label>
+                                            <br>
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Submitted_Auth_Rep_Phone__c"></lightning-output-field>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <label>Title:</label>
+                                            <br>
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Submitted_Auth_Rep_Title__c"></lightning-output-field>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <label>Email:</label>
+                                            <br>
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Submitted_Auth_Rep_Email__c"></lightning-output-field>
+                                        </div>
+                                    </div>
+                
+                                    <br><br><br>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-2">
+                                            <label>Date submitted</label>
+                                            <lightning-output-field style="font-size:1rem;" variant="label-hidden" field-name="Submission_Date__c"></lightning-output-field>
+                                        </div>
+                                    </div>
+                                </lightning-record-view-form>
+                            </template>
+                            
+                            <br>    
+                        </div>
+    
+                        <br>
+                        <div style="float: left;">
+                            <button style="width:6rem" class="slds-button slds-button_neutral" onclick={handleChangeTab} name="form" type="button">Back</button>
+                        </div>
+                        <template if:false={disableEdits}>
+                            <div style="float: right; margin-right: 0">
+                                <button class="provide" type="save" disabled={showError}>Certify and submit</button> 
+                            </div>    
+                        </template> 
+<!-- 
+                        <template if:true={showCloseout}>
+                            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+                                <div class="slds-modal__container">
+                                    <button type="button" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeCloseout} style="margin-right: 2rem">
+                                        <lightning-icon icon-name="utility:close"
+                                        alternative-text="close"
+                                        variant="inverse"
+                                        size="small" ></lightning-icon>
+                                    <span class="slds-assistive-text">Close</span>
+                                    </button>
+                                      <div class="slds-modal__content slds-var-p-around_large" style={splash}>
+                                        <div style="color:#083c6f; margin-top:5rem; background-color:white; width: 85%; border-radius: 10px; padding-top:inherit; margin-left: auto; margin-right: auto; padding:4rem">
+                                          <h2>Have you spent your full LATCF award and are ready to close out the award?</h2>
+                                          <br> 
+                                          <p style="font-size:1rem">
+                                            If you are ready to close out, please be aware that this is not your final report. Included in forthcoming guidance will be information on how to close out your LATCF award, including completion of final report information.
+                                          </p>
+                                          <br>
+                
+
+                                          <div style="margin-top: 30px; text-align:center">
+
+                                                <button
+                                                type="button"
+                                                style="width:6rem; display:inline-block; margin-right:1rem"
+                                                class="slds-button slds-button_neutral"
+                                                onclick={handleCloseoutClick}
+                                                name="No">No
+                                                </button>
+                                          
+                                      
+                                                <button
+                                                type="button"
+                                                style="width:6rem; display:inline-block"
+                                                class="slds-button slds-button_neutral"
+                                                onclick={handleCloseoutClick}
+                                                name="Yes">Yes
+                                                </button>
+                                      
+                                        </div>
+
+                                          <br>
+                                        </div>
+                                      </div>
+                        
+                                </div>
+                            </section>
+                            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+                        </template> -->
+
+                    </lightning-record-edit-form>
+
+                    <footer></footer>
+                  </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-small-size_2-of-12">
+                    <div class="containerInfobox animate__animated">
+                        <div style="width: 87%; margin:auto">
+                            <template if:false={showToggle}>
+                                <div onclick={collapse} style="cursor: pointer; font-size: .6875rem; margin-bottom:10px">
+                                    <lightning-icon icon-name="utility:right"></lightning-icon> 
+                                    Hide
+                                </div>
+                                <c-app-605-info-box deadline-passed={deadlinePassed} status={status} object-name='SLT_Compliance_Report__c' fields={fields} record-id={reportId} show-unsubmit='true'></c-app-605-info-box > 
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <template if:true={showToggle}>
+            <div class="containerCollapsed"></div>
+            <lightning-icon icon-name="utility:left" onclick={expand} style="cursor: pointer; position: fixed; right:0; top: 9.5rem" size="medium"></lightning-icon>
+            <br>
+            <lightning-icon icon-name="utility:help" onclick={expand} style="cursor: pointer; position: fixed; right:0; top: 12.5rem" size="medium"></lightning-icon>
+            <br>
+            <lightning-icon icon-name="utility:info_alt" onclick={expand} style="cursor: pointer; position: fixed; right:0; top: 15.5rem" size="medium"></lightning-icon>
+        </template>
+    </div>
+
+
+
+    <!-- <template lwc:if={showCloseoutModalAfterSubmission}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+            <div class="slds-modal__container">
+                <button type="button" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeCloseout} style="margin-right: 2rem">
+                    <lightning-icon icon-name="utility:close"
+                    alternative-text="close"
+                    variant="inverse"
+                    size="small" ></lightning-icon>
+                <span class="slds-assistive-text">Close</span>
+                </button>
+                    <div class="slds-modal__content slds-var-p-around_large" style={splash}>
+                    <div style="color:#083c6f; margin-top:5rem; background-color:white; width: 85%; border-radius: 10px; padding-top:inherit; margin-left: auto; margin-right: auto; padding:4rem">
+                        <h2 style="text-align: center;">Ready for closeout</h2>
+                        <br> 
+                        <p style="font-size:1rem">
+                            Thank you for your submission. You may now certify and submit your Closeout Report. Click the button below to view and submit your Closeout Report(s).
+                        </p>
+                        <br>
+                        <div style="margin-top: 20px; text-align:center">
+                            <button type="button" style="display:inline-block" class="slds-button slds-button_neutral" onclick={navigateToHome} name="Yes">Go to closeout</button>
+                        </div>
+                        <br>
+                    </div>
+                    </div>
+    
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template> -->
+    
+
+</template>

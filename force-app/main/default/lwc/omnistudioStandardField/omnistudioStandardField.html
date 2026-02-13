@@ -1,0 +1,31 @@
+<template>
+    <template if:true={objectAPI}>
+        <div class="slds-grid slds-gutters">
+            
+            <div class="slds-col slds-size_1-of-1">
+                <div class={styleClass}>
+                    <template if:true={required}>
+                        <span style="color:red">*</span>
+                    </template>
+                    <lightning-formatted-text value={label} id={fieldAPI}></lightning-formatted-text>
+                </div>
+                <template if:true={helptext}>
+                    <lightning-helptext style="margin-left:10px;" for-item={fieldAPI} content={helptext}></lightning-helptext>              
+                </template>
+            </div>
+        </div>
+        <lightning-record-edit-form object-api-name={objectAPI}>
+            <template if:true={required}>
+                
+                <lightning-input-field required variant="label-hidden"  value={storedValue} field-name={fieldAPI} onchange={onFieldChange}></lightning-input-field> -->
+                <!-- <lightning-input-rich-text required value={storedValue} onchange={onFieldChange}></lightning-input-rich-text> -->
+            </template>
+            <template if:false={required}>
+                <lightning-input-field class="label-hidden" variant="label-hidden" field-name={fieldAPI} value={storedValue} onchange={onFieldChange}>
+
+                </lightning-input-field>
+               
+            </template>
+        </lightning-record-edit-form>
+    </template>
+</template>

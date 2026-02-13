@@ -1,0 +1,79 @@
+<template>
+    <lightning-card title={objTitle} class="slds-card_boundary ">
+        <div class="slds-box slds-m-left_xx-large slds-m-right_xx-large slds-m-top_xx-large slds-m-bottom_xx-large">
+            
+        <lightning-record-edit-form object-api-name={objectApiName} record-id={recordId} onsubmit={handleSubmit} onsuccess={handleSuccess} >
+            <!-- <lightning-record-edit-form object-api-name={objectApiName} onsuccess={handleSuccess}   onsubmit={handleSubmit}> -->
+            <lightning-messages></lightning-messages>
+
+            <!-- <br/> 
+            <template if:true={hasRecordType}>
+                <div class="slds-col slds-size_1-of-2">
+                    <lightning-input-field field-name="RecordTypeId" value={recordTypeId} disabled='true'>
+                    </lightning-input-field>
+                </div>
+            </template>               
+            <br/>  -->
+
+             <template for:each={objMapClm} for:item="keyValue">
+                <div key={keyValue.key}>
+                    <br/> 
+                    <lightning-accordion allow-multiple-sections-open={sections} active-section-name={sections}>
+                        <lightning-accordion-section name={keyValue.key} label={keyValue.key} class="accordionSection">
+                            
+                            <br/> 
+                            <div class="slds-grid slds-gutters">
+                                <template for:each={keyValue.value} for:item="column"> 
+                                    
+                                    <template if:true={oneColumn}>
+                                        <div key={column} class="slds-col slds-size_1-of-1">
+                                            <template for:each={column.fields} for:item="field">                                                
+                                                <div key={field} class="slds-grid  slds-border_bottom">
+                                                    <div class="slds-col slds-size_1-of-1">
+                                                        <lightning-input-field field-name={field.fieldAPI} 
+                                                                                required={field.behavior.fieldRequired} 
+                                                                                disabled={field.behavior.fieldReadonly}>
+                                                        </lightning-input-field>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </template>
+                                
+                                    <template if:true={twoColumn}>
+                                        <div key={column} class="slds-col slds-size_1-of-2">
+                                            <template for:each={column.fields} for:item="field">
+                                                
+                                                <div key={field} class="slds-grid  slds-border_bottom">
+                                                    <div class="slds-col slds-size_1-of-1">
+                                                        <lightning-input-field field-name={field.fieldAPI} 
+                                                                                required={field.behavior.fieldRequired} 
+                                                                                disabled={field.behavior.fieldReadonly}>
+                                                        </lightning-input-field>
+                                                    </div>
+                                                </div>
+                                            </template>
+                                        </div>                                        
+                                    </template>
+                                </template> 
+
+                            </div>
+
+                        </lightning-accordion-section>
+                    </lightning-accordion>
+
+                </div>
+
+            </template> 
+            <br/>
+            <br/> 
+            
+            <lightning-button-group class="slds-align_absolute-center">
+                <lightning-button type="cancel" variant="brand-outline"  name="submit" label="Cancel" onclick={handleCancel}></lightning-button>
+                <lightning-button type="submit" variant="brand"  name="submit" label="Save"></lightning-button>
+            </lightning-button-group>
+            
+        </lightning-record-edit-form>
+    </div>
+    </lightning-card>  
+</template>

@@ -1,0 +1,60 @@
+<template>
+  <p class="slds-text-heading_small">Click the section which events you would like to view</p>
+  <lightning-accordion>
+    <!-- PubSub Events -->
+    <lightning-accordion-section name="PubSub Events"
+                                 label="PubSub Events">
+      <template for:each={pubsubEventList}
+                for:item='event'
+                for:index='eventIndex'>
+        <div key={event.key}
+             class="slds-var-m-bottom_large">
+          <div>PubSub Event Name: <span> {event.name}</span></div>
+          <div>PubSub Payload:</div>
+          <div class="event-data-container slds-var-m-around_small"><code>{event.data}</code></div>
+        </div>
+      </template>
+    </lightning-accordion-section>
+
+    <!-- OA Vtag Events -->
+    <lightning-accordion-section name="OA Vtag Events"
+                                 label="OA Vtag Events">
+      <template for:each={oaEventList}
+                for:item='event'
+                for:index='eventIndex'>
+        <div key={event.key}
+             class="slds-var-m-bottom_large">
+          <div>OA Event Name: <span> {event.name}</span></div>
+          <div>OA Payload:</div>
+          <div class="event-data-container slds-var-m-around_small"><code>{event.payload}</code></div>
+        </div>
+      </template>
+    </lightning-accordion-section>
+
+    <lightning-accordion-section name="WPM Events"
+                                 label="WPM Events">
+      <div class="slds-form-element">
+        <label class="slds-form-element__label"
+               for="text-input-id-1">Enter the messagingKey for the WPM event</label>
+        <div class="slds-form-element__control slds-var-m-bottom_medium">
+          <input type="text"
+                 id="wpm-value"
+                 value={wpmKey}
+                 onkeyup={filterWpmPayload}
+                 placeholder="Default is OmniScript-Messaging"
+                 class="slds-input" />
+        </div>
+      </div>
+
+      <template for:each={wpmFilteredList}
+                for:item='event'
+                for:index='eventIndex'>
+        <div key={event.key}
+             class="slds-var-m-bottom_large">
+          <div>WPM Payload:</div>
+          <div class="event-data-container slds-var-m-around_small"><code>{event.payload}</code></div>
+        </div>
+      </template>
+    </lightning-accordion-section>
+  </lightning-accordion>
+</template>

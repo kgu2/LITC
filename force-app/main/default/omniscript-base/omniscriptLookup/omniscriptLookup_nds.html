@@ -1,0 +1,121 @@
+<template>
+  <slot>
+    <div class={_styleClasses.container}>
+      <fieldset class={errorClass}>
+        <div class="nds-combobox_container">
+          <div class="nds-combobox nds-dropdown-trigger nds-dropdown-trigger_click"
+               aria-expanded={show}
+               aria-haspopup="listbox"
+               role="combobox">
+            <div class="nds-combobox__form-element nds-input-has-icon nds-input-has-icon_right nds-form-element__control nds-form-element__control-animated-label"
+                 role="none">
+              <input type="text"
+                     value={lookupDisplay}
+                     onclick={showLookup}
+                     onblur={hideOptions}
+                     disabled={_propSetMap.readOnly}
+                     required={_propSetMap.required}
+                     readonly
+                     class={inputClass}
+                     onkeydown={ariaKeyDown}
+                     aria-controls='lookup'
+                     id="lookupId"
+                     placeholder={_propSetMap.placeholder}
+                     data-omni-input />
+              <div class='nds-form-element__label nds-align-middle nds-animated-label__ease-out'>
+                <label aria-label={_propSetMap.label}
+                       class={_labelClass}
+                       for="lookupId">
+                  {_propSetMap.label}
+                  <abbr if:true={_propSetMap.required}
+                        title="required"
+                        class="nds-required nds-p-left_xx-small">*</abbr>
+                </label>
+                <c-tooltip if:true={_propSetMap.help}
+                           theme="nds"
+                           class="nds-tooltip__container"
+                           content={_handleHelpText}
+                           arrowposition="bottom-left"
+                           icon-name="utility:info">
+                </c-tooltip>
+                <template if:true={_propSetMap.repeat}>
+                  <div class={_styleClasses.repeatContainer}
+                       style="float:right;right:17px;top:3px;"
+                       role="group">
+                    <button if:true={canRepeat}
+                            class={_styleClasses.repeatAdd}
+                            onclick={handleAdd}>
+                      <c-icon icon-name="utility:add"
+                              alternative-text="Repeat Lookup"
+                              extraclass={_styleClasses.repeatIcons}
+                              size="xx-small">
+                      </c-icon>
+                    </button>
+                    <button if:true={canRemove}
+                            class={_styleClasses.repeatRemove}
+                            onclick={handleRemove}>
+                      <c-icon icon-name="utility:close"
+                              alternative-text="Remove Lookup"
+                              extraclass={_styleClasses.repeatIcons}
+                              size="xx-small">
+                      </c-icon>
+                    </button>
+                  </div>
+                </template>
+              </div>
+              <span class="nds-icon_container nds-input__icon_right">
+                <c-icon extraclass="nds-input__icon"
+                        iconposition="right"
+                        icon-name="utility:search"
+                        theme="nds"
+                        alternative-text="lookup"
+                        size="small">
+                </c-icon>
+              </span>
+              <div class="nds-dropdown nds-dropdown_fluid"
+                   role="listbox"
+                   id='lookup'>
+                <ul class="nds-listbox nds-listbox_vertical"
+                    role="presentation">
+                  <template for:each={options}
+                            for:item="optionItem"
+                            for:index='optionIndex'>
+                    <li key={optionItem.key}
+                        role="presentation"
+                        onmousedown={selectOption}
+                        onmouseover={mouseOverFocus}
+                        class="nds-listbox__item">
+                      <div class="nds-media nds-listbox__option nds-listbox__option_entity nds-listbox__option_has-meta"
+                           role="option"
+                           data-option-index={optionIndex}
+                           aria-selected={optionItem.selected}>
+                        <span class="nds-media__body"
+                              data-option-index={optionIndex}>
+                          <span class="nds-listbox__option-text nds-listbox__option-text_entity"
+                                data-option-index={optionIndex}>{optionItem.value}</span>
+                        </span>
+                      </div>
+                    </li>
+                  </template>
+                </ul>
+              </div>
+            </div>
+            <div class="nds-has-error nds-m-top_none">
+              <div if:true={hasError}
+                   class="nds-form-element__help nds-form-element__help_text-transform__none">
+                {errorMessage}
+              </div>
+            </div>
+          </div>
+        </div>
+        <template if:true={isPageLoading}>
+          <c-spinner variant="brand"
+                     alternative-text="Loading..."
+                     theme={_theme}
+                     size="medium">
+          </c-spinner>
+        </template>
+      </fieldset>
+    </div>
+  </slot>
+</template>

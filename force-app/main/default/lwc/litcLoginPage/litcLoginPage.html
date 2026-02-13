@@ -1,0 +1,228 @@
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <div class="container">
+        <div style="text-align: center">
+            <lightning-icon icon-name="utility:warning" size="large" class="my-icon"></lightning-icon>
+        </div>
+        <br/>
+        <b><p>Important: Registration for Authorized Officials or SAM.gov EBiz Points of Contact (POC) Only</p></b>
+
+        <p>This registration form is exclusively for the Authorized Official or EBiz POC of your organization to create their account. Once registered, they can add contact details and invite other users to join.</p>
+
+
+        <p>If you are not an Authorized Official or EBiz POC and require access to your LITC application, please contact your organization's Authorized Official or EBiz POC to request an 
+            invitation. Do not complete this registration form unless you are the Authorized Official or EBiz POC. For questions or assistance, contact our <a href="mailto:LITCGrants@treasury.gov" target="_blank">support team</a>. </p>
+
+        <br/>
+        <lightning-progress-indicator current-step={currentStep} type="base" variant="base">
+            <lightning-progress-step label="Authorizing Official or EBiz Point of Contact (POC)" value="1" onclick={handleNavigate}></lightning-progress-step>
+            <lightning-progress-step label="Sponsoring organization" value="2" onclick={handleNavigate}></lightning-progress-step>
+            <lightning-progress-step label="Add/Create clinic(s)" value="3" onclick={handleNavigate}></lightning-progress-step>
+            <lightning-progress-step label="Inviting team members" value="4" onclick={handleNavigate}></lightning-progress-step>
+        </lightning-progress-indicator>
+        <br/>
+
+        <template lwc:if={currentStepOne}>
+            <div class="slds-box">
+                <h2>Authorizing Official or EBiz POC contact information</h2>
+                <br/>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-1">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>Are you an Authorizing Official or EBiz POC?</label>
+                        <lightning-input variant="label-hidden" onchange={handleAOChange} type="checkbox" style="display: inline-flex; margin-left: 15px"></lightning-input>
+                    </div>
+                </div>
+                <br/>
+                <template lwc:if={isAO}>
+                    
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Select role</label>
+                            <lightning-combobox required variant="label-hidden" value={selectedRole} options={roleOptions} onchange={handleRoleChange}></lightning-combobox>
+                        </div>
+                    </div>
+                    <br/>
+
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_4-of-8">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>First Name</label>
+                            <lightning-input required variant="label-hidden" onchange={handleContactChange} data-name="FirstName"></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_4-of-8">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Last Name</label>
+                            <lightning-input required variant="label-hidden" onchange={handleContactChange} data-name="LastName"></lightning-input>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-2">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Title</label>
+                            <lightning-input required variant="label-hidden" onchange={handleContactChange} data-name="Title"></lightning-input>
+                        </div>
+                        <div class="slds-col slds-size_1-of-2">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Phone</label>
+                            <lightning-input required variant="label-hidden" onchange={handleContactChange} data-name="Phone" type="tel"></lightning-input>
+                        </div>
+                    </div>
+                    <br/><br/>
+        
+                    <lightning-button variant="brand" onclick={handleUpdateContact} label="Create contact"></lightning-button>
+                </template>
+            </div>
+        </template>
+
+        <template lwc:if={currentStepTwo}>
+            <div class="slds-box">
+                <h2>Sponsoring organization</h2>
+                <br/>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_3-of-4">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>Are the sponsoring organization and the clinic the same entity?</label>
+                        <lightning-helptext content="The sponsoring organization is the legal entity that will receive the grant funds. For most applicants, the sponsoring organization the same as the clinic (e.g., XYZ Legal Aid Inc. is the sponsoring organization of XYZ LITC). For other applicants, primarily institutions of higher education, the sponsoring organization is a separate entity from the clinic (e.g., the ABC University Research Foundation is the sponsoring organization receiving grant funds for the ABC University LITC or Waterloo State University is the sponsoring organization of the Waterloo School of Law operating an LITC). "></lightning-helptext>
+                        <lightning-combobox required variant="label-hidden" value={sponsoringOrgSameValue} options={options} onchange={handleSponsoringOrgChange}></lightning-combobox>
+                    </div>
+                </div>
+                <br/>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>Sponsoring organization name</label>
+                        <lightning-helptext content="The sponsoring organization name should exactly match the name provided on SAM.gov. If the name does not match, it could result in a delay in the processing of an application."></lightning-helptext>
+                        <lightning-input required variant="label-hidden" onchange={handleAccountChange} data-name="Name"></lightning-input>
+                    </div>
+                </div>
+                <br/>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>Street</label>
+                        <lightning-input required variant="label-hidden" onchange={handleAccountChange} data-name="BillingStreet"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>City</label>
+                        <lightning-input required variant="label-hidden" onchange={handleAccountChange} data-name="BillingCity"></lightning-input>
+                    </div>
+                </div>
+                <br/>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>State</label>
+                        <lightning-input required variant="label-hidden" onchange={handleAccountChange} data-name="BillingState"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>Zip code</label>
+                        <lightning-input required variant="label-hidden" onchange={handleAccountChange} data-name="BillingPostalCode"></lightning-input>
+                    </div>
+                </div>
+                <template lwc:if={isSponsoringOrgYes}>
+                    <br/>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-2">
+                            <label>UEI</label>
+                            <lightning-input variant="label-hidden" data-name="UEI" onchange={handleAccountChange}></lightning-input>
+                        </div>
+                    </div>
+                </template>
+                <br/><br/>
+    
+                <lightning-button variant="brand" onclick={handleUpdateAccount} label="Create account"></lightning-button>
+                <br/><br/>
+
+                <p>Note: If you need to delete a Sponsoring Organization or Clinic record, please contact the help desk. Provide the account details and specify that you need the account deleted. The help desk team will assist you with the process</p>
+            </div>
+        </template>
+
+        <template lwc:if={currentStepThree}>
+            <div class="slds-box">
+                <h2>Add/Create clinic(s)</h2>
+                <br/>
+
+                <p>If funded, the clinic’s name will be used in IRS publications and other communications with the public. This is also the name the clinic plans to use in its marketing materials and other communications with the public.</p>
+                
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>Clinic name</label>
+                        <lightning-input required variant="label-hidden" onchange={handleAccountChange} data-name="Name"></lightning-input>
+                    </div>
+                </div>
+                <br/>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>Street</label>
+                        <lightning-input required variant="label-hidden" onchange={handleAccountChange} data-name="BillingStreet"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>City</label>
+                        <lightning-input required variant="label-hidden" onchange={handleAccountChange} data-name="BillingCity"></lightning-input>
+                    </div>
+                </div>
+                <br/>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>State</label>
+                        <lightning-input required variant="label-hidden" onchange={handleAccountChange} data-name="BillingState"></lightning-input>
+                    </div>
+                    <div class="slds-col slds-size_1-of-2">
+                        <abbr title="required" class="slds-required">*</abbr>
+                        <label>Zipcode</label>
+                        <lightning-input required variant="label-hidden" onchange={handleAccountChange} data-name="BillingPostalCode"></lightning-input>
+                    </div>
+                </div>
+                <br/>
+                <div class="slds-grid slds-gutters">
+                    <div class="slds-col slds-size_1-of-2">
+                        <label>UEI</label>
+                        <lightning-input variant="label-hidden" data-name="UEI" onchange={handleAccountChange}></lightning-input>
+                    </div>
+                </div>
+                <br/><br/>
+
+                <lightning-button variant="brand" label="Add clinic" icon-name="utility:add" onclick={handleCreateAccount}></lightning-button>
+
+                <template lwc:if={showTable}>
+                    <br/><br/><br/>
+                    <h3>My clinics</h3>
+                    <br/>
+                    <lightning-datatable onrowaction={deleteClinic} show-row-number-column key-field="Id" hide-checkbox-column data={childAccounts} columns={columns}></lightning-datatable>
+                    <br/><br/>
+                    <lightning-button variant="brand" label="Submit" onclick={handleFinalSubmit}></lightning-button>
+                </template>
+            
+                <br/><br/>
+
+                <p>Note: If you need to delete a Sponsoring Organization or Clinic record, please contact the help desk. Provide the account details and specify that you need the account deleted. The help desk team will assist you with the process</p>
+            </div>
+        </template>
+
+        <template lwc:if={currentStepFour}>
+            <div class="slds-box">
+                <h2>Inviting team members to your account</h2>
+
+                <p>Now that you’ve completed the registration form and created your account, you may access the portal and invite others to join your account by clicking the link below:</p>
+                <br/>
+                <a onclick={navigatePortal}>Go to portal</a>
+            </div>
+        </template>
+
+        <footer></footer>
+    </div>
+
+
+</template>

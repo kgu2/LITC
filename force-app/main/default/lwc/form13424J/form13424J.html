@@ -1,0 +1,386 @@
+<template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <template lwc:if={isAuthorizedOfficial}>
+
+        <div style="display: flex; justify-content: center;">
+
+            <div style="width: 190px; margin-right: 2rem;">
+
+                <div style="height: 1.25rem;"></div>
+                <div style="height: 2rem;"></div>
+            
+                <lightning-tabset active-tab-value={activeTab} variant="vertical" >       
+                    <lightning-tab onactive={handleOnActive} label="Instructions" value="instructions"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="13424-J" value="form"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="Submission" value="submission" ></lightning-tab>
+                </lightning-tabset>
+            </div>
+
+            <div style="margin-top:2rem; width: 100%;">
+                <div class="slds-grid slds-wrap slds-gutters_direct">
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_9-of-12">
+                        <div class={instructions} style="max-width: 70rem;">
+                                <h1>Instructions</h1>
+                                <hr style="margin-top: 5px;">
+
+                                <template lwc:if={isStatusAmended}>
+                                    <b><p>Funding decision review </p></b>
+
+                                    <lightning-button type="button" variant="base" onclick={openBAModal} label="Click here to review funding decision"></lightning-button>
+                                    <br/>  <br/><br/>
+                                    <template if:true={showBAModal}>
+                                        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                                            <div class="slds-modal__container">
+                                                <header class="slds-modal__header">
+                                                    <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeBAModal} alternative-text="close"></lightning-button-icon>
+                                                    <h2 id="modal-heading-05" class="header">Funding decision</h2>
+                                                </header>
+                                                <div class="slds-modal__content slds-var-p-around_large">
+                                                    <label>Funding amount</label>
+                                                    <br/>
+                                                    <lightning-formatted-number value={fundingAmount} format-style="currency" style="font-size: 1rem;"></lightning-formatted-number>
+                                                    <br/><br/>
+                                                    <label>Funding conditions</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fundingConditions} style="font-size: 1rem;"></lightning-formatted-text>
+                                                    <br/> <br/>
+                                                    <label>Funding explanation</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fundingExplanation} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+
+                                                    <label>Personnel</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldA} style="font-size: 1rem;"></lightning-formatted-text>
+                                                    
+                                                    <br/> <br/>
+                                                    <label>Fringe benefits</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldB} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Travel</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldC} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Equipment</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldD} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Supplies</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldE} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Contractual</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldF} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Other expenses</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldG} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Indirect charges</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldH} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Matching charges</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldI} style="font-size: 1rem;"></lightning-formatted-text>
+
+
+                                                    <br/> <br/>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <div class="slds-backdrop slds-backdrop_open"></div>
+                                    </template>
+                                </template>
+
+                                <b><p>Form 13424-J, Detailed Budget Worksheet and Narrative Explanations  </p></b>
+                                
+                                <p>
+                                    This form must be submitted with all LITC grant applications. It is used to provide a detailed explanation for each spending category in the proposed budget for the LITC grant, including how federal grant funds and matching funds will be spent during the grant period. All budgeted amounts must be reasonable, necessary, and allocable to this grant. In preparing the budget, adhere to existing guidelines in 2 CFR Part 200, 2 CFR Part 1000, and Publication 3319, which explains how budgeted amounts should be reported. See <a href="https://www.irs.gov/pub/irs-pdf/p3319.pdf" target="_blank">Publication 3319</a>, 2 CFR § 200.306, and 2 CFR § 1000.306 for guidance on matching funds.
+                                </p>
+
+                                <p>Items to keep in mind when completing this form:  </p>
+                                <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                                    <li>Each budget item does not require a dollar-for-dollar match, but the total matching funds must equal or exceed the total federal funds requested. For more information on meeting the matching funds requirement, See <a href="https://www.irs.gov/pub/irs-pdf/p3319.pdf" target="_blank">Publication 3319</a>, Section IV.E.iii, <i>Meeting the Matching Funds Requirement.</i> </li>
+                                    <li>Federal funds are those funds the applicant is seeking from the IRS in support of the LITC Program. </li>
+                                    <li>Non-federal funds are funds from other sources that the applicant has or will have available to spend on the LITC Program. These are considered matching funds. </li>
+                                    <li>2 CFR Part 200, <i>Uniform Administrative Requirements, Cost Principles, and Audit Requirements for Federal Awards (Uniform Guidance)</i> provides guidance about allowable and unallowable expenses. Also, see <a href="https://www.irs.gov/pub/irs-pdf/p3319.pdf" target="_blank">Publication 3319</a>, Section IV.E.iii, <i>Meeting the Matching Funds Requirement</i>, for a list of common allowable and unallowable expenses. </li>
+                                    <li>Please round figures to whole dollars, if possible. The forms allows for reporting of cents if needed. </li>
+                                    <li>Budgets should only include funding requested for grant year 2025, even if an applicant is applying for a multiyear grant. </li>
+                                    <li>Each lettered section of the Budget Narrative corresponds to an expense category in the Detailed Budget Worksheet. The information provided in the narrative should be sufficiently detailed so that a reviewer can arrive at the same amounts listed on the budget by expense and by category (federal and match). </li>
+                                </ul>
+                                <br/>
+
+                                <p>
+                                    See the following document for examples. <lightning-button variant="base" icon-name="utility:download" label="Line item examples" onclick={handleClick} data-url={fileLink}></lightning-button>
+                                </p>
+
+                                <br/>  <br/>
+
+                                <div style="width: 100%; margin-top: 15px;">
+                                    <div style="float: right;">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form" label="Next"></lightning-button>
+                                    </div>
+                                </div>
+                                <footer></footer> 
+                        </div>
+                        <div class={form}>
+                            <h1>Form 13424-J</h1>
+                            <hr style="margin-top: 5px;">
+                            <template lwc:if={isSubmitted}>
+                                <p>Thank you for submitting!</p>
+                                <p>Your application is not submitted until all forms are submitted. If you need to make changes you may unsubmit at any time.</p>
+                            </template>
+                            <template lwc:else>
+                                <h2>Overview</h2>
+                                <br/>
+                                <c-litc-line-item-rollup-table record-id={recordId}></c-litc-line-item-rollup-table>
+
+                                <br/><br/>
+                                <div class="slds-box">
+                                    <h2 style="display: inline;">Donated goods and services</h2>    
+                                    <lightning-helptext content="Enter each donated good or service on a separate line. This includes all in-kind services provided by volunteers. For in-kind services, the unit of measure will be the hour and the cost per unit will be the in-kind value for each hour. For more information about how to value in-kind volunteer services, see IRS Publication 3319 https://www.irs.gov/pub/irs-pdf/p3319.pdf. Also include any donated software or electronic research tools and subscriptions. Use the note field to provide any other information related to the item, including the value provided."></lightning-helptext> 
+                                    <br/><br/>   
+                                    <c-litc-datatable selected-type="Donated Goods and Services" record-id={recordId}></c-litc-datatable>
+                                </div>
+                                <br/>
+                                <div class="slds-box">
+                                    <h2 style="display: inline;">Matching funds</h2>  
+                                    <lightning-helptext content="Enter each source of matching funds that will make up the total dollar-for-dollar match needed for the federal award provided. If the clinic’s match includes donated goods and services, you do not need to enter those items again here. They will be carried over from that section and included in the match total that will tally as sources of match are added."></lightning-helptext>     
+                                    <br/><br/>
+                                    <c-litc-datatable selected-type="Matching Funds" record-id={recordId}></c-litc-datatable>
+                                </div>
+                                <br/>
+                                <div class="slds-box">
+                                    <h2 style="display: inline;">Personnel</h2>     
+                                    <lightning-helptext content="Enter how many hours equal a full-time equivalent (FTE) in your organization. Next, enter information for each induvial who will be paid by federal or match funds. The LITC FTE is the percentage of time each individual will be allocated to the LITC grant. If the individual works 20 hours per week for an organization where one FTE is 40 hours and all that time will be spent on the LITC grant, that individual’s FTE on the grant is 0.50. If a key position is “to be hired,” enter TBH in the name field and use the rate or salary that you plan to pay the individual to be hired. Use the note field for each individual to include any other information related to the allocation and calculation for that expense.  "></lightning-helptext>    
+                                    <br/><br/>
+                                    <lightning-record-edit-form object-api-name='Application_for_Federal_Assistance__c' record-id={recordId} onerror={handleError}>
+                                        <label>How many hours does one full-time equivalent work in your organization each year?</label>
+                                        <br/>
+                                        <div class="slds-grid slds-gutters slds-wrap">
+                                            <div class="slds-col slds-medium-size_1-of-6 slds-size_1-of-1">
+                                                <lightning-input-field field-name="Full_Time_Equivalent_Hours__c" variant="label-hidden" onchange={autosave}></lightning-input-field>
+                                            </div>
+                                        </div>
+                                    </lightning-record-edit-form>
+                                    <br/>
+                                    <c-litc-datatable selected-type="Personnel" record-id={recordId} class="table"></c-litc-datatable>
+                                </div>
+                                <br/>
+                                <div class="slds-box">
+                                    <h2 style="display: inline;">Fringe</h2>  
+                                    <lightning-helptext content="Enter each type of fringe paid by federal or match grant funds for individuals working on the LITC grant. Be sure to complete all the required fields and use the note field to include any additional information related to the allocation and calculation for each expense."></lightning-helptext>      
+                                    <br/><br/>
+                                    <c-litc-datatable selected-type="Fringe" record-id={recordId}></c-litc-datatable>
+                                </div>
+                                <br/>
+                                <div class="slds-box">
+                                    <h2 style="display: inline;">Supplies, contractual, travel, equipment, and other expenses</h2>      
+                                    <lightning-helptext content="Select the supplies category for any supplies or equipment costing less than $10,000 that will be used in operating the LITC. Select the equipment category only for individual items that cost more than $10,000. (Equipment expenses are rare under the LITC.) Travel expenses are travel costs, including costs associated with attendance at the Annual LITC Grantee Conference and other travel expenses directly related to conducting LITC business or activities. Other expenses are those that do not fit into any of the preceding categories but were incurred in operating the LITC. Enter each item on a separate line and complete all the required fields."></lightning-helptext>     
+                                    <br/><br/>
+                                    <c-litc-datatable selected-type="Supplies, Contractual, Travel, and Other Expenses" record-id={recordId}></c-litc-datatable>
+                                </div>
+                                <br/>
+                                <div class="slds-box">
+                                    <h2 style="display: inline;">Indirect expenses</h2>   
+                                    <lightning-helptext content="These are expenses that are not directly related to the LITC grant but are incurred as part of the general overhead and administration of the sponsoring organization. Examples of indirect expenses include: salaries and wages of administrative and support staff; related employee benefits; and facility occupancy costs such as utilities, security, and maintenance. Organizations may use a negotiated indirect cost rate agreement (ICRA) approved by the organization’s cognizant agency. If the organization has never obtained an ICRA or the agreement has expired, it may elect to apply the de minimis rate of fifteen percent. More information about indirect expenses can be found in IRS Publication 3319 "></lightning-helptext>     
+                                    <br/><br/>
+                                    <c-litc-datatable selected-type="Indirect Expenses" record-id={recordId}></c-litc-datatable>
+                                </div>
+                            </template>
+                        </div>
+
+                        <div class={submission}>
+                        
+
+                                <h1>Submission</h1>
+                                <hr style="margin-top: 5px;">
+        
+                                <h2>Overview</h2>
+                                <br/>
+                                <p>The following is a review of your application</p>
+                                
+                                <c-litc-line-item-rollup-table record-id={recordId}></c-litc-line-item-rollup-table>
+
+                                <!-- <template if:true={isNotTotalMatch}>
+                                    <br/><br/>
+                                    <lightning-icon icon-name="action:edit" variant="warning" style="position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                    <b style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Note: There are errors with your submission, please verify that there are no errors on previous tab.</b>
+                                </template> -->
+                                <br/><br/>
+                                <template lwc:if={isTotalMatch}>
+                                    <lightning-icon icon-name="utility:success" variant="success" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer; position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" onclick={openValidationModal}></lightning-icon>
+                                    <b style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">All calculations match as required. Click the icon to view details</b>
+                                </template>
+                                <template lwc:else>
+                                    <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer; position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" size="xx-small" onclick={openValidationModal}></lightning-icon>
+                                    <b style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Click the yellow icon to view detailed errors. Ensure all calculations match as required</b>
+                                </template>
+
+                                <br><br/>
+                                <template if:false={disableEdits}>
+                                    <div class="slds-box">
+                                        <h2>Submission</h2>
+                                        <br/>
+                                            <p>By Signing this application, I certify (1) to the statements contained in the list of certifications ** and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001). </p>
+                                            <p>Check the box below to affirm that all information is complete and accurate</p>
+                                            <br/>
+                                            <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                                            <label>By checking this box, I affirm that I am the sponsoring organization's Authorizing Official and all information provided is complete and accurate.</label>
+                                            <br/><br/>
+                                            <p>The list of certifications and assurances, or an internet site where you may obtain this list, is contained in the announcement or agency specific instructions.</p>  
+                                    </div>
+                                </template>
+                                <lightning-record-edit-form object-api-name='Application_for_Federal_Assistance__c' record-id={recordId} onerror={handleError} onsuccess={handleSubmit}>
+                                    
+                                    <br>
+                                    <div style="float: left;">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form" label="Back"></lightning-button>
+                                    </div>
+                                    <template if:false={disableEdits}>
+                                        <div style="float: right; margin-right: 0">
+                                            <lightning-button type="button" variant="brand" disabled={anyErrors} label="Submit" onclick={handleSubmit}></lightning-button>
+                                        </div>  
+                                    </template> 
+
+                                </lightning-record-edit-form>
+
+                            <footer></footer>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_3-of-12">
+                        <c-form-infobox accordion-errors={submissionErrors} status={status} status-field-name='Form_13424_J_Status__c' object-name='Application_for_Federal_Assistance__c' fields={recordFields} record-id={recordId} show-unsubmit="true" deadline-passed={deadlinePassed} style="min-width: 245px; max-width: 215px; margin-top:5rem; display:block"></c-form-infobox> 
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </template>
+    
+    <template lwc:if={isNotAuthorizedOfficial}>
+        <br/>
+        You do not have the necessary role to view this page.
+    </template>
+
+
+    <template lwc:if={showValidationModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <lightning-record-edit-form object-api-name="Application_for_Federal_Assistance__c" onerror={handleError} record-id={recordId} >
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeValidationModal}></lightning-button-icon>
+                        <h2 id="modal-heading-03" class="header">Calculations</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-4" style="max-height: 600px;">
+                        <div style="display: flex;">
+                            <div style="width: 22%">
+                                <label>Match $ Personnel</label>
+                                <lightning-helptext content="The sum of Match $ where line item = Personnel"></lightning-helptext>
+                                <br/>
+                                <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Personnel_Dollar_Match_Total__c'></lightning-output-field>
+                            </div>
+                            <div style="width: 20%">
+                                <label>Match $ Fringe</label>
+                                <lightning-helptext content="The sum of Match $ where line item = Fringe"></lightning-helptext>
+                                <br/>
+                                <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Fringe_Dollar_Match_Total__c'></lightning-output-field>
+                            </div>
+                            <div style="width: 25%">
+                                <label>Match $ Supplies, Contractual, etc</label>
+                                <lightning-helptext content="The sum of Match $ where line item = Supplies, contractual, travel, equipment, and other expenses"></lightning-helptext>
+                                <br/>
+                                <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Supplies_etc_Dollar_Match_Total__c'></lightning-output-field>
+                            </div>
+                            <div style="width: 25%">
+                                <label>Total Donated goods and services</label>
+                                <lightning-helptext content="The sum of Total where line item = Donated goods and services"></lightning-helptext>
+                                <br/>
+                                <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Donated_Goods_and_Services_Total__c'></lightning-output-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <label>Sum of total amounts above (A)</label>
+                            </div>
+                        </div>
+                        <div>
+                            <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Personnel_Dollar_Match_Total__c' style="display: inline-block;"></lightning-output-field>
+                            &nbsp;+  &nbsp;
+                            <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Fringe_Dollar_Match_Total__c' style="display: inline-block;"></lightning-output-field>
+                            &nbsp;+  &nbsp;
+                            <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Supplies_etc_Dollar_Match_Total__c' style="display: inline-block;"></lightning-output-field>
+                            &nbsp;+  &nbsp;
+                            <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Donated_Goods_and_Services_Total__c' style="display: inline-block;"></lightning-output-field>
+                            &nbsp;=  &nbsp;
+                            <span style={colorTotalMatch}>
+                            <b>    <lightning-formatted-number value={totalA} format-style="currency" currency-code="USD" style="font-size: 1rem"></lightning-formatted-number></b>
+                            </span>
+                        </div>
+                        <br/><br/>
+                        <div style="display: flex;">
+                            <div style="width: 25%">
+                                <label>Matching funds amount</label>
+                                <lightning-helptext content="The sum of amount where line item = Matching funds"></lightning-helptext>
+                                <br/>
+                                <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Matching_Funds_Total__c'></lightning-output-field>
+                            </div>
+                            <div style="width: 25%">
+                                <label>Total Donated goods and services</label>
+                                <lightning-helptext content="The sum of Total where line item = Donated goods and services"></lightning-helptext>
+                                <br/>
+                                <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Donated_Goods_and_Services_Total__c'></lightning-output-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <label>Sum of total amounts above (B)</label>
+                            </div>
+                        </div>
+                        <div>
+                            <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Matching_Funds_Total__c' style="display: inline-block;"></lightning-output-field>
+                            &nbsp;+  &nbsp;
+                            <lightning-output-field variant="label-hidden" disabled={disableEdits} field-name='Donated_Goods_and_Services_Total__c' style="display: inline-block;"></lightning-output-field>
+                            &nbsp;=  &nbsp;
+                            <span style={colorTotalMatch}>
+                                <b><lightning-formatted-number value={totalB} format-style="currency" currency-code="USD" style="font-size: 1rem"></lightning-formatted-number></b>
+                            </span>
+                        </div>
+
+                        <br/><br/>
+                        <!-- <p><b>Note:</b> Sum of (A) must equal (B)</p> -->
+                        <p><b>Note:</b> The sum of (B) must greater than or equal to the sum of (A)</p>
+
+                        <template lwc:if={isNotTotalMatch}>
+                            <b>The sum of matching funds and donated goods/services must be greater than or equal to your total matching expenses.</b>
+                        </template>
+                    </div> 
+                    <div class="slds-modal__footer">
+                        <lightning-button label="Close" variant="brand-outline" onclick={closeValidationModal}></lightning-button> 
+                    </div>
+                </lightning-record-edit-form>
+            </div>                      
+        </section>
+        
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+
+    </template>
+
+</template>

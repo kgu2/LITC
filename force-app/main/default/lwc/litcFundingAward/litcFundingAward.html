@@ -1,0 +1,62 @@
+<template>
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+        <div class="slds-modal__container">
+            <template lwc:if={selectedAward}>
+                <template lwc:if={selectedDisbursement}>
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeModal} alternative-text="close"></lightning-button-icon>
+                        <h2 id="modal-heading-05" class="header">Accept disbursement</h2>
+                    </header>
+                    <div class="slds-modal__content slds-var-p-around_large">
+                        <lightning-button type="button" variant="base" onclick={handleDownloadPDF} label="Click here to view funding disbursement"></lightning-button>
+                        <br/><br/>
+
+                        <label>Would you like to accept this funding disbursement?</label>
+                        <lightning-radio-group options={options} onchange={handleOptionChange} type="radio"></lightning-radio-group>
+                        <br/>
+                        <template lwc:if={showRejection}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <lightning-textarea label="Comments" onchange={handleCommentsChange} style="display: inline;"></lightning-textarea>
+                            <br/>
+                        </template>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={handleBackClickTwo} style="float:left">Back</button>
+                        <button class="slds-button slds-button_brand" onclick={handleSubmit} style="float:right">Confirm</button>
+                    </footer>
+                </template>
+                <template lwc:else>
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeModal} alternative-text="close"></lightning-button-icon>
+                        <h2 id="modal-heading-02" class="header">Funding disbursements</h2>
+                    </header>
+                    <div class="slds-modal__content slds-var-p-around_large">
+                        <lightning-datatable onrowaction={handleFundingDisbursementSelect} key-field="Id" hide-checkbox-column data={fundingDisbursements} columns={fundingDisbursementColumns}></lightning-datatable>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={handleBackClick} style="float:left">Back</button>
+                    </footer>
+                </template>
+            </template>
+            <template lwc:else>
+                <header class="slds-modal__header">
+                    <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeModal} alternative-text="close"></lightning-button-icon>
+                    <h2 id="modal-heading-03" class="header">Funding award</h2>
+                </header>
+                <div class="slds-modal__content slds-var-p-around_large">
+                    <lightning-datatable onrowaction={openFundingAward} key-field="Id" hide-checkbox-column data={fundingAwards} columns={fundingAwardColumns}></lightning-datatable>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeModal} style="float:left">Cancel</button>
+                </footer>
+            </template>
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+
+
+
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+</template>

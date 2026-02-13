@@ -1,0 +1,96 @@
+<template>
+    <lightning-record-edit-form record-id={recordId} object-api-name="Application_for_Federal_Assistance__c" onerror={handleError} onsuccess={handleSuccess} class="form">
+
+        <p>To select the state and appropriate counties to be served by the clinic:</p>
+        <ul style="list-style-type:decimal; margin-left: 3rem; margin-top: 0.5rem">
+            <li>Select the appropriate state in the dropdown "Select state".</li>
+            <li>Select the counties that the clinic will serve from the column on the left. </li>
+            <li>Select the right arrow to move your selections to the column on the right. </li>
+            <li>Click the 'Add Counties' button to view all your selections in the "Areas Affected by Project" field.</li>
+            <li>To add all counties of a state, select the state and then select the blue text "Select All".</li>
+        </ul>
+        <br/>
+
+        <h4>Project areas affected by county</h4>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-medium-size_1-of-4 slds-size_1-of-1">
+                <lightning-combobox placeholder="Select state" options={stateOptions} onchange={handleStateChange}></lightning-combobox>
+            </div>
+        </div>
+        <br/>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <label>Counties</label>
+            </div>
+            <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <lightning-button variant="base" onclick={handleSelectAllCounties} label="Select all"></lightning-button>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-medium-size_4-of-4 slds-size_1-of-1">
+                <lightning-dual-listbox options={countyOptions} size='7' class="countyPicklist" value={selectedCounties}></lightning-dual-listbox>
+            </div>
+        </div>
+
+        <br/>
+        <lightning-button variant="brand" onclick={handleAddCounty} label="Add counties"></lightning-button>
+        <br/>
+
+        <br/>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-medium-size_4-of-4 slds-size_1-of-1">
+                <abbr title="required" class="slds-required">*</abbr>
+                <label>Areas affected by project</label>
+                <lightning-input-field disabled='true' variant="label-hidden" field-name="Areas_affected_by_project__c" data-name="areasInput"></lightning-input-field>
+                <lightning-button variant="base" onclick={handleClearAreasField} label="Clear" style="float: right;"></lightning-button>
+            </div>
+        </div>
+        <br/>
+
+
+        <p>To select the state and appropriate congressional districts to be served by the clinic:</p>
+        <ul style="list-style-type:decimal; margin-left: 3rem; margin-top: 0.5rem">
+            <li>Select the appropriate state in the dropdown "Select state".</li>
+            <li>Select the congressional districts  that the clinic will serve from the column on the left.</li>
+            <li>Select the right arrow to move your selections to the column on the right. </li>
+            <li>Click the 'Add districts' button to view all your selections in the "Congressional Districts" field.</li>
+            <li>To add all Congressional Districts of a state, select the state and then select the blue text "Select All".</li>
+        </ul>
+        <br/>
+
+        <h4>Congressional districts</h4>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-medium-size_1-of-4 slds-size_1-of-1">
+                <lightning-combobox placeholder="Select state" options={stateOptions} onchange={handleStateChangeTwo}></lightning-combobox>
+            </div>
+        </div>
+        <br/>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <label>Districts</label>
+            </div>
+            <div class="slds-col slds-medium-size_1-of-2 slds-size_1-of-1">
+                <lightning-button variant="base" onclick={handleSelectAllDistricts} label="Select all"></lightning-button>
+            </div>
+        </div>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-medium-size_4-of-4 slds-size_1-of-1">
+                <lightning-dual-listbox options={districtOptions} size='7' class="districtPicklist" value={selectedDistricts}></lightning-dual-listbox>
+            </div>
+        </div>
+
+        <br/>
+        <lightning-button variant="brand" onclick={handleAddDistrict} label="Add districts"></lightning-button>
+        <br/>
+
+        <br/>
+        <div class="slds-grid slds-gutters slds-wrap">
+            <div class="slds-col slds-medium-size_4-of-4 slds-size_1-of-1">
+                <abbr title="required" class="slds-required">*</abbr>
+                <label>Congressional districts</label>
+                <lightning-input-field disabled='true' variant="label-hidden" field-name="Congressional_district_by_project__c" data-name="districtInput"></lightning-input-field>
+                <lightning-button variant="base" onclick={handleClearAreasFieldTwo} label="Clear" style="float: right;"></lightning-button>
+            </div>
+        </div>
+    </lightning-record-edit-form>
+</template>

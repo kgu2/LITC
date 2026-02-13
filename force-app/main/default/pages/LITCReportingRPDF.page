@@ -1,0 +1,641 @@
+<apex:page standardController="LITC_Reporting_Form__c" extensions="LitcReportingFormPDFController" renderAs="pdf" name="Form13424R.pdf" showHeader="false" sidebar="false" applyHtmlTag="false" docType="html-5.0">
+    <head>
+        <style type="text/css">
+            body{
+                font-size:10pt;
+            }
+            p{
+                font-size:10pt;
+            }
+
+            h1{ 
+                font-family: sans-serif;
+                font-weight: bold;
+                font-size: 22pt;
+                color: rgb(80, 133, 165);
+            }
+
+            h2{ 
+                font-family: sans-serif;
+                font-weight: bold;
+                font-size: 14pt;
+                color: rgb(80, 133, 165);
+            }
+
+            .hr{ 
+                width:100%; height:2px; background:#DADADA;
+            }
+
+            .header{ 
+                font-size: 10pt;
+                color: #AFAFAF;
+                font-family: sans-serif;
+            }
+            .space{ 
+                margin-top: 20px; margin-bottom: 5px
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <apex:image url="{!$Resource.LITCPDFTitleIcon}" width="200px" height="60px"/>
+                </td>
+            </tr>
+        </table>
+
+        <h1><u>Form 13424-R</u></h1>
+
+        <apex:outputPanel rendered="{!LITC_Reporting_Form__c.Clinic_Type__c == 'Standard (representation, education, advocacy)'}" layout="none">
+            <h2>Case inventory</h2>
+            <div class='hr'></div>
+
+            <div class="space">a. Case inventory on January 1 of the current grant year (should match closing inventory from prior year-end report)</div>
+            <b>{!LITC_Reporting_Form__c.Starting_Inventory__c}</b>
+
+            <div class="space">If line a does not equal the closing inventory from the prior year-end report, explain the discrepancy</div>
+            <b>{!LITC_Reporting_Form__c.Inventory_Discrepancy_Explanation__c}</b>
+
+            <div class="space">b. New cases opened during the current grant year</div>
+            <b>{!LITC_Reporting_Form__c.New_Cases__c}</b>
+
+            <div class="space">c. Total cases worked during the current grant year (add lines a and b)</div>
+            <b>{!LITC_Reporting_Form__c.Total_Cases_Worked__c}</b>
+
+            <div class="space">d. Cases closed during the current grant year</div>
+            <b>{!LITC_Reporting_Form__c.Closed_Cases__c}</b>
+
+            <div class="space">e. Case inventory on June 30 (interim) or December 31 (year-end) of the current grant year (subtract line d from line c)</div>
+            <b>{!LITC_Reporting_Form__c.Closing_Case_Inventory__c}</b>
+
+            <apex:outputPanel rendered="{!LITC_Reporting_Form__c.Reporting_period__c == 'Year-End report (January 1 through December 31)'}" layout="none">
+                <h2>IRS function or court</h2>
+                <div class='hr'></div>
+                <table style="width: 100%; line-height: 2;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            a. Return processing: <b>{!LITC_Reporting_Form__c.Return_processing__c}</b><br/>
+                            b. Injured spouse: <b>{!LITC_Reporting_Form__c.Injured_spouse__c}</b><br/>
+                            c. Other accounts management: <b>{!LITC_Reporting_Form__c.Other_accounts_management__c}</b><br/>
+                            d. Correspondence exam: <b>{!LITC_Reporting_Form__c.Correspondence_exam__c}</b><br/>
+                            e. Office or field exam: <b>{!LITC_Reporting_Form__c.Office_or_field_exam__c}</b><br/>
+                            f. Automated Underreporter (AUR): <b>{!LITC_Reporting_Form__c.Automated_Underreporter_AUR__c}</b><br/>
+                            g. Automated Substitute-for-Return (ASFR): <b>{!LITC_Reporting_Form__c.Automated_Substitute_for_Return_ASFR__c}</b><br/>
+                            h. Audit reconsideration: <b>{!LITC_Reporting_Form__c.Audit_reconsideration__c}</b><br/>
+                            i. Other exam: <b>{!LITC_Reporting_Form__c.Other_exam__c}</b><br/>
+                            j. Automated Collection System (ACS): <b>{!LITC_Reporting_Form__c.Automated_Collection_System_ACS__c}</b><br/>
+                            k. Field Collection (Revenue Officer): <b>{!LITC_Reporting_Form__c.Field_Collection_Revenue_Officer__c}</b><br/>
+                            l. Offer-In-Compromise (OIC): <b>{!LITC_Reporting_Form__c.Offer_In_Compromise_OIC__c}</b><br/>
+                            m. Lien unit: <b>{!LITC_Reporting_Form__c.Lien_unit__c}</b><br/>
+                            n. Other collection: <b>{!LITC_Reporting_Form__c.Other_collection__c}</b><br/>
+                            o. Examination Appeals: <b>{!LITC_Reporting_Form__c.Examination_Appeals__c}</b><br/>
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            p. Collection Due Process (CDP): <b>{!LITC_Reporting_Form__c.Collection_Due_Process_CDP__c}</b><br/>
+                            q. Collection Appeals Process (CAP): <b>{!LITC_Reporting_Form__c.Collection_Appeals_Process_CAP__c}</b><br/>
+                            r. OIC Appeals: <b>{!LITC_Reporting_Form__c.OIC_Appeals__c}</b><br/>
+                            s. Other Appeals: <b>{!LITC_Reporting_Form__c.Other_Appeals__c}</b><br/>
+                            t. U.S. Tax Court - Entry of Appearance: <b>{!LITC_Reporting_Form__c.U_S_Tax_Court_Entry_of_Appearance__c}</b><br/>
+                            u. U.S. Tax Court - Power of Attorney: <b>{!LITC_Reporting_Form__c.U_S_Tax_Court_Power_of_Attorney__c}</b><br/>
+                            v. Other federal courts: <b>{!LITC_Reporting_Form__c.Other_federal_courts__c}</b><br/>
+                            w. Identity Protection Specialized Unit (IPSU): <b>{!LITC_Reporting_Form__c.Identity_Protection_Specialized_Unit_IP__c}</b><br/>
+                            x. Other identity theft: <b>{!LITC_Reporting_Form__c.Other_identity_theft__c}</b><br/>
+                            y. Innocent Spouse Unit: <b>{!LITC_Reporting_Form__c.Innocent_Spouse_Unit__c}</b><br/>
+                            z. SS-8 Unit: <b>{!LITC_Reporting_Form__c.SS_8_Unit__c}</b><br/>
+                            aa. ITIN Unit: <b>{!LITC_Reporting_Form__c.ITIN_Unit__c}</b><br/>
+                            ab. Trust fund recovery penalty: <b>{!LITC_Reporting_Form__c.Trust_fund_recovery_penalty__c}</b><br/>
+                            ac. Other miscellaneous: <b>{!LITC_Reporting_Form__c.Other_miscellaneous__c}</b><br/>
+                            Total: <b>{!LITC_Reporting_Form__c.Total_Cases_Formula__c}</b><br/>
+                            Cases worked in more than one function: <b>{!LITC_Reporting_Form__c.Cases_worked_in_more_than_one_function__c}</b><br/>
+                        </td>
+                    </tr>
+                </table>
+
+                <h2>Case Issues Worked</h2>
+                <div class='hr'></div>
+                <table style="width: 100%; line-height: 2;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            a. Small business issues: <b>{!LITC_Reporting_Form__c.Small_business_issues__c}</b><br/>
+                            b. Child tax credit/Additional child tax credit: <b>{!LITC_Reporting_Form__c.Child_tax_credit_Additional_child_tax_cr__c}</b><br/>
+                            c. Earned income tax credit: <b>{!LITC_Reporting_Form__c.Earned_income_tax_credit__c}</b><br/>
+                            d. Other credits: <b>{!LITC_Reporting_Form__c.Other_credits__c}</b><br/>
+                            e. Innocent spouse: <b>{!LITC_Reporting_Form__c.Innocent_spouse__c}</b><br/>
+                            f. Identity theft: <b>{!LITC_Reporting_Form__c.Identity_theft__c}</b><br/>
+                            g. Nonfiler: <b>{!LITC_Reporting_Form__c.Nonfiler__c}</b><br/>
+                            h. Suspected return preparer fraud: <b>{!LITC_Reporting_Form__c.Suspected_return_preparer_fraud__c}</b><br/>
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            i. Installment Payment Agreement (IPA): <b>{!LITC_Reporting_Form__c.Installment_Payment_Agreement_IPA__c}</b><br/>
+                            j. Offer-In-Compromise (OIC): <b>{!LITC_Reporting_Form__c.Offer_In_Compromise_OIC__c}</b><br/>
+                            k. Currently Not Collectible (CNC): <b>{!LITC_Reporting_Form__c.Currently_Not_Collectible_CNC__c}</b><br/>
+                            l. Liens: <b>{!LITC_Reporting_Form__c.Liens__c}</b><br/>
+                            m. Levies: <b>{!LITC_Reporting_Form__c.Levies__c}</b><br/>
+                            n. Worker classification: <b>{!LITC_Reporting_Form__c.Worker_classification__c}</b><br/>
+                            o. Penalties: <b>{!LITC_Reporting_Form__c.Penalties__c}</b><br/>
+                            Total: <b>{!LITC_Reporting_Form__c.Total_Case_Issues_Worked_Formula__c}</b><br/>
+                        </td>
+                    </tr>
+                </table>
+            </apex:outputPanel>
+
+            <h2>Statutory Requirements</h2>
+            <div class='hr'></div>
+
+            <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+                <thead>
+                    <tr>
+                        <th style="border: 1px solid black;background-color: #2d247c; color: white">Explanation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <apex:repeat value="{!lineItemException}" var="item">
+                        <tr>
+                            <td style="border: 1px solid black;">{!item['Exception_explanation__c']}</td>
+                        </tr>
+                    </apex:repeat>
+                </tbody>
+            </table>
+
+            <div class="space">Total number of new cases opened during the grant year (under Case Inventory b) where the amount in controversy exceeds $50,000 in one or more tax periods</div>
+            <b>{!LITC_Reporting_Form__c.Number_of_Exception_Explanations__c}</b>
+
+            <div class="space">Enter the number of new cases opened during the grant year (under Case Inventory b) where the taxpayers income exceeded 250% of the federal poverty guidelines when the clinic opened the case</div>
+            <b>{!LITC_Reporting_Form__c.X90_250_New_cases__c}</b>
+
+            <div class="space">a. Percentage of over-income New Cases (divide number of new cases (Case Inventory b) opened during the grant year by number entered above). Enter the result as percent</div>
+            <b>{!LITC_Reporting_Form__c.X90_250_Percentage_of_New_Cases__c}</b>
+
+            <div class="space">b. If the percentage of over-income new cases exceeds 10%, explain why the clinic violated the prohibition on opening more than 10% of new cases where the taxpayers' income exceeded 250% of the federal poverty guidelines during the grant year. Explain the steps the clinic will take to avoid violating this prohibition in the future</div>
+            <b>{!LITC_Reporting_Form__c.Explanation_for_exceeding_10__c}</b>
+
+
+            <apex:outputPanel rendered="{!LITC_Reporting_Form__c.Reporting_period__c == 'Year-End report (January 1 through December 31)'}" layout="none">
+                <h2>Additional Case Information</h2>
+                <div class='hr'></div>
+
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid black;background-color: #2d247c; color: white">Issue</th>
+                            <th style="border: 1px solid black;background-color: #2d247c; color: white">Result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!lineItemTASCase}" var="item">
+                            <tr>
+                                <td style="border: 1px solid black;">{!item['Case_Issue__c']}</td>
+                                <td style="border: 1px solid black;">{!item['Case_Result__c']}</td>
+                            </tr>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+
+                <div class="space">Total number of TAS Cases</div>
+                <b>{!LITC_Reporting_Form__c.Total_Number_TAS_Cases__c}</b>
+
+
+                <h3>Additional Case Features</h3>
+                <table style="width: 100%; line-height: 2;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            a. More than one tax year: <b>{!LITC_Reporting_Form__c.More_than_one_tax_year__c}</b><br/>
+                            b. Representation of English as a Second Language (ESL) taxpayers: <b>{!LITC_Reporting_Form__c.Rep_of_English_as_a_2nd_Language__c}</b><br/>
+                            c. Representation of more than one taxpayer (i.e., both spouses): <b>{!LITC_Reporting_Form__c.Representation_of_more_than_one_taxpayer__c}</b><br/>
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            d. Representation by a non-attorney qualified representative (generally a CPA or Enrolled Agent): <b>{!LITC_Reporting_Form__c.Representation_by_non_attorney_qualified__c}</b><br/>
+                            e. Representation by a clinic volunteer: <b>{!LITC_Reporting_Form__c.Representation_by_a_clinic_volunteer__c}</b><br/>
+                            f. A state tax controversy: <b>{!LITC_Reporting_Form__c.A_state_tax_controversy__c}</b><br/>
+                        </td>
+                    </tr>
+                </table>
+
+                <h3>Student Representation</h3>
+                <table style="width: 100%; line-height: 2;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            a. Obtained a special appearance authorization: <b>{!LITC_Reporting_Form__c.Obtained_a_special_appearance_auth__c}</b><br/>
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            b. Received academic credit for clinic work: <b>{!LITC_Reporting_Form__c.Received_academic_credit_for_clinic_work__c}</b><br/>
+                        </td>
+                    </tr>
+                </table>
+
+                <h3>Closed Case Outcomes</h3>
+                <table style="width: 100%; line-height: 2;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            a. Cases where the clinic brought the taxpayer into filing compliance: <b>{!LITC_Reporting_Form__c.Cases_taxpayer_filing_compliance__c}</b><br/>
+                            c. Dollars refunded to taxpayers: <b>{!LITC_Reporting_Form__c.Dollars_refunded_to_taxpayers__c}</b><br/>
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            b. Cases where the clinic brought the taxpayer into collection compliance: <b>{!LITC_Reporting_Form__c.Cases_taxpayer_collection_compliance__c}</b><br/>
+                            d. Decrease in tax liabilities, penalties, and interest: <b>{!LITC_Reporting_Form__c.Decrease_in_tax_liabilities_penalties__c}</b><br/>
+                        </td>
+                    </tr>
+                </table>
+
+                <h3>U.S. Tax Court Activities</h3>
+                <div class="space">a. Does the clinic Attend U.S. Tax Court Calendar calls?</div>
+                <b>{!LITC_Reporting_Form__c.Attend_U_S_Tax_Court_Calendar_calls__c}</b>
+
+                <div class="space">b. Does the clinic provide the U.S. Tax Court with a stuffer letter?</div>
+                <b>{!LITC_Reporting_Form__c.Provide_the_U_S_Tax_Court_with_a_stuffe__c}</b>
+
+                <br/><br/>
+
+                <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            <th style="border: 1px solid black;background-color: #2d247c; color: white">City</th>
+                            <th style="border: 1px solid black;background-color: #2d247c; color: white">State</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <apex:repeat value="{!lineItemTrialLocation}" var="item">
+                            <tr>
+                                <td style="border: 1px solid black;">{!item['Trial_Location_City__c']}</td>
+                                <td style="border: 1px solid black;">{!item['Trial_Location_State__c']}</td>
+                            </tr>
+                        </apex:repeat>
+                    </tbody>
+                </table>
+
+
+                <div class="space">Describe any significant cases the clinic worked in U.S. Tax Court or another Federal Court (i.e. litigating novel issues, coordinating with other clinics on systemic issues, etc.)</div>
+                <b>{!LITC_Reporting_Form__c.Describe_significant_cases_in_US_Tax_Co__c}</b>
+
+
+                <h2>Consultations</h2>
+                <div class='hr'></div>
+                <table style="width: 100%; line-height: 2;">
+                    <tr>
+                        <td style="width: 50%; vertical-align: top;">
+                            a. Consultations conducted in connection with the clinic's U.S. Tax Court work: <b>{!LITC_Reporting_Form__c.USTC_Consultations__c}</b><br/>
+                            b. Consultations conducted with ESL taxpayers: <b>{!LITC_Reporting_Form__c.ESL_Consulations__c}</b><br/>
+                        </td>
+                        <td style="width: 50%; vertical-align: top;">
+                            c. Consultations conducted with non-ESL taxpayers: <b>{!LITC_Reporting_Form__c.Non_ESL_Consultations__c}</b><br/>
+                            Total: <b>{!LITC_Reporting_Form__c.Total_Consultations__c}</b><br/>
+                        </td>
+                    </tr>
+                </table>
+
+            </apex:outputPanel>
+
+        </apex:outputPanel>
+
+
+
+        <h2>Tax information</h2>
+        <div class='hr'></div>
+
+        <div class="space">Tax returns: a. Ancillary to ESL activities</div>
+        <b>{!LITC_Reporting_Form__c.Ancillary_tax_returns__c}</b>
+
+        <div class="space">Tax returns: b. To resolve a case the clinic worked during the grant year (under Case Inventory c)</div>
+        <b>{!LITC_Reporting_Form__c.Controversy_tax_returns__c}</b>
+
+        <div class="space">Tax returns: Total</div>
+        <b>{!LITC_Reporting_Form__c.Total_Returns__c}</b>
+
+        <div class="space">ITIN applications: a. Ancillary to ESL activities</div>
+        <b>{!LITC_Reporting_Form__c.Ancillary_ITIN__c}</b>
+
+        <div class="space">ITIN applications: b. To resolve a case the clinic worked during the grant year (under Case Inventory c)</div>
+        <b>{!LITC_Reporting_Form__c.Controversy_ITINS__c}</b>
+
+        <div class="space">ITIN applications: Total</div>
+        <b>{!LITC_Reporting_Form__c.Total_ITINS__c}</b>
+
+
+        <h2>Activities</h2>
+        <div class='hr'></div>
+
+        <div class="space">Outreach Activities</div>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Date</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Venue</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Type</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!lineItemOutreach}" var="item">
+                    <tr>
+                        <td style="border: 1px solid black;">
+                            <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                <apex:param value="{!item['Activity_Date__c']}" /> 
+                            </apex:outputText>
+                            
+                        </td>
+                        <td style="border: 1px solid black;">{!item['Venue_Organization__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Activity_Type__c']}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+
+        <div class="space">Total number of Outreach activities</div>
+        <b>{!LITC_Reporting_Form__c.Total_Number_Outreach_Activities__c}</b>
+
+        <div class="space">Educational Activities</div>
+
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Date</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Presenter</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Venue</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Attendees</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Primary Audience</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!lineItemEducational}" var="item">
+                    <tr>
+                        <td style="border: 1px solid black;">
+                            <apex:outputText value="{0, date, MMMM d','  yyyy}">
+                                <apex:param value="{!item['Activity_Date__c']}" /> 
+                            </apex:outputText>
+                        </td>
+                        <td style="border: 1px solid black;">{!item['Presenter__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Venue_Organization__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Attendees__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Primary_Audience__c']}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+        
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    ESL Events: <b>{!LITC_Reporting_Form__c.EA_Number_of_Events_ESL__c}</b><br/>
+                    LI Events: <b>{!LITC_Reporting_Form__c.EA_Number_of_Events_LI__c}</b><br/>
+                    Staff Events: <b>{!LITC_Reporting_Form__c.EA_Number_of_Events_Staff__c}</b><br/>
+                    Total Events: <b>{!LITC_Reporting_Form__c.Total_Number_Educational_Activities__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    ESL Attendees: <b>{!LITC_Reporting_Form__c.EA_Total_Attendees_ESL__c}</b><br/>
+                    LI Attendees: <b>{!LITC_Reporting_Form__c.EA_Total_Attendees_LI__c}</b><br/>
+                    Staff Attendees: <b>{!LITC_Reporting_Form__c.EA_Total_Attendees_Staff__c}</b><br/>
+                    Total Attendees: <b>{!LITC_Reporting_Form__c.EA_Total_Attendees__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <div class="space">Does the clinic have a pro bono panel</div>
+        <b>{!LITC_Reporting_Form__c.Does_the_clinic_have_a_pro_bono_panel__c}</b>
+
+        <div class="space">Total volunteers</div>
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    a. Attorneys: <b>{!LITC_Reporting_Form__c.Attorneys__c}</b><br/>
+                    b. Certified Public Accountants (CPAs): <b>{!LITC_Reporting_Form__c.Certified_Public_Accountants_CPAs__c}</b><br/>
+                    c. Enrolled Agents (EAs): <b>{!LITC_Reporting_Form__c.Enrolled_Agents_EAs__c}</b><br/>
+                    d. Interpreters/Translators: <b>{!LITC_Reporting_Form__c.Interpreters_Translators__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    e. Students (not receiving academic credit): <b>{!LITC_Reporting_Form__c.Students_not_receiving_academic_credit__c}</b><br/>
+                    f. Others: <b>{!LITC_Reporting_Form__c.Others__c}</b><br/>
+                    Total: <b>{!LITC_Reporting_Form__c.Total_Volunteer_Activties__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <div class="space">Enter the number of hours provided by the volunteers listed above (if a volunteer is listed, this line cannot be blank)</div>
+        <b>{!LITC_Reporting_Form__c.Total_Volunteer_Hours__c}</b>
+
+        <div class="space">Advocacy information</div>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Type</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Clinician</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!lineItemAdvocacy}" var="item">
+                    <tr>
+                        <td style="border: 1px solid black;">{!item['Activity_Type__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Clinician_Staff_Member__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Description__c']}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+
+
+        <h2>Goals</h2>
+        <div class='hr'></div>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 33%; vertical-align: top;">
+                    <apex:outputPanel rendered="{!LITC_Reporting_Form__c.Clinic_Type__c == 'Standard (representation, education, advocacy)'}" layout="none">
+                        a. New cases: <b>{!LITC_Reporting_Form__c.GP_New_Cases__c}</b><br/>
+                        b. Consultations: <b>{!LITC_Reporting_Form__c.GP_Consultations__c}</b><br/>
+                    </apex:outputPanel>
+                
+                    c. Education events: <b>{!LITC_Reporting_Form__c.GP_Education_events__c}</b><br/>
+                    d. Education attendees: <b>{!LITC_Reporting_Form__c.GP_Education_attendees__c}</b><br/>
+                </td>
+                <td style="width: 33%; vertical-align: top;">
+                    <apex:outputPanel rendered="{!LITC_Reporting_Form__c.Clinic_Type__c == 'Standard (representation, education, advocacy)'}" layout="none">
+                        New case goal: <b>{!LITC_Reporting_Form__c.GP_New_case_goal__c}</b><br/>
+                        Consultations goal: <b>{!LITC_Reporting_Form__c.GP_Consultations_goal__c}</b><br/>
+                    </apex:outputPanel>
+                    
+                    Education events goal: <b>{!LITC_Reporting_Form__c.GP_Education_events_goal__c}</b><br/>
+                    Education attendees goal: <b>{!LITC_Reporting_Form__c.GP_Education_attendees_goal__c}</b><br/>
+                </td>
+                <td style="width: 33%; vertical-align: top;">
+                    <apex:outputPanel rendered="{!LITC_Reporting_Form__c.Clinic_Type__c == 'Standard (representation, education, advocacy)'}" layout="none">
+                        Percentage: <b>{!LITC_Reporting_Form__c.GP_New_Case_Percentage__c}</b><br/>
+                        Percentage: <b>{!LITC_Reporting_Form__c.GP_Consultations_Percent__c}</b><br/>
+                    </apex:outputPanel>
+                    
+                    Percentage: <b>{!LITC_Reporting_Form__c.GP_Education_events_Percent__c}</b><br/>
+                    Percentage: <b>{!LITC_Reporting_Form__c.GP_Education_attendees_Percent__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <div class="space">Efforts made towards goals. You must address efforts made towards reaching each goal</div>
+        <b>{!LITC_Reporting_Form__c.Efforts_made_towards_goals__c}</b>
+
+        
+        
+        <div class="space">Impediments</div>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Impediment</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Efforts Made to Overcome</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!lineItemImpediment}" var="item">
+                    <tr>
+                        <td style="border: 1px solid black;">{!item['Impediment__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Efforts_Made_to_Overcome__c']}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+
+        <div class="space">Emerging Issues</div>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Issue</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!lineItemEmerging}" var="item">
+                    <tr>
+                        <td style="border: 1px solid black;">{!item['Issue__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Description__c']}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+
+        <div class="space">Successes</div>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Case/Activity</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!lineItemSuccess}" var="item">
+                    <tr>
+                        <td style="border: 1px solid black;">{!item['Case_Activity__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Description__c']}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+
+        <div class="space">Describe any other activities or efforts not previously captured on this report that you would like to share with the LITC Program Office</div>
+        <b>{!LITC_Reporting_Form__c.Other_Activities_or_Efforts__c}</b>
+
+
+        <h2>Clinic information</h2>
+        <div class='hr'></div>
+
+        <div class="space">Staff changes</div>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Staff Member</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Details</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!lineItemStaffChange}" var="item">
+                    <tr>
+                        <td style="border: 1px solid black;">{!item['Staff_Member__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Details__c']}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+
+        <div class="space">Tax law</div>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Trainee</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Topic</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Training Hours</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Provider</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!lineItemTaxLaw}" var="item">
+                    <tr>
+                        <td style="border: 1px solid black;">{!item['Trainee__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Topic__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Training_Hours__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Provider__c']}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+        
+        <div class="space">List any changes in days or hours of operation, if applicable</div>
+        <b>{!LITC_Reporting_Form__c.Changes_to_day_hours_of_operation__c}</b>
+
+        <h2>Submission</h2>
+        <div class='hr'></div>
+        <div class="space">Submission date</div>
+        <b>
+        <apex:outputText value="{0, date, MMMM d',' yyyy}">
+            <apex:param value="{!LITC_Reporting_Form__c.Submission_Date__c}" />
+        </apex:outputText>
+        </b>
+   
+        <div class="space">Submitted By</div>
+        <b>{!LITC_Reporting_Form__c.Submitted_Name__c}</b>
+      
+
+
+        
+        <!-- <h2>Donated goods and services</h2>
+        <table style="width: 100%; border-collapse: collapse; border: 1px solid black; table-layout: fixed;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Description</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Quantity</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">U/M</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Cost per unit</th>
+                    <th style="border: 1px solid black;background-color: #2d247c; color: white">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <apex:repeat value="{!formattedLineItemsGDS}" var="item">
+                    <tr>
+                        <td style="border: 1px solid black;">{!item['Description__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Quantity__c']}</td>
+                        <td style="border: 1px solid black;">{!item['U_M__c']}</td>
+                        <td style="border: 1px solid black;">{!item['Cost_per_Unit__c']}</td>
+                        <td style="border: 1px solid black;">{!item['FormattedTotal']}</td>
+                    </tr>
+                </apex:repeat>
+            </tbody>
+        </table>
+
+        <br/>
+
+
+        <div style="page-break-before:always;"></div>
+
+        <h2>
+            Form 13424-L
+        </h2>
+
+        <div class='hr'></div>
+
+        <div class="space">label</div>
+        <b>{!LITC_Reporting_Form__c.test}</b>
+
+        <apex:outputPanel rendered="{!LITC_Reporting_Form__c.Return_Grant_Funds__c != null}" layout="none">
+            <div class="space">label</div>
+            <b>{!LITC_Reporting_Form__c.test}</b>
+
+        </apex:outputPanel> -->
+
+
+    </body>
+</apex:page>

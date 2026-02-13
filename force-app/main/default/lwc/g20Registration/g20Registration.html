@@ -1,0 +1,699 @@
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <p>All G20 delegates and attendees must register through this portal to be considered for participation in the 2026 Finance and Central Bank Deputies’ Meeting.  This process ensures that all attendees are reviewed and approved by the U.S. Presidency prior to receiving access credentials.</p>
+
+    <template lwc:if={isRoleDAO}>
+        <div class="slds-box">
+            <h2>Start a registration</h2>
+            <br/>
+            <lightning-record-edit-form object-api-name="G20_Event_Registration__c" onerror={handleError} onsuccess={handleSuccess} onsubmit={handleSubmitRegistration} class="g20">
+
+                <lightning-progress-indicator current-step={currentStep} type="base" variant="base">
+                    <lightning-progress-step label="Preliminary Questions" value="1" onclick={handleNavigatePrevent}></lightning-progress-step>
+                    <template lwc:if={isSelectedBasic}>
+                        <lightning-progress-step label="Delegate Information" value="2" onclick={handleNavigatePrevent}></lightning-progress-step>
+                    </template>
+                    <template lwc:if={isSelectedFull}>
+                        <lightning-progress-step label="Delegate Information" value="2" onclick={handleNavigatePrevent}></lightning-progress-step>
+                        <lightning-progress-step label="Passport Upload" value="3" onclick={handleNavigatePrevent}></lightning-progress-step>
+                        <lightning-progress-step label="Emergency Contact Information" value="4" onclick={handleNavigatePrevent}></lightning-progress-step>
+                        <lightning-progress-step label="Travel Information" value="5" onclick={handleNavigatePrevent}></lightning-progress-step>
+                    </template>
+                </lightning-progress-indicator>
+                <br/>
+
+                <div class={currentStepOne}>
+
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-1">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Are you registering for yourself, or someone else?</label>
+                            <lightning-radio-group name="radioGroup1"
+                                    label="Radio Group"
+                                    onchange={handleSelfChange}
+                                    variant="label-hidden"
+                                    options={optionsSelf}
+                                    value={selectedValueSelf}
+                                    type="radio"
+                                    class="tab1">
+                                </lightning-radio-group>
+
+                            <!-- <lightning-combobox required variant="label-hidden" value={selectedValueSelf} options={optionsSelf} onchange={handleSelfChange} class="tab1"></lightning-combobox> -->
+                        </div>
+                    </div>
+                    <br/>
+
+                    <template lwc:if={selectedValueTypeOther}>
+
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Select how you would like to register this delegate. You may either enter all required information now or send an invitation so the delegate can provide their own details.</label>
+                                <lightning-radio-group name="radioGroup"
+                                    label="Radio Group"
+                                    onchange={handleFullBasicChange}
+                                    variant="label-hidden"
+                                    class="tab1"
+                                    options={radioOptions}
+                                   
+                                    type="radio">
+                                </lightning-radio-group>
+                                <!-- <abbr title="required" class="slds-required">*</abbr>
+                                <label>Full or basic registration?</label>
+                                <lightning-combobox required variant="label-hidden" value={selectedValueType} options={optionsRegistrationType} onchange={handleFullBasicChange} class="tab1"></lightning-combobox> -->
+                            </div>
+                        </div>
+                        <br/>
+                        <template lwc:if={isSelectedBasic}>
+                            <br/>
+                            <p><b>Send an Invitation to Register</b></p>
+                            <p>Enter the delegate’s name, email address, and role to send them an invitation link. 
+                                The delegate will receive a secure email allowing them to complete and submit their registration details. </p>
+                        </template>
+                        <template lwc:if={isSelectedFull}>
+                            <br/>
+                            <p><b>Complete Registration Now</b></p>
+                            <p>Enter all required information for the delegate, including personal details, contact information, and identification. </p>
+                            <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                                <li>A passport photo is required on the third page of this registration form.  </li>
+                                <li>Be sure to have a valid, color photo ready before proceeding. </li>
+                                <li>You will also need to provide emergency contact information and may optionally include travel details (e.g., arrival/departure dates, flight numbers, accommodations). </li>
+                            </ul>
+
+                        </template>
+                        
+                    </template>
+                    <br/>
+
+                    <lightning-button variant="brand" onclick={handleNavigate} label="Next" value="2" style="float: right"></lightning-button>
+
+                </div>
+                <div class={currentStepTwo}>
+                    <h3>Delegate Information</h3>
+                    <br/>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>First/Given Name</label>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input-field required variant="label-hidden" field-name="DI_First_Name__c" class="tab2"></lightning-input-field>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <label>Middle Name</label>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input-field variant="label-hidden" field-name="DI_Middle_Name__c"></lightning-input-field>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Last/Family Name</label>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input-field required variant="label-hidden" field-name="DI_Last_Name__c" class="tab2"></lightning-input-field>
+                        </div>
+                    </div>
+                    <br/>
+                    <template lwc:if={isSelectedFull}>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Title</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="DI_Title__c" class="tab2" onchange={handleTitleChange}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <template lwc:if={showTitleOther}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Please specify</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <lightning-input-field variant="label-hidden" field-name="Title_Other__c"></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+                        
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Sex</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="DI_Gender__c" class="tab2"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                    </template>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Email</label>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input-field required variant="label-hidden" field-name="DI_Email__c" class="tab2"></lightning-input-field>
+                        </div>
+                    </div>
+                    <br/>
+                    <template lwc:if={isSelectedFull}>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Phone number</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="DI_Phone_Number__c" class="tab2"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                    </template>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>G20 Role</label>
+                        </div>
+                    </div>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                            <lightning-input-field required variant="label-hidden" field-name="G20_Role__c" class="tab2" onchange={handleRoleChange}></lightning-input-field>
+                        </div>
+                    </div>
+                    <br/>
+                    <template lwc:if={isSelectedBasic}>
+                        <template lwc:if={showTextDCODAO}>
+                            <p><b>Note</b>: You have selected a Delegation Accreditation Officer (DAO) or Delegation Contact Officer (DCO), please note that the invitee will be required to authenticate through ID.me before accessing the registration portal. </p>
+                        </template>
+                    </template>
+                    <template lwc:if={isSelectedFull}>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Organization</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="Ministry_of_Finance_Central_Bank__c" class="tab2" value={organization} onchange={handleMinistryChange}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <template lwc:if={showMinistryOther}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Please specify</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                    <lightning-input-field variant="label-hidden" field-name="Ministry_Other__c"></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </template>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Job Title</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="DI_Job_Title__c" class="tab2"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Dietary Restrictions/Allergies</label>
+                                <lightning-helptext content="please provide any dietary restrictions, if not applicable please indicate none"></lightning-helptext>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="Dietary_Restrictions__c" class="tab2"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                    </template>
+                    
+                    <br/><br/>
+                    <lightning-button variant="brand-outline" onclick={handleNavigate} label="Previous" value="1" style="float:left"></lightning-button>
+                    <template lwc:if={isSelectedBasic}>
+                        <lightning-button variant="brand" label="Send invite" style="float:right" type="submit"></lightning-button>
+                    </template>
+                    <template lwc:else>
+                        <lightning-button variant="brand" onclick={handleNavigate} label="Next" value="3" style="float:right"></lightning-button>
+                    </template>
+
+                </div>
+                <template lwc:if={isSelectedFull}>
+                    <div class={currentStepThree}>
+                        <h3>Photo Upload</h3>
+                        <br/>
+                        <p>Please upload a passport sized photo for your credential.</p>
+                        <br/>
+                        <c-file-loader my-record-id={contactId} file-prefix="passport" dynamic-accepted-format={dynamicAcceptedFormat} onfileloaded={handleFileLoaded}></c-file-loader>
+                        
+                        <br/><br/>
+                        <lightning-button variant="brand-outline" onclick={handleNavigate} label="Previous" value="2" style="float:left"></lightning-button>
+                        <lightning-button variant="brand" onclick={handleNavigate} label="Next" value="4" style="float:right"></lightning-button>
+                    </div>
+                    <div class={currentStepFour}>
+                        <h3>Emergency Contact Information</h3>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>First/Given Name</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="EC_First_Name__c" class="tab4"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Middle Name</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field variant="label-hidden" field-name="EC_Middle_Name__c"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Last/Family Name</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="EC_Last_Family_Name__c" class="tab4"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Email</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="EC_Email__c" class="tab4"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Phone number</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="EC_Phone__c" class="tab4"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <br/><br/>
+                        <lightning-button variant="brand-outline" onclick={handleNavigate} label="Previous" value="3" style="float:left"></lightning-button>
+                        <lightning-button variant="brand" onclick={handleNavigate} label="Next" value="5" style="float:right"></lightning-button>
+                    </div>
+                    <div class={currentStepFive}>
+                        <h3>Travel Information</h3>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Passport Number</label>
+                                <lightning-button-icon icon-name="utility:hide" variant="bare" onclick={handleHideToggle} alternative-text="Close window" size="small"></lightning-button-icon>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="Passport_Number__c" class="tab5" data-style={showPassport}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Passport Issuing Jurisdiction</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="Passport_Jurisdiction__c" class="tab5"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Country of Birth</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="Country_of_Birth_v2__c" class="tab5"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Date of Birth</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field required variant="label-hidden" field-name="Date_of_Birth__c" class="tab5"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Flight Number</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field variant="label-hidden" field-name="Flight_Number__c"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Arrival Airport code</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field variant="label-hidden" field-name="Arrival_Airport_Code__c"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Arrival Date and Time</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field variant="label-hidden" field-name="Arrival_Date_Time__c"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Departure Airport code</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field variant="label-hidden" field-name="Departure_Airport_Code__c"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <label>Departure Date and Time</label>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <lightning-input-field variant="label-hidden" field-name="Departure_Date_Time__c"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        
+                        <br/><br/>
+                        <lightning-button variant="brand-outline" onclick={handleNavigate} label="Previous" value="4" style="float:left"></lightning-button>
+                        <lightning-button variant="brand" type="submit" label="Submit" style="float:right"></lightning-button>
+                    </div>
+                </template>    
+                <br/>
+            </lightning-record-edit-form>
+        </div>
+    </template>
+
+    <br/>
+    <div class="slds-box">
+        <h2>My registrations</h2>
+        <br/><br/>
+        <template lwc:if={showTable}>
+            <div class="">
+                <lightning-datatable onrowaction={openRegistrationModal} show-row-number-column key-field="Id" hide-checkbox-column data={registrations} columns={columns} class="slds-max-medium-table_stacked"></lightning-datatable>
+            </div>
+        </template>
+        <template lwc:else>
+            You have no submitted registrations
+        </template>
+    </div>
+
+    <template if:true={showRegistrationModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <lightning-record-edit-form object-api-name="G20_Event_Registration__c" onerror={handleError} class="g20Edit" record-id={selectedId} onsuccess={handleSuccess} onsubmit={handleSubmitEdit}>
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeRegistrationModal} alternative-text="close"></lightning-button-icon>
+                        <h2 id="modal-heading-05" class="header">Registration details</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-3" style="max-height: 600px;"> 
+
+                        <lightning-input-field variant="label-hidden" field-name="Status__c" value="Submitted" class="slds-hide"></lightning-input-field>
+
+                        <h3>Delegate Information</h3>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>First/Given Name</label>
+                                <lightning-input-field required variant="label-hidden" field-name="DI_First_Name__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <label>Middle Name</label>
+                                <lightning-input-field variant="label-hidden" field-name="DI_Middle_Name__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Last/Family Name</label>
+                                <lightning-input-field required variant="label-hidden" field-name="DI_Last_Name__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Title</label>
+                                <lightning-input-field required variant="label-hidden" field-name="DI_Title__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Sex</label>
+                                <lightning-input-field required variant="label-hidden" field-name="DI_Gender__c" disabled={disableEdits}></lightning-input-field>
+                            </div>             
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Email</label>
+                                <lightning-input-field required variant="label-hidden" field-name="DI_Email__c" disabled='true'></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Phone number</label>
+                                <lightning-input-field required variant="label-hidden" field-name="DI_Phone_Number__c" disabled={disableEdits}></lightning-input-field>
+                            </div>    
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Delegation/International Organization</label>
+                                <lightning-input-field variant="label-hidden" field-name="Delegation_International_Organization__c" disabled='true'></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Organization</label>
+                                <lightning-input-field required variant="label-hidden" field-name="Ministry_of_Finance_Central_Bank__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Job Title</label>
+                                <lightning-input-field required variant="label-hidden" field-name="DI_Job_Title__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>G20 Role</label>
+                                <lightning-input-field required variant="label-hidden" field-name="G20_Role__c" disabled='true'></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Dietary Restrictions/Allergies</label>
+                                <lightning-helptext content="please provide any dietary restrictions, if not applicable please indicate none"></lightning-helptext>
+                                <lightning-input-field required variant="label-hidden" field-name="Dietary_Restrictions__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <h3>Photo Upload</h3>
+                        <p>Please upload a passport sized photo for your credential.</p>
+                        <br/>
+                        <div class="slds-scrollable_x">
+                            <c-file-loader my-record-id={selectedId} file-prefix="passport" dynamic-accepted-format={dynamicAcceptedFormat} disable-edits={disableEdits}></c-file-loader>
+                        </div>
+                        <br/>
+                        <h3>Emergency Contact Information</h3>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>First/Given Name</label>
+                                <lightning-input-field required variant="label-hidden" field-name="EC_First_Name__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <label>Middle Name</label>
+                                <lightning-input-field variant="label-hidden" field-name="EC_Middle_Name__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Last/Family Name</label>
+                                <lightning-input-field required variant="label-hidden" field-name="EC_Last_Family_Name__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Email</label>
+                                <lightning-input-field required variant="label-hidden" field-name="EC_Email__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Phone number</label>
+                                <lightning-input-field required variant="label-hidden" field-name="EC_Phone__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <h3>Travel Information</h3>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Passport Issuing Jurisdiction</label>
+                                <lightning-input-field required variant="label-hidden" field-name="Passport_Jurisdiction__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Passport Number</label>&nbsp;
+                                <lightning-button-icon icon-name="utility:hide" variant="bare" onclick={handleHideToggle} alternative-text="Close window" size="small"></lightning-button-icon>
+                                <lightning-input-field required variant="label-hidden" field-name="Passport_Number__c" disabled={disableEdits} data-style={showPassport}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Country of Birth</label>
+                                <lightning-input-field required variant="label-hidden" field-name="Country_of_Birth_v2__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Date of Birth</label>
+                                <lightning-input-field required variant="label-hidden" field-name="Date_of_Birth__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <label>Flight Number</label>
+                                <lightning-input-field variant="label-hidden" field-name="Flight_Number__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                 
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <label>Arrival Airport code</label>
+                                <lightning-input-field variant="label-hidden" field-name="Arrival_Airport_Code__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <label>Arrival Date and Time</label>
+                                <lightning-input-field variant="label-hidden" field-name="Arrival_Date_Time__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="slds-grid slds-gutters slds-wrap">
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <label>Departure Airport code</label>
+                                <lightning-input-field variant="label-hidden" field-name="Departure_Airport_Code__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-3">
+                                <label>Departure Date and Time</label>
+                                <lightning-input-field variant="label-hidden" field-name="Departure_Date_Time__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div> 
+                        <br/>
+                        <template lwc:if={showPublicURL}>
+                            <p><b>Note: </b>You may share this registration by clicking <a href={showPublicURL} target="_blank"> here</a></p>
+                            <br/>
+                        </template>
+                    </div> 
+                    <footer class="slds-modal__footer">
+                        <lightning-button style="margin-right:1rem" label="Cancel" type="button" variant="brand-outline" onclick={closeRegistrationModal}></lightning-button> 
+                        <template lwc:if={disableEdits}></template>
+                        <template lwc:else>
+                            <lightning-button style="margin-right:1rem; float: right" label="Save" type="submit" variant="brand"></lightning-button> 
+                        </template>
+                    </footer>
+                </lightning-record-edit-form>
+            </div>                      
+        </section>
+        
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+ 
+
+</template>

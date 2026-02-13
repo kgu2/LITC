@@ -1,0 +1,351 @@
+<template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <div style="display: flex; justify-content: center;">
+
+        <div style="width: 190px; margin-right: 2rem;">
+
+            <div style="height: 1.25rem;"></div>
+            <div style="height: 2rem;"></div>
+        
+            <lightning-tabset active-tab-value={activeTab} variant="vertical" >       
+                <lightning-tab onactive={handleOnActive} label="Case eligibility tracking" value="form"></lightning-tab>
+                <lightning-tab onactive={handleOnActive} label="File upload" value="form2"></lightning-tab>
+            </lightning-tabset>
+        </div>
+
+        <div style="margin-top:2rem; width: 100%;">
+            <div class="slds-grid slds-wrap slds-gutters_direct">
+                <div class="slds-col slds-size_1-of-1 slds-small-size_9-of-12">
+                    <div class={form} style="max-width: 70rem;">
+                            <h1>Site visit</h1>
+                            <hr style="margin-top: 5px;">
+
+                            <b><p>Site Visit- Case Eligibility Requirements Tracking Instructions </p></b>
+                            
+                            <p>
+                                The purpose of this form is to help the LITC Program Office determine if the clinic is adhering to the eligibility rules of IRC§ 7526 when accepting a new controversy case for representation. 
+                            </p>
+                            <p>There are two eligibility rules: 1) 90/250 income eligibility, and 2) amount in controversy. </p>
+
+                            <p><b>90/250 Income Requirement:</b> A low-income taxpayer is an individual whose income does not exceed 250% of the Federal Poverty Guidelines published annually by the Department of Health Human Services (HHS). According to this rule, at least 90 percent of taxpayers represented or referred for pro bono assistance must have incomes that do not exceed 250% of the Federal Poverty Guidelines. For purposes of determining the total number of taxpayers represented in controversies with the IRS, include both those who do and do not meet the income requirements. </p>
+
+                            <p><b>Amount in Controversy:</b> For any taxable year, generally, the amount in controversy should be $50,000 or less. The amount in controversy includes penalties but does not include interest. </p>
+                            
+                            <p><b>General Instructions:</b> From January 1 through the end of the tracking period, enter the total number of cases opened and enter the total number of cases opened where the taxpayer’s family unit income exceeded 250% of poverty. Complete an entry for all new cases accepted for representation during the tracking period. The tracking period appears at the top of the record where you are making the entries. Submit the form to Program Office Staff at least one week prior to the site visit unless requested otherwise.  </p>
+                            
+                            <p><b>Example 1:</b> Joe Taxpayer completed an application on February 15, 2025, seeking assistance for tax problems with the IRS. During the intake process, he reported his total weekly wages which when annualized equals $50,545. There are 4 individuals in his household. Joe's federal tax liabilities were as follows: $5,200 for 2021; $3,400 for 2022; and $2,400 for 2023. These amounts include interest and penalties. </p>
+                            <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem;">
+                                <li>Intake Date: 02/15/2025 </li>
+                                <li>Client ID: 34-9900 </li>
+                                <li>Size of Family Unit: 4 </li>
+                                <li>Income at time of representation: $50,545 </li>
+                                <li>Is income more than 250% of the Federal Poverty Guidelines? N </li>
+                                <li>Number of tax years in controversy: 3 </li>
+                                <li>Highest amount in controversy: $5,200 </li>
+                                <li>Is the highest amount in controversy more than $50,000? N </li>
+                                <li>Explanation: N/A </li>
+                            </ul>
+
+                            <p><b>Example 2: </b>Jane Taxpayer has IRS notices for two tax years.  She is married but has no children. Jane's husband lost his job in 2022. Her income is $44,000. Jane and her husband failed to file taxes when he lost his job, and the IRS says they owe $35,000 for 2022 and $55,000 for 2023. These amounts include interest and penalties. </p>
+                            <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem;">
+                                <li>Intake Date: 03/19/2025 </li>
+                                <li>Client ID: 86-4455 </li>
+                                <li>Size of Family Unit: 2 </li>
+                                <li>Income at time of representation: $44,000 </li>
+                                <li>Is income more than 250% of the Federal Poverty Guidelines? N </li>
+                                <li>Number of tax years in controversy: 2 </li>
+                                <li>Highest amount in controversy: $55,000 </li>
+                                <li>Is the highest amount in controversy more than $50,000? Y </li>
+                                <li>Explanation: The University of Maple’s LITC may accept a case where the amount in controversy exceeds $50,000 when the clinic anticipates that the taxpayer owes much less than the listed liability or when the case presents a unique or new issue that would provide educational benefit to the students. Jane Taxpayer’s case presents a legal issue of first impression in the district court where the clinic is located and will be a valuable case for clinic students to litigate. The legal issue is also one that would broadly impact low-income taxpayers.  </li>
+                            </ul>
+
+                            <br/> 
+
+                            <div class="slds-box">
+                                <lightning-record-edit-form object-api-name='Site_Visit__c' record-id={recordId} onerror={handleError}>
+                                    <label>Total number of cases accepted from January 1 of the current year through end date of tracking period</label>
+                                    <br/>
+                                    <div style="width: 50%;">
+                                        <lightning-input-field field-name="Total_number_of_cases_accepted__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <br/> 
+                                    <label>Total number of cases accepted from January 1 of the current year through the end date of the tracking sheet for individual's whose family unit's income exceeds 250% of Poverty for the number of persons in the unit</label>
+                                    <br/>
+                                    <div style="width: 50%;">
+                                        <lightning-input-field field-name="Total_number_of_cases_accepted_250__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <br/> 
+                                    <label>Tracking period</label>
+                                    <br/>
+                                    <div style="width: 50%;">
+                                        <lightning-input-field field-name="Tracking_Period__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                </lightning-record-edit-form>
+                            </div>
+
+                            <br/> 
+                            
+                            
+                            <div class="slds-box">
+                                <h2 style="display: inline;">My case eligibility requirements</h2>   
+                                <br/><br/> 
+                                
+                                <lightning-button variant="brand" label="Add line item" icon-name="utility:add" onclick={openAddLineItemModal} disabled={disableEdits}></lightning-button>
+                                <br/>   <br/> 
+
+                                <template lwc:if={showTable}>
+                                     <lightning-datatable class="myTable" onrowaction={openEditLineItemModal} show-row-number-column key-field="Id" hide-checkbox-column data={records} columns={columns}></lightning-datatable>
+                                </template>
+                            </div>
+                            <!-- <br/>
+                            <div class="slds-box">
+                                <h2 style="display: inline;">File upload/reference</h2>    
+                                <br /><br />
+                                <label>At least 10 days before your scheduled visit, please upload information requested by your analyst and any other information that you would like to share.</label> <br />
+                                <c-file-loader my-record-id={recordId} file-prefix="fileUpload" dynamic-accepted-format ={dynamicAcceptedFormat} disable-edits={disableEdits}></c-file-loader>
+                                <br/>  
+
+                                <label>Referenced files: </label> <br />
+                                <lightning-button variant="base" onclick={handleFileDownload} label={fileName} value={referencedFiles}></lightning-button>
+                                
+                                <br/>  
+                            </div>
+
+
+                            <br/>  <br/>
+
+                            <div style="width: 100%; margin-top: 15px;">
+                                <div style="float: left;">
+                                    <lightning-button type="button" variant="brand" onclick={openConfirmationModal} label="Submit" disabled={disableEdits}></lightning-button>
+                                </div>
+                            </div> -->
+                            <br/>  <br/>
+
+                            <div style="float: right;">
+                                <lightning-button type="button" variant="brand-outline" onclick={handleNav} label="Next" value="form2"></lightning-button>
+                            </div>
+                            <footer></footer> 
+                    </div>
+                    <div class={form2} style="max-width: 70rem;">
+                    <br/>
+                    <div class="slds-box">
+                        <h2 style="display: inline;">File upload/reference</h2>    
+                        <br /><br />
+                        <label>At least 10 days before your scheduled visit, please upload information requested by your analyst and any other information that you would like to share.</label> <br />
+                        <c-file-loader my-record-id={recordId} file-prefix="fileUpload" dynamic-accepted-format ={dynamicAcceptedFormat} disable-edits={disableEdits}></c-file-loader>
+                        <br/>  
+
+                        <label>Referenced files: </label> <br />
+                        <lightning-button variant="base" onclick={handleFileDownload} label={fileName} value={referencedFiles}></lightning-button>
+                        
+                        <br/>  
+                    </div>
+
+
+                    <br/>  <br/>
+
+                    <div style="width: 100%; margin-top: 15px;">
+                        <div style="float: left;">
+                            <lightning-button type="button" variant="brand-outline" onclick={handleNav} label="Previous" value="form"></lightning-button>
+                        </div>
+                        <div style="float: right;">
+                            <lightning-button type="button" variant="brand" onclick={openConfirmationModal} label="Submit" disabled={disableEdits}></lightning-button>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="slds-col slds-size_1-of-1 slds-small-size_3-of-12">
+                    <c-form-infobox accordion-errors={submissionErrors} status={status} status-field-name='Recipient_Status__c' object-name='Site_Visit__c' fields={recordFields} record-id={recordId} show-unsubmit="true" deadline-passed={deadlinePassed} style="min-width: 245px; max-width: 215px; margin-top:5rem; display:block"></c-form-infobox> 
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <template lwc:if={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <lightning-record-edit-form object-api-name="Site_Visit_Case_Eligibility_Requirement__c" onerror={handleError} onsuccess={handleSuccess} record-id={selectedLineItem}>
+
+                    <lightning-input-field required variant="label-hidden" field-name="Site_Visit__c" class="slds-hide" value={recordId}></lightning-input-field>
+
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeEditLineItemModal}></lightning-button-icon>
+                        <h2 id="modal-heading-03" class="header">Eligibility requirement</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-4" style="max-height: 600px;">
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Intake date</label>
+                                <lightning-helptext content="Enter the date the application for assistance was completed by the taxpayer."></lightning-helptext>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Client ID</label>
+                                <lightning-helptext content="Enter a client ID that identifies the case. The client ID should not include the taxpayer's name or Social Security Number."></lightning-helptext>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input-field required variant="label-hidden" field-name="Intake_Date__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input-field required variant="label-hidden" field-name="Client_ID__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-3">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Size of Family Unit</label>
+                                <lightning-helptext content="Enter the family size used to determine whether the case met the 90/250 income eligibility requirement."></lightning-helptext>
+                            </div>
+                            <div class="slds-col slds-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Household Income at Time of Representation</label>
+                                <lightning-helptext content="Enter the total family income used to determine whether the taxpayer/case met the 90/250 income requirement."></lightning-helptext>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input-field required variant="label-hidden" field-name="Size_of_Family_Unit__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input-field required variant="label-hidden" field-name="Household_Income_Representation__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>What was used to determine income?</label>
+                                <lightning-helptext content="Choose one of the four selections provided: paystub, affidavit, client attestation or other."></lightning-helptext>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input-field required variant="label-hidden" field-name="What_was_used_to_determine_income__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Is income more than 250% of the Federal Poverty Guidelines?</label>
+                                <lightning-helptext content="Enter Yes (Y) or No (N) if the client's income is more than 250% of the Federal Poverty Guidelines. If you answer yes, please provide an explanation for accepting the case."></lightning-helptext>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input-field required variant="label-hidden" field-name="Income_more_250_Fed_Poverty_Guidelines__c" disabled={disableEdits} onchange={handleRenderConditional} class="fieldA"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Number of Tax Years in Controversy</label>
+                                <lightning-helptext content="Enter the number of years of tax controversies for each client."></lightning-helptext>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input-field required variant="label-hidden" field-name="Number_of_Tax_Years_in_Controversy__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-2">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Highest Amount in Controversy</label>
+                                <lightning-helptext content="For each taxpayer, enter the highest dollar amount in controversy."></lightning-helptext>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-input-field required variant="label-hidden" field-name="Highest_Amount_in_Controversy__c" disabled={disableEdits}></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-1">
+                                <abbr title="required" class="slds-required">*</abbr>
+                                <label>Is the highest amount in controversy more than $50,000?</label>
+                                <lightning-helptext content="Enter Yes (Y) or No (N) if the highest amount in controversy is more than $50,000. If you answer yes, please provide an explanation for accepting the case."></lightning-helptext>
+                            </div>
+                        </div>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-4">
+                                <lightning-input-field required variant="label-hidden" field-name="Highest_amount_controversy_more_50_000__c" disabled={disableEdits} onchange={handleRenderConditional} class="fieldB"></lightning-input-field>
+                            </div>
+                        </div>
+                        <br/>
+
+                        <template lwc:if={showExplanation}>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-3">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Explanation</label>
+                                    <lightning-helptext content="If your answers to either of the two questions above (whether income was over 250% and whether the amount in controversy exceeds $50,000) are yes, please provide an explanation. For the first entry where income exceeded 250% of poverty, provide the acceptance criteria used by the clinic for these types of cases. For this entry and the ones that follow, explain how the case met the clinic’s acceptance criteria. For the first entry involving a case where the amount in controversy exceeded $50,000, provide the acceptance criteria used by the clinic for these types of cases. For this entry and the ones that follow, explain how the case meets the clinic’s acceptance criteria."></lightning-helptext>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <lightning-input-field required variant="label-hidden" field-name="Explanation__c" disabled={disableEdits}></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>   
+                        </template>
+                         
+
+                        <br/>
+                    </div> 
+                    <div class="slds-modal__footer">
+                        <template lwc:if={selectedLineItem}>
+                            <lightning-button style="float:left" label="Delete" type="button" variant="destructive " onclick={handleDelete} disabled={disableEdits}></lightning-button> 
+                        </template>
+                        <lightning-button label="Submit information" type="submit" variant="brand" disabled={disableEdits}></lightning-button> 
+                    </div>
+                </lightning-record-edit-form>
+            </div>                      
+        </section>
+        
+        <div class="slds-backdrop slds-backdrop_open"></div>
+
+
+    </template>
+
+    <template if:true={showConfirmationModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+            <div class="slds-modal__container">     
+                  <div class="slds-modal__content slds-var-p-around_large">
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeConfirmationModal}></lightning-button-icon>
+                        <h2 id="modal-heading-06" class="header">Confirmation</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-6" style="max-height: 600px;">
+                        <p>Are you sure you would like to submit?</p>
+                        <br/>
+                    </div> 
+                  </div>
+                  <div class="slds-modal__footer">
+                    <lightning-button label="Yes" type="button" variant="brand" onclick={handleSubmit}></lightning-button> 
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+
+
+
+</template>

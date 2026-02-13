@@ -1,0 +1,5 @@
+<apex:page renderAs="pdf" controller="PDFGeneratorController"> 
+   <H1>
+       {!contact.Name}
+    </H1>
+</apex:page>

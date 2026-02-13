@@ -1,0 +1,27 @@
+<template>
+
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <h1>Site visits</h1>
+    <hr>
+
+    <div class="slds-box">
+        <h2>My site visits</h2>
+        <template if:true={showVisits}>
+            <lightning-datatable
+                show-row-number-column
+                hide-checkbox-column
+                key-field="Id"
+                data={siteVisits}
+                onrowaction={handleRowAction}
+                columns={columns}
+            >
+            </lightning-datatable>
+        </template>
+        <template if:false={showVisits}>
+            You have no records available
+        </template>
+    </div>
+</template>

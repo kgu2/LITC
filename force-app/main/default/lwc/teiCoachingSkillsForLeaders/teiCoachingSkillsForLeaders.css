@@ -1,0 +1,142 @@
+:host{
+  /* ===== Theme tokens (light TEI look) ===== */
+  --bg: #f5f5f5;      /* page background */
+  --panel: #F5F5F5;   /* light panel surface */
+  --panel-2: #F5F5F5;
+  --text: #111;       /* primary text */
+  --muted: #55607a;   /* secondary text */
+  --accent: #4d86ff;  /* brand blue */
+  --accent-2: #8e7bff;
+  --radius: 14px;
+  --shadow: 0 10px 25px rgba(0,0,0,.16);
+  overflow: visible;
+
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* ===== Page wrapper ===== */
+.tei{
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+}
+.page{
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  min-height: 1000px;
+}
+
+/* ===== Header ===== */
+.page-header{ margin-bottom: 16px; }
+.page-title{
+  font-size: 28px; line-height: 1.2; font-weight: 800;
+  color: var(--text);               /* solid title (no gradient) */
+  letter-spacing: .3px;
+}
+.subtitle{
+  margin-top: 8px;
+  color: var(--muted);
+}
+
+/* ===== Panel ===== */
+.panel{
+  background: var(--panel);
+  border: 1px solid var(--panel);   /* subtle edge */
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  overflow: visible;
+}
+
+/* ===== Body copy ===== */
+.body{ color: var(--muted); margin: 4px 0 12px; }
+
+/* ===== Links (no hover lift) ===== */
+.link{
+  color: #0053a3;
+  text-decoration: underline;
+  border-bottom: none;
+  transition: none;                 /* no animation */
+}
+.link:hover{ text-decoration: underline; }
+.link:focus-visible{
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ===== Subsections & lists ===== */
+.subsection{
+  margin: 14px 0 8px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}
+.list{ list-style: disc; padding-left: 1.1rem; margin: 6px 0 10px; }
+.list li{ margin: 6px 0; color: var(--text); }
+.list li::marker{ color: var(--accent); }
+
+/* ===== Video embed ===== */
+.video{
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%;              /* 16:9 */
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid #e5e7f2;
+  box-shadow: var(--shadow);
+  background: #fff;
+  margin: 10px 0 2px;
+}
+.video iframe{
+  position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+}
+
+/* ===== lightning-accordion light theme via SLDS hooks ===== */
+.tei-accordion{
+  /* backgrounds */
+  --slds-c-accordion-summary-color-background: transparent;
+  --slds-c-accordion-content-color-background: transparent;
+  --slds-c-accordion-heading-text-color: var(--text);
+
+  /* borders & radius */
+  --slds-c-accordion-color-border: #e5e7f2;
+  --slds-c-accordion-radius-border: var(--radius);
+
+  /* spacing */
+  --slds-c-accordion-section-spacing-block-start: 6px;
+  --slds-c-accordion-section-spacing-block-end: 6px;
+
+  /* focus/hover */
+  --slds-c-accordion-summary-text-color-hover: var(--accent);
+  --slds-c-accordion-summary-text-color-focus: var(--accent);
+  --slds-c-accordion-summary-shadow-focus: 0 0 0 2px rgba(77,134,255,.35);
+}
+
+/* thin separators between sections */
+.tei-accordion lightning-accordion-section + lightning-accordion-section{
+  border-top: 1px solid #e5e7f2;
+  margin-top: 8px;
+  padding-top: 10px;
+}
+
+/* Remove stray SLDS paddings if present */
+[class*="slds-p-around"]{ padding: 0 !important; }
+
+/* ===== Reduced motion ===== */
+@media (prefers-reduced-motion: reduce){
+  *{ transition: none !important; }
+}
+
+/* ===== No-bulge safety net (ensure zero lift/shadow growth) ===== */
+.link,
+.panel,
+.video,
+.video iframe,
+.tei-accordion,
+.tei-accordion *{
+  transform: none !important;
+  box-shadow: inherit !important;
+  transition: none !important;
+}

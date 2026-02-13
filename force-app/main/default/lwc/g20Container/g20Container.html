@@ -1,0 +1,77 @@
+<template> 
+    <template lwc:if={renderPage}>
+        <template lwc:if={isRoleAuthorized}>
+            <div style="height: 2.25rem;"></div>
+
+            <div class="slds-grid slds-grid_align-center">
+                <div class="slds-grid slds-wrap" style="max-width: 1260px; width: 100%;">
+
+                    <div class="slds-size_1-of-1 slds-medium-size_2-of-12 desktop" style="padding-right: 2rem;">
+                        <lightning-tabset variant="vertical" active-tab-value={activeTab}>
+                            <lightning-tab onactive={handleOnActive} label="Introduction" value="intro"></lightning-tab>
+                            <lightning-tab onactive={handleOnActive} label="Register for the Meeting" value="registration"></lightning-tab>
+                            <lightning-tab onactive={handleOnActive} label="Reserve a Meeting Room" value="reservation"></lightning-tab>
+                        </lightning-tabset>
+                    </div>
+               
+
+                     <div class="mobile">
+                        <lightning-tabset active-tab-value={activeTab}>
+                            <lightning-tab onactive={handleOnActive} label="Introduction" value="intro"></lightning-tab>
+                            <lightning-tab onactive={handleOnActive} label="Registrations" value="registration"></lightning-tab>
+                            <lightning-tab onactive={handleOnActive} label="Reservations" value="reservation"></lightning-tab>
+                        </lightning-tabset>
+                        <br/>
+                     </div>
+                
+                    
+                   
+
+                    <div class="slds-col slds-size_1-of-1 slds-medium-size_10-of-12">
+                        <div class="slds-grid slds-wrap">
+                            <div class="slds-col slds-size_1-of-1">
+                                <div class={intro} style="padding-right: 5rem; max-width: 70rem;">
+                                    <h1>Welcome to the Registration Portal for the 2026 G20 Finance and Central Bank Deputies’ (FCBD) Meeting</h1>
+                                    <hr style="margin-top: 5px;">
+                                    <p>The first G20 Finance and Central Bank Deputies’ (FCBD) Meeting under the 2026 U.S. Presidency brings together global leaders and international organizations 
+                                        to begin discussions on the Finance track agenda under the 2026 U.S. Presidency.  This secure portal provides participants 
+                                        with access to participant registration and bilateral meeting room reservations for the upcoming G20 FCBD in Washington, DC.</p>
+
+                                    <p>Use this site to: </p>
+                                    <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                                        <li>Complete your delegate registration </li>
+                                        <li>Submit and manage meeting room reservations  </li>
+                                    </ul>
+                                    <br/>
+
+                                    <lightning-button variant="brand" label="Register for the Meeting" onclick={handleButtonNavReg} style="margin-right: 1rem;"></lightning-button>
+                                    <br class="mobile-break">
+                                    <br class="mobile-break">
+                                    <lightning-button variant="brand-outline" label="Reserve a Meeting Room" onclick={handleButtonNavRes}></lightning-button>
+                    
+                                    <br/><br/><br/>
+
+                                    <p>For assistance on your submission and other questions, <a href="mailto:G20finance.Logistics@treasury.gov" target="_blank">contact us</a></p>
+                                </div>
+                                <div class={registration}>
+                                    <h1>Registrations</h1>
+                                    <hr>
+                                    <c-g20-registration role={role} g-2-0-event-id={g20EventId} account-id={accountId} delegation={delegation} organization={organization}></c-g20-registration>
+                                </div>
+                                <div class={reservation}>
+                                    <h1>Reservations</h1>
+                                    <hr>
+                                    <c-g20-reservation role={role} contact-id={contactId} g-2-0-event-id={g20EventId}></c-g20-reservation>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template lwc:if={isNotRoleAuthorized}>
+            <br/>
+            <p>You do not have the necessary role to view this page. For assistance on your submission and other questions, <a href="mailto:G20finance.Logistics@treasury.gov" target="_blank">contact us</a></p>
+        </template>
+    </template>
+</template>

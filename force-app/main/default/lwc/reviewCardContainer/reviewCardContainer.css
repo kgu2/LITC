@@ -1,0 +1,56 @@
+h1 {
+	font-family: sans-serif;
+	font-size: 2rem;
+}
+
+h2 {
+	font-family: sans-serif;
+	font-size: 1.5rem;
+}
+
+h3 {
+	font-family: sans-serif;
+	font-size: 1.25rem;
+}
+
+label, .c-label {
+    font-family: sans-serif;
+    font-size: .9375rem;
+    color: #666;
+}
+
+lightning-output-field{
+	--lwc-inputStaticFontSize: 1.5rem;
+	--lwc-inputStaticFontFamily: 'sans-serif';
+ }
+
+
+
+ td {
+	padding: 5px;
+	background-color: white;
+  }
+  
+  
+  th {
+	background-color: #DADADA;
+	padding: 5px;
+	margin-top: 15px;
+	font-size: 1rem;
+  }
+  
+  tr {
+	font-size: 1rem;
+	background-color: #E0EEFD;
+  }
+
+  :host{
+	--lwc-inputStaticFontSize: 1rem;
+}
+
+
+@media screen and (max-width: 1350px) {
+    .summaryPanel {
+        display: none;
+    }
+}

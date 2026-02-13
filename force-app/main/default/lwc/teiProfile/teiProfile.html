@@ -1,0 +1,89 @@
+<!-- <template>
+  <br/><br/>
+  <div class="slds-card profile-card" style="border:1px solid grey;padding-top:2rem;box-shadow: 5px 10px rgba(0, 0, 0, 0.15);border-radius:9px;">
+
+    <header class="slds-card__header slds-grid">
+      <div class="slds-media slds-media_center slds-var-mb_small">
+        <div class="slds-media__body">
+          <h2 class="slds-text-heading_small">{name}</h2>
+          <p>{title}</p>
+ 
+        </div>
+      </div>
+    </header>
+
+ 
+    <div class="slds-card__body slds-card__body_inner">
+        <br/>
+      <div class="about-title slds-var-mb_small" style="background-color:#eeeeee;font-size:16px;"><b>About Me</b></div>
+      <br/>
+      <div class="slds-grid slds-wrap slds-var-p-horizontal_small">
+        <div class="slds-size_1-of-2 field-row">
+          <span class="label">Direct Phone</span>
+          <span class="value">{directPhone}</span>
+        </div>
+        <div class="slds-size_1-of-2 field-row">
+          <span class="label">Mobile Phone</span>
+          <span class="value">{mobilePhone}</span>
+        </div>
+        <div class="slds-size_1-of-2 field-row">
+          <span class="label">Email</span>
+          <a class="value">{email}</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br/><br/>
+</template> -->
+
+<template>
+  <div class="container">
+    <section class="section profile-card">
+      <!-- Header -->
+      <header class="profile-header">
+        <!-- <div class="avatar-circle" aria-hidden="true"></div> -->
+        <div class="profile-meta">
+          <h1 class="page-title">{name}</h1>
+          <p class="subtitle">{title}</p>
+          <!-- <p class="muted">{org}</p> -->
+        </div>
+      </header>
+
+      <hr class="divider" />
+
+      <!-- About me -->
+      <div class="section-header">
+        <div class="section-title">About Me</div>
+        <span class="badge">Profile</span>
+      </div>
+
+      <div class="fields-grid">
+        <div class="field">
+          <span class="label">Direct Phone</span>
+          <span class="value">{directPhone}</span>
+        </div>
+
+        <div class="field">
+          <span class="label">Mobile Phone</span>
+          <span class="value">{mobilePhone}</span>
+        </div>
+
+        <div class="field">
+          <span class="label">Email</span>
+          <a class="value">{email}</a>
+        </div>
+
+        <!--
+        <div class="field">
+          <span class="label">User ID</span>
+          <span class="value">{userId}</span>
+        </div>
+        <div class="field">
+          <span class="label">Location</span>
+          <span class="value">{location}</span>
+        </div>
+        -->
+      </div>
+    </section>
+  </div>
+</template>

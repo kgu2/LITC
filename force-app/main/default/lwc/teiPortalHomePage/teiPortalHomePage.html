@@ -1,0 +1,159 @@
+<template>
+  <template if:true={showWithdraw}>
+    <c-tei-withdraw
+      registrant-id={currentRegistrantId}
+      is-series={isSeries}
+      from-where="HomePage"
+      onbacktohome={handleResetWithdraw}>
+    </c-tei-withdraw>
+  </template>
+
+  <template if:false={showWithdraw}>
+    <div class="container">
+      <!-- Left: Sidebar / Quick Links -->
+      <aside class="sidebar sidebarSection">
+        <h1 class="page-title">Welcome, {userName}</h1>
+        <p class="page-sub">Jump back into your tools and learning resources.</p>
+
+        <div class="tiles">
+          <div class="tile tile-green" tabindex="0" onclick={navToEventCalendar} role="button" aria-label="Calendar">
+            <span class="icon">
+              <lightning-icon icon-name="utility:event" size="small"></lightning-icon>
+            </span>
+            <span class="label">Calendar</span>
+          </div>
+
+          <div class="tile tile-blue" tabindex="0" onclick={navToToolKit} role="button" aria-label="Leader's Toolkit">
+            <span class="icon">
+              <lightning-icon icon-name="utility:favorite" size="small"></lightning-icon>
+            </span>
+            <span class="label">Leader's Toolkit</span>
+          </div>
+
+          <div class="tile tile-green" tabindex="0" onclick={navToRepaly} role="button" aria-label="TEI Replay">
+            <span class="icon">
+              <lightning-icon icon-name="utility:loop" size="small"></lightning-icon>
+            </span>
+            <span class="label">TEI Replay</span>
+          </div>
+
+          <!-- <div class="tile tile-blue" tabindex="0" onclick={navToOnDemand} role="button" aria-label="On-Demand">
+            <span class="icon">
+              <lightning-icon icon-name="utility:video" size="small"></lightning-icon>
+            </span>
+            <span class="label">On-Demand</span>
+          </div> -->
+
+          <div class="tile tile-green" tabindex="0" onclick={navToTranscript} role="button" aria-label="My Transcripts">
+            <span class="icon">
+              <lightning-icon icon-name="utility:note" size="small"></lightning-icon>
+            </span>
+            <span class="label">My Transcripts</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- Center: Announcements -->
+      <main class="content section">
+        <div class="carouselContainer">
+          <!-- <c-tei-carousel images={carouselImages} aria-label="TEI highlights" auto-ms="6000" show-arrows show-dots loop pause-on-hover style="--aspect: 16 / 9;"></c-tei-carousel> -->
+           <img src={teiFlower}>
+        </div>
+        <hr class="divider" />
+        <div class="section-header">
+          <div class="section-title">Announcements</div>
+        </div>
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <!-- <th style="width: 140px;">Date</th> -->
+                <th>Details</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={annoucements} for:item="ann">
+                <template if:true={ann.hasClassLink}>
+                  <tr key={ann.Id}
+                      data-id={ann.Class__c}
+                      onclick={navToClass}
+                      role="button"
+                      tabindex="0"
+                      class="row-link">
+                    <!-- <td class="nowrap">{ann.Date__c}</td> -->
+                     <td><lightning-formatted-rich-text value={ann.Details__c}></lightning-formatted-rich-text></td>
+                  </tr>
+                </template>
+                <template if:false={ann.hasClassLink}>
+                  <tr key={ann.Id}>
+                    <!-- <td class="nowrap">{ann.Date__c}</td> -->
+                     <td><lightning-formatted-rich-text value={ann.Details__c}></lightning-formatted-rich-text></td>
+                  </tr>
+                </template>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </main>
+
+      <!-- Right: Upcoming Classes -->
+      <aside class="rightColumn section">
+        <!--Insert youtube embed video here-->
+        <div style="width:fit-content;margin: 0 auto;">
+          <iframe 
+              width="460"
+              height="241"
+              src="https://www.youtube.com/embed/VOXrpW-rotE" 
+              title="YouTube video player" 
+              frameborder="0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+          </iframe>
+        </div>
+        <hr class="divider" />
+        <br/>
+        <div class="section-header">
+          <div class="section-title">My Upcoming Classes</div>
+        </div>
+        <br/>
+        <div class="table-wrap">
+          <table class="table upcoming-table">
+            <thead>
+              <tr>
+                <th style="width: 140px;">Start Date</th>
+                <th>Title</th>
+                <th style="width: 90px;">Type</th>
+                <th style="width: 100px;">Status</th>
+                <th style="width: 110px;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <template for:each={upcomingClass} for:item="item">
+                <tr key={item.registrantId}>
+                  <td data-label="Start Date" class="nowrap">{item.startDate}</td>
+                  <td data-label="Title"><strong>{item.Title}</strong></td>
+                  <td data-label="Type">{item.Type}</td>
+                  <td data-label="Status"><span class="badge">{item.Status}</span></td>
+                  <td data-label="Action"
+                      tabindex="0"
+                      role="button"
+                      class="linkcell"
+                      onclick={handleUpcomingClassNav}
+                      data-isseries={item.isSeries}
+                      data-type={item.Type}
+                      data-videoid={item.videoId}
+                      data-registrantid={item.registrantId}
+                      data-classid={item.classId}
+                      data-action={item.Action}>
+                    {item.Action}
+                  </td>
+                </tr>
+              </template>
+            </tbody>
+          </table>
+        </div>
+      </aside>
+      <br/><br/>
+    </div>
+  </template>
+</template>

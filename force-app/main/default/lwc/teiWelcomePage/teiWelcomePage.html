@@ -1,0 +1,121 @@
+<template>
+  <div class="page">
+
+    <!-- Top brand bar -->
+    <header class="brandbar">
+      <div class="brandbar__inner">
+        <a class="brand" href="/" aria-label="TEI Connect home">
+          <img src={teiLogo}
+               alt="TEI Connect" class="brand__logo" />
+        </a>
+
+        <!-- Mobile menu button -->
+        <button class="nav-toggle"
+                aria-controls="mainnav"
+                aria-expanded={menuOpen}
+                onclick={toggleMenu}>
+          <span class="sr-only">Toggle navigation</span>
+          <span class="hamburger"></span>
+        </button>
+      </div>
+
+      <!-- Secondary (nav) bar -->
+      <!-- <nav id="mainnav" class={navClass}>
+        <ul class="navlist" role="menubar">
+          <li role="none">
+            <a role="menuitem" href="#" class="navlink">About TEI</a>
+          </li>
+          <li role="none">
+            <a role="menuitem" href="#" class="navlink">Contact Us</a>
+          </li>
+        </ul>
+      </nav> -->
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero2" style={heroBackgroundImg} role="img"
+             aria-label="Compass overlaid on drafting lines">
+      <div class="container">
+        <h1 class="headline">
+          <span>Welcome to the</span><br>
+          <span class="headline__accent">Treasury Executive Institute</span>
+        </h1>
+
+        <div style="width:200px;">
+            <button class="btn" onclick={handleLogin}>
+            LOG IN
+            </button>
+        </div>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
+        <br/><br/><br/><br/><br/><br/>
+        <div style="font-size:8px;">
+            <h2 class="warning__title">WARNING WARNING WARNING</h2>
+            <div>
+            You have accessed a U.S. Government information system, which includes
+            (1) this computer, (2) this network, (3) all computers connected to this
+            network, and (4) all devices and storage media attached to this network
+            or to a computer on this network. U.S. Government information systems
+            are provided for the processing of official U.S. Government information
+            only. Unauthorized or improper use of this information system is
+            prohibited and may subject you to disciplinary action, as well as civil
+            and criminal penalties. All data contained on U.S. Government information
+            systems is owned by the U.S. Government and may, for the purpose of
+            protecting the rights and property of the U.S. Government, be monitored,
+            intercepted, recorded, read, searched, copied, or captured in any manner
+            and disclosed or used for any lawful government purpose at any time.
+            THERE IS NO RIGHT TO PRIVACY IN THIS SYSTEM. System personnel may give
+            to law enforcement officials any potential evidence of crime found on
+            U.S. Government information systems. USE OF THIS SYSTEM BY ANY USER,
+            AUTHORIZED OR UNAUTHORIZED, CONSTITUTES YOUR UNDERSTANDING AND CONSENT
+            TO THIS MONITORING, INTERCEPTION, RECORDING, READING, COPYING, OR
+            CAPTURING AND DISCLOSURE.
+            </div>
+        </div>
+      </div>
+    </section>
+    <br/>
+    <div class="aboutTEIContainer" style="padding-left:20%; padding-right:20%;">
+        <div id="aboutTEI" style="font-size:16px;"><strong>About TEI</strong></div>
+        <br/>
+        <div>
+            <div style="color:#0b3c68;font-size:14px;"><strong>At a Glance</strong></div>
+            <div>
+                A leader in learning for over 37 years, TEI has evolved to meet the needs of its stakeholders in over 40 Federal agencies through expansion of services and audience becoming a sought after shared service provider of leadership development for GS-14s, GS-15 and SES. We focus on helping successful leaders enrich their leadership and professional skills to strengthen their agencies.
+            </div>
+            <div>
+                Our leadership development programs align with the Office of Personnel Management (OPM) Executive Core Qualifications (ECQ) and their supporting competencies, as well as, cutting edge themes. We offer in person as well as streamed, blended, and on-demand sessions bringing programs directly to the desktops of busy executives and leaders. In addition, TEI’s provides coaching, a powerful tool for any leader or manager seeking to develop others and maximize performance and engagement within an organization. TEI also provides coach training aligned with the International Coaching Federation (ICF) for federal leaders who are interested in bringing coaching to their organizations and beyond.
+            </div>
+        </div>
+        <br/>
+        <div>
+            <div style="color:#0b3c68;font-size:14px;"><strong>Our History</strong></div>
+            <div>
+                On February 25, 1983, the Treasury Secretary established the Treasury Executive Institute to serve Treasury’s SES learning and networking needs. In 2002, TEI became interagency; and in 2014, TEI joined the Treasury Franchise Fund, becoming a shared service. The GS-14 and GS-15 employees of our partner agencies are also now part of TEI.            
+            </div>
+        </div>
+        <br/>
+
+        <div>
+            <div style="color:#0b3c68;font-size:14px;"><strong>Policy</strong></div>
+            <div>
+                <a href="https://home.treasury.gov/subfooter/privacy-policy">Privacy Policy</a>
+            </div>
+            <div>
+                <a href="https://home.treasury.gov/subfooter/site-policies-and-notices">Site Policies and Notices</a>
+            </div>
+        </div>
+        <br/>
+
+        <div>
+            <div style="color:#0b3c68;font-size:14px;"><strong>Contact Us</strong></div>
+            <div>
+                Email: <a href="mailto:TEI@treasury.gov">TEI@treasury.gov</a>
+            </div>
+            <div>
+                Phone: (202) 622-9311
+            </div>
+        </div>
+        <br/><br/>
+    </div>
+  </div>
+</template>

@@ -1,0 +1,86 @@
+.quarterlyReportButton{
+    color: white;
+    display: flex;
+    border-radius: 5px;
+    background-color:#6cb043;
+    padding: 20px 20px 20px 20px;
+    font-size: 24px;
+    align-items: center;
+    float: right;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 0;
+    height: 24px;
+}
+
+.columnMiddle{
+    max-width:1500px ;
+    width: 80%;
+    padding: 16px; 
+    margin-top: 25px;
+    padding-bottom: 100px;
+}
+
+.helpInfoBox{
+    width: 240px;
+    min-width: 240px;
+    z-index: 1;
+    padding: 16px;
+    height: 100%;
+    padding-top: 10rem;
+    margin-top: -8rem;
+    background-color: #F5F5F5;
+    position: fixed;
+}
+
+.hide{ 
+    display: none;
+}
+
+.helpInfoBoxCollapsed{ 
+    width: 35px; 
+    /* height: 100%; */
+    height: -webkit-fill-available;
+    background-color: #F5F5F5;
+    margin-top: -21rem;
+    position: fixed;
+    right:0;
+    z-index: 1;
+  }
+
+p{
+    font-size: 13pt;
+}
+
+.bubble {
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    float: right;
+    cursor: pointer;
+    margin-left: -20px;
+    margin-top: -10px;
+  }
+
+  .bubbleCollapsed {
+    width: 15px;
+    height: 15px;
+    background-color: red;
+    border-radius: 50%;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    position: fixed; right:1rem; top: 12.3rem;
+    cursor: default;
+    z-index: 6;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+  }

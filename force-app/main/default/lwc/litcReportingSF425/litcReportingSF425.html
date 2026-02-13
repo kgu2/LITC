@@ -1,0 +1,136 @@
+<template>
+
+    <template lwc:if={isLoading}>
+      <lightning-spinner alternative-text="Loading...." size="large" variant="brand"></lightning-spinner>
+    </template>
+    <template lwc:if={isRendered}>
+    <template lwc:if={isAuthorizedOfficial}>
+      <div style="display: flex; justify-content: center;" class="showErrors">
+
+          <div style="width: 190px; margin-right: 2rem;">
+
+              <div style="height: 1.25rem;"></div>
+              <div style="height: 2rem;"></div>
+          
+              <lightning-tabset active-tab-value={activeTab} variant="vertical" >       
+                  <lightning-tab onactive={handleOnActive} label="Instructions" value="instructions"></lightning-tab>
+                  <lightning-tab onactive={handleOnActive} label="Standard Form 425" value="form"></lightning-tab>
+                  <lightning-tab onactive={handleOnActive} label="Submission" value="submission" ></lightning-tab>
+              </lightning-tabset>
+          </div>
+
+          <div style="margin-top:2rem; width: 100%;">
+              <div class="slds-grid slds-wrap slds-gutters_direct">
+                  <div class="slds-col slds-size_1-of-1 slds-small-size_9-of-12">
+                      <div class={instructions} style="max-width: 70rem;">
+                              <h1>Instructions</h1>
+                              <hr style="margin-top: 5px;">
+                              <b><p>Standard Form 425</p></b>
+                              
+                              <p>Placeholder text</p>
+                              <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sequi laboriosam facere aut eum pariatur odio? Vero iste beatae corrupti hic exercitationem velit, ab eligendi, voluptas incidunt laudantium ullam! Deleniti, asperiores.</p>
+
+                              <br/>  <br/>
+
+                              <div style="width: 100%; margin-top: 15px;">
+                                  <div style="float: right;">
+                                      <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form" label="Next"></lightning-button>
+                                  </div>
+                              </div>
+                              <footer></footer> 
+                      </div>
+
+                      <div class={form}>
+                          <h1>Standard Form 425</h1>
+                          <hr style="margin-top: 5px;">
+                          <template lwc:if={isSubmitted}>
+                            <p>Thank you for submitting!</p>
+                            <p>If you need to make changes you may unsubmit at any time before the deadline.</p>
+                          </template>
+                          <template lwc:else>
+                            <c-form--s-f425-english prefill={prefill} layout="lightning"></c-form--s-f425-english>
+                            <br/><br/>
+                            <p>If you are ready to submit, return to the top and select Submission</p>
+                          </template>
+                          <footer></footer>
+                      </div>
+
+                      <div class={submission}>
+                          <lightning-record-edit-form object-api-name='SF424_Form__c' record-id={recordId} onerror={handleError} onsuccess={handleSubmit}>
+                          
+                          
+
+                              <h1>Submission</h1>
+                              <hr style="margin-top: 5px;">   
+                          
+                              <template if:true={showErrors}>
+                                <p>  Note: There are errors with your submission, please verify all status icons are complete and there are no errors on previous tab.</p>
+                              </template>
+
+                              <template lwc:if={isSubmitted}>
+                                <p>Thank you for submitting!</p>
+                                <p>If you need to make changes you may unsubmit at any time before the deadline.</p>
+                            </template>
+                          
+                              <template if:false={disableEdits}>
+                                  <div class="slds-box">
+                                      <h2>Certification</h2>
+                                        
+                                        <!-- <p>By signing this report, I certify that it is true, complete, and accurate to the best of my knowledge. I am aware that any false, fictitious, or fraudulent information may subject me to criminal, civil or administrative penalties. (U.S. Code, Title 18, section 1001) -->
+                                        <p>
+                                            By submitting this report, I certify that the statements herein are true, complete, and accurate to the best of my knowledge. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001).
+                                        </p>
+                                        <br/>
+                                        <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                                        <label>By checking this box, I affirm that I am the sponsoring organization's Authorizing Official and all information provided is complete and accurate.
+                                        </label>
+                                        <br/><br/>
+                                        <h3>Name and Title of Authorizing Certifying Official</h3>
+                                        <p>First Name: {contactData.FirstName}</p>
+                                        <p>Middle Name:{contactData.MiddleName}</p> 
+                                        <p>Last Name: {contactData.LastName} </p>
+                                        <p>Title: {contactData.Title}</p>
+                                        <p>Telephone: {contactData.Phone}</p>
+                                        <p>Email Address: {contactData.Email}</p>
+                      
+                                  </div>
+                              </template>
+                              <!-- <template lwc:if={isAwaitingSignature}>
+                                  <p>Note: submission is not complete until all parties sign and certify. If you need to make any changes you may unsubmit at any time before the submission deadline.</p>
+                              </template> -->
+          
+                              <br>
+                              <div style="float: left;">
+                                  <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form" label="Back"></lightning-button>
+                              </div>
+
+                              <template if:false={disableEdits}>
+                                    <div style="float: right; margin-right: 0">
+                                        <lightning-button type="button" variant="brand" disabled={disableEdits} label="Submit Form" onclick={handleSubmit}></lightning-button>
+                                    </div>  
+                              </template>
+                            </lightning-record-edit-form>
+
+
+                          <!-- </lightning-record-edit-form> -->
+
+                          <footer></footer>
+                      </div>
+                  </div>
+                  <div class="slds-col slds-size_1-of-1 slds-small-size_3-of-12">
+                    <c-form-infobox accordion-errors={submissionErrors} status={status} status-field-name='Status__c' ongettabname={handleErrorClick} object-name='SF425_Form__c' fields={recordFields} record-id={recordId} show-unsubmit="true" deadline-passed={deadlinePassed} style="min-width: 245px; max-width: 215px; margin-top:5rem; display:block"></c-form-infobox> 
+                    <!-- <lightning-button variant="base" label="Return to LITC Portal" onclick={navigateFooter} class="slds-m-left_x-small"></lightning-button> -->
+  
+                </div>
+              </div>
+          </div>
+
+      </div>  
+    </template>
+
+    <template lwc:if={isNotAuthorizedOfficial}>
+        <br/>
+        You do not have the necessary role to view this page.
+    </template>
+</template>
+</template>

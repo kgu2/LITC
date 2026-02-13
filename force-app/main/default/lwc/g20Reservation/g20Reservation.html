@@ -1,0 +1,119 @@
+<template>
+    <p>Placeholder text.</p>
+    <div class="slds-box">
+        <h2>My reservations</h2>
+        <template lwc:if={showTable}>
+            <br/>
+        <lightning-datatable
+            data={meetings}
+            columns={columns}
+            key-field="Id"
+            hide-checkbox-column	
+        ></lightning-datatable>
+        </template>
+    </div>
+
+    <br/>
+    <h3>Filters</h3>
+    <label>Select Day:</label>
+    <lightning-button-group>
+        <template for:each={dayOptions} for:item="day">
+            <lightning-button label={day.eventDate} key={day.eventDate} value={day.eventDate} onclick={toggleDayFilter} variant={day.buttonVariant}></lightning-button>
+        </template>
+    </lightning-button-group>
+    <br/>
+    <label>Select Room:</label>
+    <lightning-button-group>
+        <template for:each={roomOptions} for:item="room">
+            <lightning-button label={room.name} key={room.name} value={room.name} onclick={toggleRoomFilter} variant={room.buttonVariant}></lightning-button>
+        </template>
+    </lightning-button-group>
+    <lightning-input type="number" onchange={filterCapacity}></lightning-input>
+        <template for:each={roomAvailData} for:item="day">
+            <hr key={day.eventDate}>
+            <h3 key={day.eventDate}>{day.eventDate}</h3>
+                <div key={day.eventDate} class="slds-grid slds-wrap">
+
+                <div class="columnHeader">
+                <div class="slds-col slds-size_1-of-1">
+                    <div class="slds-grid slds-wrap">
+                        <div class={day.classSizing}>
+
+                        </div>
+                        <template for:each={day.roomNames} for:item="roomName">
+                            <div class={day.classSizing} key={roomName.name} style="text-align:center;">{roomName.name} <br/>capacity: {roomName.capacity}</div>
+                        </template>
+                    </div>
+                </div>
+            </div>
+                <template for:each={day.timeSlotList} for:item="timeSlot">
+                    <div class="slds-col slds-size_1-of-1" key={timeSlot.time}>
+                        <div class="slds-grid slds-wrap">
+                            <div class={day.classSizing} style="border-top: 1px solid black; border-collapse: collapse; padding:.25em;">
+
+                            <strong><lightning-formatted-date-time value={timeSlot.time} hour="2-digit" minute="2-digit"></lightning-formatted-date-time></strong>
+
+                            </div>
+                        <template for:each={timeSlot.timeBlocks} for:item="timeBlock">
+                            
+                            <template lwc:if={timeBlock.available}>
+                                <div key={timeBlock.blockId} class={day.classSizing} style="border-top: 1px solid black; border-collapse: collapse; border-left:1px dashed black; height:max-content" onclick={clickBox} data-value={timeBlock.blockId}>
+                                <div class={timeBlock.class} style="padding:.25em;">
+
+                                    <p>&nbsp;</p>
+                                    <p class="blockInfo">{timeBlock.roomName}<br/>Capacity: {timeBlock.capacity}<br/></p>
+                            </div>
+                                </div>
+                            </template>
+                            <template lwc:else>
+                                <div key={timeBlock.blockId} class={day.classSizing} style="border-top: 1px solid black; border-collapse: collapse; border-left:1px dashed black; padding:.25em; background-color:lightgray">
+
+                                    <p key={timeBlock.blockId}>(Unavailable)</p>
+                                </div>
+                            </template>
+                        </template>
+                    </div>
+                    </div>
+
+                </template>
+
+            </div>
+            <template lwc:if={day.showSelected}>
+                <!-- <template for:each={day.selectedRows} for:item="selectedRow">
+                    <p key={selectedRow.blockId}>{selectedRow.roomName}</p>
+
+                </template> -->
+                <div class="slds-box" key={day.eventDate}>
+                    <lightning-record-edit-form object-api-name="G20_Meeting__c" onerror={handleError} onsuccess={handleSuccess}>
+                        <lightning-input-field field-name="Name" required></lightning-input-field>
+                        <lightning-input-field field-name="Number_of_Attendees__c" required></lightning-input-field>
+                        <lightning-input-field field-name="Start_Date_Time__c" required value={day.selectedStart}></lightning-input-field>
+                        <lightning-input-field field-name="End_Date_Time__c" required value={day.selectedEnd}></lightning-input-field>
+                        <lightning-input-field field-name="Meeting_Contact__c" required value={contactId} style="display:none;"></lightning-input-field>
+                        <lightning-input-field field-name="Status__c" required value="Submitted" style="display:none;"></lightning-input-field>
+                        <lightning-input-field field-name="Event_Location__c" required value={day.selectedRoom} disabled></lightning-input-field>
+
+                        <!-- <label>Start Time:</label><lightning-formatted-date-time month="long" weekday="long" year="numeric" day="numeric" value={day.selectedStartDisplay} hour="numeric" minute="2-digit"></lightning-formatted-date-time>
+                        <br/>
+                        <label>End Time:</label><lightning-formatted-date-time month="long" weekday="long" year="numeric" day="numeric" value={day.selectedEndDisplay} hour="numeric" minute="2-digit"></lightning-formatted-date-time>
+                        <br/> -->
+                        <!-- <p>{day.selectedRoom}</p> -->
+                        <br/>
+                        <lightning-button key={day.eventDate} label="Create Meeting" type="submit" disabled={day.error}></lightning-button>
+                        <template lwc:if={day.error}><p  key={day.eventDate}>{day.error}</p></template>
+
+                    </lightning-record-edit-form>
+                </div>
+
+
+            </template>
+
+            <br key={day.eventDate}/>
+        </template>
+        <template lwc:if={showCreate}>
+
+        </template>
+        <template lwc:else>
+            <p><em>Select times above to request a meeting reservation.</em></p>
+        </template>
+</template>

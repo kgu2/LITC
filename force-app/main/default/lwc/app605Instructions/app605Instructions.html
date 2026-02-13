@@ -1,0 +1,129 @@
+<template>
+    <p style="font-size:24pt; font-weight: 300;">
+        Welcome to the Treasury Submission Portal for the Local Assistance and Tribal Consistency Fund (LATCF)
+    </p>
+    <br/>
+    <h1 style="font-size:24pt">Instructions</h1>
+
+    <template if:true={secondTranche}>
+        <p style="margin-top:20px;">
+            On the Payment Information tab, you will be prompted to import your recipient information from the LATCF first tranche submission. The designated submitter should review and update this information as applicable, to include:
+        </p>
+        <br/>
+        <p> Recipient Information – Including Name, Entity Taxpayer Identification Number (EIN) and Unique Entity Identifier (UEI)</p>
+        <br/>
+        <p>Authorized Representative Name & Contact Information</p>
+        <ul class="ulOne" style="margin-left: 2rem;">
+            <li><i>The Authorized Representative is the individual with legal authority to bind the Recipient or the Chief Executive Officer of the Recipient. </i></li>
+        </ul>
+        
+        <p>Contact Person Name & Contact Information</p>
+        <ul class="ulOne" style="margin-left: 2rem;">
+            <li><i>The contact person will receive emails confirming your submission has been received, alerts of any issues with the submission that need resolution, notification of submission approval, and any other action required on behalf of your entity.</i></li>
+        </ul>
+
+        <p>Financial Institution Information – Including Routing and Account Number</p>
+        <ul class="ulOne" style="margin-left: 2rem;">
+            <li><i>All entities must submit an ACH routing transit number.</i></li>
+            <li><i>Entities with a Wire routing transit number are asked to submit that information in addition to the ACH routing transit number.</i></li>
+        </ul> 
+
+        <p>When the information is updated and complete, proceed to the Affirmation tab. When the submitter affirms the information is complete and accurate, the designated contact person will receive an email notification that the submission has been received, and Treasury will begin the submission review process.  </p>
+
+        <br/>
+
+        <p>Please note, the allocation amounts displayed on this page include the Second Tranche Allocation Amount and the Total Allocation Amount (first and second tranche allocations combined) to the recipient for which you are preparing a submission.  </p>
+       
+
+
+        <br/>
+    </template>
+
+    <template if:false={secondTranche}>
+        <p style="margin-top:20px;">
+            On the Payment Information tab, you will be prompted to complete information about the entity for which you are submitting information, including:
+        </p>
+        <br/>
+        <p> Recipient Information – Including Name, Entity Taxpayer Identification Number (EIN) and Unique Entity Identifier (UEI)</p>
+        <br/>
+        <p>Authorized Representative Name & Contact Information</p>
+        <ul class="ulOne" style="margin-left: 2rem;">
+            <li><i>The Authorized Representative is the individual with legal authority to bind the Recipient or the Chief Executive Officer of the Recipient. The Authorized Representative will also complete an agreement on behalf of the Recipient. </i></li>
+        </ul>
+        
+        <p>Contact Person Name & Contact Information</p>
+        <ul class="ulOne" style="margin-left: 2rem;">
+            <li><i>The contact person will receive emails confirming your submission has been received, alerts of any issues with the submission that need resolution, notification of submission approval, and any other action required on behalf of your entity.</i></li>
+        </ul>
+
+        <p>Financial Institution Information – Including Routing and Account Number</p>
+        <ul class="ulOne" style="margin-left: 2rem;">
+            <li><i>All entities must submit an ACH routing transit number.</i></li>
+            <li><i>Entities with a Wire routing transit number are asked to submit that information in addition to the ACH routing transit number.</i></li>
+        </ul> 
+
+        <template if:true={county}>
+            <p>
+                When the information is updated and complete, proceed to the Certification tab to have these forms emailed to your Authorized Representative for signature.
+            </p>
+        </template>
+        <template if:true={tribal}>
+            <p>
+                When the information is updated and complete, proceed to the Certification and Agreement tab to have these forms emailed to your Authorized Representative for signature.
+            </p>
+        </template>
+
+
+        <ul class="ulOne" style="margin-left: 2rem;">
+            <li>The designated Authorized Representative must sign the forms.</li>
+            <template if:true={county}>
+                <li>The certification will be emailed directly to the Authorized Representative with instructions to electronically sign and submit the document with DocuSign.</li>
+            </template>
+            <template if:true={tribal}>
+                <li>The certification and agreement will be emailed directly to the Authorized Representative with instructions to electronically sign and submit the document with DocuSign.</li>
+            </template>
+        </ul>
+
+        <template if:true={county}>
+            <p style="margin-top:20px;">
+                When the Authorized Representative signs the certification, the designated contact person will receive an email notification that the submission has been received and Treasury will begin the submission review process.
+            </p>
+        </template>
+        <template if:true={tribal}>
+            <p style="margin-top:20px;">
+                When the Authorized Representative signs the certification and agreement, the designated contact person will receive an email notification that the submission has been received and Treasury will begin the submission review process.
+            </p>
+        </template>
+
+        <template if:true={tribal}>
+            <p style="margin-top:20px;">
+                <strong>Please note: <em><u>if using Docusign,</u></em> both the certification regarding economic conditions and the award terms and conditions agreement will receive the same digital signature provided with your submission. <em><u>If not using Docusign</u></em>, recipients should confirm that they have provided signatures on both the certification regarding economic conditions and the award terms and conditions agreement separately. </strong>
+            </p>
+        </template>
+        <br/>  
+        <p>Please note, the allocation amounts displayed on this page include the FY22 Allocation Amount and the Total Allocation Amount (FY22 and FY23 allocation) to the recipient for which you are preparing a submission. The total FY22 and FY23 amount will be displayed on the award terms and conditions agreement that the Authorized Representative must sign. For Tribal governments, the first payment is available immediately and will be made to recipients on a rolling basis, and Treasury expects to make the second payment in fiscal year 2023.</p>
+        <br/>
+    </template>
+
+
+    <h1 style="font-size:24pt">Questions?</h1>
+    <p style="margin-top:20px;">
+        If you have questions about the Treasury Submission Portal or for technical support, please visit <a href="https://treasury.gov/LATCF" target="_blank">treasury.gov/LATCF</a>, email <a href="mailto:covidreliefitsupport@treasury.gov" target="_blank">covidreliefitsupport@treasury.gov</a>. If you have general questions about the Local Assistance and Tribal Consistency Fund please email <a href="mailto:LATCF@treasury.gov" target="_blank">LATCF@treasury.gov</a>.
+    </p>
+
+    <p style="margin-top:20px;">
+        U.S. Department of the Treasury
+    </p>
+
+    <p style="margin-top:20px;">
+        <a href="mailto:LATCF@treasury.gov" target="_blank">LATCF@treasury.gov</a>
+    </p>
+
+    <br/><br/>
+
+    <div style="float: right;">
+        <lightning-button type="button" label="Next: Payment Information" onclick={handleNav} name="form"></lightning-button>
+    </div>
+    <br/><br/><br/><br/>
+
+</template>

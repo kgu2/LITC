@@ -1,0 +1,65 @@
+<template>
+
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <h1>Reports</h1>
+    <hr>
+
+    <div class="slds-box">
+        <h2>Form 13424-R</h2>
+        <template if:true={showReportsR}>
+            <lightning-datatable
+                show-row-number-column
+                hide-checkbox-column
+                key-field="Id"
+                data={reportsR}
+                onrowaction={handleRowAction}
+                columns={columns}
+            >
+            </lightning-datatable>
+        </template>
+        <template if:false={showReportsR}>
+            You have no records available
+        </template>
+    </div>
+
+    <br/>
+    <div class="slds-box">
+        <h2>Form 13424-L</h2>
+        <template if:true={showReportsL}>
+            <lightning-datatable
+                show-row-number-column
+                hide-checkbox-column
+                key-field="Id"
+                data={reportsL}
+                onrowaction={handleRowAction}
+                columns={columns}
+            >
+            </lightning-datatable>
+        </template>
+        <template if:false={showReportsL}>
+            You have no records available
+        </template>
+    </div>
+
+    <br/>
+    <div class="slds-box">
+        <h2>SF-425</h2>
+        <template if:true={showReportsSF425}>
+            <lightning-datatable
+                show-row-number-column
+                hide-checkbox-column
+                key-field="Id"
+                data={reports425}
+                onrowaction={handleRowAction425}
+                columns={columns}
+            >
+            </lightning-datatable>
+        </template>
+        <template if:false={showReportsSF425}>
+            You have no records available
+        </template>
+    </div>
+</template>

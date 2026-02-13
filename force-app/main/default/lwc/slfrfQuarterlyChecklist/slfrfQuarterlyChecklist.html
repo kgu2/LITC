@@ -1,0 +1,52 @@
+<html lang="en">
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Loading...." size="large"></lightning-spinner>
+      </template>
+      
+    <div class="slds-box">
+        <h2 class="formHeader">SLFRF compliance reports</h2>
+
+        <template lwc:if={draftReportsSize}>
+            <lightning-accordion allow-multiple-sections-open=true active-section-name={activeSections} onclick={toggleAccordian}>
+                <lightning-accordion-section name="reports" label={label}>
+                    <template for:each={draftReports} for:item="report">
+                        <div key={report.Id} style="margin-left: 15px;">
+                            <a onclick={goToReport} data-id={report.Id} tabindex="0">{report.Name}</a>
+                            <br/>
+                        </div>
+                    </template>
+                </lightning-accordion-section> 
+            </lightning-accordion>
+            <br/>
+        </template>
+
+        <template if:true={showSLFRFTable}>
+            <c-paginator 
+                records={SLFRFComplianceReports} 
+                total-records={SLFRFComplianceReports.length}  
+                show-search-box="true" 
+                page-size-options={pageSizeOptions}
+                onpaginatorchange={handlePaginatorChangeSLFRF}>
+                </c-paginator>
+
+                <br/>
+
+                <lightning-datatable
+                show-row-number-column
+                hide-checkbox-column
+                key-field="Id"
+                data={SLFRFrecordsToDisplay}
+                onrowaction={handleRowAction}
+                columns={columnsSLFRF}
+                sorted-by={sortBy}
+                sorted-direction={sortDirection}
+                onsort={doSortingSLFRF}>
+                </lightning-datatable>
+        </template>
+        <template if:false={showSLFRFTable}>
+            You have no SLFRF compliance reports.
+        </template>
+    </div>
+</template>
+</html>

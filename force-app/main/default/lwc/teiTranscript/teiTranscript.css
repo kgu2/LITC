@@ -1,0 +1,190 @@
+/* ===== Theme tokens (light TEI look) ===== */
+:host{
+  --bg: #f5f5f5;         /* keep site-wide dark radial bg */
+  --panel: #F5F5F5;      /* light panel surface */
+  --panel-2: #F5F5F5;
+  --text: #111;          /* primary text */
+  --muted: #55607a;      /* secondary text */
+  --accent: #4d86ff;     /* brand blue */
+  --accent-2: #8e7bff;
+  --radius: 14px;
+  --shadow: 0 10px 25px rgba(0,0,0,.16);
+  display:block;
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+}
+
+/* ===== Page container & panel ===== */
+.container{
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 10px 20px 96px;
+  min-height: 100vh;
+}
+.section.transcript{
+  background: var(--panel);
+  border: 1px solid var(--panel);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px 18px 22px;
+}
+
+/* ===== Header / Topbar ===== */
+.topbar{
+  display:flex; align-items:center; justify-content:space-between; gap: 12px; flex-wrap: wrap;
+}
+.page-title{
+  font-weight: 800; letter-spacing:.2px;
+  font-size: clamp(22px, 2.3vw, 28px);
+  color: var(--text);   /* solid title to match home page */
+}
+hr.divider{
+  height:1px; border:0;
+  background: linear-gradient(90deg, transparent, #cfcfcf, transparent);
+  margin: 12px 0 16px;
+}
+
+/* ===== Kebab dropdown ===== */
+.dropdown-container{ position:relative; }
+.menu-options{
+  position:absolute; top:36px; right:0; z-index:10;
+  background: #fff; color: var(--text);
+  border: 1px solid #e5e7f2; border-radius: 12px;
+  box-shadow: 0 12px 26px rgba(0,0,0,.12);
+  min-width: 210px; padding: 6px 0;
+}
+.menu-item{
+  padding: 10px 14px; cursor: pointer; font-size: 14px;
+}
+.menu-item:hover{ background: #f2f5ff; }
+
+/* ===== Info callout ===== */
+.info{
+  background: #eef3ff;
+  border: 1px solid #d9e2ff; border-radius: 12px;
+  padding: 12px 14px; margin: 4px 0 16px; color: var(--text);
+}
+.info-title{ margin: 0 0 6px; }
+.info-text{ color: var(--muted); }
+
+/* ===== Metrics ===== */
+.metrics{
+  display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; margin: 6px 0 18px;
+}
+.metric{
+  display:flex; align-items:center; gap: 10px;
+  padding: 12px 14px; border-radius: 12px;
+  background: #fff; border: 1px solid #e5e7f2; color: var(--text);
+}
+.metric-icon lightning-icon{ --sds-c-icon-color-foreground-default: var(--accent); }
+.metric-value{ font-weight: 800; font-size: 16px; }
+.metric-label{ color: var(--muted); font-size: 12px; }
+
+/* ===== Filters ===== */
+.filters{
+  display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; margin: 0 0 16px;
+}
+.filter-group label{
+  display:block; font-weight: 800; font-size: 12px; color: var(--muted); margin-bottom: 6px;
+}
+.filter-group select,
+.filter-group input[type="search"]{
+  width: 100%; height: 42px;
+  padding: 0 12px 0 12px; color: var(--text);
+  background: #fff;
+  border: 1px solid #d9e0f2; border-radius: 12px; outline: none;
+}
+.filter-group input[type="search"]{
+  padding-left: 42px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%2355607a' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.415l-3.85-3.85zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: 12px 50%;
+}
+
+/* ===== Training cards ===== */
+.card.training-card{
+  display:flex; align-items:flex-start; gap: 14px;
+  padding: 14px; border-radius: 12px; cursor: pointer;
+  background: #fff; border: 1px solid #e5e7f2;
+  position: relative;
+  margin-bottom: 12px; color: var(--text);
+}
+.card.training-card:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 16px 30px rgba(0,0,0,.12);
+  border-color: #d6dbf1;
+}
+.icon{ font-size: 18px; line-height: 1; margin-top: 4px; color: var(--accent); }
+.training-info{ flex:1; min-width:0; }
+.title{ font-weight: 800; font-size: 15px; margin: 2px 0 6px; color: var(--text); }
+.details{ color: var(--muted); font-size: 12px; }
+
+/* Split button */
+.split-actions{ display:flex; align-items:stretch; gap: 6px; position: relative; }
+.btn{
+  height: 36px; padding: 0 14px; border-radius: 10px; border:none; cursor:pointer;
+  color: #fff; font-weight: 800; letter-spacing:.2px;
+  background: #3851b8;
+  box-shadow: 0 6px 18px rgba(106,167,255,.28);
+}
+.btn:hover{ transform: translateY(-1px); box-shadow: 0 10px 22px rgba(106,167,255,.34); }
+.btn-secondary{
+  height: 36px; padding: 0 10px; border-radius: 10px; cursor:pointer;
+  color: var(--accent);
+  background: #fff; border: 1px solid #d9e0f2;
+}
+.dropdown-toggle{ width: 40px; }
+
+/* Per-card dropdown */
+.dropdown-menu{
+  position:absolute; top: 42px; right: 0; z-index: 10;
+  background: #fff; color: var(--text);
+  border: 1px solid #e5e7f2; border-radius: 12px;
+  box-shadow: 0 12px 26px rgba(0,0,0,.12);
+  width: 240px; overflow: hidden;
+}
+.dropdown-menu ul{ list-style:none; margin:0; padding:6px 0; }
+.dropdown-menu li{
+  padding: 10px 14px; cursor: pointer; font-size: 14px;
+}
+.dropdown-menu li:hover{ background: #f2f5ff; }
+
+/* Pagination (if used) */
+.pagination{
+  display:flex; justify-content:center; align-items:center; gap: 12px; margin-top: 16px;
+}
+.pagination button{
+  background: #fff;
+  border: 1px solid #d9e0f2; border-radius: 10px; color: var(--text);
+  padding: 8px 14px; cursor:pointer;
+}
+.pagination button[disabled]{ opacity:.55; cursor:not-allowed; }
+.card.training-card:hover{
+  transform: none !important;
+  box-shadow: none !important;
+  border-color: #e5e7f2 !important; /* same as default */
+}
+
+/* Primary button: keep same shadow and no lift on hover */
+.btn:hover{
+  transform: none !important;
+  box-shadow: 0 6px 18px rgba(106,167,255,.28) !important; /* same as default */
+}
+
+/* Secondary button: already flat; ensure no hover lift is introduced elsewhere */
+.btn-secondary:hover{
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Optional: disable any transitions so hover feels perfectly static */
+.card.training-card,
+.btn,
+.btn-secondary{
+  transition: none !important;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 720px){
+  .metrics{ grid-template-columns: 1fr; }
+  .filters{ grid-template-columns: 1fr; }
+}

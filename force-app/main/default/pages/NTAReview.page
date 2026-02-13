@@ -1,0 +1,619 @@
+<apex:page standardController="NTA_Review__c" extensions="NTA_Review_PDF_Controller" renderAs="pdf" name="{!NTA_Review__c.Name + 'pdf'}" showHeader="false" sidebar="false" applyHtmlTag="false" applyBodyTag="false" docType="html-5.0">
+    <head>
+        <style type="text/css">
+
+            * {
+                font-family: sans-serif;
+                font-size: 10px;
+                margin: 0;
+                padding: 0;
+                border: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 1px;
+                box-sizing: border-box; 
+            }
+
+            @page {
+                size: A4 landscape;
+    
+                /* size: 50.0cm 29.7cm; */
+                margin: 0;
+            }
+
+            table {
+                border-collapse: collapse;
+                /* border: 1px solid black; */
+                border-spacing: 0;
+                margin: 0;
+                width: 100%;
+            }
+
+            td, th {
+                border: 0.5px solid black;
+                border-collapse: collapse;
+                padding: 5px;
+                margin: 0;
+                max-height: 18px;
+                /* use min height or max height to set static heights / widths */
+            }
+            .compactTable tr, .compactTable td {
+                padding: 2.49px;
+                /* modify */
+            }
+
+            th{
+                background-color: #e4f9fb;
+                font-weight: bold;
+                text-align: center;
+            }
+            .header{ 
+                background-color: #e4f9fb;
+                font-weight: bold;
+                text-align: center;
+            }
+            .container {
+                width: 100%;
+                overflow: hidden;
+                margin: 0;
+                padding: 0;
+            }
+
+        </style>
+    </head>
+    <body>
+        <div style="float: left; width: 45.6%; margin-left: 1px">
+            <div style="width: 100%;">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th colspan="4">SPONSORING ORGANIZATION INFORMATION</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="background-color: #F2F2F2; width: 20%;">Name</td>
+                            <td colspan="3" style="font-weight: bold; width: 80%;">{!NTA_Review__c.Application_for_Federal_Assistance__r.Legal_Name__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: #F2F2F2; width: 15%;">State</td>
+                            <td style="font-weight: bold; width: 25%;">{!NTA_Review__c.Application_for_Federal_Assistance__r.State__c}</td>
+                            <td style="background-color: #F2F2F2; width: 15%;">City</td>
+                            <td style="font-weight: bold; width: 45%;">{!NTA_Review__c.Application_for_Federal_Assistance__r.City__c}</td>
+                        </tr>
+                    </tbody>               
+                </table>
+            </div>
+    
+            <div style="width: 100%;">
+                <table border="1">
+                    <thead>
+                        <tr>
+                            <th colspan="6">
+                                APPLICANT INFORMATION
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="background-color: #F2F2F2; width: 15%; max-height: 20px; min-height: 20px;">Clinic Type</td>
+                            <td style="font-weight: bold;" colspan="5">{!NTA_Review__c.Application_for_Federal_Assistance__r.Type_of_Applicant_1__c}</td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: #F2F2F2; width: 15%;">App Type</td>
+                            <td style="font-weight: bold; width: 15%;">{!NTA_Review__c.Application_for_Federal_Assistance__r.Type_of_Application__c}</td>
+
+                            <td style="background-color: #F2F2F2; width: 20%;">Clinic Services and Delivery Model</td>
+                            <td style="font-weight: bold; width: 20%;">{!IF(CONTAINS(NTA_Review__c.Version__c,'New'),NTA_Review__c.Application_for_Federal_Assistance__r.Clinic_Services_and_Delivery_Model__c,NTA_Review__c.Clinic_Model_Legacy__c)}</td>
+
+                            <td style="background-color: #F2F2F2; width: 20%;">First Year Funded</td>
+                            <td style="font-weight: bold; width: 20%;">{!intakeReview.First_Year_Funded__c}</td>
+                        </tr>
+                        <tr style="max-height: 10px;">
+                            <td style="background-color: #F2F2F2; width: 25%;" colspan="2">Charging Fees Y/N</td>
+                            <td style="font-weight: bold; width: 25%;">{!NTA_Review__c.Application_for_Federal_Assistance__r.Nominal_Fee__c}</td>
+                            <td style="background-color: #F2F2F2; width: 25%;">Current Year Funded Amount</td>
+                            <td style="font-weight: bold; width: 25%;" colspan="2">
+                                <apex:outputText value="{0, Number, Currency}"><apex:param value="{!NTA_Review__c.Current_Year_Funded_Amount__c}"/></apex:outputText>
+                            </td>
+                        </tr>
+                    </tbody>                
+                </table>
+            </div>
+        </div>
+
+        <div style="width: 20%; float: left; margin: 0; padding: 0;">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th colspan="2">{!grantYear} AMOUNT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="background-color: #F2F2F2; width: 50%;">Requested Amount</td>
+                        <td style="font-weight: bold; width: 50%;">
+                            <apex:outputText value="{0, Number, Currency}"><apex:param value="{!NTA_Review__c.Application_for_Federal_Assistance__r.Total_Federal_Expenses__c}"/></apex:outputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2; width: 50%; min-height: 24px">Grant Period Requested</td>
+                        <td style="font-weight: bold; width: 50%;">
+                            <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!NTA_Review__c.Grant_Period_Requested_Start__c}"/></apex:outputText> - <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!NTA_Review__c.Grant_Period_Requested_End__c}"/></apex:outputText> 
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2; width: 50%; min-height: 38px">NTA Award Amount</td>
+                        <td style="font-weight: bold; width: 50%;">
+                            <apex:outputText value="{0, Number, Currency}"><apex:param value="{!NTA_Review__c.NTA_Award_Amount__c}"/></apex:outputText>
+                        </td>
+                    </tr>
+                    <tr style="">
+                        <td style="background-color: #F2F2F2; width: 50%; min-height: 39px">Grant Period Approved</td>
+                        <td style="font-weight: bold; width: 50%;">
+                             <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!NTA_Review__c.Grant_Period_Approved_Start__c}"/></apex:outputText> - <apex:outputText value="{0,date,MM/dd/yyyy}"><apex:param value="{!NTA_Review__c.Grant_Period_Approved_End__c}"/></apex:outputText> 
+                        </td>
+                    </tr>
+                </tbody>               
+            </table>
+        </div>
+
+        <div style="width: 34%; float: left; margin: 0; padding: 0;">
+            <table border="1">
+
+                    <thead>
+                        <tr>
+                            <th colspan="5">GOALS</th>
+                        </tr>
+                        <th></th>
+                        <th style="min-height:24px">PROPOSED {!grantYear} GOALS</th>
+                        <th>{!grantYear - 1} GOALS</th>
+                        <th>{!grantYear - 1} INTERIM</th>
+                        <th>{!grantYear - 2} ACTUAL YE</th>
+                    </thead>
+                    <tbody >
+                        <tr>
+                            <td style="background-color: #F2F2F2; width: 20%; min-height: 19px">New cases</td>
+                            <td style="font-weight: bold; width: 20%">
+                                {!IF(CONTAINS(NTA_Review__c.Version__c, 'Legacy'), legacyApp.New_representation_cases_First_Year__c ,NTA_Review__c.Application_for_Federal_Assistance__r.New_Representation_Cases__c)}
+                            </td>
+                            <td style="font-weight: bold; width: 20%">
+                                {!previousYearLegacyApp.New_representation_cases_First_Year__c}
+                            </td>
+                            <td style="font-weight: bold; width: 20%">
+                                {!IF(NOT(ISBLANK(previousInterimReport.DL_New_Cases__c)), previousInterimReport.DL_New_Cases__c, previousInterimReport.New_Cases__c)}
+                                <!-- {!IF(NOT(ISBLANK(previousInterimReport.DL_New_Cases__c)), previousInterimReport.DL_New_Cases__c, previousInterimReport.GP_New_case_goal__c)} -->
+                            </td>
+                            <td style="font-weight: bold; width: 20%">
+                                {!IF(NOT(ISBLANK(previousYEReport.DL_New_Cases__c)), previousYEReport.DL_New_Cases__c, previousYEReport.New_Cases__c)}
+                                <!-- {!IF(NOT(ISBLANK(previousYEReport.DL_New_Cases__c)), previousYEReport.DL_New_Cases__c, previousYEReport.GP_New_case_goal__c)} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: #F2F2F2; min-height: 19px">Consults</td>
+                            <td style="font-weight: bold;">{!IF(CONTAINS(NTA_Review__c.Version__c, 'Legacy'), legacyApp.Consulta_w_Low_Income_ESL_First_Year__c ,NTA_Review__c.Application_for_Federal_Assistance__r.Consultations_with_Low_Income_ESL__c)}</td>
+                            <td style="font-weight: bold;">
+                                {!previousYearLegacyApp.Consulta_w_Low_Income_ESL_First_Year__c}
+                            </td>
+                            <td style="font-weight: bold;">
+                                {!IF(NOT(ISBLANK(previousInterimReport.DL_Consults__c)), previousInterimReport.DL_Consults__c, previousInterimReport.Total_Consultations__c)}
+                                 <!-- {!IF(NOT(ISBLANK(previousInterimReport.DL_Consults__c)), previousInterimReport.DL_Consults__c, previousInterimReport.GP_Consultations_goal__c)} -->
+                            </td>
+                            <td style="font-weight: bold;">
+                                {!IF(NOT(ISBLANK(previousYEReport.DL_Consults__c)), previousYEReport.DL_Consults__c, previousYEReport.Total_Consultations__c)}
+                                 <!-- {!IF(NOT(ISBLANK(previousYEReport.DL_Consults__c)), previousYEReport.DL_Consults__c, previousYEReport.GP_Consultations_goal__c)} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: #F2F2F2; min-height: 20px">Ed. Activities</td>
+                            <td style="font-weight: bold;">{!IF(CONTAINS(NTA_Review__c.Version__c, 'Legacy'), legacyApp.Educa_Activ_to_Low_Income_First_Year__c ,NTA_Review__c.Application_for_Federal_Assistance__r.Educational_Activates_to_Low_Income__c)}</td>
+                            <td style="font-weight: bold;">
+                                {!previousYearLegacyApp.Educa_Activ_to_Low_Income_First_Year__c}
+                            </td>
+                            <td style="font-weight: bold;">
+                               {!IF(NOT(ISBLANK(previousInterimReport.DL_Educational__c)), previousInterimReport.DL_Educational__c, previousInterimReport.Total_Number_Educational_Activities__c)}
+                                 <!-- {!IF(NOT(ISBLANK(previousInterimReport.DL_Educational__c)), previousInterimReport.DL_Educational__c, previousInterimReport.GP_Education_events_goal__c)} -->
+                            </td>
+                            <td style="font-weight: bold;">
+                                {!IF(NOT(ISBLANK(previousYEReport.DL_Educational__c)), previousYEReport.DL_Educational__c, previousYEReport.Total_Number_Educational_Activities__c)}
+                                 <!-- {!IF(NOT(ISBLANK(previousYEReport.DL_Educational__c)), previousYEReport.DL_Educational__c, previousYEReport.GP_Education_events_goal__c)} -->
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="background-color: #F2F2F2; min-height: 20px">Taxpayers Ed.</td>
+                            <td style="font-weight: bold;">{!IF(CONTAINS(NTA_Review__c.Version__c, 'Legacy'), legacyApp.Low_Income_ESL_to_be_reached_First_Year__c ,NTA_Review__c.Application_for_Federal_Assistance__r.Low_Income_ESL_TP_Service_Providers__c)}</td>
+                            <td style="font-weight: bold;">
+                                {!previousYearLegacyApp.Low_Income_ESL_to_be_reached_First_Year__c}
+                            </td>
+                            <td style="font-weight: bold;">
+                                {!IF(NOT(ISBLANK(previousInterimReport.DL_Taxpayers_Ed__c)), previousInterimReport.DL_Taxpayers_Ed__c, previousInterimReport.EA_Total_Attendees__c)}
+                                 <!-- {!IF(NOT(ISBLANK(previousInterimReport.DL_Taxpayers_Ed__c)), previousInterimReport.DL_Taxpayers_Ed__c, previousInterimReport.GP_Education_attendees_goal__c)} -->
+                            </td>
+                            <td style="font-weight: bold;">
+                                {!IF(NOT(ISBLANK(previousYEReport.DL_Taxpayers_Ed__c)), previousYEReport.DL_Taxpayers_Ed__c, previousYEReport.EA_Total_Attendees__c)}
+                                 <!-- {!IF(NOT(ISBLANK(previousYEReport.DL_Taxpayers_Ed__c)), previousYEReport.DL_Taxpayers_Ed__c, previousYEReport.GP_Education_attendees_goal__c)} -->
+                            </td>
+                        </tr>
+                    </tbody>
+            </table>
+        </div>
+
+
+        <!-- XXXXXXXXXXXXXXXX -->
+
+
+        <div style="float: left; width: 70%; margin-left: 1px;">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">RANKING PANEL TECHNICAL EVALUATION</th>
+                        <td style="background-color: #F2F2F2;">Score</td>
+                        <td style="font-weight: bold;">{!level2RC.Weighted_Score__c}</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td colspan="3" style="min-height: 100px; max-height: 100px; font-size: 8.2px;">{!level2RC.Notes__c}</td>
+                    </tr>
+                </tbody>     
+            </table>
+        
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">FINANCIAL REVIEW (BA REVIEW)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="min-height: 100px; max-height: 100px; font-size: 8.2px;">{!baStaffReview.Financial_Review_Comments__c}</td>
+                    </tr>
+                </tbody>     
+            </table>
+
+            <table border="1">
+                <tr>
+                    <td style="text-align: left; background-color: #e4f9fb; font-weight: bold;">ADVOCACY REVIEW</td>
+                    <td style="background-color: #F2F2F2;">Recommended Funding</td>
+                    <td style="font-weight: bold;">
+                        <apex:outputText value="{0, Number, Currency}"><apex:param value="{!aaStaffReview.Dollar_Amount__c}"/></apex:outputText>
+                    </td>
+                    <td style="background-color: #F2F2F2; max-height: 18px; min-height: 18px;">Recommended Conditions</td>
+                    <td style="font-weight: bold;">{!aaStaffReview.Conditions_for_Funding__c}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; background-color: #e4f9fb; font-weight: bold;">PROGRAM OFFICE EVALUATION</td>
+                    <td style="background-color: #F2F2F2;">Recommended Funding</td>
+                    <td style="font-weight: bold;">
+                        <apex:outputText value="{0, Number, Currency}"><apex:param value="{!pdStaffReview.Dollar_Amount__c}"/></apex:outputText>
+                    </td>
+                    <td style="background-color: #F2F2F2; max-height: 18px; min-height: 18px;">Recommended Conditions</td>
+                    <td style="font-weight: bold;">{!pdStaffReview.Conditions_for_Funding__c}</td>
+                </tr>
+                <tr>
+                    <td style="min-height: 165px; max-height: 165px; font-size: 8.2px;" colspan="5">{!pdStaffReview.Program_Review_Summary__c}</td>
+                </tr>
+
+            </table>
+
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">NTA</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="min-height: 84px; max-height: 84px; font-size: 8.2px;">{!NTA_Review__c.NTA_Comments__c}</td>
+                        
+                    </tr>
+                </tbody>     
+            </table>
+        </div>
+        
+        <div style="float: left; width: 29.6%;">
+            <table border="1" class="compactTable">
+                <tbody>
+                    <tr>
+                        <th style="background-color: #F2F2F2; width:36%;"></th>
+                        <th class="header" style="width:32%;">{!grantYear - 1} INTERIM</th>
+                        <th class="header" style="width:32%">{!grantYear - 2} YE</th>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="header">PROGRESS REPORT DATA</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Beginning Inventory</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Starting_Inventory__c} -->
+                            {!IF(NOT(ISBLANK(previousInterimReport.DL_Beginning_Inventory__c)), previousInterimReport.DL_Beginning_Inventory__c, previousInterimReport.Starting_Inventory__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Starting_Inventory__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Beginning_Inventory__c)), previousYEReport.DL_Beginning_Inventory__c, previousYEReport.Starting_Inventory__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Total Inventory</td>
+                        <!-- beginning inventoery + new cases -->
+                        <td style="font-weight: bold;">
+                            {!IF(NOT(ISBLANK(previousInterimReport.DL_Beginning_Inventory__c)), 
+                                previousInterimReport.DL_Beginning_Inventory__c + previousInterimReport.DL_New_Cases__c, 
+                                previousInterimReport.Starting_Inventory__c + previousInterimReport.New_Cases__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            {!IF(NOT(ISBLANK(previousYEReport.DL_Beginning_Inventory__c)), 
+                                previousYEReport.DL_Beginning_Inventory__c + previousYEReport.DL_New_Cases__c, 
+                                previousYEReport.Starting_Inventory__c + previousYEReport.New_Cases__c)}
+                            
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Ending Inventory</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Closing_Case_Inventory__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Ending_Inventory__c)), previousInterimReport.DL_Ending_Inventory__c, previousInterimReport.Closing_Case_Inventory__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Closing_Case_Inventory__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Ending_Inventory__c)), previousYEReport.DL_Ending_Inventory__c, previousYEReport.Closing_Case_Inventory__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="header">GENERAL INFORMATION</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Outreach Activities</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Total_Number_Outreach_Activities__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Outreach_Activities__c)), previousInterimReport.DL_Outreach_Activities__c, previousInterimReport.Total_Number_Outreach_Activities__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Total_Number_Outreach_Activities__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Outreach_Activities__c)), previousYEReport.DL_Outreach_Activities__c, previousYEReport.Total_Number_Outreach_Activities__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Tax Returns Controversy</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Controversy_tax_returns__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Tax_Returns_Controversy__c)), previousInterimReport.DL_Tax_Returns_Controversy__c, previousInterimReport.Controversy_tax_returns__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Controversy_tax_returns__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Tax_Returns_Controversy__c)), previousYEReport.DL_Tax_Returns_Controversy__c, previousYEReport.Controversy_tax_returns__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Tax Returns ESL</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Ancillary_tax_returns__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Tax_Returns_ESL__c)), previousInterimReport.DL_Tax_Returns_ESL__c, previousInterimReport.Ancillary_tax_returns__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Ancillary_tax_returns__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Tax_Returns_ESL__c)), previousYEReport.DL_Tax_Returns_ESL__c, previousYEReport.Ancillary_tax_returns__c)}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="header">WHERE WORKED</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Account Management</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Account_Management_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Account_Management__c)), previousInterimReport.DL_Account_Management__c, previousInterimReport.Account_Management_Rollup__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Account_Management_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Account_Management__c)), previousYEReport.DL_Account_Management__c, previousYEReport.Account_Management_Rollup__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Exam</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Exam_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Exam__c)), previousInterimReport.DL_Exam__c, previousInterimReport.Exam_Rollup__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Exam_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Exam__c)), previousYEReport.DL_Exam__c, previousYEReport.Exam_Rollup__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Collection</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Collection_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Collection__c)), previousInterimReport.DL_Collection__c, previousInterimReport.Collection_Rollup__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Collection_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Collection__c)), previousYEReport.DL_Collection__c, previousYEReport.Collection_Rollup__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Appeals</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Appeal_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Appeal__c)), previousInterimReport.DL_Appeal__c, previousInterimReport.Appeal_Rollup__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Appeal_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Appeal__c)), previousYEReport.DL_Appeal__c, previousYEReport.Appeal_Rollup__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Litigation</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Litigation_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Litigation__c)), previousInterimReport.DL_Litigation__c, previousInterimReport.Litigation_Rollup__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Litigation_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Litigation__c)), previousYEReport.DL_Litigation__c, previousYEReport.Litigation_Rollup__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Miscellaneous</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Miscellaneous_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Miscellaneous__c)), previousInterimReport.DL_Miscellaneous__c, previousInterimReport.Miscellaneous_Rollup__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Miscellaneous_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Miscellaneous__c)), previousYEReport.DL_Miscellaneous__c, previousYEReport.Miscellaneous_Rollup__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">TAS Referrals</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Total_Number_TAS_Cases__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_TAS_Referrals__c)), previousInterimReport.DL_TAS_Referrals__c, previousInterimReport.Total_Number_TAS_Cases__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Total_Number_TAS_Cases__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_TAS_Referrals__c)), previousYEReport.DL_TAS_Referrals__c, previousYEReport.Total_Number_TAS_Cases__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" class="header">US TAX COURT</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Clinical Program</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Clinical_Program_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Clinical_Program__c)), previousInterimReport.DL_Clinical_Program__c, previousInterimReport.Clinical_Program_Rollup__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Clinical_Program_Rollup__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Clinical_Program__c)), previousYEReport.DL_Clinical_Program__c, previousYEReport.Clinical_Program_Rollup__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Appearance</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.U_S_Tax_Court_Entry_of_Appearance__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Appearance__c)), previousInterimReport.DL_Appearance__c, previousInterimReport.U_S_Tax_Court_Entry_of_Appearance__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.U_S_Tax_Court_Entry_of_Appearance__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Appearance__c)), previousYEReport.DL_Appearance__c, previousYEReport.U_S_Tax_Court_Entry_of_Appearance__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">No Appearance</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.U_S_Tax_Court_Power_of_Attorney__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_No_Appearance__c)), previousInterimReport.DL_No_Appearance__c, previousInterimReport.U_S_Tax_Court_Power_of_Attorney__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.U_S_Tax_Court_Power_of_Attorney__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_No_Appearance__c)), previousYEReport.DL_No_Appearance__c, previousYEReport.U_S_Tax_Court_Power_of_Attorney__c)}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;">Consultation</td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousInterimReport.Total_Consultations__c} -->
+                             {!IF(NOT(ISBLANK(previousInterimReport.DL_Consultation__c)), previousInterimReport.DL_Consultation__c, previousInterimReport.USTC_Consultations__c)}
+                        </td>
+                        <td style="font-weight: bold;">
+                            <!-- {!previousYEReport.Total_Consultations__c} -->
+                             {!IF(NOT(ISBLANK(previousYEReport.DL_Consultation__c)), previousYEReport.DL_Consultation__c, previousYEReport.USTC_Consultations__c)}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3" class="header">ISSUES</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">OIC</td>
+                        <td style="font-weight: bold;">
+                            {!previousYEReport.Offer_In_Compromise_OIC__c}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">CNC</td>
+                        <td style="font-weight: bold;">
+                            {!previousYEReport.Currently_Not_Collectible_CNC__c}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">Levies</td>
+                        <td style="font-weight: bold;">
+                            {!previousYEReport.Levies__c}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">Liens</td>
+                        <td style="font-weight: bold;">
+                            {!previousYEReport.Liens__c}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">Non-filer</td>
+                        <td style="font-weight: bold;">
+                            {!previousYEReport.Nonfiler__c}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">Identity Theft</td>
+                        <td style="font-weight: bold;">
+                            {!previousYEReport.Identity_theft__c}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">Innocent Spouse</td>
+                        <td style="font-weight: bold;">
+                            {!previousYEReport.Innocent_spouse__c}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">EITC</td>
+                        <td style="font-weight: bold;">
+                            {!previousYEReport.Earned_income_tax_credit__c}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">Return Preparer Fraud</td>
+                        <td style="font-weight: bold;">
+                            {!IF(
+                                NOT(ISBLANK(previousYEReport.DL_Return_Preparer_Fraud__c)),
+                                previousYEReport.DL_Return_Preparer_Fraud__c,
+                                IF(
+                                    NOT(ISBLANK(previousYEReport.Suspected_return_preparer_fraud__c)),
+                                    previousYEReport.Suspected_return_preparer_fraud__c,
+                                    0
+                                )
+                            )}
+                            <!-- {!IF(ISBLANK(previousYEReport.DL_Return_Preparer_Fraud__c), 0, previousYEReport.DL_Return_Preparer_Fraud__c)} -->
+                        </td>
+                    </tr>
+                    
+
+                    <tr>
+                        <td colspan="3" class="header">FINANCIAL RESULTS</td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">Dollars Refunded</td>
+                        <td style="font-weight: bold;">
+                            {!previousYEReport.Dollars_refunded_to_taxpayers__c}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="background-color: #F2F2F2;" colspan="2">Total Decrease Tax Amnt.</td>
+                        <td style="font-weight: bold;">
+                            {!previousYEReport.Decrease_in_tax_liabilities_penalties__c}
+                        </td>
+                    </tr>
+                </tbody>     
+            </table>
+        </div>
+    </body>
+</apex:page>

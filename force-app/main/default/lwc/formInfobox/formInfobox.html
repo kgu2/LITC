@@ -1,0 +1,95 @@
+<html lang="en">
+<template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Unsubmiting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <lightning-record-view-form object-api-name={objectName} record-id={recordId}>
+        <lightning-accordion active-section-name={activeSections}>
+            <lightning-accordion-section name="Help" label="Help" class="helpSection">
+                <p style="font-size: 1rem; margin-left: 10px;">
+                    For assistance on your submission and other questions, contact 
+                    <br>
+                    <a href="mailto:LITCGrants@treasury.gov" target="_blank">LITCGrants@treasury.gov</a> 
+                </p>
+                <br> 
+            </lightning-accordion-section>
+            <lightning-accordion-section name="Record-Details" label="Record details" class="recordDetailSection">
+                <template if:false={hideStatus}>
+                    <div style="margin-left:10px">
+                        <label style="font-size: .8125rem; margin-bottom: 1rem; color: #858585">
+                            Status
+                        </label>
+                        <div style={formStyle}>
+                            {status}
+                        </div>
+                    </div>
+                </template>
+
+                <template for:each={fields} for:item="field">
+                    <div style = "margin-left:10px; margin-top:10px;" key={field}> 
+                        <label style="font-size: .8125rem; color: #858585">
+                            {field.label}
+                        </label>
+                        <template if:true={field.fieldName}>
+                            <lightning-output-field variant="label-hidden" field-name={field.fieldName} style="font-size: 1rem;"></lightning-output-field>
+                            <div style="margin-top: 10px;"></div>
+                        </template>
+                        <template if:false={field.fieldName}>
+                            <br>
+                            {field.noField}
+                        </template>
+                        <div style="margin-top: 10px;"></div>
+                    </div>
+                </template>
+
+                <template if:true={statusSubmitted}>
+                    <template if:false={deadlinePassed}>
+                        <template if:true={showUnsubmit}>
+                            <div style="margin: auto; width:40%">
+                                <lightning-button style="margin-left:auto" variant="brand-outline" label="Unsubmit" onclick={openUnsubmitModal}></lightning-button>
+                                <br><br>
+                            </div>
+                        </template>
+                    </template>
+                </template>
+            </lightning-accordion-section>
+            <template lwc:if={accordionErrors}>
+                <lightning-accordion-section name="Errors" label="Errors" class="errorsAccordian slds-hide">
+                    <p>Please verify the following errors in the corresponding sections:</p>
+                    <lightning-accordion allow-multiple-sections-open={showMultipleSections} onsectiontoggle={handleSectionToggle} active-section-name={activeSection}>
+                        <template for:each={accordionErrors} for:item="entry">
+                            <template if:true={entry.showList}>
+                                <lightning-accordion-section label={entry.label} class="accordionSection" key={entry.label} onclick={handleErrorClick} data-name={entry.label}>
+                                    <template for:each={entry.errList} for:item="error">
+                                        <div data-name={entry.label} key={entry.label}>{error}</div>
+                                        <br key={error}/>
+                                    </template>
+                                </lightning-accordion-section>
+                            </template>
+                        </template>
+                    </lightning-accordion>
+                </lightning-accordion-section>
+            </template>
+        </lightning-accordion>
+    </lightning-record-view-form>
+
+    <template if:true={showUnsubmitModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium"
+        aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container" style="color: black">
+                <div class="slds-modal__content slds-var-p-around_large" style="min-height:250px;">
+                    <h1 style="text-align: center; margin-top:100px;">
+                        Are you sure you want to unsubmit? You will have to recertify.
+                     </h1>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeUnsubmitModal}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleUnsubmit}>Unsubmit</button>
+                </footer>
+            </div>
+        </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+</template>
+</html>

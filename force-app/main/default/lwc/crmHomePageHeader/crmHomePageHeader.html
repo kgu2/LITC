@@ -1,0 +1,55 @@
+<template>
+    <div class="slds-box slds-theme_default slds-theme_backgroundColor-white">
+        <!-- <div style="font-size: x-large; color: #083c6f"><strong>{groupName}</strong></div> -->
+        <div style="font-size: x-large; color: #083c6f">{groupName}</div>
+
+        <template if:false={isLoading}>
+       
+            <template if:true={hasAnnouncement}>
+                <template if:false={showEditField}>
+                    <div class="slds-p-around_medium">
+                        <lightning-formatted-rich-text value={announcement}>                        
+                        </lightning-formatted-rich-text>
+                    </div>
+                </template> 
+                
+                <template if:true={userIsAdmin}> 
+                    <template if:false={showEditField}>                
+                        <div>
+                            <lightning-button-group>
+                                <lightning-button label="Edit"  onclick={handleEdit}></lightning-button>                    
+                            </lightning-button-group>                
+                        </div>
+                    </template>
+                </template>
+            </template>            
+
+            <template if:true={userIsAdmin}>
+
+                <template if:true={showEditField}>
+                    <div class="slds-form-element">
+                        <div class="slds-p-around_medium">
+                            <lightning-textarea value={announcement} name="announcement" id="announcement" variant="label-hidden">                        
+                            </lightning-textarea>
+                        </div>
+                        <lightning-button-group class="slds-align_absolute-center">
+                            <lightning-button type="cancel" variant="brand-outline"  name="submit" label="Cancel" onclick={handleCancel}></lightning-button>
+                            <lightning-button type="submit" variant="brand"  name="submit" label="Save" onclick={handleSave}></lightning-button>
+                        </lightning-button-group>
+                    </div>
+                </template> 
+                
+                <template if:false={hasAnnouncement}>                    
+                    <template if:false={showEditField}>                
+                        <div>
+                        </br>
+                            <lightning-button-group>
+                                <lightning-button label="Add Announcement or Description"  onclick={handleEdit}></lightning-button>                    
+                            </lightning-button-group>                
+                        </div>
+                    </template>                    
+                </template>
+            </template>
+        </template>
+    </div>
+</template>

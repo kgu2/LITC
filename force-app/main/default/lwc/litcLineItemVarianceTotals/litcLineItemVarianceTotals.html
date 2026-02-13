@@ -1,0 +1,41 @@
+<template>
+    <lightning-tabset>
+        <lightning-tab label="Reporting totals">
+            <c-litc-line-item-rollup-table is-report-review record-id={recordId}></c-litc-line-item-rollup-table>
+        </lightning-tab>
+        <lightning-tab label="Application totals">
+            <c-litc-line-item-rollup-table record-id={appId}></c-litc-line-item-rollup-table>
+        </lightning-tab>
+        <lightning-tab label="Variance totals">
+             <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_2-of-2">
+                    <table border="1">
+                        <tr>
+                            <th style="text-align: center;">Expense Category</th>
+                            <th style="text-align: center;">Federal $</th>
+                            <th style="text-align: center;">Federal %</th>
+                            <th style="text-align: center;">Match $</th>
+                            <th style="text-align: center;">Match %</th>
+                            <th style="text-align: center;">Total $</th>
+                            <th style="text-align: center;">Total %</th>
+                        </tr>
+                        <template for:each={rows} for:item="row">
+                            <tr key={row.expenseCategory} class={row.rowClass}>
+                                <td>{row.expenseCategory}</td>
+                                <td><lightning-formatted-number value={row.federalDollar} format-style="currency"></lightning-formatted-number></td>
+                                <td>{row.federalPercent}%</td>
+                                <td><lightning-formatted-number value={row.matchDollar} format-style="currency"></lightning-formatted-number></td>
+                                <td>{row.matchPercent}%</td>
+                                <td><lightning-formatted-number value={row.totalDollar} format-style="currency"></lightning-formatted-number></td>
+                                <td>{row.totalPercent}%</td>
+                            </tr>
+                        </template>
+
+                        
+                    </table>
+             
+                </div>
+            </div>
+        </lightning-tab>
+    </lightning-tabset>
+</template>

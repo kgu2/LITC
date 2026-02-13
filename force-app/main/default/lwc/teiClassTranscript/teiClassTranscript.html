@@ -1,0 +1,195 @@
+<template><div class="tei">
+    <div class={containerStyle} if:true={showClass}>
+        
+        <!-- <div role="main" class="usa-prose"><h1>{classTitle}</h1><br/><br/></div> -->
+        <header class="page-header">
+            <h1 class="page-title">
+                {classTitle}
+            </h1>                
+        </header>
+        <br/><br/>
+                   
+        <div style="background-color: #003466; color: white; padding: 0.5rem 1rem; font-weight: bold; border-radius: 0.25rem;">                       
+            Training Details
+        </div>
+        
+        <div class={containerClass} style="background-color: white; color: black;">
+            <div if:false={isMobile} class="slds-grid  slds-wrap">
+                <!-- <div>
+                    Duration: {classDuration}
+                    <br/><br/>
+                </div>             -->
+                <!-- <div if:true={isVideo}> -->
+                <div class="slds-col slds-size_1-of-4 slds-text-align_right" if:true={isVideo}>Training Type:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>  
+                <div class="slds-col slds-size_3-of-4 slds-text-align_left" if:true={isVideo}>{type}</div> 
+                <!-- </div> -->
+                <!-- Training Type:	Video,  -->
+                <div class="slds-col slds-size_1-of-4 slds-text-align_right">Description:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>  
+                <div class="slds-col slds-size_3-of-4 slds-text-align_left">
+                    <lightning-formatted-rich-text value={classInfo}></lightning-formatted-rich-text>
+                    <div if:false={isVideo}>
+                        <br/><br/>                
+                        <a href="javascript:void(0);" onclick={openBehaviorPolicy}><strong>TEI Behavior Policy</strong></a>
+                        <br/><br/>
+                        <a href="javascript:void(0);" onclick={openCancellationPolicy}><strong>TEI Cancellation Policy</strong></a>
+                        <br/><br/>
+                        {recorded}<br/><br/>
+                    </div>   
+                </div> 
+            
+                <div class="slds-col slds-size_1-of-4 slds-text-align_right">Topic:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>  
+                <div class="slds-col slds-size_3-of-4 slds-text-align_left">{topic}</div>                    
+                <br/> 
+                <div class="slds-col slds-size_1-of-4 slds-text-align_right">Target Audience:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>  
+                <div class="slds-col slds-size_3-of-4 slds-text-align_left">{targetAudience}</div>                    
+                <br/>
+                <div class="slds-col slds-size_1-of-4 slds-text-align_right">Access Method:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>  
+                <div class="slds-col slds-size_3-of-4 slds-text-align_left">{accessMethod}</div>                    
+                <br/>
+                <div class="slds-col slds-size_1-of-4 slds-text-align_right">{contactTraining}:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>  
+                <div class="slds-col slds-size_3-of-4 slds-text-align_left">{classDuration}</div>                    
+                <br/>  
+                <div class="slds-col slds-size_1-of-4 slds-text-align_right" if:false={isVideo}>Registration Deadline:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>  
+                <div class="slds-col slds-size_3-of-4 slds-text-align_left" if:false={isVideo}>{deadline}</div>                
+            </div>  
+                
+            <div if:true={isMobile}>
+                <strong>Description:</strong><br/>                  
+                <lightning-formatted-rich-text value={classInfo}></lightning-formatted-rich-text>
+                <div if:false={isVideo}>
+                    <br/><br/>                
+                    <a href="javascript:void(0);" onclick={openBehaviorPolicy}><strong>TEI Behavior Policy</strong></a>
+                    <br/><br/>
+                    <a href="javascript:void(0);" onclick={openCancellationPolicy}><strong>TEI Cancellation Policy</strong></a>
+                    <br/><br/>
+                    {recorded}
+                </div>   
+                <br/><br/> 
+                <strong>Topic:</strong><br/>{topic}<br/> 
+                <strong>Target Audience:</strong><br/>{targetAudience}<br/>
+                <strong>Access Method:</strong><br/>{accessMethod}<br/>
+                <strong>{contactTraining}:</strong><br/>{classDuration}<br/> 
+            </div>     
+                           
+            <div if:true={hasSessionsTrns} >
+                <br/><br/>        
+                <div style="background-color: #bfc0c0; color: black; padding: 0.25rem 1rem; font-weight: bold; border-radius: 0.25rem;">
+                            <!-- border-top-left-radius: 0.25rem; border-top-right-radius: 0.25rem;"> -->
+                    Sessions Details
+                </div>
+                <div if:false={isMobile}  class="slds-scrollable_x"> 
+                    <table class="slds-table slds-table_cell-buffer slds-table_bordered" style="table-layout: auto; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Part</th>
+                                <th>Title</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Duration</th>
+                                <th>Access</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <template for:each={allSessionsTrns} for:item="sessionTrns">
+                                <tr key={sessionTrns.Id}>
+                                    <td>{sessionTrns.index}</td>
+                                    <td>{sessionTrns.Title}</td>
+                                    <td>{sessionTrns.FormattedStartTime}</td>
+                                    <td>{sessionTrns.FormattedEndTime}</td>
+                                    <td>{sessionTrns.Training_Hours} Hour(s) {sessionTrns.Training_Minutes} Minute(s)</td>
+                                    <td>{sessionTrns.Access_Method}</td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div if:true={isMobile}> 
+                    <table class="slds-table slds-table_bordered">
+                        <tbody>
+                            <template for:each={allSessionsTrns} for:item="sessionTrns">
+                                <tr key={sessionTrns.Id}>
+                                    <td>{sessionTrns.index}. {sessionTrns.Title}<br/> 
+                                        Start: {sessionTrns.FormattedStartTime}<br/>
+                                        End: {sessionTrns.FormattedEndTime}<br/>
+                                        Duration: {sessionTrns.Training_Hours} h {sessionTrns.Training_Minutes} m<br/>
+                                        Access: {sessionTrns.Access_Method}<br/>
+                                    </td>
+                                </tr>
+                            </template>
+                        </tbody>
+                    </table>
+                </div>                    
+            </div>
+
+            <br/><br/>        
+            <div style="background-color: #bfc0c0; color: black; padding: 0.25rem 1rem; font-weight: bold; border-radius: 0.25rem;">
+                        <!-- border-top-left-radius: 0.25rem; border-top-right-radius: 0.25rem;"> -->
+                Training Progress Details
+            </div>
+            <div class={containerClass} if:false={isVideo}>
+                <div if:false={isMobile} class="slds-grid  slds-wrap">
+                    <div class="slds-col slds-size_1-of-4 slds-text-align_right">Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>  
+                    <div class="slds-col slds-size_3-of-4 slds-text-align_left">{status}</div>
+                    <br/> 
+                    <div class="slds-col slds-size_1-of-4 slds-text-align_right">Required Attendance:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>  
+                    <div class="slds-col slds-size_3-of-4 slds-text-align_left">
+                        Must attend {numberRequired} of {numberInSeries} parts for course completion.
+                    </div>
+                    <br/>
+                    <div class="slds-col slds-size_1-of-4 slds-text-align_right">Attendance Record:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>  
+                    <div class="slds-col slds-size_3-of-4 slds-text-align_left">{attendance}</div>
+                    <br/>
+                    <template if:true={isCompleted}>
+                        <br/>
+                        <div class="slds-col slds-size_1-of-4 slds-text-align_right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>  
+                        <div class="slds-col slds-size_3-of-4 slds-text-align_left">
+                            <button class="launch-main" onclick={handleViewCertificates}>View Certificate</button>
+                            <!-- <a href={certificateUrl} target="_blank">
+                                <strong>View Certificates</strong>
+                            </a> -->
+                        </div> 
+                        <br/>   
+                    </template>                
+                </div>  
+                    
+                <div if:true={isMobile}>
+                    <strong>Status:</strong><br/>{status}<br/> 
+                    <!-- <strong>Due Date</strong><br/>{topic}<br/>  -->
+                    <strong>Required Attendance</strong><br/>Must attend {numberRequired} of {numberInSeries} parts for course completion.<br/>
+                    <strong>Attendance Record</strong><br/>{attendance}<br/>
+                </div>
+            </div>
+
+            <div class={containerClass} if:true={isVideo}>
+                <div if:false={isMobile} class="slds-grid  slds-wrap">
+                    <div class="slds-col slds-size_1-of-4 slds-text-align_right">Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </div>  
+                    <div class="slds-col slds-size_3-of-4 slds-text-align_left">{status}</div>
+                    <br/>
+                    <button class="launch-main" onclick={handleViewCertificates}>View Certificate</button>
+                </div>
+
+                <div if:true={isMobile}>
+                    <strong>Status:</strong><br/>{status}<br/>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <div if:true={showTEIBehaviorPolicy}>
+        <c-tei-behavior-policy></c-tei-behavior-policy>
+    </div>
+
+    <div if:true={showTEICancellationPolicy}>
+        <c-tei-cancellation-policy></c-tei-cancellation-policy>
+    </div>    
+
+    <!-- <div if:false={showClass} class="slds-p-around_xx-large">
+        <div if:false={showVideo}>
+            <a href="javascript:void(0);" onclick={openClass}><strong>Back to Class</strong></a>
+            <br/><br/>
+        </div>
+    </div> -->
+</div>      
+</template>

@@ -1,0 +1,318 @@
+<template>
+    <template if:true={userIsAdmin}>
+        <div class="slds-box slds-theme_default slds-theme_backgroundColor-white">
+            
+                <!-- <div>
+                    <br/>
+                    User Group Settings area. Under constraction!            
+                    <br/>________________________________________
+                    <br/>
+                    <br/>      
+                </div> -->
+
+                <div>
+                    
+                    <div style="font-size: x-large;">Layout Assignments </div> </br>   
+                    <div>
+                        If the User is not assigned to any custom layouts, the defaul layout will be used on the Object Record Page.
+                    </div>                           
+                    <!-- <br/>  
+                    <template for:each={usersList} for:item="user">
+                        <div key={user} class="slds-grid">
+                            <div class="slds-col slds-size_1-of-2  slds-border_bottom">
+                                {user}                                
+                            </div> 
+                        </div> 
+                    </template> -->
+                </div>
+                <br/>
+                <br/> 
+
+                
+                <!-- <lightning-tabset>
+                    <template for:each={objectsList} for:item="object">
+                        <lightning-tab key={object} label={object} value={object}>                            
+                            <div class="slds-p-around_medium">
+                                <template for:each={usersList} for:item="user">
+                                    <div key={user} class="slds-grid">
+                                        <div class="slds-col slds-size_1-of-2  slds-border_bottom">
+                                            {user}                                
+                                        </div> 
+                                    </div> 
+                                </template>
+                            </div>
+                        </lightning-tab>
+                    </template>
+                </lightning-tabset>                 -->
+
+                <!-- <lightning-tabset variant="scoped">
+                    <template for:each={userAndLayout} for:item="object">
+                        <lightning-tab key={object.key} label={object.key} value={object.key}>                            
+                            
+                            <div class="slds-p-around_medium">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-size_1-of-2  slds-border_bottom">
+                                        <strong>Users</strong>                               
+                                    </div> 
+                                    <div class="slds-col slds-size_1-of-2  slds-border_bottom">
+                                    <strong>Custom Layouts</strong>                                
+                                    </div>
+                                </div>
+
+                                <template for:each={object.value} for:item="user">
+                                    <div key={user.name} class="slds-grid">
+                                        <div class="slds-col slds-size_6-of-12  slds-border_bottom">
+                                            {user.name}                                
+                                        </div> 
+                                        <div class="slds-col slds-size_5-of-12  slds-border_bottom">
+                                            {user.layout}                                
+                                        </div> 
+                                        <div class="slds-col slds-size_1-of-12   slds-border_bottom">
+                                            <lightning-button-icon icon-name="utility:edit" variant="bare" onclick={handleEdit}>
+                                            </lightning-button-icon>
+                                        </div>
+                                    </div> 
+                                </template>
+                            </div>
+                        </lightning-tab>
+                    </template>
+                </lightning-tabset> -->
+
+            <!-- <form id="layouts" class="layouts">
+                <lightning-tabset variant="scoped">
+                    <template for:each={userAndLayout} for:item="object">                        
+                        <lightning-tab key={object.key} label={object.key} value={object.key}> 
+                           
+                                
+                                <div class="slds-p-around_medium">
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-size_1-of-2  slds-border_bottom">
+                                            <strong>Users</strong>                               
+                                        </div> 
+                                        <div class="slds-col slds-size_1-of-2  slds-border_bottom">
+                                        <strong>Custom Layouts</strong>                                
+                                        </div>
+                                    </div>
+
+                                    <template for:each={object.value} for:item="user">
+                                        <div key={user.name} class="slds-grid" if:false={showEditField}>
+                                            <div class="slds-col slds-size_6-of-12  slds-border_bottom">
+                                                {user.name}                                
+                                            </div> 
+                                            <div class="slds-col slds-size_5-of-12  slds-border_bottom">
+                                                {user.layout}                                
+                                            </div> 
+                                            
+                                            <div class="slds-col slds-size_1-of-12   slds-border_bottom">
+                                                <lightning-button-icon icon-name="utility:edit" variant="bare" onclick={handleEdit}>
+                                                </lightning-button-icon>
+                                            </div>
+                                        </div> 
+                                        <div key={user.name} class="slds-grid" if:true={showEditField}>
+                                            <div class="slds-col slds-grid_vertical-align-center slds-size_6-of-12  slds-border_bottom">
+                                                {user.name}                                
+                                            </div> 
+                                            <div class="slds-col slds-grid_vertical-align-center slds-size_6-of-12  slds-border_bottom">
+                                                <lightning-combobox options={user.options} value={user.layout} onchange={handleChange} >                                            
+                                                </lightning-combobox>
+                                            </div>                                          
+                                            
+                                        </div> 
+                                    </template>
+                                </div>
+
+                        </lightning-tab>
+                    </template>
+                </lightning-tabset>
+
+                <br/>
+                <br/> 
+                <template if:true={showEditField}>
+                    <lightning-button-group class="slds-align_absolute-center">
+                        <lightning-button type="cancel" variant="brand-outline"  name="submit" label="Cancel" onclick={handleCancel}></lightning-button>
+                        <lightning-button type="submit" variant="brand"  name="submit" label="Save" onclick={handleSave}></lightning-button>
+                    </lightning-button-group>
+                </template>
+            </form> -->
+
+            <template if:true={showEditField}>
+            <form id="layouts" class="layouts">
+                <lightning-tabset variant="scoped">
+                    <template for:each={editUserAndLayout} for:item="object">                        
+                        <lightning-tab key={object.key} label={object.key} value={object.key}> 
+                            
+                                <div class="slds-p-around_medium">
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-size_1-of-2  slds-border_bottom">
+                                            <strong>Users</strong>                               
+                                        </div> 
+                                        <div class="slds-col slds-size_1-of-2  slds-border_bottom">
+                                        <strong>Custom Layouts</strong>                                
+                                        </div>
+                                    </div>
+
+                                    <template for:each={object.value} for:item="user">                                        
+                                        <div key={user.name} class="slds-grid">
+                                            <div class="slds-col slds-grid_vertical-align-center slds-size_6-of-12  slds-border_bottom">
+                                                {user.name}                                
+                                            </div> 
+                                            <div class="slds-col slds-grid_vertical-align-center slds-size_6-of-12  slds-border_bottom">
+                                                <lightning-combobox options={user.options} value={user.layout} onchange={handleChange} >                                            
+                                                </lightning-combobox>
+                                            </div>                                            
+                                        </div> 
+                                    </template>
+                                </div>
+
+                        </lightning-tab>
+                    </template>
+                </lightning-tabset>
+
+                <br/>
+                <br/> 
+                <template if:true={showEditField}>
+                    <lightning-button-group class="slds-align_absolute-center">
+                        <lightning-button type="cancel" variant="brand-outline"  name="submit" label="Cancel" onclick={handleCancel}></lightning-button>
+                        <lightning-button type="submit" variant="brand"  name="submit" label="Save" onclick={handleSave}></lightning-button>
+                    </lightning-button-group>
+                </template>
+            </form>
+        </template>
+
+            <template if:false={showEditField}>            
+                <lightning-tabset variant="scoped">
+                    <template for:each={userAndLayout} for:item="object">                        
+                        <lightning-tab key={object.key} label={object.key} value={object.key}>                            
+                            
+                                <!-- Content for each tab goes here -->
+                                <div class="slds-p-around_medium">
+                                    <div class="slds-grid">
+                                        <div class="slds-col slds-size_1-of-2  slds-border_bottom">
+                                            <strong>Users</strong>                               
+                                        </div> 
+                                        <div class="slds-col slds-size_1-of-2  slds-border_bottom">
+                                        <strong>Custom Layouts</strong>                                
+                                        </div>
+                                    </div>
+
+                                    <template for:each={object.value} for:item="user">
+                                        <div key={user.name} class="slds-grid">
+                                            <div class="slds-col slds-size_6-of-12  slds-border_bottom">
+                                                {user.name}                                
+                                            </div> 
+                                            <div class="slds-col slds-size_6-of-12  slds-border_bottom">
+                                                {user.layout}                                
+                                            </div> 
+                                            
+                                            <!-- <div class="slds-col slds-size_1-of-12   slds-border_bottom">
+                                                <lightning-button-icon icon-name="utility:edit" variant="bare" onclick={handleEdit}>
+                                                </lightning-button-icon>
+                                            </div> -->
+                                        </div>                                         
+                                    </template>
+                                </div>
+                        </lightning-tab>
+                    </template>
+                </lightning-tabset>                 
+                <br/>
+                <br/>
+                    <lightning-button-group class="slds-align_absolute-center">
+                        <lightning-button type="" variant="brand-outline"  name="edit" label="Edit" onclick={handleEdit}></lightning-button>
+                    </lightning-button-group>
+                
+            </template>
+            
+            </br></br>
+            <div style="font-size: x-large;">The List of Layouts with Fields</div> </br> 
+
+            <!-- <template for:each={layoutAndFields} for:item="layout">
+                <div key={layout.key} class="slds-grid slds-border_top">
+                </br>
+                    <div class="slds-col slds-size_1-of-12">                                                       
+                    </div> 
+                    <div class="slds-col slds-size_5-of-12 ">
+                        <strong>{layout.key}</strong>                                
+                    </div>
+                    <div class="slds-col slds-size_6-of-12">
+                        <template for:each={layout.value} for:item="fieled">
+                            <div key={fieled} >
+                                {fieled}
+                            </div>
+                        </template>                               
+                    </div> 
+                </br>
+                </div> 
+            </template> -->
+
+            <!-- <template for:each={layoutAndFields} for:item="layout">
+                <div key={layout.key}>
+                        <lightning-accordion allow-multiple-sections-open={layout.key} active-section-name="">
+                        <lightning-accordion-section name={layout.key} label={layout.key} class="accordionSection"> 
+                            <br/> 
+                            <div class="slds-col slds-size_1-of-2">
+                                <template for:each={layout.value} for:item="fieled">
+                                    <div key={fieled} >
+                                        {fieled}
+                                    </div>
+                                </template>                               
+                            </div> 
+                        </lightning-accordion-section>
+                        <br/>
+                    </lightning-accordion>
+                </div> 
+            </template> -->
+
+            <template for:each={layoutAndFieldsNew} for:item="layout">
+                <div key={layout.key}>                    
+                    <!-- <lightning-accordion allow-multiple-sections-open={layout.key} active-section-name={layout.key}> -->
+                        <lightning-accordion allow-multiple-sections-open={layout.key} active-section-name="">
+                        <lightning-accordion-section name={layout.key} label={layout.key} class="accordionSection"> 
+                                                        
+                            <template for:each={layout.value} for:item="section"> 
+                                <div key={section.key}>
+                                    <br/>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-12"> </div>
+                                        <div class="slds-col slds-size_11-of-12">
+                                            Section: {section.key}
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="slds-grid slds-gutters">
+                                        <template for:each={section.value} for:item="column"> 
+                                            
+                                            <template if:true={oneColumn}>
+                                                <div key={column} class="slds-col slds-size_1-of-2">
+                                                    <template for:each={column.fields} for:item="field">
+                                                        <div key={field} class="slds-grid">
+                                                                {field}
+                                                        </div>                                                        
+                                                    </template>
+                                                </div>
+                                            </template>
+                                
+                                            <template if:true={twoColumn}>
+                                                <div key={column} class="slds-col slds-size_1-of-2">
+                                                    <template for:each={column.fields} for:item="field">
+                                                        <div key={field} class="slds-grid">
+                                                            {field}
+                                                        </div>                                                        
+                                                    </template>
+                                                </div>                                        
+                                            </template>
+                                        </template> 
+
+                                    </div>
+                                </div>
+                            </template>
+
+                        </lightning-accordion-section>
+                        <br/>
+                    </lightning-accordion>
+                </div> 
+            </template>
+            
+
+        </div>
+    </template>
+</template>

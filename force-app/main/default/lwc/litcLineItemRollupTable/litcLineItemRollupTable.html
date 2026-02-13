@@ -1,0 +1,181 @@
+<template>
+    <lightning-record-edit-form object-api-name={myObjectName} record-id={myRecId} onerror={handleError}>
+
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_2-of-2">
+                <table border="1">
+                    <tr>
+                        <th style="text-align: center;" width="25%" >
+                            Expense category
+                        </th>
+                        <th style="text-align: center;" width="25%" >
+                            Federal
+                        </th>
+                        <th style="text-align: center;" width="25%" >
+                            Match
+                        </th>
+                        <th style="text-align: center;" width="25%" >
+                            Total
+                        </th>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" width="25%">
+                            A. Personnel
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Personnel_Dollar_Federal_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Personnel_Dollar_Match_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Personnel_Total_Formula__c'></lightning-output-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" width="25%">
+                            B. Fringe benefits
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Fringe_Dollar_Federal_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Fringe_Dollar_Match_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Fringe_benefits_Total_Formula__c'></lightning-output-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" width="25%">
+                            C. Travel
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Travel_Federal_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Travel_Match_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Travel_Total_Formula__c'></lightning-output-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" width="25%">
+                            D. Equipment
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Equipment_Federal_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Equipment_Match_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Equipment_Total_Formula__c'></lightning-output-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" width="25%">
+                            E. Supplies
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Supplies_Federal_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Supplies_Match_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Supplies_Total_Formula__c'></lightning-output-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" width="25%">
+                            F. Contractual
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Contractual_Federal_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Contractual_Match_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Contractual_Total_formula__c'></lightning-output-field>
+                        </td>
+                    </tr>
+                    <tr class="gray">
+                        <td style="text-align: center;" width="25%">
+                            G. Construction
+                        </td>
+                        <td style="text-align: center;" width="25%">
+
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" width="25%">
+                            H. Other expenses
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Other_expenses_Federal_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Other_Expenses_Match_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Other_Expenses_Total_Formula__c'></lightning-output-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" width="25%">
+                            I. Total direct charges
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Total_Direct_Charges_Federal_Formula__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Total_Direct_Charges_Match_Formula__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Total_Direct_Charges_Total_Formula__c'></lightning-output-field>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: center;" width="25%">
+                            J. Indirect charges
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Indirect_Expenses_Federal_Total__c'></lightning-output-field>
+                        </td>
+                        <td style="text-align: center; background-color: #DADADA;" width="25%" class="gray"></td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-output-field variant="label-hidden" field-name='Indirect_Expenses_Federal_Total__c'></lightning-output-field>
+                        </td>
+                    </tr>
+                    <tr class={colorSum}>
+                        <td style="text-align: center;" width="25%">
+                            K. Totals
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-formatted-number value={fedExp} format-style="currency" style="color: white"></lightning-formatted-number>
+                            <!-- <lightning-output-field variant="label-hidden" field-name='Total_Federal_Expenses__c' class="white"></lightning-output-field> -->
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-formatted-number value={matchExp} format-style="currency" style="color: white"></lightning-formatted-number>
+                            <!-- <lightning-output-field variant="label-hidden" field-name='Total_Match_Expenses__c' class="white"></lightning-output-field> -->
+                        </td>
+                        <td style="text-align: center;" width="25%">
+                            <lightning-formatted-number value={totalExp} format-style="currency" style="color: white"></lightning-formatted-number>
+                            <!-- <lightning-output-field variant="label-hidden" field-name='Total_Expenses__c' class="white"></lightning-output-field> -->
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </lightning-record-edit-form>
+</template>

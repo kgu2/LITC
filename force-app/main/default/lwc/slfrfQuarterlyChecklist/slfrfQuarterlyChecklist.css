@@ -1,0 +1,25 @@
+.slds-box{
+    background-color:#E0EEFD !important;
+    padding: 1.875rem !important;
+}
+
+.formHeader {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+}
+
+td {
+    padding: 0.5rem;
+    vertical-align: top;
+}
+
+th {
+    vertical-align: top;
+    padding: 0.5rem;
+}
+button:disabled,
+button[disabled]{
+  border: 0.0625rem solid #999999;
+  background-color: #46c22d;
+  color: #666666;
+}

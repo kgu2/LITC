@@ -1,0 +1,1120 @@
+<template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <template lwc:if={isAuthorizedOfficial}>
+        <div style="display: flex; justify-content: center;">
+
+            <div style="width: 190px; margin-right: 2rem;">
+
+                <div style="height: 1.25rem;"></div>
+                <div style="height: 2rem;"></div>
+            
+                <lightning-tabset active-tab-value={activeTab} variant="vertical" >       
+                    <lightning-tab onactive={handleOnActive} label="Instructions" value="instructions"></lightning-tab>
+
+                    <template lwc:if={isStandard}>
+                        <lightning-tab onactive={handleOnActive} label="Case information" value="Case information"></lightning-tab>
+                        <template lwc:if={isYearEnd}>
+                            <lightning-tab onactive={handleOnActive} label="Additional Case information" value="Additional Case information"></lightning-tab>
+                        </template>
+                    </template>
+                    
+                    <lightning-tab onactive={handleOnActive} label="Tax information" value="Tax information"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="Activities" value="Activities"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="Goals / narratives" value="Goals / narratives"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="Clinic information" value="Clinic information"></lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="Submission" value="submission" ></lightning-tab>
+                </lightning-tabset>
+            </div>
+
+            <div style="margin-top:2rem; width: 100%;">
+                <div class="slds-grid slds-wrap slds-gutters_direct">
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_9-of-12">
+                        <lightning-record-edit-form object-api-name='LITC_Reporting_Form__c' record-id={recordId} onerror={handleError} onsuccess={handleSuccess} onsubmit={handleSubmit}>
+                            <div class={instructions} style="max-width: 70rem;">
+                                <h1>Instructions</h1>
+                                <hr style="margin-top: 5px;">
+                                <b><p>Reporting form 13424-R</p></b>
+
+                                <p>Form 13424-R, Low Income Taxpayer Clinic Program Report, is used to report all clinic activities during the reporting period. Built in functionality will display only questions required for each type of clinic (representation and education, ESL education only). The LITC Program Office uses the information reported to determine the scope of services provided by clinics. Data from all clinics is totaled to provide program-wide statistical information to program stakeholders about services provided to low-income and ESL taxpayer.</p>
+
+                                <p>Please read the questions carefully and report all information completely and accurately. Helper text is provided for some items and will display when you hover over this icon (insert income here). For your convenience, save buttons are provided at the top and bottom of each page of the form. Users will be involuntarily exited from the portal due to inactivity after 15 minutes and any unsaved work will be lost. An autosave will be triggered when you move from page to page of the form, but the best practice is to click the save button periodically while you work to ensure no work is lost. If you would like to download a copy of the report in draft form or after submission, clink the download button on the reports list screen. </p>
+
+                                <p>If you have any questions, please contact the clinic’s assigned advocacy analyst for assistance. </p>
+                               
+                                <br/>  <br/>
+
+                                <div style="width: 100%; margin-top: 15px;">
+                                    <div style="float: right;">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form" label="Next"></lightning-button>
+                                    </div>
+                                </div>
+                                <footer></footer> 
+                            </div>
+
+                            <template lwc:if={isStandard}>
+                                <div class={tab1}>
+                                    <div class="slds-box caseInventory">
+                                        <h2>Case inventory</h2>
+
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>a. Case inventory on January 1 of the current grant year (should match closing inventory from prior year-end report)</label>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field field-name="Starting_Inventory__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseInventory" required></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <label>If line a does not equal the closing inventory from the prior year-end report, explain the discrepancy</label>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_6-of-8">
+                                                <lightning-input-field field-name="Inventory_Discrepancy_Explanation__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>b. New cases opened during the current grant year</label>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field field-name="New_Cases__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseInventory" required></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <label>c. Total cases worked during the current grant year (add lines a and b)</label>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field field-name="Total_Cases_Worked__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>d. Cases closed during the current grant year</label>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field field-name="Closed_Cases__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseInventory" required></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <label>e. Case inventory on June 30 (interim) or December 31 (year-end) of the current grant year (subtract line d from line c)</label>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field field-name="Closing_Case_Inventory__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                    </div>
+                                    <br/>
+                                    <template lwc:if={isYearEnd}>
+                                        <div class="slds-box irsFunctionOrCourt">
+                                            <h2>IRS function or court</h2>
+                                            <p>For all cases the clinic worked during the grant year (under Case Inventory c), enter the IRS function(s) or U.S. court(s) where the clinic
+                                            addressed the controversy as of December 31 (Year-End) of the current grant year. If the clinic has closed the case, enter the function/
+                                            court where it last addressed the case. If a clinic is currently handling a case in more than one function/court, enter each function/court
+                                            where the clinic is working the case.</p>
+
+                                            <table border="1">
+                                                <tbody>
+                                                    <tr>
+                                                        <td rowspan="3"><abbr title="required" class="slds-required">*</abbr><strong>Accounts Management</strong></td>
+                                                        <td>a. Return processing</td>
+                                                        <td><lightning-input-field field-name="Return_processing__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>b. Injured spouse</td>
+                                                        <td><lightning-input-field field-name="Injured_spouse__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>c. Other accounts management</td>
+                                                        <td><lightning-input-field field-name="Other_accounts_management__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td rowspan="6"><abbr title="required" class="slds-required">*</abbr><strong>Exam</strong></td>
+                                                        <td>d. Correspondence exam</td>
+                                                        <td><lightning-input-field field-name="Correspondence_exam__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>e. Office or field exam</td>
+                                                        <td><lightning-input-field field-name="Office_or_field_exam__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>f. Automated Underreporter (AUR)</td>
+                                                        <td><lightning-input-field field-name="Automated_Underreporter_AUR__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>g. Automated Substitute-for-Return (ASFR)</td>
+                                                        <td><lightning-input-field field-name="Automated_Substitute_for_Return_ASFR__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>h. Audit reconsideration</td>
+                                                        <td><lightning-input-field field-name="Audit_reconsideration__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>i. Other exam</td>
+                                                        <td><lightning-input-field field-name="Other_exam__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="5"><abbr title="required" class="slds-required">*</abbr><strong>Collection</strong></td>
+                                                        <td>j. Automated Collection System (ACS)</td>
+                                                        <td><lightning-input-field field-name="Automated_Collection_System_ACS__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>k. Field Collection (Revenue Officer)</td>
+                                                        <td><lightning-input-field field-name="Field_Collection_Revenue_Officer__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>l. Offer-In-Compromise (OIC)</td>
+                                                        <td><lightning-input-field field-name="Offer_In_Compromise_OIC__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>m. Lien unit</td>
+                                                        <td><lightning-input-field field-name="Lien_unit__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>n. Other collection</td>
+                                                        <td><lightning-input-field field-name="Other_collection__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="5"><abbr title="required" class="slds-required">*</abbr><strong>Appeals</strong></td>
+                                                        <td>o. Examination Appeals</td>
+                                                        <td><lightning-input-field field-name="Examination_Appeals__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>p. Collection Due Process (CDP)</td>
+                                                        <td><lightning-input-field field-name="Collection_Due_Process_CDP__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>q. Collection Appeals Process (CAP)</td>
+                                                        <td><lightning-input-field field-name="Collection_Appeals_Process_CAP__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>r. OIC Appeals</td>
+                                                        <td><lightning-input-field field-name="OIC_Appeals__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>s. Other Appeals</td>
+                                                        <td><lightning-input-field field-name="Other_Appeals__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="3"><abbr title="required" class="slds-required">*</abbr><strong>Litigation</strong></td>
+                                                        <td>t. U.S. Tax Court - Entry of Appearance</td>
+                                                        <td><lightning-input-field field-name="U_S_Tax_Court_Entry_of_Appearance__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>u. U.S. Tax Court - Power of Attorney</td>
+                                                        <td><lightning-input-field field-name="U_S_Tax_Court_Power_of_Attorney__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>v. Other federal courts</td>
+                                                        <td><lightning-input-field field-name="Other_federal_courts__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td rowspan="7"><abbr title="required" class="slds-required">*</abbr><strong>Miscellaneous</strong></td>
+                                                        <td>w. Identity Protection Specialized Unit (IPSU)</td>
+                                                        <td><lightning-input-field field-name="Identity_Protection_Specialized_Unit_IP__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>x. Other identity theft</td>
+                                                        <td><lightning-input-field field-name="Other_identity_theft__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>y. Innocent Spouse Unit</td>
+                                                        <td><lightning-input-field field-name="Innocent_Spouse_Unit__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>z. SS-8 Unit</td>
+                                                        <td><lightning-input-field field-name="SS_8_Unit__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>aa. ITIN Unit</td>
+                                                        <td><lightning-input-field field-name="ITIN_Unit__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>ab. Trust fund recovery penalty</td>
+                                                        <td><lightning-input-field field-name="Trust_fund_recovery_penalty__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr class="category-group">
+                                                        <td>ac. Other miscellaneous</td>
+                                                        <td><lightning-input-field field-name="Other_miscellaneous__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2"><strong>Total (this total must equal Case Inventory c total cases worked)</strong></td>
+                                                        <td><lightning-input-field field-name="Total_Cases_Formula__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="2"><strong>Cases worked in more than one function</strong></td>
+                                                        <td><lightning-input-field field-name="Cases_worked_in_more_than_one_function__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="irsFunctionOrCourt" required></lightning-input-field></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br/>
+                                        <div class="slds-box caseIssuesWorked">
+                                            <h2>Case Issues Worked</h2>
+                                            <p><abbr title="required" class="slds-required">*</abbr>For each of the total cases the clinic worked during the current grant year (under Case Inventory c), make an entry below if the clinic
+                                                worked the listed issue while the case was open.
+
+                                                <lightning-helptext content="The purpose of this section it to capture the most prevalent issues reported in cases. The number of issues no longer have to equal the number of cases.  If your clinic has identified an issue that is trending upwards but is not captured here, this can be added to emerging issues."></lightning-helptext>
+                                            </p>
+                                            
+                                            <table border="1">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>a. Small business issues <lightning-helptext content="(Schedule C income, Schedule C deductions, self-employment tax, Etc.)"></lightning-helptext></td>
+                                                        <td><lightning-input-field field-name="Small_business_issues__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>b. Child tax credit/Additional child tax credit</td>
+                                                        <td><lightning-input-field field-name="Child_tax_credit_Additional_child_tax_cr__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>c. Earned income tax credit</td>
+                                                        <td><lightning-input-field field-name="Earned_income_tax_credit__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>d. Other credits</td>
+                                                        <td><lightning-input-field field-name="Other_credits__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>e. Innocent spouse</td>
+                                                        <td><lightning-input-field field-name="Innocent_spouse__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>f. Identity theft</td>
+                                                        <td><lightning-input-field field-name="Identity_theft__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>g. Nonfiler</td>
+                                                        <td><lightning-input-field field-name="Nonfiler__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>h. Suspected return preparer fraud</td>
+                                                        <td><lightning-input-field field-name="Suspected_return_preparer_fraud__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>i. Installment Payment Agreement (IPA)</td>
+                                                        <td><lightning-input-field field-name="Installment_Payment_Agreement_IPA__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>j. Offer-In-Compromise (OIC)</td>
+                                                        <td><lightning-input-field field-name="Offer_In_Compromise_OIC__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>k. Currently Not Collectible (CNC)</td>
+                                                        <td><lightning-input-field field-name="Currently_Not_Collectible_CNC__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>l. Liens</td>
+                                                        <td><lightning-input-field field-name="Liens__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>m. Levies</td>
+                                                        <td><lightning-input-field field-name="Levies__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>n. Worker classification</td>
+                                                        <td><lightning-input-field field-name="Worker_classification__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>o. Penalties</td>
+                                                        <td><lightning-input-field field-name="Penalties__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="caseIssuesWorked" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><strong>Total (add lines a through o)</strong></td>
+                                                        <td><lightning-input-field field-name="Total_Case_Issues_Worked_Formula__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <br/>
+                                    </template>
+                                    <div class="slds-box statutoryRequirements">
+                                        <h2>Statutory Requirements</h2>
+
+                                        <h3>Amount in Controversy</h3>
+                                        <label>Create a line item below for each new case opened during the grant year (under Case Inventory b) where the amount in controversy exceeds $50,000 in one or more tax periods.
+                                        </label>
+                                        <br/><br/>
+                            
+                                        <c-litc-reporting-datatable selected-type="Exception Explanation" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+                                        <br/>
+                                        <label>Total number of new cases opened during the grant year (under Case Inventory b) where the amount in controversy exceeds $50,000 in one or more tax periods</label>
+                                        <br/>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field field-name="Number_of_Exception_Explanations__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+
+                                        <h3>90/250 Requirement</h3>
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>
+                                            Enter the number of new cases opened during the grant year (under Case Inventory b) where the taxpayers'
+                                            income exceeded 250% of the federal poverty guidelines when the clinic opened the case
+                                        </label>
+                                        <br/>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field field-name="X90_250_New_cases__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="statutoryRequirements" required></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <label>
+                                            a. Percentage of over-income New Cases (divide number of new cases (Case Inventory b) opened during the grant year by number entered above). Enter the result as percent
+                                        </label>
+                                        <br/>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field field-name="X90_250_Percentage_of_New_Cases__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <template lwc:if={percentGreater10}>
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            <label>
+                                                b. If the percentage of over-income new cases exceeds 10%, explain why the clinic violated the prohibition on opening more than 10% of new cases where the taxpayers' income exceeded 250% of the federal poverty guidelines during the grant year. Explain the steps the clinic will take to avoid violating this prohibition in the future
+                                            </label>
+                                            <br/>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_6-of-8">
+                                                    <lightning-input-field field-name="Explanation_for_exceeding_10__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="statutoryRequirements" required></lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                        </template>
+
+                                        <h3>Attestation</h3>
+                                        <p>I attest that the information provided regarding the LITC Statutory Requirements is true, complete, and accurate to the best of my
+                                            knowledge and I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or
+                                            administrative penalties pursuant to 18 USC Sec. 1001.
+                                        </p>
+
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_4-of-8">
+                                                <abbr title="required" class="slds-required">*</abbr>
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-8">
+                                                <abbr title="required" class="slds-required">*</abbr>
+                                                <label>Title/role</label>
+                                            </div>
+                                        </div>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_4-of-8">
+                                                <lightning-input-field field-name="Attestation_Name__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="statutoryRequirements" required></lightning-input-field>
+                                            </div>
+                                            <div class="slds-col slds-size_4-of-8">
+                                                <lightning-input-field field-name="Attestation_Title_Role__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="statutoryRequirements" required></lightning-input-field>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="slds-box consultations">
+                                        <h2>Consultations</h2>
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>Enter the number of</label>
+                                        <table border="1">
+                                            <tbody>
+                                                <tr>
+                                                    <td>a. Consultations conducted in connection with the clinic's U.S. Tax Court work (do not repeat these entries on lines b and c)</td>
+                                                    <td><lightning-input-field field-name="USTC_Consultations__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="consultations" required></lightning-input-field></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>b. Consultations conducted with ESL taxpayers</td>
+                                                    <td><lightning-input-field field-name="ESL_Consulations__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="consultations" required></lightning-input-field></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>c. Consultations conducted with non-ESL taxpayers</td>
+                                                    <td><lightning-input-field field-name="Non_ESL_Consultations__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="consultations" required></lightning-input-field></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Total</b></td>
+                                                    <td><lightning-input-field field-name="Total_Consultations__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                        <div style="float: left;">
+                                            <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="instruction" label="Back"></lightning-button>
+                                        </div>
+                                        <div style="text-align: center;">
+                                            <lightning-button type="button" variant="brand" onclick={handleSaveButton} name="save" label="Save"></lightning-button>
+                                        </div>
+                                        <div style="float: right; margin-right: 0">
+                                            <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="submission" label="Next"></lightning-button>
+                                        </div>  
+                                    </div>
+                                    <footer></footer>
+                                </div>
+
+                                <template lwc:if={isYearEnd}>
+                                    <div class={tab2}>
+                                        <div class="slds-box additionalCaseInformation">
+                                            <h2>Additional Case Information</h2>
+
+                                            <p>For each of the total cases the clinic worked during the current grant year (under Case Inventory c), make an entry below under TAS Case Assistance and Additional Case Features if the case the clinic worked involved:</p>
+                                            
+                                            <h3>TAS Assistance</h3>
+                                        
+                                            <br/>
+                                            <p>Create a line item below for each Assistance from the Taxpayer Advocate Service (include clinic referrals to TAS and TAS referrals to the clinic)</p>
+                                            
+                                            
+                                            <c-litc-reporting-datatable selected-type="TAS Case" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+                                            <br/>
+                                            <label>Total number of TAS Cases</label>
+                                            <br/>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_2-of-8">
+                                                    <lightning-input-field field-name="Total_Number_TAS_Cases__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                </div>
+                                            </div>
+
+                                            <br/>
+                                            
+                                            <h3><abbr title="required" class="slds-required">*</abbr>Additional Case Features</h3>
+                                            <table border="1">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>a. More than one tax year</td>
+                                                        <td><lightning-input-field field-name="More_than_one_tax_year__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>b. Representation of English as a Second Language (ESL) taxpayers</td>
+                                                        <td><lightning-input-field field-name="Rep_of_English_as_a_2nd_Language__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>c. Representation of more than one taxpayer (i.e., both spouses)</td>
+                                                        <td><lightning-input-field field-name="Representation_of_more_than_one_taxpayer__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>d. Representation by a non-attorney qualified representative (generally a CPA or Enrolled Agent)</td>
+                                                        <td><lightning-input-field field-name="Representation_by_non_attorney_qualified__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>e. Representation by a clinic volunteer</td>
+                                                        <td><lightning-input-field field-name="Representation_by_a_clinic_volunteer__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>f. A state tax controversy</td>
+                                                        <td><lightning-input-field field-name="A_state_tax_controversy__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <br/>
+                                            
+                                            <h3><abbr title="required" class="slds-required">*</abbr>Student Representation</h3>
+                                            <label>Enter the number of students who: </label>
+                                            <table border="1">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>a. Obtained a special appearance authorization</td>
+                                                        <td><lightning-input-field field-name="Obtained_a_special_appearance_auth__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>b. Received academic credit for clinic work</td>
+                                                        <td><lightning-input-field field-name="Received_academic_credit_for_clinic_work__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <br/>
+
+                                            
+                                            <h3><abbr title="required" class="slds-required">*</abbr>Closed Case Outcomes</h3>
+                                            <label>For each of the cases the clinic closed during the current grant year (under Case Inventory d), enter the number of</label>
+                                            <table border="1">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>a. Cases where the clinic brought the taxpayer into filing compliance</td>
+                                                        <td><lightning-input-field field-name="Cases_taxpayer_filing_compliance__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>b. Cases where the clinic brought the taxpayer into collection compliance</td>
+                                                        <td><lightning-input-field field-name="Cases_taxpayer_collection_compliance__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>c. Dollars refunded to taxpayers</td>
+                                                        <td><lightning-input-field field-name="Dollars_refunded_to_taxpayers__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>d. Decrease in tax liabilities, penalties, and interest</td>
+                                                        <td><lightning-input-field field-name="Decrease_in_tax_liabilities_penalties__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <br/>
+
+                                            
+                                            <h3>U.S. Tax Court Activities</h3>
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            <label>a. Does the clinic Attend U.S. Tax Court Calendar calls?</label>
+                                            <br/>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_2-of-8">
+                                                    <lightning-input-field field-name="Attend_U_S_Tax_Court_Calendar_calls__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            <label>b. Does the clinic provide the U.S. Tax Court with a stuffer letter?</label>
+                                            <br/>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_2-of-8">
+                                                    <lightning-input-field field-name="Provide_the_U_S_Tax_Court_with_a_stuffe__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field>
+                                                </div>
+                                            </div>
+                                            <br/>
+                                            <label>If either of lines a or b is Yes, create a line item for the trial location(s) served.</label>
+                                            <br/><br/>
+
+                                            <c-litc-reporting-datatable selected-type="Trial Location" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+
+                                            <br/>
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            <label>Describe any significant cases the clinic worked in U.S. Tax Court or another Federal Court (i.e. litigating novel issues, coordinating with other clinics on systemic issues, etc.)</label>
+                                            <br/>
+                                            <div class="slds-grid slds-gutters">
+                                                <div class="slds-col slds-size_6-of-8">
+                                                    <lightning-input-field field-name="Describe_significant_cases_in_US_Tax_Co__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="additionalCaseInformation" required></lightning-input-field>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <!-- <br/>
+                                        <div class="slds-box consultations">
+                                            <h2>Consultations</h2>
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            <label>Enter the number of</label>
+                                            <table border="1">
+                                                <tbody>
+                                                    <tr>
+                                                        <td>a. Consultations conducted in connection with the clinic's U.S. Tax Court work (do not repeat these entries on lines b and c)</td>
+                                                        <td><lightning-input-field field-name="USTC_Consultations__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="consultations" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>b. Consultations conducted with ESL taxpayers</td>
+                                                        <td><lightning-input-field field-name="ESL_Consulations__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="consultations" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>c. Consultations conducted with non-ESL taxpayers</td>
+                                                        <td><lightning-input-field field-name="Non_ESL_Consultations__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="consultations" required></lightning-input-field></td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td><b>Total</b></td>
+                                                        <td><lightning-input-field field-name="Total_Consultations__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div> -->
+                                    
+                                        <br/><br/><br/>
+                                        <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                            <div style="float: left;">
+                                                <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="instruction" label="Back"></lightning-button>
+                                            </div>
+                                            <div style="text-align: center;">
+                                                <lightning-button type="button" variant="brand" onclick={handleSaveButton} name="save" label="Save"></lightning-button>
+                                            </div>
+                                            <div style="float: right; margin-right: 0">
+                                                <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="submission" label="Next"></lightning-button>
+                                            </div>  
+                                        </div>
+                                        <footer></footer>
+                                    </div>
+                                </template>
+                            </template>
+                            
+                            <div class={tab3}>
+
+                                <div class="slds-box taxReturns">
+                                    <h2>Tax Returns</h2>
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Enter the number of tax returns prepared</label>
+                                    <table border="1">
+                                        <tbody>
+                                            <tr>
+                                                <td>a. Ancillary to ESL activities</td>
+                                                <td><lightning-input-field field-name="Ancillary_tax_returns__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="taxReturns" required></lightning-input-field></td>
+                                            </tr>
+                                            <template lwc:if={isStandard}>
+                                                <tr>
+                                                    <td>b. To resolve a case the clinic worked during the grant year (under Case Inventory c)</td>
+                                                    <td><lightning-input-field field-name="Controversy_tax_returns__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="taxReturns" required></lightning-input-field></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Total</b></td>
+                                                    <td><lightning-input-field field-name="Total_Returns__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br/>
+                                <div class="slds-box ITIN">
+                                    <h2>Individual Taxpayer Identification Number (ITIN)</h2>
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Enter the number of ITIN applications prepared</label>
+                                    <table border="1">
+                                        <tbody>
+                                            <tr>
+                                                <td>a. Ancillary to ESL activities</td>
+                                                <td><lightning-input-field field-name="Ancillary_ITIN__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="ITIN" required></lightning-input-field></td>
+                                            </tr>
+                                            <template lwc:if={isStandard}>
+                                                <tr>
+                                                    <td>b. To resolve a case the clinic worked during the grant year (under Case Inventory c)</td>
+                                                    <td><lightning-input-field field-name="Controversy_ITINS__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="ITIN" required></lightning-input-field></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><b>Total</b></td>
+                                                    <td><lightning-input-field field-name="Total_ITINS__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                                </tr>
+                                            </template>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            
+                                <br/><br/><br/>
+                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                    <div style="float: left;">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="instruction" label="Back"></lightning-button>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <lightning-button type="button" variant="brand" onclick={handleSaveButton} name="save" label="Save"></lightning-button>
+                                    </div>
+                                    <div style="float: right; margin-right: 0">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="submission" label="Next"></lightning-button>
+                                    </div>  
+                                </div>
+                                <footer></footer>
+                            </div>
+                            <div class={tab4}>
+                                <div class="slds-box outreachActivities">
+                                    <h2>Outreach Activities</h2>
+                                    <p>Complete this section to provide information on outreach activities conducted by the clinic during the current grant 
+                                        year. Enter the details for each activity. <b>Note</b>: Do not repeat any activity already listed in Education below.</p>
+
+                                    <c-litc-reporting-datatable selected-type="Outreach Activity" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+
+                                    <br/>
+                                    <label>Total number of events</label>
+                                    <br/>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-8">
+                                            <lightning-input-field field-name="Total_Number_Outreach_Activities__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <br/>
+
+                                <div class="slds-box educationalActivities">
+                                    <h2>Educational Activities</h2>
+                                    <p>Complete this section to provide information on educational activities conducted by the clinic during the current grant year. Enter the
+                                        details for each activity. For Primary audience select ESL.</p>
+                                    
+                                    <c-litc-reporting-datatable selected-type="Educational Activity" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+                                    
+                                    <br/>
+
+                                    <label>Totals</label>
+                                    <table border="1">
+                                        <tbody>
+                                            <tr>
+                                                <td>a. Number of events</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ESL (or ESL taxpayers)</td>
+                                                <td><lightning-input-field field-name="EA_Number_of_Events_ESL__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td>LI (for low-income taxpayers)</td>
+                                                <td><lightning-input-field field-name="EA_Number_of_Events_LI__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Staff (of either ESL or LI service providers)</td>
+                                                <td><lightning-input-field field-name="EA_Number_of_Events_Staff__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Total events</b></td>
+                                                <td><lightning-input-field field-name="Total_Number_Educational_Activities__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td>b. Attendees</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ESL (or ESL taxpayers)</td>
+                                                <td><lightning-input-field field-name="EA_Total_Attendees_ESL__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td>LI (for low-income taxpayers)</td>
+                                                <td><lightning-input-field field-name="EA_Total_Attendees_LI__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Staff (of either ESL or LI service providers)</td>
+                                                <td><lightning-input-field field-name="EA_Total_Attendees_Staff__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Total attendees</b></td>
+                                                <td><lightning-input-field field-name="EA_Total_Attendees__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                                <br/>
+
+                                <div class="slds-box volunteerActivities">
+                                    <h2>Volunteer Activities</h2>
+
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Does the clinic have a pro bono panel</label>
+                                    <br/>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_2-of-8">
+                                            <lightning-input-field field-name="Does_the_clinic_have_a_pro_bono_panel__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="volunteerActivities" required></lightning-input-field>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Enter the number of volunteers that provided service to the clinic during the grant year who are</label>
+                                    <table border="1">
+                                        <tbody>
+                                            <tr>
+                                                <td>a. Attorneys</td>
+                                                <td><lightning-input-field field-name="Attorneys__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="volunteerActivities" required></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td>b. Certified Public Accountants (CPAs)</td>
+                                                <td><lightning-input-field field-name="Certified_Public_Accountants_CPAs__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="volunteerActivities" required></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td>c. Enrolled Agents (EAs)</td>
+                                                <td><lightning-input-field field-name="Enrolled_Agents_EAs__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="volunteerActivities" required></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td>d. Interpreters/Translators</td>
+                                                <td><lightning-input-field field-name="Interpreters_Translators__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="volunteerActivities" required></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td>e. Students (not receiving academic credit)</td>
+                                                <td><lightning-input-field field-name="Students_not_receiving_academic_credit__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="volunteerActivities" required></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td>f. Others</td>
+                                                <td><lightning-input-field field-name="Others__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="volunteerActivities" required></lightning-input-field></td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Total</b></td>
+                                                <td><lightning-input-field field-name="Total_Volunteer_Activties__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <template lwc:if={showVolunteerQuestion}>
+                                        <br/>
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>Enter the number of hours provided by the volunteers listed above (if a volunteer is listed, this line cannot be blank)</label>
+                                        <br/>
+                                        <div class="slds-grid slds-gutters">
+                                            <div class="slds-col slds-size_2-of-8">
+                                                <lightning-input-field field-name="Total_Volunteer_Hours__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="volunteerActivities" required></lightning-input-field>
+                                            </div>
+                                        </div>
+                                    </template>
+                                    
+                                </div>
+                                <br/>
+
+                                <div class="slds-box advocacyInformation">
+                                    <h2>Advocacy Information</h2>
+                                    <p>Enter the details of any advocacy activities the clinic participated in during the grant year. You may select from a drop down option or
+                                        indicate other if your activity is not listed. Add lines for each activity</p>
+
+                                    <c-litc-reporting-datatable selected-type="Advocacy Activity" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+                                    <br/>
+                                </div>
+                                <br/>
+                            
+                                <br/><br/><br/>
+                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
+                                    <div style="float: left;">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="instruction" label="Back"></lightning-button>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <lightning-button type="button" variant="brand" onclick={handleSaveButton} name="save" label="Save"></lightning-button>
+                                    </div>
+                                    <div style="float: right; margin-right: 0">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="submission" label="Next"></lightning-button>
+                                    </div>  
+                                </div>
+                                <footer></footer>
+                            </div>
+                            <div class={tab5}>
+                                <div class="slds-box goals">
+                                    <h2>Goals Progress</h2>
+                                    <label>Describe the clinic's efforts made in reaching established numerical program goals (reference most recent application amendment project abstract)</label>
+
+                                    <table>
+                                        <tbody>
+                                            <template lwc:if={isStandard}>
+                                                <tr>
+                                                    <td>
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                        a. New cases (under Case Inventory b) <br/>
+                                                        <lightning-input-field field-name="New_Cases__c" variant="label-hidden" onchange={autosave} disabled='true' data-section="goals"></lightning-input-field>
+                                                    </td>
+                                                    <td>
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                        New case goal <br/>
+                                                        <lightning-input-field field-name="GP_New_case_goal__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="goals" required></lightning-input-field>
+                                                    </td>
+                                                    <td>
+                                                        Percentage of goal <br/>
+                                                        <lightning-input-field field-name="GP_New_Case_Percentage__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                        b. Consultations <br/>
+                                                        <lightning-input-field field-name="Total_Consultations__c" variant="label-hidden" onchange={autosave} disabled='true' data-section="goals"></lightning-input-field>
+                                                    </td>
+                                                    <td>
+                                                        <abbr title="required" class="slds-required">*</abbr>
+                                                        Consultations goal <br/>
+                                                        <lightning-input-field field-name="GP_Consultations_goal__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="goals" required></lightning-input-field>
+                                                    </td>
+                                                    <td>
+                                                        Percentage of goal <br/>
+                                                        <lightning-input-field field-name="GP_Consultations_Percent__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                    </td>
+                                                </tr>
+                                            </template>
+                                            <tr>
+                                                <td>
+                                                    <abbr title="required" class="slds-required">*</abbr>
+                                                    c. Education events <br/>
+                                                    <lightning-input-field field-name="Total_Number_Educational_Activities__c" variant="label-hidden" onchange={autosave} disabled='true' data-section="goals"></lightning-input-field>
+                                                </td>
+                                                <td>
+                                                    <abbr title="required" class="slds-required">*</abbr>
+                                                    Education events goal <br/>
+                                                    <lightning-input-field field-name="GP_Education_events_goal__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="goals" required></lightning-input-field>
+                                                </td>
+                                                <td>
+                                                    Percentage of goal <br/>
+                                                    <lightning-input-field field-name="GP_Education_events_Percent__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <abbr title="required" class="slds-required">*</abbr>
+                                                    d. Education attendees <br/>
+                                                    <lightning-input-field field-name="EA_Total_Attendees__c" variant="label-hidden" onchange={autosave} disabled='true' data-section="goals"></lightning-input-field>
+                                                </td>
+                                                <td>
+                                                    <abbr title="required" class="slds-required">*</abbr>
+                                                    Education attendees goal <br/>
+                                                    <lightning-input-field field-name="GP_Education_attendees_goal__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="goals" required></lightning-input-field>
+                                                </td>
+                                                <td>
+                                                    Percentage of goal <br/>
+                                                    <lightning-input-field field-name="GP_Education_attendees_Percent__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <br/>
+                                <div class="slds-box narrative">
+                                    <h2>Narrative</h2>
+
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Efforts made towards goals. You must address efforts made towards reaching each goal (even if the clinic exceeded the goal)</label>
+                                    <lightning-helptext content="Please describe the over all progress in executing your program plan encompassing both numerical and non-numerical goals."></lightning-helptext>
+                                    
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_6-of-8">
+                                            <lightning-input-field field-name="Efforts_made_towards_goals__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} data-section="narrative" required></lightning-input-field>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+
+                                    <h3>Impediments</h3>
+                                    <p>Describe impediments to reaching goals and the clinic's efforts made to overcome them. If an interim delivery is less than 40% of your goal or a year-end delivery is less than 80% of your goal, you must address it here</p>
+
+                                    <c-litc-reporting-datatable selected-type="Impediment" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+
+                                    <br/>
+
+                                    <h3>Emerging Issues</h3>
+                                    <p>Briefly describe any frequently encountered or ongoing trends identified through the clinic's work on behalf of low-income or ESL
+                                        taxpayers during the grant year. Do not include information that may identify a specific taxpayer. Do not repeat issues from the interim
+                                        report unless you have an update</p>
+
+                                    <c-litc-reporting-datatable selected-type="Emerging Issue" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+
+                                    <br/>
+
+                                    <h3>Successes</h3>
+                                    <p>Briefly describe the clinic's successes from the grant year. Describe a specific activity or case, but do not include information that may
+                                        identify a specific taxpayer. Include at least one success per report (Interim and Year-End), but do not repeat those from the interim
+                                        report unless you have an update</p>
+
+                                    <c-litc-reporting-datatable selected-type="Success" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+
+                                    <br/>
+
+                                    <h3>Other Activities or Efforts</h3>
+                                    <label>Describe any other activities or efforts not previously captured on this report that you would like to share with the LITC Program Office</label>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_6-of-8">
+                                            <lightning-input-field field-name="Other_Activities_or_Efforts__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <br/><br/><br/>
+                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;"> 
+                                    <div style="float: left;">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="instruction" label="Back"></lightning-button>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <lightning-button type="button" variant="brand" onclick={handleSaveButton} name="save" label="Save"></lightning-button>
+                                    </div>
+                                    <div style="float: right; margin-right: 0">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="submission" label="Next"></lightning-button>
+                                    </div>  
+                                </div>
+                                <footer></footer>
+                            </div>
+                            <div class={tab6}>
+                                <div class="slds-box clinicInfo">
+                                    <h2>Clinic Information</h2>
+                                    <p>Describe changes to key clinic staff during the grant year (include known upcoming changes)</p>
+
+                                    <c-litc-reporting-datatable selected-type="Staff Change" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+
+                                    <br/>
+
+                                    <p>Describe tax law or other relevant training (i.e. intersection between tax law and poverty law, immigration law, etc.) provided during the grant year</p>
+    
+
+                                    <c-litc-reporting-datatable selected-type="Tax Law" record-id={recordId} disable-edits={disableEdits}></c-litc-reporting-datatable>
+
+                                    <br/>
+
+                                    <label>List any changes in days or hours of operation, if applicable</label>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_6-of-8">
+                                            <lightning-input-field field-name="Changes_to_day_hours_of_operation__c" variant="label-hidden" onchange={autosave} disabled={disableEdits}></lightning-input-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            
+                                <br/><br/><br/>
+                                <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;"> 
+                                    <div style="float: left;">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="instruction" label="Back"></lightning-button>
+                                    </div>
+                                    <div style="text-align: center;">
+                                        <lightning-button type="button" variant="brand" onclick={handleSaveButton} name="save" label="Save"></lightning-button>
+                                    </div>
+                                    <div style="float: right; margin-right: 0">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="submission" label="Next"></lightning-button>
+                                    </div>  
+
+                                </div>
+                                <footer></footer>
+                            </div>
+
+                            <div class={submission}>
+                        
+                                <h1>Submission</h1>
+                                <hr style="margin-top: 5px;">   
+                        
+                                <!-- <h2>Overview</h2>
+                                <p>The following is a review of your application</p> -->
+
+                                <template lwc:if={isSubmitted}>
+                                    <p>Thank you for submitting!</p>
+                                    <p>If you need to make changes you may unsubmit at any time before the deadline.</p>
+                                </template>
+
+                                <template if:true={submissionErrors}>
+                                    <b> Note: There are errors with your submission, please review the errors on the right and resubmit.</b>
+                                </template>
+                 
+
+                                <template if:false={disableEdits}>
+                                    <div class="slds-box">
+                                        <h2>Submission</h2>          
+                                        <p>By submitting this report, I certify that the statements herein are true, complete, and accurate to the best of my knowledge. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001). </p>
+                                        <br/>
+                                        <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                                        <label>By checking this box, I affirm that I am authorized to submit this information on behalf of the sponsoring organization and all information provided is complete and accurate.</label>
+                                        <br/><br/>
+                                    </div>
+                                </template>
+                                <template lwc:if={isAwaitingSignature}>
+                                    <p>Note: submission is not complete until all parties sign and certify. If you need to make any changes you may unsubmit at any time before the submission deadline.</p>
+                                </template>
+            
+                                <br>
+                                <div style="float: left;">
+                                    <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form" label="Back"></lightning-button>
+                                </div>
+                                <template if:false={disableEdits}>
+                                    <div style="float: right; margin-right: 0">
+                                        <lightning-button type="button" variant="brand" disabled={anyErrors} label="Certify and submit" onclick={handleSubmit}></lightning-button>
+                                    </div>  
+                                </template> 
+
+                                <footer></footer>
+                            </div>
+
+                        </lightning-record-edit-form>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_3-of-12">
+                        <div style="min-width: 245px; max-width: 215px; margin-top:5rem; display:block;">
+                            <lightning-button variant="base" label="Return to LITC Portal" onclick={navigateFooter} icon-name="utility:redo"></lightning-button> 
+                            <br/>
+                            <lightning-button  variant="base"  label="Save" title="Save" onclick={handleSaveButton} icon-name="utility:save" ></lightning-button>
+                            <br/><br/>
+                            <c-form-infobox accordion-errors={submissionErrors} status={status} status-field-name='Status__c' ongettabname={handleErrorClick} object-name='LITC_Reporting_Form__c' fields={recordFields} record-id={recordId} show-unsubmit="true" deadline-passed={deadlinePassed}></c-form-infobox> 
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+
+        </div>  
+    </template>
+
+    <template lwc:if={isNotAuthorizedOfficial}>
+        <br/>
+        You do not have the necessary role to view this page.
+    </template>
+
+
+
+</template>

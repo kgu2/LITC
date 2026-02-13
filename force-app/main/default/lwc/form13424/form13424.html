@@ -1,0 +1,462 @@
+<template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <template lwc:if={isAuthorizedOfficial}>
+        <div style="display: flex; justify-content: center;">
+
+            <div style="width: 190px; margin-right: 2rem;">
+
+                <div style="height: 1.25rem;"></div>
+                <div style="height: 2rem;"></div>
+            
+                <lightning-tabset active-tab-value={activeTab} variant="vertical" >       
+                    <lightning-tab onactive={handleOnActive} label="Instructions" value="instructions"></lightning-tab>
+                    <template lwc:if={isNew}>
+                        <lightning-tab onactive={handleOnActive} label="Form 13424-M" value="form"></lightning-tab>
+                    </template>
+                    <template lwc:if={isLegacy}>
+                        <lightning-tab onactive={handleOnActive} label="Form 13424" value="formLegacy"></lightning-tab>
+                        <lightning-tab onactive={handleOnActive} label="Form 13424-M" value="formLegacyM"></lightning-tab>
+                    </template>
+                    <lightning-tab onactive={handleOnActive} label="Submission" value="submission" ></lightning-tab>
+                </lightning-tabset>
+            </div>
+
+            <div style="margin-top:2rem; width: 100%;">
+                <div class="slds-grid slds-wrap slds-gutters_direct">
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_9-of-12">
+                        <div class={instructions} style="max-width: 70rem;">
+                                <h1>Instructions</h1>
+                                <hr style="margin-top: 5px;">
+
+                                <template lwc:if={isStatusAmended}>
+                                    <b><p>Funding decision review </p></b>
+
+                                    <lightning-button type="button" variant="base" onclick={openBAModal} label="Click here to review funding decision"></lightning-button>
+                                    <br/>  <br/><br/>
+                                    <template if:true={showBAModal}>
+                                        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                                            <div class="slds-modal__container">
+                                                <header class="slds-modal__header">
+                                                    <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeBAModal} alternative-text="close"></lightning-button-icon>
+                                                    <h2 id="modal-heading-05" class="header">Funding decision</h2>
+                                                </header>
+                                                <div class="slds-modal__content slds-var-p-around_large">
+                                                    <label>Funding amount</label>
+                                                    <br/>
+                                                    <lightning-formatted-number value={fundingAmount} format-style="currency" style="font-size: 1rem;"></lightning-formatted-number>
+                                                    <br/><br/>
+                                                    <label>Funding conditions</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fundingConditions} style="font-size: 1rem;"></lightning-formatted-text>
+                                                    <br/> <br/>
+                                                    <label>Funding explanation</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fundingExplanation} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+
+                                                    <label>Personnel</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldA} style="font-size: 1rem;"></lightning-formatted-text>
+                                                    
+                                                    <br/> <br/>
+                                                    <label>Fringe benefits</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldB} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Travel</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldC} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Equipment</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldD} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Supplies</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldE} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Contractual</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldF} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Other expenses</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldG} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Indirect charges</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldH} style="font-size: 1rem;"></lightning-formatted-text>
+
+                                                    <br/> <br/>
+                                                    <label>Matching charges</label>
+                                                    <br/>
+                                                    <lightning-formatted-text value={fieldI} style="font-size: 1rem;"></lightning-formatted-text>
+
+
+                                                    <br/> <br/>
+                                                </div>
+                                            </div>
+                                        </section>
+                                        <div class="slds-backdrop slds-backdrop_open"></div>
+                                    </template>
+                                </template>
+
+                                <template lwc:if={isNew}>
+                                    <b><p>Form 13424-M, Low Income Taxpayer Clinic (LITC) Application Narrative</p></b>
+                                
+                                    <p>
+                                        This form is used to report background information about the applicant, details about the proposed program plan, including staffing and plans for representation, education, and advocacy. There are also civil rights related questions. The LITC Program Office uses the information reported on this form to determine applicant eligibility. The information collected will be closely evaluated when reviewing and scoring the grant application. Please answer all the questions carefully and report all information completely and accurately. A complete response means an entry must be provided for each required field.  
+                                        
+                                        Remember that the Form 13424-M is an interactive form and answers you provide under clinic services and delivery model will 
+                                        determine which questions you are asked to respond to throughout. 
+                                        Pay close attention to these early responses to ensure you are prompted with the questions that pertain to your clinic’s 
+                                        program plan and the scoring for your application.
+        
+                                    </p>
+                                    <p>All required fields must be completed or you will not be able to submit the form.</p>
+                                </template>
+                                <template lwc:if={isLegacy}>
+                                    <div style="font-weight: bold">
+                                        <b><p>Form 13424-M, Low Income Taxpayer Clinic (LITC) Application Narrative</p></b>
+        
+                                        <p style="color: red"> 
+                                            For this grant year, both new/full and continuation/NCC request applicants will submit Form 13424-M.
+                                        </p>
+        
+                                        <p style="color: red">
+                                            For new/full applicants, responses to all the questions are required for submission. (If applying for an ESL Education Program grant, be sure to review the question helper text provided throughout the form for guidance on responding.) If any question does not apply to the clinic or there is no information to provide, please indicate as such or enter not applicable (N/A).
+                                        </p>
+        
+                                        <p style="color: red">
+                                            For continuation/NCC request applicants, the following information must be provided:
+                                        </p>
+        
+                                        <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem; color: red;">
+                                            <li>all four program numerical goals (new cases, consultations, educational activities, and attendees at educational events);</li>
+                                            <li>civil rights review responses;</li>
+                                            <li>the most recent audited financial statement and related information (see Background Information, II. Financial Responsibility, 4 i-v); and</li>
+                                            <li>any substantial program plan changes. Provide this information under the questions that cover the area of the program that will be changing.  For example, if the LITC’s hours of operation will be changing substantially, explain the change under III. Clinic Operations, question D. For all other questions, please enter not applicable or N/A. All required fields must be completed in order to submit.</li>
+                                        </ul>
+                                    </div>
+
+                                    <br/> <br/>
+                                    <b><p>Form 13424</p></b>
+
+                                    <div style="font-weight: bold">
+
+                                        <p>If any of the key personnel are not on staff at the time an application is submitted, please enter “to be hired” or “TBH” in the related required fields. Required fields are indicated by a red asterisk.</p>
+
+                                        <p>Also, due to the format of email address fields, an email address must be submitted for those fields to be considered complete. Entering only text in an email field will signal an error and will not allow for submission of the form.</p>
+                                
+                                    </div>
+                                </template>
+
+                                <br/>  
+                                <br/>
+
+                                <div style="width: 100%; margin-top: 15px;">
+                                    <div style="float: right;">
+                                        <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="formLegacy" label="Next"></lightning-button>
+                                    </div>
+                                </div>
+                                <footer></footer> 
+                        </div>
+
+                        <div class={form}>
+                            <h1>Form 13424-M</h1>
+                            <hr style="margin-top: 5px;">
+                            <template lwc:if={isSubmitted}>
+                                <p>Thank you for submitting!</p>
+                                <p>Your application is not submitted until all forms are submitted. If you need to make changes you may unsubmit at any time.</p>
+                            </template>
+                            <template lwc:else>
+                                <template lwc:if={isContinuation}>
+                                    <!-- 2.4.25 -->
+                                     <!-- continuation form uncommented 9/18/25 -->
+                                    <p>Select the correct clinic services and delivery model under Clinic Information. The selection impacts which questions are displayed.</p>
+                                    <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                                        <li>If Representation, Education and Advocacy is selected, the applicant must also choose the primary service delivery method.</li>
+                                    </ul>
+                                    <br/>
+                                    <p>Complete all fields under the following sections: Clinic Information, Language Access, Language Options, Reasonable Accommodations, Staffing, Program Numeric Goals, and Civil Rights Information.</p>
+                                    <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                                        <li>This is true even if you answer “no” to the question “Are there any major changes to the proposed program plan.”</li>
+                                        <li>For those who answer “yes to above question” you will then need to go through each section and answer “yes or no” to the question. If you mark “yes” for a section, it will display the field(s) to complete</li>
+                                    </ul>
+                                    
+                                    <br/>
+                                    <c-form-continuation13424-english prefill={prefill} layout="lightning"></c-form-continuation13424-english>
+                                    <!-- <p>Provide detailed responses for each section. Ranking panelists do not have access to applicant’s current or past history of performance.</p>
+                                    <br/>
+                                    <p>Select the correct clinic services and delivery model under Clinic Information. The selection impacts which questions are displayed and how the application is ranked.</p>
+                                    <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                                        <li>If Representation, Education and Advocacy is selected, the applicant must choose the primary service delivery method</li>
+                                    </ul>
+
+                                    <br/>
+                                    <c-form-new13424-english prefill={prefill} layout="lightning"></c-form-new13424-english> -->
+                                </template>
+                                <template lwc:else>
+                                    <p>Provide detailed responses for each section. Ranking panelists do not have access to applicant’s current or past history of performance.</p>
+                                    <br/>
+                                    <p>Select the correct clinic services and delivery model under Clinic Information. The selection impacts which questions are displayed and how the application is ranked.</p>
+                                    <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                                        <li>If Representation, Education and Advocacy is selected, the applicant must also choose the primary service delivery method.</li>
+                                    </ul>
+
+                                    <br/>
+                                    <c-form-new13424-english prefill={prefill} layout="lightning"></c-form-new13424-english>
+                                    <br/><br/>
+                                    <p>If you are ready to submit, return to the top and select Submission</p>
+                                </template>
+                            </template>
+                            <footer></footer>
+                        </div>
+
+                        <div class={formLegacy}>
+                            <h1>Form 13424</h1>
+                            <hr style="margin-top: 5px;">
+                            <template lwc:if={isSubmitted}>
+                                <p>Thank you for submitting!</p>
+                                <p>Your application is not submitted until all forms are submitted. If you need to make changes you may unsubmit at any time.</p>
+                            </template>
+                            <template lwc:else>
+                                <c-form-old13424-english prefill={prefill} layout="lightning"></c-form-old13424-english>
+                                <br/><br/>
+                                <p>If you are ready to submit, return to the top and select Submission</p>
+                            
+                            </template>
+                            <footer></footer>
+                        </div>
+
+                        <div class={formLegacyM}>
+                            <h1>Form 13424-M</h1>
+                            <hr style="margin-top: 5px;">
+                            <template lwc:if={isSubmitted}>
+                                <p>Thank you for submitting!</p>
+                                <p>Your application is not submitted until all forms are submitted. If you need to make changes you may unsubmit at any time.</p>
+                            </template>
+                            <template lwc:else>
+                                <c-form-old13424-m-english prefill={prefill} layout="lightning"></c-form-old13424-m-english>
+                                <br/><br/>
+                                <p>If you are ready to submit, return to the top and select Submission</p>
+                            
+                            </template>
+                            <footer></footer>
+                        </div>
+
+                        <div class={submission}>
+                            <lightning-record-edit-form object-api-name='Application_for_Federal_Assistance__c' record-id={recordId} onerror={handleError} onsuccess={handleSubmit}>
+
+                                <h1>Submission</h1>
+                                <hr style="margin-top: 5px;">
+            
+                                <h2>Overview</h2>
+                                <p>The following is a review of your application</p>
+
+                                <template if:true={showErrors}>
+                                <p>  Note: There are errors with your submission, please verify all status icons are complete and there are no errors on previous tab.</p>
+                                </template>
+                                <div style="margin-top: 1rem;"></div>
+
+                                <div class="slds-grid slds-wrap">
+                                    <template lwc:if={isNew}>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <template lwc:if={resultsOne}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconOne"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Clinic information</h3>
+                                            <br/>
+                                            <template lwc:if={resultsTwo}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconTwo" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconTwo"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Taxpayer access, geographic area, etc</h3>
+                                            <br/>
+                                            <template lwc:if={resultsThree}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconThree" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconThree"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Taxpayer services</h3>
+                                            <br/>
+                                            <template lwc:if={resultsFour}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconOne"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Staffing</h3>
+                                            <br/>
+                                            <template lwc:if={resultsFive}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconTwo" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconTwo"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Volunteers</h3>
+                                            <br/>
+                                            <template lwc:if={resultsSix}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconThree" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconThree"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Clinic operations</h3>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-2">
+                                            <template lwc:if={resultsSeven}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconOne"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Background</h3>
+                                            <br/>
+                                            <template lwc:if={resultsEight}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconTwo" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconTwo"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Training and resources</h3>
+                                            <br/>
+                                            <template lwc:if={resultsNine}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconThree" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconThree"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Financial responsibility</h3>
+                                            <br/>
+                                            <template lwc:if={resultsTen}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconOne"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Program information</h3>
+                                            <br/>
+                                            <template lwc:if={resultsEleven}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconTwo" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconTwo"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Civil rights information</h3>
+                                            <br/>
+                                        </div>
+                                    </template>
+                                    <template lwc:else>
+                                        <div class="slds-col slds-size_1-of-1 slds-small-size_1-of-1">
+                                            <template lwc:if={legacyResultsOne}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconOne"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Form 13424 - Applicant information</h3>
+                                            <br/>
+                                            <template lwc:if={legacyResultsTwo}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconTwo" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconTwo"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Form 13424 - Clinic information</h3>
+                                            <br/>
+                                            <template lwc:if={legacyResultsThree}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconThree" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconThree"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Form 13424-M - Background information</h3>
+                                            <br/>
+                                            <template lwc:if={legacyResultsFour}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconOne"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Form 13424-M - Program performance plan</h3>
+                                            <br/>
+                                            <template lwc:if={legacyResultsFive}>
+                                                <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style=" position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                            </template>  
+                                            <template lwc:else>
+                                                <lightning-icon icon-name="utility:success" variant="success" style=" position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconOne"></lightning-icon>
+                                            </template> 
+                                            <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Form 13424-M - Civil rights review</h3>
+                                            <br/>
+                                        </div>
+                                    </template>
+                                </div>
+
+                                
+                                <br/>
+                            
+
+                                <br><br/><br/>
+                                <template if:false={disableEdits}>
+                                    <div class="slds-box">
+                                        <h2>Submission</h2>
+                                            <p>By Signing this application, I certify (1) to the statements contained in the list of certifications ** and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001). </p>
+                                            <p>Check the box below to affirm that all information is complete and accurate</p>
+                                            <br/>
+                                            <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                                            <label>By checking this box, I affirm that I am the sponsoring organization's Authorizing Official and all information provided is complete and accurate.</label>
+                                            <br/><br/>
+                                            <p>The list of certifications and assurances, or an internet site where you may obtain this list, is contained in the announcement or agency specific instructions.</p>  
+                                    </div>
+                                </template>
+                            
+                                <br>
+                                <div style="float: left;">
+                                    <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form13424" label="Back"></lightning-button>
+                                </div>
+                                <template if:false={disableEdits}>
+                                    <div style="float: right; margin-right: 0">
+                                        <lightning-button type="button" variant="brand" disabled={anyErrors} label="Submit" onclick={handleSubmit}></lightning-button>
+                                    </div>  
+                                </template> 
+
+
+                            </lightning-record-edit-form>
+
+                            <footer></footer>
+                        </div>
+                    </div>
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_3-of-12">
+                        <c-form-infobox accordion-errors={submissionErrors} status={status} status-field-name='Form_13424_Status__c' object-name='Application_for_Federal_Assistance__c' fields={recordFields} record-id={recordId} show-unsubmit="true" deadline-passed={deadlinePassed} style="min-width: 245px; max-width: 275px; margin-top:5rem; display:block"></c-form-infobox> 
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </template>
+
+
+
+    <template lwc:if={isNotAuthorizedOfficial}>
+        <br/>
+        You do not have the necessary role to view this page.
+    </template>
+
+</template>

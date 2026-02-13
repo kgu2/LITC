@@ -1,0 +1,40 @@
+
+
+
+  .slds-box{
+	background-color:#2d247c0a;
+	border: 1px solid #2D247C;
+	border-radius: 5px;
+	padding: 28px;
+  }
+
+
+omnistudio-omniscript-block{ 
+    background-color:#2d247c0a;
+	border: 1px solid #2D247C;
+	border-radius: 5px;
+	padding: 28px;
+}
+
+runtime_omnistudio_omniscript-omniscript-block{ 
+	background-color:#2d247c0a;
+	border: 1px solid #2D247C;
+	border-radius: 5px;
+	padding: 28px;
+}
+
+.omniscript-body{ 
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+.slds-textarea{ 
+	background-color: #FFFFFF;
+}
+
+lightning-output-field.white div lightning-formatted-text{ 
+	color: white !important;
+  }
+

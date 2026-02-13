@@ -1,0 +1,171 @@
+<template>
+
+
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Submitting...." size="medium"></lightning-spinner>
+    </template>
+
+    <template if:false={secondTranche}>
+        <template if:true={county}>
+            <h1 style="font-size:24pt">Certification</h1>
+        </template>
+        <template if:true={tribal}>
+            <h1 style="font-size:24pt">Certification and Agreement</h1>
+        </template>
+        <br/>
+    
+        <template if:true={county}>
+            <h2>Certification Status - <span style={formStyle}>{currentStatus}</span></h2>
+        </template>
+        <template if:true={tribal}>
+            <h2>Certification and Agreement Status - <span style={formStyle}>{currentStatus}</span></h2>
+        </template>
+    
+        <br/>
+    
+        <template if:false={isSubmitted}>
+            <lightning-record-edit-form object-api-name="X605_Application__c" record-id={recordId} onerror={handleError}>
+                <lightning-input-field value='Docusign' required disabled={disableEdits} variant="label-hidden" field-name="Submission_Source__c" onchange={handleSubmissionSourceChange} class="slds-hide submissionSource"></lightning-input-field>
+            </lightning-record-edit-form>
+            <template if:true={county}>
+                <p>The designated Authorized Representative must complete and sign the award terms and conditions agreement.</p>
+            </template>
+            <template if:true={tribal}>
+                <p>The designated Authorized Representative must complete and sign the certification regarding economic conditions and the terms and conditions agreement.</p>
+            </template>
+            <br/>
+        </template>
+    
+        <template if:true={isDraft}>
+            <template if:true={docusignCertification}>
+                <ul class="ulOne">
+                    <li>The documents will be emailed directly to the Authorized Representative with instructions to electronically sign and submit the document with DocuSign.</li>
+                </ul>
+    
+                <template if:true={county}>
+                    <p style="margin-top:20px;font-weight:bold;">
+                        When the Authorized Representative signs the award terms and conditions agreement, the designated contact person will receive an email notification that the submission has been received and Treasury will begin the submission review process.  
+                    </p>
+                </template>
+                <template if:true={tribal}>
+                    <p style="margin-top:20px;font-weight:bold;">
+                        When the Authorized Representative signs the certification regarding economic conditions and award terms and conditions agreement, the designated contact person will receive an email notification that the submission has been received and Treasury will begin the submission review process.  
+                    </p>
+                </template>
+                <br/>
+                
+                <div class="slds-box">
+                    <p>Check the box below to affirm that all information is complete and accurate</p>
+                    <br/>
+                    <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                    <label>By checking this box, I affirm that all information provided is complete and accurate.</label>
+                    <br/>
+                    <template if:true={certCheckboxChecked}>
+                        <br/>
+                        <button onclick={handleSubmitDocusign} class="slds-button slds-button_brand">Submit with DocuSign</button>
+                    </template>
+                </div>
+                <div style="float: right;">
+                    <lightning-button variant="base" label="Click here to certify manually" onclick={handleManualClick}></lightning-button>
+                </div>
+            </template>
+    
+            <template if:false={docusignCertification}>
+                <template if:true={county}>
+                    <p>
+                        Please click on the download link below to generate a filled pdf of the award terms and conditions agreement.
+                    </p>
+                    <br />
+                    <p>
+                        An Authorized Representative of the eligible applicant with legal authority to bind the eligible applicant must sign the award terms and conditions agreement. There are multiple signatures required. Please review the entire document, and upload a copy of the signed and scanned document below.
+                    </p> <br />
+                </template>
+                <template if:true={tribal}>
+                    <p>
+                        Please click on the download link below to generate a filled pdf of the certification regarding economic conditions and award terms and conditions agreement.
+                    </p>
+                    <br />
+                    <p>
+                        An Authorized Representative of the eligible applicant with legal authority to bind the eligible applicant must sign the certification regarding economic conditions and award terms and conditions agreement. There are multiple signatures required. Please review the entire document, and upload a copy of the signed and scanned document below.
+                    </p> <br />
+                </template>
+    
+                <div class="slds-box">
+                    <h2>
+                        Manual Certification Option
+                    </h2>
+                    <br />
+                    <button onclick={handleDownloadAwardTermFile} class="slds-button slds-button_brand">Download Agreement</button>
+                    <br /> <br /> <br />
+                    <label>Upload Agreement Below: </label> <br />
+                    <c-file-loader my-record-id={recordId} file-prefix="awardTerm"></c-file-loader>
+                    <!-- <hr/>
+                    <br/>
+                    <button onclick={handleDownloadCRECFile} class="slds-button slds-button_brand">Download Certification</button>
+                    <br /> <br /> <br />
+                    <label>Upload Certification Regarding Economic Conditions Below: </label> <br />
+                    <c-file-loader my-record-id={recordId} file-prefix="CREC"></c-file-loader> -->
+                </div>
+                <br />
+                <div class="slds-box">
+                    <p>Check the box below to affirm that all information is complete and accurate</p>
+                    <br/>
+                    <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                    <label >By checking this box, I affirm that all information provided is complete and accurate.</label>
+                    <br/>
+                    <template if:true={certCheckboxChecked}>
+                        <br/>
+                        <button onclick={submitManual} class="slds-button slds-button_brand">Submit Certification</button>
+                    </template>
+                </div>
+                <div style="float: right;">
+                    <lightning-button variant="base" label="Click here to certify with DocuSign" onclick={handleDocusignClick}></lightning-button>
+                </div>
+            </template>
+    
+        </template>
+    
+        <template if:true={isAwaitingSignature}>
+            <br/>
+            <p>Docusign has been sent to Authorized Representative</p>
+        </template>
+    
+    
+    </template>
+
+    <template if:true={secondTranche}>
+        <h1 style="font-size:24pt">Affirmation</h1> 
+        <br/>
+        <template if:false={isSubmitted}>
+            <p> When the submitter affirms the information is complete and accurate, the designated contact person will receive an email notification that the submission has been received, and Treasury will begin the submission review process. The designated point of contact will receive an email if any corrections are needed as well as when payment is scheduled.   </p>
+            <br/>
+            <div class="slds-box">
+                <p>Check the box below to affirm that all information is complete and accurate</p>
+                <br/>
+                <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                <label>By checking this box, I affirm that all information provided is complete and accurate.</label>
+                <br/>
+                <template if:true={certCheckboxChecked}>
+                    <br/>
+                    <button onclick={handleSecondTrancheSubmit} class="slds-button slds-button_brand">Submit</button>
+                </template>
+            </div>
+        </template>
+    </template>
+
+    <template if:true={isSubmitted}>
+        <br/>
+        <p>Thank you for submitting! The designated contact person will receive an email notification that the submission has been received, and Treasury will begin the submission review process. The designated point of contact will receive an email if any corrections are needed as well as when payment is scheduled.</p>
+        <br/>
+        <p>Click <a onclick={handleSurveyNav}>HERE</a> to complete a survey</p>
+    </template>
+    
+    <br /><br />
+
+    <div style="float: left;">
+        <lightning-button type="button" label="Back: Payment Information" onclick={handleNav} name="form"></lightning-button>
+    </div>
+
+    <br /><br />
+
+</template>

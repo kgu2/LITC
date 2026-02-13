@@ -1,0 +1,39 @@
+<template>
+  <!-- Short Card Add Button-->
+  <template if:true={_allowNew}>
+    <template if:true={_isCards}>
+      <div class="nds-p-horizontal_small">
+        <div class="nds-box nds-box_x-small nds-grid nds-grid_vertical nds-grid_vertical-align-center nds-edit-block_cards-add-card nds-edit-block_shortcards"
+             onclick={handleAdd}
+             role="button"
+             tabindex="0"
+             onkeydown={handleKeyboardAdd}>
+          <div class="nds-m-top_x-large nds-edit-block_shortcards-circle ">
+            <!-- Add Button Icon -->
+            <span class="nds-icon_container nds-icon_container_circle">
+              <c-icon class=""
+                      extraclass="nds-input__icon"
+                      icon-name="utility:user"
+                      theme="nds"
+                      alternative-text="user icon"
+                      size="large">
+              </c-icon>
+            </span>
+          </div>
+
+          <div class="nds-m-top_x-small nds-size_1-of-1 nds-text-align_center nds-edit-block_shortcards-add-icon">
+            <c-icon extraclass="nds-input__icon nds-button__icon nds-button__icon_small"
+                    icon-name="utility:add"
+                    theme="nds"
+                    alternative-text="add icon"
+                    size="x-small">
+            </c-icon>
+            <span>
+              {_newLabel}
+            </span>
+          </div>
+        </div>
+      </div>
+    </template>
+  </template>
+</template>

@@ -1,0 +1,245 @@
+<template>
+    <template lwc:if={typeLicense}>
+        <br/>
+        <lightning-button variant="brand" label="Add license/certification" icon-name="utility:add" onclick={openAddLicenseModal}></lightning-button>
+        <br/>  <br/>
+        <template lwc:if={showTableLicense}>
+            <lightning-datatable class="myTable" onrowaction={openEditLicenseModal} show-row-number-column key-field="Id" hide-checkbox-column data={licenses} columns={columnsLicense}></lightning-datatable>
+        </template> 
+
+
+        <template lwc:if={showModalLicense}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container">
+                    <lightning-record-edit-form object-api-name="LITC_Licensure__c" onerror={handleError} onsuccess={handleSuccess} record-id={selectedLicense}>
+    
+                        <lightning-input-field required variant="label-hidden" field-name="Application_for_Federal_Assistance__c" class="slds-hide" value={recordId}></lightning-input-field>
+                        <lightning-input-field required variant="label-hidden" field-name="Type__c" class="slds-hide" value={typeLicense}></lightning-input-field>
+    
+                        <header class="slds-modal__header">
+                            <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeLicenseModal}></lightning-button-icon>
+                            <h2 id="modal-heading-05" class="header">Licenses/Certification</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-6" style="max-height: 600px;">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Select License/Certification</label>
+                                </div>
+                                <template lwc:if={showOther}>
+                                    <div class="slds-col slds-size_4-of-8">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>Other(specify)</label>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_4-of-8">
+                                    <lightning-input-field required variant="label-hidden" field-name="Licensure__c" onchange={handleLicenseChange}></lightning-input-field>
+                                </div>
+                                <template lwc:if={showOther}>
+                                    <div class="slds-col slds-size_4-of-8">
+                                        <lightning-input-field required variant="label-hidden" field-name="Other_explanation__c"></lightning-input-field>
+                                    </div>
+                                </template>
+                            </div>
+                            <template lwc:if={showAdditionalFields}>
+                                <br/>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>State(s) of licensure</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>License number</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <!-- <abbr title="required" class="slds-required">*</abbr> -->
+                                        <label>US tax court number</label>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="Jurisdiction__c"></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field required variant="label-hidden" field-name="License_number__c"></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field variant="label-hidden" field-name="U_S_Tax_Court_number__c"></lightning-input-field>
+                                    </div>
+                                </div>
+                            </template>     
+                            <br/>         
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <label>The applicant affirms that the status of the individual’s licensure has been verified. The license is active and the licensee is in good standing with the licensing authority.</label>
+                                </div>
+                            </div>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-1">
+                                    <lightning-input-field required variant="label-hidden" field-name="Application_Affirmation__c"></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                        </div> 
+                        <div class="slds-modal__footer">
+                            <template lwc:if={selectedLicense}>
+                                <lightning-button style="float:left" label="Delete" type="button" variant="destructive " onclick={handleDeleteLicense}></lightning-button> 
+                            </template>
+                            <lightning-button label="Submit information" type="submit" variant="brand"></lightning-button> 
+                        </div>
+                    </lightning-record-edit-form>
+                </div>                      
+            </section>
+            
+            <div class="slds-backdrop slds-backdrop_open"></div>
+    
+    
+        </template>
+
+        <br/>
+    </template>
+
+
+
+    <template lwc:else>
+        <lightning-button variant="brand" label="Add staff" icon-name="utility:add" onclick={openAddStaffModal}></lightning-button>
+        <br/>  <br/>
+        <template lwc:if={showTable}>
+            <lightning-datatable class="myTable" onrowaction={openEditStaffModal} show-row-number-column key-field="Id" hide-checkbox-column data={otherStaff} columns={columns}></lightning-datatable>
+        </template>       
+        <template lwc:if={showModal}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+                <div class="slds-modal__container">
+                    <lightning-record-edit-form object-api-name="Other_Staff__c" onerror={handleError} onsuccess={handleSuccess} record-id={selectedStaff}>
+    
+                        <lightning-input-field required variant="label-hidden" field-name="Application_for_Federal_Assistance__c" class="slds-hide" value={recordId}></lightning-input-field>
+    
+                        <header class="slds-modal__header">
+                            <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeEditStaffModal}></lightning-button-icon>
+                            <h2 id="modal-heading-03" class="header">Other staff</h2>
+                        </header>
+                        <div class="slds-modal__content slds-p-around_small" id="modal-content-id-4" style="max-height: 600px;">
+              
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_3-of-8">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>Last name</label>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-8">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>First name</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-8">
+                                        <label>Middle initial</label>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-8">
+                                        <label>Suffix</label>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_3-of-8">
+                                        <lightning-input-field required variant="label-hidden" field-name="Other_Staff_Last_Name__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_3-of-8">
+                                        <lightning-input-field required variant="label-hidden" field-name="Other_Staff_First_Name__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-8">
+                                        <lightning-input-field variant="label-hidden" field-name="Other_Staff_Middle_Initial__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-8">
+                                        <lightning-input-field variant="label-hidden" field-name="Other_Staff_Suffix__c" disabled={disableEdits}></lightning-input-field>
+                                    </div>
+                                </div>
+                                <br/>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <label>Licensure (select all options that apply)</label>
+                                    </div>
+                                    <template lwc:if={showAdditionalFields}>
+                                        <template lwc:if={showOther}>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <label>Other</label>
+                                            </div>
+                                        </template>
+                                    </template>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-1">
+                                        <lightning-input-field variant="label-hidden" field-name="Other_Staff_Licenses_Certifications__c" disabled={disableEdits} onchange={handleLicenseChange}></lightning-input-field>
+                                    </div>
+                                    <template lwc:if={showAdditionalFields}>
+                                        <template lwc:if={showOther}>
+                                            <div class="slds-col slds-size_1-of-2">
+                                                <lightning-input-field variant="label-hidden" field-name="Other_License_Certfication__c" disabled={disableEdits}></lightning-input-field>
+                                            </div>
+                                        </template>
+                                    </template>
+                                </div>
+                                <template lwc:if={showAdditionalFields}>
+                                    <br/>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label>State(s) of licensure</label>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label>License number</label>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <label>U.S. tax court number (if applicable)</label>
+                                        </div>
+                                    </div>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <lightning-input-field variant="label-hidden" field-name="State_of_licensure__c" disabled={disableEdits}></lightning-input-field>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <lightning-input-field variant="label-hidden" field-name="License_number__c" disabled={disableEdits}></lightning-input-field>
+                                        </div>
+                                        <div class="slds-col slds-size_1-of-3">
+                                            <lightning-input-field variant="label-hidden" field-name="U_S_tax_court_number__c" disabled={disableEdits}></lightning-input-field>
+                                        </div>
+                                    </div>
+                                    <br/>
+                                    <div class="slds-grid slds-gutters">
+                                        <div class="slds-col slds-size_1-of-1">
+                                            <abbr title="required" class="slds-required">*</abbr>
+                                            <lightning-input-field variant="label-hidden" field-name="Other_Staff_Application_Affirms__c" disabled={disableEdits} style="display:inline-block;"></lightning-input-field>
+                                            <label>The applicant affirms that the status of the individual’s licensure has been verified. The license is active and the licensee is in good standing with the licensing authority</label>
+                                        </div>
+                                    </div>
+                                </template>
+                                <br/>                             
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_1-of-2">
+                                        <abbr title="required" class="slds-required">*</abbr>
+                                        <label>Responsibilities and qualifications</label>
+                                    </div>
+                                </div>
+                                <div class="slds-grid slds-gutters">
+                                    <div class="slds-col slds-size_4-of-8">
+                                        <lightning-input-field variant="label-hidden" field-name="Other_Staff_Responsibilities_Qualf__c" disabled={disableEdits} required></lightning-input-field>
+                                    </div>
+                                </div>
+                                <br/> 
+                                
+                            <br/>
+                        </div> 
+                        <div class="slds-modal__footer">
+                            <template lwc:if={selectedStaff}>
+                                <lightning-button style="float:left" label="Delete" type="button" variant="destructive " onclick={handleDelete}></lightning-button> 
+                            </template>
+                            <lightning-button label="Submit information" type="submit" variant="brand"></lightning-button> 
+                        </div>
+                    </lightning-record-edit-form>
+                </div>                      
+            </section>
+            
+            <div class="slds-backdrop slds-backdrop_open"></div>
+    
+    
+        </template>
+    </template>
+</template>

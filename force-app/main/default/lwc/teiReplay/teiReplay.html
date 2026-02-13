@@ -1,0 +1,59 @@
+<template>
+  <template if:true={isLoading}>
+    <lightning-spinner alternative-text="Loading…" size="large" variant="brand"></lightning-spinner>
+  </template>
+
+    <div class="container">
+  
+      <h1 class="page-title">TEI Replay</h1>
+      <p class="page-sub">
+        We curated our best TEI leadership programming to support and inspire you as you hone your leadership skills.
+        We keep expanding our collection so you can binge-watch all your favorite sessions. View shorter clips highlighting
+        one learning objective on our ICYMI Page.
+      </p>
+      <p class="warning">Note, it is a violation to download, copy or share any of the videos.</p>
+
+    <div class="globalContainer">
+      <template for:each={categories} for:item="cat">
+        <template if:true={cat.hasItems}>
+          <section key={cat.label} class="section">
+            <div class="section-header">
+              <div class="section-title">{cat.label}                
+                <div>
+                  <button class="ViewAllVideos" data-label={cat.label} onclick={handleViewAllVideos}>View All Videos</button>
+                </div>
+              </div>
+              <div class="section-actions">
+              </div>
+            </div>
+            <hr class="divider" />
+            <div class="grid">
+              <template for:each={cat.items} for:item="item">
+                <div key={item.Id}
+                          data-id={item.Id}
+                          onclick={handleLaunchVideo}
+                          class="card"
+                          role="button"
+                          tabindex="0"
+                          aria-label={item.Title}>
+                  <div class="thumb">
+                    <img src={item.videoThumbnail} alt={item.Title} />
+                    <div class="play" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="#0b1020"><path d="M8 5v14l11-7z"></path></svg>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <div class="title">{item.Title}</div>
+                    <div class="meta">
+                      <span class="badge">Video</span>
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </div>
+          </section>
+        </template>
+      </template>
+    </div>
+    </div>
+</template>

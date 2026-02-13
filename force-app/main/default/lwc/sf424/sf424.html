@@ -1,0 +1,302 @@
+<template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <template lwc:if={isAuthorizedOfficial}>
+      <div style="display: flex; justify-content: center;">
+
+          <div style="width: 190px; margin-right: 2rem;">
+
+              <div style="height: 1.25rem;"></div>
+              <div style="height: 2rem;"></div>
+          
+              <lightning-tabset active-tab-value={activeTab} variant="vertical" >       
+                  <lightning-tab onactive={handleOnActive} label="Instructions" value="instructions"></lightning-tab>
+                  <lightning-tab onactive={handleOnActive} label="Standard Form 424" value="form"></lightning-tab>
+                  <lightning-tab onactive={handleOnActive} label="Submission" value="submission" ></lightning-tab>
+              </lightning-tabset>
+          </div>
+
+          <div style="margin-top:2rem; width: 100%;">
+              <div class="slds-grid slds-wrap slds-gutters_direct">
+                  <div class="slds-col slds-size_1-of-1 slds-small-size_9-of-12">
+                      <div class={instructions} style="max-width: 70rem;">
+                              <h1>Instructions</h1>
+                              <hr style="margin-top: 5px;">
+                              <b><p>Standard Form 424, Application for Federal Assistance</p></b>
+                              
+                              <p>
+                                This is a standard form required to be submitted with all grant applications. It is used to report information about the applicant, 
+                                including the amount and period of the grant requested and the counties and congressional districts where the applicant will provide assistance.  
+                              </p>
+
+                              <p>When signing Standard Form 424, the applicant certifies that it:</p>
+                              <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                                  <li>Has provided true, complete, and accurate information;</li>
+                                  <li>Has provided the required assurances, found in Publication 3319, Section VI.D, National Policy Requirements and Administrative Requirements; and </li>
+                                  <li>Upon acceptance of an award, agrees to comply with the terms of Publication 3319, 2026 Grant Application Package and Guidelines, and any additional terms contained in the Notice of Award issued by the LITC Program Office.  </li>
+                              </ul>
+                              <br/>
+                              <p>
+                                The 424 will ask you for your organization's UEI. A UEI is applied for through Sam.gov.  We highly recommend that you set up your Sam.gov account and then start the application process.You may request that your application be processed without having completed the Sam.gov process. 
+                                
+                                You must provide an explanation for why the process is not complete and when it is expected that the process will be complete. 
+
+                                The LITC Program Office will consider the explanation given and determine whether to allow the application to move forward. 
+                              </p>
+
+                              <br/>
+                              <p>OMB requires Standard Form 424 be used by all federal grant programs. Some information collected on this form is not required when applying for an LITC grant. In this portal, however, you will only see the questions that are required of LITCs so be sure to provide an answer for all the questions asked.  </p>
+
+
+                              <br/>  <br/>
+
+                              <div style="width: 100%; margin-top: 15px;">
+                                  <div style="float: right;">
+                                      <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form" label="Next"></lightning-button>
+                                  </div>
+                              </div>
+                              <footer></footer> 
+                      </div>
+
+                      <div class={form}>
+                          <h1>Standard Form 424</h1>
+                          <hr style="margin-top: 5px;">
+                          <template lwc:if={isSubmitted}>
+                            <p>Thank you for submitting!</p>
+                            <p>Your application is not submitted until all forms are submitted. If you need to make changes you may unsubmit at any time.</p>
+                          </template>
+                          <template lwc:else>
+                            <c-form--s-f424-english prefill={prefill} layout="lightning"></c-form--s-f424-english>
+                            <br/><br/>
+                            <p>If you are ready to submit, return to the top and select Submission</p>
+                          </template>
+                          <footer></footer>
+                      </div>
+
+                      <div class={submission}>
+                          <lightning-record-edit-form object-api-name='Application_for_Federal_Assistance__c' record-id={recordId} onerror={handleError} onsuccess={handleSubmit}>
+
+                              <h1>Submission</h1>
+                              <hr style="margin-top: 5px;">   
+                              <template lwc:if={showSubmittedNoUEI}>
+                                <b><p style="color: red">The application can't be submitted at this time because the organization does not have a UEI. A message with the explanation you provided in the application has been forwarded to the LITC Program Office for review and consideration. You will be contacted when a decision has been made about whether the application may be submitted without the UEI. Thank for you for your patience as we consider your request.</p></b>
+                              </template>     
+                              <h2>Overview</h2>
+                              <p>The following is a review of your application</p>
+
+                              <template if:true={showErrors}>
+                                <p>  Note: There are errors with your submission, please verify all status icons are complete and there are no errors on previous tab.</p>
+                              </template>
+                              <div style="margin-top: 1rem;"></div>
+
+                              <template lwc:if={resultsOne}>
+                                  <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer; position: relative; top:-4px" name="iconOne" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                  <template if:true={showHelpPopover.one}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                                        <div id="popover-body-id-2" class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: rgb(254, 147, 57);">Warning</b>: All required fields in this section must be filled out. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template>  
+                              <template lwc:else>
+                                  <lightning-icon icon-name="utility:success" variant="success" style="cursor: pointer; position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconOne"></lightning-icon>
+                                  <template if:true={showHelpPopover.one}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem;">
+                                        <div class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: green;">Success</b>: section is complete. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template> 
+                              <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Applicant information</h3>
+                              <br/>
+                              <template lwc:if={resultsTwo}>
+                                  <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer; position: relative; top:-4px" name="iconTwo" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                  <template if:true={showHelpPopover.two}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                                        <div id="popover-body-id-5" class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: rgb(254, 147, 57);">Warning</b>: All required fields in this section must be filled out. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template>  
+                              <template lwc:else>
+                                  <lightning-icon icon-name="utility:success" variant="success" style="cursor: pointer; position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconTwo"></lightning-icon>
+                                  <template if:true={showHelpPopover.two}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem;">
+                                        <div class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: green;">Success</b>: section is complete. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template> 
+                              <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Organization unit</h3>
+                              <br/>
+                              <template lwc:if={resultsThree}>
+                                  <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer; position: relative; top:-4px" name="iconThree" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                  <template if:true={showHelpPopover.three}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                                        <div id="popover-body-id-6" class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: rgb(254, 147, 57);">Warning</b>: All required fields in this section must be filled out. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template>  
+                              <template lwc:else>
+                                  <lightning-icon icon-name="utility:success" variant="success" style="cursor: pointer; position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconThree"></lightning-icon>
+                                  <template if:true={showHelpPopover.three}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem;">
+                                        <div class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: green;">Success</b>: section is complete. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template> 
+                              <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Type of applicant</h3>
+                              <br/>
+                              <template lwc:if={resultsFour}>
+                                  <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer; position: relative; top:-4px" name="iconFour" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                  <template if:true={showHelpPopover.four}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                                        <div class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: rgb(254, 147, 57);">Warning</b>: All required fields in this section must be filled out. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template>  
+                              <template lwc:else>
+                                  <lightning-icon icon-name="utility:success" variant="success" style="cursor: pointer; position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconFour"></lightning-icon>
+                                  <template if:true={showHelpPopover.four}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem;">
+                                        <div class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: green;">Success</b>: section is complete. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template> 
+                              <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Congressional district / Project info</h3>
+                              <br/>
+                              <template lwc:if={resultsSix}>
+                                  <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer; position: relative; top:-4px" name="iconSix" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                  <template if:true={showHelpPopover.six}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                                        <div class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: rgb(254, 147, 57);">Warning</b>: All required fields in this section must be filled out. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template>  
+                              <template lwc:else>
+                                  <lightning-icon icon-name="utility:success" variant="success" style="cursor: pointer; position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconSix"></lightning-icon>
+                                  <template if:true={showHelpPopover.six}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem;">
+                                        <div class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: green;">Success</b>: section is complete. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template> 
+                              <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Estimated funding</h3>
+                              <br/>
+                              <template lwc:if={resultsFive}>
+                                  <lightning-icon icon-name="action:edit" variant="warning" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer; position: relative; top:-4px" name="iconFive" class="animate__animated animate__bounce" size="xx-small"></lightning-icon>
+                                  <template if:true={showHelpPopover.five}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                                        <div class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: rgb(254, 147, 57);">Warning</b>: All required fields in this section must be filled out. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template>  
+                              <template lwc:else>
+                                  <lightning-icon icon-name="utility:success" variant="success" style="cursor: pointer; position: relative; top:-4px" onmouseover={showPopover} onmouseout={closePopover} name="iconFive"></lightning-icon>
+                                  <template if:true={showHelpPopover.five}>
+                                      <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem;">
+                                        <div class="slds-popover__body">
+                                          <p style="font-size: 1rem;">
+                                            <b style="color: green;">Success</b>: section is complete. 
+                                        </p>
+                                        </div>
+                                      </section>
+                                  </template>
+                              </template> 
+                              <h3 style="display: inline-block; margin-left:1rem; margin-bottom:.75rem">Authorized representative</h3>
+
+
+                              <br><br/><br/>
+                              <template if:false={disableEdits}>
+                                  <div class="slds-box">
+                                      <h2>Submission</h2>
+                                      
+                                          <p>By Signing this application, I certify (1) to the statements contained in the list of certifications ** and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001). </p>
+
+
+                                          <p>Check the box below to affirm that all information is complete and accurate</p>
+                                          <br/>
+                                          <lightning-input style="display: inline-block;" name="certifyCheckbox" type="checkbox" onchange={handleCheckboxCertify}></lightning-input>
+                                          <label>By checking this box, I affirm that I am the sponsoring organization's Authorizing Official and all information provided is complete and accurate.</label>
+                                          <br/><br/>
+                                          <p>The list of certifications and assurances, or an internet site where you may obtain this list, is contained in the announcement or agency specific instructions.</p>
+                                          
+                                  </div>
+                              </template>
+                              <template lwc:if={isAwaitingSignature}>
+                                  <p>Note: submission is not complete until all parties sign and certify. If you need to make any changes you may unsubmit at any time before the submission deadline.</p>
+                              </template>
+          
+                              <br>
+                              <div style="float: left;">
+                                  <lightning-button type="button" variant="brand-outline" onclick={handleChangeTab} name="form" label="Back"></lightning-button>
+                              </div>
+                              <template if:false={disableEdits}>
+                                  <div style="float: right; margin-right: 0">
+                                      <lightning-button type="button" variant="brand" disabled={anyErrors} label="Proceed with certification" onclick={handleSubmit}></lightning-button>
+                                  </div>  
+                              </template> 
+
+
+                          </lightning-record-edit-form>
+
+                          <footer></footer>
+                      </div>
+                  </div>
+                  <div class="slds-col slds-size_1-of-1 slds-small-size_3-of-12">
+                      <c-form-infobox accordion-errors={submissionErrors} status={status} status-field-name='SF424_Status__c' ongettabname={handleErrorClick} object-name='Application_for_Federal_Assistance__c' fields={recordFields} record-id={recordId} show-unsubmit="true" deadline-passed={deadlinePassed} style="min-width: 245px; max-width: 215px; margin-top:5rem; display:block"></c-form-infobox> 
+                  </div>
+              </div>
+          </div>
+
+      </div>  
+    </template>
+
+    <template lwc:if={isNotAuthorizedOfficial}>
+        <br/>
+        You do not have the necessary role to view this page.
+    </template>
+
+</template>

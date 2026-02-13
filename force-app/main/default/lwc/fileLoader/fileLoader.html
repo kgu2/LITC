@@ -1,0 +1,76 @@
+<template>
+    <div class="fileloader">
+        <template if:false={disableEdits}>
+            <template if:true={myRecordId}>
+                <div style="display: flex;">
+                    <!-- <template if:true={required}>
+                        <div style="display: flex; flex-flow: row nowrap;">
+                            <abbr title="required" class="slds-required">*</abbr>
+                        </div>
+                    </template> -->
+                    <!-- <template if:true={helpText}>
+                        &nbsp;
+                        <div style="display: flex; flex-flow: row nowrap;">
+                            <lightning-helptext content={helpText}></lightning-helptext>
+                        </div>
+                        &nbsp;
+                    </template> -->
+
+                    <div style="display: flex;flex-direction: column;">
+                        <template if:true={required}>
+                            <abbr title="required" class="slds-required">*</abbr>
+                        </template>
+                        <div>
+                            <label>{uploadLabel}</label>
+                            <template if:true={helpText}>
+                                <lightning-helptext content={helpText}></lightning-helptext>
+                            </template>
+                            <br/>
+                            <span style="font-size: 0.8rem;">Accepted formats: {dynamicAcceptedFormat}</span>
+                        </div>
+
+                        <lightning-file-upload
+                  
+                        name="fileUploader"
+                        record-id={myRecordId}
+                        title = "Upload files"
+                        onuploadfinished={handleUploadFinished}
+                        file-field-name="File_Prefix__c"
+                        file-field-value={encryptedToken}
+                        accept={acceptedFormats}
+                        multiple>
+                        </lightning-file-upload>
+                    </div>
+                </div>
+            </template>
+        </template>
+        
+        <template if:false={disableEdits}>
+            <template if:true={removeFiles}>
+
+                <lightning-button-group class="slds-align_absolute-center">
+                    <lightning-button label="Delete Files" variant="destructive" icon-name="utility:delete" onclick={deleteSelected}></lightning-button>
+                </lightning-button-group>
+
+            </template>
+        </template>
+
+        <template if:false={hideUploads}>
+            <template if:true={data}>
+                <div style="width: auto;margin-top:10px;">
+                    <lightning-datatable
+                            class="slds-max-medium-table_stacked"
+                            key-field="id"
+                            data={data}
+                            columns={columns}
+                            onrowaction={generateURLS}
+                            onrowselection={getSelectedRecords}
+                            data-id={data.ContentDocumentId}
+                            accept={acceptedFormats}>
+                    </lightning-datatable>
+                </div>
+                <br/>
+            </template>
+        </template>
+    </div>
+</template>

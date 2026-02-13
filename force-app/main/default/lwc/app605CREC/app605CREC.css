@@ -1,0 +1,89 @@
+.slds-form-element__label, .slds-form-element__static {
+	font-size: 16pt !important;
+    display : none !important;
+    visibility : hidden !important;
+}
+
+p {
+    font-size: 16pt;
+}
+
+label {
+    font-size: 15pt;
+}
+
+li {
+    font-size: 16pt;
+}
+
+h1 {
+    font-size: 20pt;
+}
+
+h2 {
+    font-size: 18pt;
+}
+
+tr{
+    font-size: 16pt;
+}
+
+td {
+    padding: 8px;
+    vertical-align: top;
+}
+
+th {
+    vertical-align: top;
+    padding: 8px;
+}
+
+.usa-button_formsoutline {
+    font-family: Source Sans Pro Web,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif;
+    font-size: 1.06rem;
+    line-height: .9;
+    background-color: #0053A2;
+    box-shadow: inset 0 0 0 2px #005ea2;
+    color: #fff;
+    appearance: none;
+    border: 0;
+    border-radius: .25rem;
+    cursor: pointer;
+    display: inline-block;
+    font-weight: 700;
+    margin-right: .5rem;
+    padding: .75rem 1.25rem;
+    text-align: center;
+}
+
+.formHeaderText {
+    text-align: left;
+    color: #3D3D3D;
+    src: url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@100&display=swap'); 
+    font-family: "Public Sans", sans-serif;
+    font-size: 28px;
+    font-weight: bold;
+    letter-spacing: 0;
+    line-height: 24px;
+}
+
+:host {
+    --sds-c-button-brand-color-background: #0053A2;
+    --sds-c-button-brand-color-border: #0053A2;
+}
+
+.customButton{
+    margin-right: 1.75em!important;
+    height: 60px!important;
+    width: 16rem!important;
+    padding: 7px!important;
+    font-weight: bold!important;
+    font-size: 16px!important;
+    line-height: 16px!important;
+}
+
+
+.slds-box{
+    background-color:#E0EEFD !important;
+    padding: 30px !important;
+}

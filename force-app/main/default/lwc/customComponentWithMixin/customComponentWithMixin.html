@@ -1,0 +1,78 @@
+<template>
+  <div>custom component with mixin</div>
+  <div class='slds-grid slds-wrap'>
+    <template for:each={products}
+              for:item='p'
+              for:index='pIndex'>
+      <div key={p.name}
+           class='slds-box slds-grid slds-grid_vertical slds-p-around_small slds-m-bottom_large product slds-m-right_small'>
+        <div class='slds-grid'>
+          <div class='slds-m-right_large device-image'>
+            <img src={p.imageUrl} />
+          </div>
+          <div class='slds-grid slds-grid_vertical device'>
+            <div class='slds-text-heading_large'>
+              {p.name}
+            </div>
+            <div class='slds-grid price'>
+              <div class='retail slds-grid slds-grid_vertical slds-grid_vertical-align-center slds-p-around_large'>
+                <div>
+                  Full Price
+                </div>
+                <div>
+                  ${p.retailPrice}
+                </div>
+              </div>
+              <div class='monthly slds-grid slds-grid_vertical slds-grid_vertical-align-center slds-p-around_large'>
+                <div>
+                  Monthly
+                </div>
+                <div>
+                  ${p.monthlyPrice}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class='slds-grid slds-grid_align-spread slds-m-top_medium'>
+          <div class='deals'>
+            <lightning-icon icon-name="utility:bookmark"
+                            size="small"
+                            alternative-text="Deals available">
+            </lightning-icon>
+            Deals available
+          </div>
+          <button if:false={p.isInCart}
+                  onclick={addToCart}
+                  data-prod-index={pIndex}
+                  class='add cart-button slds-p-vertical_medium slds-p-horizontal_xx_small'>
+            Add to Cart
+          </button>
+          <button if:true={p.isInCart}
+                  onclick={removeFromCart}
+                  data-prod-index={pIndex}
+                  class='remove cart-button slds-p-vertical_medium slds-p-horizontal_xx_small'>
+            Remove
+          </button>
+        </div>
+      </div>
+    </template>
+
+  </div>
+
+  <!-- Validation message-->
+  <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_error"
+       role="alert"
+       if:true={showValidation}>
+    <span class="slds-assistive-text">error</span>
+    <span class="slds-icon_container slds-icon-utility-error slds-m-right_x-small"
+          title="Description of icon when needed">
+      <svg class="slds-icon slds-icon_x-small"
+           aria-hidden="true">
+        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#error"></use>
+      </svg>
+    </span>
+    <h2>Please select at least 2 products.</h2>
+  </div>
+</template>

@@ -1,0 +1,70 @@
+<template>
+    <!--So right now we are trating edit and create as the same. -->
+        <div class="slds-grid slds-gutters">
+            
+            <div class="slds-col slds-size_1-of-1">
+                <div class={styleClass}>
+                    <!-- add red astrisk when req -->
+                    <template if:true={required}>
+                        <p><font color="#FF0000">*</font><font color="#000000">Required</font></p>
+                    </template>
+                    <!-- <lightning-formatted-text value={label} id={fieldAPI}></lightning-formatted-text> -->
+                </div>
+                <template if:true={helptext}>
+                    <!-- <lightning-helptext style="margin-left:10px;" for-item={fieldAPI} content={helptext}></lightning-helptext>               -->
+                </template>
+            </div>
+        </div>
+        <!--  -->
+            <template if:true={isEditMode}>
+                <template if:true={required}>
+                    <!-- edit mode and required is true. -->
+                     <!-- edit required -->
+                    <lightning-input-rich-text required 
+                    class=input
+                    id="just_an_example"
+                    disabled-categories="INSERT_CONTENT" 
+                    label={label}
+                    value={storedValue} 
+                    onchange={onFieldChange} 
+                    valid={validity}
+                   onblur={validateOnBlur}
+                    message-when-bad-input={errorMessage}>
+                    </lightning-input-rich-text>
+                </template>
+                <!-- is edit mode and not required -->
+                <template if:false={required}>
+                    <!-- edit not required -->
+                    <lightning-input-rich-text 
+                    class=input
+                    disabled-categories="INSERT_CONTENT"  
+                    label={label}
+                    value={storedValue} 
+                    onchange={onFieldChange} 
+                    valid={validity}
+                    onblur={validateOnBlur}
+                    message-when-bad-input={errorMessage}>
+                    </lightning-input-rich-text>
+                </template>
+                <!-- check for too many characters warning for max length.  Should be at every template I think. -->
+                <div if:true={showCharacterLimit} class="slds-notify slds-notify_alert slds-alert_error" role="alert">
+                <h2> You have exceeded the max length </h2>
+                </div>
+            </template>
+            <!-- read only version -->
+            <template if:false={isEditMode}>
+                <!-- <template if:false={isReadOnlyMode}>  you added this Ben -->
+                    <!-- read only version -->
+                    <lightning-input-rich-text required disabled
+                        disabled-categories="INSERT_CONTENT" 
+                        label={label}
+                        value={storedValue} 
+                        onchange={onFieldChange} 
+                        message-when-bad-input={errorMessage}>
+                    </lightning-input-rich-text>
+                    
+                <!-- </template> -->
+            </template>
+        <!-- </lightning-record-edit-form> -->
+    <!-- </template> -->
+</template>

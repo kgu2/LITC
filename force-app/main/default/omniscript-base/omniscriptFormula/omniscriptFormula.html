@@ -1,0 +1,11 @@
+<template>
+  <slot>
+    <c-masked-input type="formula"
+                    label={_propSetMap.label}
+                    imask={_imaskAttributes}
+                    value={renderedValue}
+                    theme={_theme}
+                    data-omni-input>
+    </c-masked-input>
+  </slot>
+</template>

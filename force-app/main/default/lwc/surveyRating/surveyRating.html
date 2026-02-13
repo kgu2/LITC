@@ -1,0 +1,32 @@
+<template>
+    <div class="slds-var-m-top_medium slds-var-m-bottom_x-large">
+        <div class="slds-var-p-around_medium lgc-bg">
+            <div style="display: flex;">
+                <div class="textLeft">
+                    Highly Dissatisfied
+                </div>
+                <div class="rate">
+                    <input type="radio" id="star5" name={questionNumber} value="Highly Satisfied" onchange={handleRatingChange}/>
+                    <label for="star5" title="star5" onmouseover={handleHoverEvent}></label>
+                    <input type="radio" id="star4" name={questionNumber} value="Satisfied" onchange={handleRatingChange} />
+                    <label for="star4" title="star4" onmouseover={handleHoverEvent}></label>
+                    <input type="radio" id="star3" name={questionNumber} value="Neutral" onchange={handleRatingChange} />
+                    <label for="star3" title="star3" onmouseover={handleHoverEvent}></label>
+                    <input type="radio" id="star2" name={questionNumber} value="Dissatisfied" onchange={handleRatingChange} />
+                    <label for="star2" title="star2" onmouseover={handleHoverEvent}></label>
+                    <input type="radio" id="star1" name={questionNumber} value="Highly Dissatisfied" onchange={handleRatingChange} class='test'/>
+                    <label for="star1" title="star1" onmouseover={handleHoverEvent}></label>
+                    
+                    <div class="textMiddle">
+                        {rating}
+                    </div>
+                </div>
+                <br/>
+                <div class="textRight">
+                    Highly Satisfied
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</template>

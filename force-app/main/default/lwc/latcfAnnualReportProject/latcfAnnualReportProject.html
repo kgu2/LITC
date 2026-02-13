@@ -1,0 +1,1038 @@
+<template>
+    <h1>Reporting category</h1>
+    <hr style="margin-top: 5px;">
+    <lightning-record-edit-form object-api-name="SLT_Compliance_Report__c" onerror={handleError} record-id={reportId}>
+        <!-- CATEGORY 1 -->
+        <div class="slds-box">
+            <h2 style="display: inline;">
+                Category 1: Government services  
+            </h2>
+            &emsp;
+            <template if:true={statusIncomplete.one}>
+                <lightning-icon icon-name="utility:warning" variant="error" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer;" name="iconOne" class="animate__animated animate__bounce"></lightning-icon>
+                <template if:true={showHelpPopoverOne}>
+                    <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                      <div id="popover-body-id" class="slds-popover__body">
+                        <p style="font-size: 1rem;">
+                          <b style="color: #930012;">Warning</b>: All fields in this section must be filled out. 
+                       </p>
+                      </div>
+                    </section>
+                </template>
+            </template>
+            <template if:false={statusIncomplete.one}>
+                <lightning-icon icon-name="utility:success" variant="success" style="cursor: pointer;" onmouseover={showPopover} onmouseout={closePopover} name="iconOne"></lightning-icon>
+                <template if:true={showHelpPopoverOne}>
+                    <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem;">
+                      <div class="slds-popover__body">
+                        <p style="font-size: 1rem;">
+                          <b style="color: green;">Success</b>: section is complete. 
+                       </p>
+                      </div>
+                    </section>
+                </template>
+            </template>
+            <br>
+
+            <p style="font-size: 1rem; color: #930012">
+                <template if:true={initialCumulativeOblNeg1}>
+                    * Cumulative obligations can not be negative
+                    <br>
+                </template>
+                <template if:true={initialCumulativeExpNeg1}>
+                    * Cumulative expenditures can not be negative
+                    <br>
+                </template>
+                <template if:true={initialCumulativeExpGreatObl1}>
+                    * Cumulative expenditures can not be greater than cumulative obligations 
+                    <br>
+                </template>
+            </p>
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_2-of-2">
+                    <table border="1" style="border-color: #F5F5F5;">
+                        <tr>
+                            <th style="text-align: center;" width="30%" >
+                                Category
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Cumulative obligations 
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Cumulative expenditures 
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Current period obligations
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Current period expenditures
+                            </th>
+                            <th style="text-align: center;" width="10%" >
+                                Infrastructure?
+                            </th>
+                        </tr>
+                
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                1.1 Healthcare
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_1_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="one" data-id="LATCF_1_1_Cumulative_Obligations__c"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_1_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="one" data-id="LATCF_1_1_Cumulative_Expenditures__c"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_1_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="one" data-id="LATCF_1_1_Current_Period_Obligations__c"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_1_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="one" data-id="LATCF_1_1_Current_Period_Expenditures__c"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_1_1_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                1.2 Education
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_2_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_2_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_2_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_2_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits}  class="large" type="checkbox" data-field-name="LATCF_1_2_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                1.3 Public safety
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_3_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_3_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_3_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_3_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_1_3_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                1.4 Social services
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_4_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_4_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_4_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_4_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_1_4_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                1.5 Economic development
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_5_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_5_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_5_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_5_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_1_5_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                1.6 General government operations
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_6_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_6_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_6_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_6_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_1_6_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                1.7 Other services
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_7_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_7_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_7_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_1_7_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="one"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_1_7_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr class="blue">
+                            <td style="text-align: left;" width="30%">
+                                <strong>Totals</strong>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.one.cumulativeObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.one.cumulativeExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.one.currentPeriodObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.one.currentPeriodExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="10%"></td>
+                        </tr>
+            
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORY 2 -->
+        <div class="slds-box">
+            <h2 style="display: inline">
+                Category 2: Capital expenditures
+            </h2>
+            &emsp; 
+            <template if:true={statusIncomplete.two}>
+                <lightning-icon icon-name="utility:warning" variant="error" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer;" name="iconTwo" class="animate__animated animate__bounce"></lightning-icon>
+                <template if:true={showHelpPopoverTwo}>
+                    <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                      <div class="slds-popover__body">
+                        <p style="font-size: 1rem;">
+                          <b style="color: #930012;">Warning</b>: All fields in this section must be filled out. 
+                       </p>
+                      </div>
+                    </section>
+                </template>
+            </template>
+            <template if:false={statusIncomplete.two}>
+                <lightning-icon icon-name="utility:success" variant="success" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer;" name="iconTwo"></lightning-icon>
+                <template if:true={showHelpPopoverTwo}>
+                    <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                        <div class="slds-popover__body">
+                          <p style="font-size: 1rem;">
+                            <b style="color: green;">Success</b>: section is complete. 
+                         </p>
+                        </div>
+                      </section>
+                </template>
+            </template>
+            <br>
+
+            <p style="font-size: 1rem; color: #930012">
+                <template if:true={initialCumulativeOblNeg2}>
+                    * Cumulative obligations can not be negative
+                    <br>
+                </template>
+                <template if:true={initialCumulativeExpNeg2}>
+                    * Cumulative expenditures can not be negative
+                    <br>
+                </template>
+                <template if:true={initialCumulativeExpGreatObl2}>
+                    * Cumulative expenditures can not be greater than cumulative obligations 
+                    <br>
+                </template>
+            </p>
+
+            <br>
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_2-of-2">
+                    <table border="1" style="border-color: #F5F5F5;">
+                        <tr>
+                            <th style="text-align: center;" width="30%" >
+                                Category
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Cumulative obligations 
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Cumulative expenditures 
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Current period obligations
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Current period expenditures
+                            </th>
+                            <th style="text-align: center;" width="10%" >
+                                Infrastructure?
+                            </th>
+                        </tr>
+                
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                2.1 Healthcare
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_1_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_1_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_1_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_1_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_2_1_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                2.2 Education
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_2_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_2_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_2_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_2_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_2_2_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                2.3 Public safety
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_3_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_3_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_3_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_3_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_2_3_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                2.4 Community development
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_4_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_4_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_4_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_4_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_2_4_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                2.5 Housing
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_5_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_5_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_5_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_5_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_2_5_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                2.6 Government administration
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_6_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_6_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_6_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_6_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_2_6_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                2.7 Economic development
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_7_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_7_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_7_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_7_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_2_7_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                2.8 Other capital expenditures
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_8_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_8_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_8_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_2_8_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="two"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_2_8_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr class="blue">
+                            <td style="text-align: left;" width="30%">
+                                <strong>Totals</strong>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.two.cumulativeObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.two.cumulativeExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.two.currentPeriodObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.two.currentPeriodExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="10%"></td>
+                        </tr>
+            
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORY 3 -->
+        <div class="slds-box">
+            <h2 style="display: inline">
+                Category 3: Transportation, Water, Sewer, Technology
+            </h2>
+            &emsp; 
+            <template if:true={statusIncomplete.three}>
+                <lightning-icon icon-name="utility:warning" variant="error" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer;" name="iconThree" class="animate__animated animate__bounce"></lightning-icon>
+                <template if:true={showHelpPopoverThree}>
+                    <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                        <div class="slds-popover__body">
+                        <p style="font-size: 1rem;">
+                            <b style="color: #930012;">Warning</b>: All fields in this section must be filled out. 
+                        </p>
+                        </div>
+                    </section>
+                </template>
+            </template>
+            <template if:false={statusIncomplete.three}>
+                <lightning-icon icon-name="utility:success" variant="success" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer;" name="iconThree"></lightning-icon>
+                <template if:true={showHelpPopoverThree}>
+                    <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                        <div class="slds-popover__body">
+                        <p style="font-size: 1rem;">
+                            <b style="color: green;">Success</b>: section is complete. 
+                        </p>
+                        </div>
+                    </section>
+                </template>
+            </template>
+            <br>
+
+            <p style="font-size: 1rem; color: #930012">
+                <template if:true={initialCumulativeOblNeg3}>
+                    * Cumulative obligations can not be negative
+                    <br>
+                </template>
+                <template if:true={initialCumulativeExpNeg3}>
+                    * Cumulative expenditures can not be negative
+                    <br>
+                </template>
+                <template if:true={initialCumulativeExpGreatObl3}>
+                    * Cumulative expenditures can not be greater than cumulative obligations 
+                    <br>
+                </template>
+            </p>
+
+            <br>
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_2-of-2">
+                    <table border="1" style="border-color: #F5F5F5;">
+                        <tr>
+                            <th style="text-align: center;" width="30%" >
+                                Category
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Cumulative obligations 
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Cumulative expenditures 
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Current period obligations
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Current period expenditures
+                            </th>
+                            <th style="text-align: center;" width="10%" >
+                                Infrastructure?
+                            </th>
+                        </tr>
+                
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                3.1 Transportation
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_1_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_1_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_1_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_1_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_3_1_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                3.2 Water / sewer
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_2_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_2_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_2_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_2_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_3_2_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                3.3 Technology development
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_3_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_3_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_3_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_3_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_3_3_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                3.4 Other infrastructure
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_4_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_4_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_4_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_3_4_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="three"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_3_4_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr class="blue">
+                            <td style="text-align: left;" width="30%">
+                                <strong>Totals</strong>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.three.cumulativeObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.three.cumulativeExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.three.currentPeriodObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.three.currentPeriodExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="10%"></td>
+                        </tr>
+            
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- CATEGORY 4 -->
+        <div class="slds-box">
+            <h2 style="display: inline;">
+                Category 4: Other governmental purposes
+            </h2>
+            &emsp; 
+            <template if:true={statusIncomplete.four}>
+                <lightning-icon icon-name="utility:warning" variant="error" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer;" name="iconFour" class="animate__animated animate__bounce"></lightning-icon>
+                <template if:true={showHelpPopoverFour}>
+                    <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                        <div class="slds-popover__body">
+                          <p style="font-size: 1rem;">
+                            <b style="color: #930012;">Warning</b>: All fields in this section must be filled out. 
+                         </p>
+                        </div>
+                      </section>
+                </template>
+            </template>
+            <template if:false={statusIncomplete.four}>
+                <lightning-icon icon-name="utility:success" variant="success" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer;" name="iconFour"></lightning-icon>
+                <template if:true={showHelpPopoverFour}>
+                    <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                        <div class="slds-popover__body">
+                          <p style="font-size: 1rem;">
+                            <b style="color: green;">Success</b>: section is complete. 
+                         </p>
+                        </div>
+                      </section>
+                </template>
+            </template>
+            <br>
+
+            <p style="font-size: 1rem; color: #930012">
+                <template if:true={initialCumulativeOblNeg4}>
+                    * Cumulative obligations can not be negative
+                    <br>
+                </template>
+                <template if:true={initialCumulativeExpNeg4}>
+                    * Cumulative expenditures can not be negative
+                    <br>
+                </template>
+                <template if:true={initialCumulativeExpGreatObl4}>
+                    * Cumulative expenditures can not be greater than cumulative obligations 
+                    <br>
+                </template>
+            </p>
+
+            <br>
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_2-of-2">
+                    <table border="1" style="border-color: #F5F5F5;">
+                        <tr>
+                            <th style="text-align: center;" width="30%" >
+                                Category
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Cumulative obligations 
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Cumulative expenditures 
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Current period obligations
+                            </th>
+                            <th style="text-align: center;" width="15%" >
+                                Current period expenditures
+                            </th>
+                            <th style="text-align: center;" width="10%" >
+                                Infrastructure?
+                            </th>
+                        </tr>
+                
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                4.1 Non-federal match / cost sharing
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_1_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_1_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_1_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_1_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_4_1_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                4.2 LATCF program administration
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_2_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_2_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_2_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_2_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_4_2_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="text-align: left;" width="30%">
+                                4.3 Other purposes not listed above
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_3_Cumulative_Obligations__c" onchange={autosave} data-type="cumulativeObl" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_3_Cumulative_Expenditures__c" onchange={autosave} data-type="cumulativeExp" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_3_Current_Period_Obligations__c" onchange={autosave} data-type="currentPeriodObl" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="LATCF_4_3_Current_Period_Expenditures__c" onchange={autosave} data-type="currentPeriodExp" data-category="four"></lightning-input-field>
+                            </td>
+                            <td style="text-align: left;" width="10%">
+                                <lightning-input disabled={disableEdits} class="large" type="checkbox" data-field-name="LATCF_4_3_Infrastructure__c" onchange={handleCheckbox} style="text-align: center;"></lightning-input>
+                            </td>
+                        </tr>
+                        <tr class="blue">
+                            <td style="text-align: left;" width="30%">
+                                <strong>Totals</strong>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.four.cumulativeObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.four.cumulativeExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.four.currentPeriodObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="15%">
+                                <lightning-formatted-number value={totals.four.currentPeriodExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="10%"></td>
+                        </tr>
+            
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUMMARY BOX -->
+        <div class="slds-box">
+            <h2 style="display: inline;">
+                Summary totals 
+            </h2>
+            &emsp; 
+            <template if:true={anyErrors}>
+                <lightning-icon icon-name="utility:warning" variant="error" onmouseover={showPopover} onmouseout={closePopover} style="cursor: pointer;" name="iconFive" class="animate__animated animate__bounce"></lightning-icon>
+                <br>
+                <p style="font-size: 1rem; color: #930012">
+                    <template if:true={showCumulativeOblError}>
+                        Cumulative obligations can not be greater than total allocation (<lightning-formatted-number value={allocationAmount} format-style="currency" currency-code="USD"></lightning-formatted-number>)
+                        <br>
+                    </template>
+                    <template if:true={showCumulativeExpError}>
+                        Cumulative expenditures can not be greater than total allocation (<lightning-formatted-number value={allocationAmount} format-style="currency" currency-code="USD"></lightning-formatted-number>)
+                        <br>
+                    </template>
+                    <template if:true={showCumulativeOblNeg}>
+                        Cumulative obligations can not be negative
+                        <br>
+                    </template>
+                    <template if:true={showCumulativeExpNeg}>
+                        Cumulative expenditures can not be negative
+                        <br>
+                    </template>
+                    <template if:true={showCurrentPeriodExpError}>
+                        Current period expenditures can not be greater than cumulative expenditures 
+                        <br>
+                    </template>
+                    <template if:true={showCurrentPeriodOblError}>
+                        Current period obligations can not be greater than cumulative obligations 
+                        <br>
+                    </template>
+                    <template if:true={showCumulativeExpGreaterObl}>
+                        Cumulative expenditures can not be greater than cumulative obligations 
+                        <br>
+                    </template>
+                    <!-- <template if:true={showCurrentPeriodExpGreaterObl}>
+                        Current period expenditures can not be greater than current period obligations
+                        <br>
+                    </template> -->
+                </p>
+            </template>
+            <br>
+            <!-- <template if:true={showHelpPopoverFive}>
+                <section aria-label="Dialog title" aria-describedby="popover-body-id" class="slds-popover slds-nubbin_left slds-popover_large" role="dialog" style="position: absolute; margin-left: 1rem; margin-top: -1rem">
+                    <div class="slds-popover__body">
+                        <p style="font-size: 1rem; color: #930012">
+                            
+                            <template if:true={showCumulativeOblError}>
+                                Cumulative obligations can not be greater than total allocation (<lightning-formatted-number value={allocationAmount} format-style="currency" currency-code="USD"></lightning-formatted-number>)
+                                <br>
+                            </template>
+                            <template if:true={showCumulativeExpError}>
+                                Cumulative expenditures can not be greater than total allocation (<lightning-formatted-number value={allocationAmount} format-style="currency" currency-code="USD"></lightning-formatted-number>)
+                                <br>
+                            </template>
+                            <template if:true={showCumulativeOblNeg}>
+                                Cumulative obligations can not be negative
+                                <br>
+                            </template>
+                            <template if:true={showCumulativeExpNeg}>
+                                Cumulative expenditures can not be negative
+                                <br>
+                            </template>
+                            <template if:true={showCurrentPeriodExpError}>
+                                Current period expenditures can not be greater than cumulative expenditures 
+                                <br>
+                            </template>
+                            <template if:true={showCurrentPeriodOblError}>
+                                Current period obligations can not be greater than cumulative obligations 
+                                <br>
+                            </template>
+                            <template if:true={showCumulativeExpGreaterObl}>
+                                Cumulative expenditures can not be greater than cumulative obligations 
+                                <br>
+                            </template>
+                            <template if:true={showCurrentPeriodExpGreaterObl}>
+                                Current period expenditures can not be greater than current period obligations
+                                <br>
+                            </template>
+                        </p>
+                    </div>
+                  </section>
+            </template> -->
+            <br>
+
+            <h3>
+                Remaining allocation amount: <b><lightning-formatted-number value={remainingAllocation} format-style="currency"></lightning-formatted-number></b>
+            </h3>
+            
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col slds-size_2-of-2">
+                    <table border="1" style="border-color: #F5F5F5;">
+                        <tr>
+                            <th style="text-align: center;" width="30%" >
+                                Category
+                            </th>
+                            <th style="text-align: center;" width="17.5%" >
+                                Cumulative obligations 
+                            </th>
+                            <th style="text-align: center;" width="17.5%" >
+                                Cumulative expenditures 
+                            </th>
+                            <th style="text-align: center;" width="17.5%" >
+                                Current period obligations
+                            </th>
+                            <th style="text-align: center;" width="17.5%" >
+                                Current period expenditures
+                            </th>
+                        </tr>
+                
+                        <tr class="blue">
+                            <td style="text-align: left;" width="30%">
+                                Category 1: Government services
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.one.cumulativeObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.one.cumulativeExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.one.currentPeriodObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.one.currentPeriodExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                        </tr>
+                        <tr class="blue">
+                            <td style="text-align: left;" width="30%">
+                                Category 2: Capital expenditures
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.two.cumulativeObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.two.cumulativeExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.two.currentPeriodObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.two.currentPeriodExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                        </tr>
+                        <tr class="blue">
+                            <td style="text-align: left;" width="30%">
+                                Category 3: Transportation / water / sewer / technology
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.three.cumulativeObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.three.cumulativeExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.three.currentPeriodObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.three.currentPeriodExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                        </tr>
+                        <tr class="blue">
+                            <td style="text-align: left;" width="30%">
+                                Category 4: Other governmental purposes
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.four.cumulativeObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.four.cumulativeExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.four.currentPeriodObl} format-style="currency"></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={totals.four.currentPeriodExp} format-style="currency"></lightning-formatted-number>
+                            </td>
+                        </tr>
+
+                        <tr class="black">
+                            <td style="text-align: left;" width="30%">
+                                <strong>Grand total</strong>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={grandTotal.cumulativeObl} format-style="currency" style={stylingTotalOne}></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={grandTotal.cumulativeExp} format-style="currency" style={stylingTotalTwo}></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={grandTotal.currentPeriodObl} format-style="currency" style={stylingTotalThree}></lightning-formatted-number>
+                            </td>
+                            <td style="text-align: left;" width="17.5%">
+                                <lightning-formatted-number value={grandTotal.currentPeriodExp} format-style="currency" style={stylingTotalFour}></lightning-formatted-number>
+                            </td>
+                        </tr>
+            
+                    </table>
+                </div>
+            </div>       
+
+        </div>
+    </lightning-record-edit-form>
+
+</template>

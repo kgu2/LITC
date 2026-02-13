@@ -1,0 +1,119 @@
+<template>
+  <slot>
+    <div class={_styleClasses.container}>
+      <fieldset class={errorClass}>
+        <div class="slds-grid">
+          <label class='slds-form-element__label slds-show--inline slds-form-element__control-help slds-truncate'
+                 style="width:auto;"
+                 for="lookupId">
+            <abbr if:true={_propSetMap.required}
+                  title="required"
+                  class="slds-required">*</abbr>
+            <span>{_propSetMap.label}</span>
+          </label>
+          <c-tooltip if:true={_propSetMap.help}
+                     class="slds-tooltip_container slds-p-right_x-small"
+                     content={_handleHelpText}
+                     arrowposition="bottom-left"
+                     extrabuttonclass="slds-m-bottom_xx-small"
+                     icon-name="utility:info">
+          </c-tooltip>
+          <template if:true={_propSetMap.repeat}>
+            <div class={_styleClasses.repeatContainer}
+                 role="group">
+              <button if:true={canRepeat}
+                      class={_styleClasses.repeatAdd}
+                      onclick={handleAdd}>
+                <c-icon icon-name="utility:add"
+                        alternative-text="Repeat Lookup"
+                        extraclass={_styleClasses.repeatIcons}
+                        size="xx-small">
+                </c-icon>
+              </button>
+              <button if:true={canRemove}
+                      class={_styleClasses.repeatRemove}
+                      onclick={handleRemove}>
+                <c-icon icon-name="utility:close"
+                        alternative-text="Remove Lookup"
+                        extraclass={_styleClasses.repeatIcons}
+                        size="xx-small">
+                </c-icon>
+              </button>
+            </div>
+          </template>
+        </div>
+        <div class="slds-combobox_container">
+          <div class="slds-combobox slds-dropdown-trigger slds-dropdown-trigger_click"
+               aria-expanded={show}
+               aria-haspopup="listbox"
+               role="combobox">
+            <div class="slds-combobox__form-element slds-input-has-icon slds-input-has-icon_right"
+                 role="none">
+              <input type="text"
+                     value={lookupDisplay}
+                     onclick={showLookup}
+                     onblur={hideOptions}
+                     disabled={_propSetMap.readOnly}
+                     required={_propSetMap.required}
+                     readonly
+                     class="vlocity-input slds-input"
+                     onkeydown={ariaKeyDown}
+                     aria-controls='lookup'
+                     id="lookupId"
+                     placeholder={_propSetMap.placeholder}
+                     data-omni-input />
+              <span class="slds-icon_container slds-input__icon_right">
+                <c-icon extraclass="slds-input__icon"
+                        iconposition="right"
+                        icon-name="utility:search"
+                        theme="slds"
+                        alternative-text="lookup"
+                        size="small">
+                </c-icon>
+              </span>
+            </div>
+            <div class="slds-dropdown slds-dropdown_fluid"
+                 role="listbox"
+                 id='lookup'>
+              <ul class="slds-listbox slds-listbox_vertical"
+                  role="presentation">
+                <template for:each={options}
+                          for:item="optionItem"
+                          for:index='optionIndex'>
+                  <li key={optionItem.key}
+                      role="presentation"
+                      onmousedown={selectOption}
+                      onmouseover={mouseOverFocus}
+                      class="slds-listbox__item">
+                    <div class="slds-media slds-listbox__option slds-listbox__option_entity slds-listbox__option_has-meta"
+                         role="option"
+                         data-option-index={optionIndex}
+                         aria-selected={optionItem.selected}>
+                      <span class="slds-media__body"
+                            data-option-index={optionIndex}>
+                        <span class="slds-listbox__option-text slds-listbox__option-text_entity"
+                              data-option-index={optionIndex}>{optionItem.value}</span>
+                      </span>
+                    </div>
+                  </li>
+                </template>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="slds-has-error slds-m-top_none">
+          <div if:true={hasError}
+               class="slds-form-element__help">
+            {errorMessage}
+          </div>
+        </div>
+        <template if:true={isPageLoading}>
+          <c-spinner variant="brand"
+                     alternative-text="Loading..."
+                     size="small">
+          </c-spinner>
+        </template>
+      </fieldset>
+    </div>
+  </slot>
+</template>

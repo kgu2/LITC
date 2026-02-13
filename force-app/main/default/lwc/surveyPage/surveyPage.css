@@ -1,0 +1,25 @@
+p {
+    font-size: 16pt;
+}
+
+label {
+    font-size: 16pt;
+}
+
+h1 {
+    font-size: 32px;
+}
+
+.myButton {
+    background: none!important;
+    border: none;
+    padding: 0!important;
+    font-family: arial, sans-serif;
+    color: #930012;
+    font-size: 16pt;
+    cursor: pointer;
+  }
+
+  .space{
+    content: "\00a0";
+  }

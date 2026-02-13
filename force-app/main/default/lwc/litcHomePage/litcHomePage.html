@@ -1,0 +1,333 @@
+<template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+    
+    <div style="display: flex; justify-content: center;">
+        <div style="width: 190px; margin-right: 2rem;">
+            <div style="height: 2.25rem;"></div>
+
+            <lightning-tabset variant="vertical" active-tab-value ={activeTab}>
+                <lightning-tab onactive={handleOnActive} label="Introduction" value="intro">
+                </lightning-tab>
+                <lightning-tab onactive={handleOnActive} label="My applications" value="applications">
+                </lightning-tab>
+                <lightning-tab onactive={handleOnActive} label="My reporting" value="reports">
+                </lightning-tab>
+                <lightning-tab onactive={handleOnActive} label="My site visits" value="visits">
+                </lightning-tab>
+                <lightning-tab onactive={handleOnActive} label="My contacts" value="contacts">
+                </lightning-tab>
+            </lightning-tabset>
+        </div>
+
+        <div style="margin-top:2rem; width: 100%;">
+            <div class="slds-grid slds-wrap slds-gutters_direct">
+                <div class="slds-col slds-size_1-of-1 slds-small-size_10-of-12">
+                    <div class={intro} style="padding-right: 5rem; max-width: 70rem;">
+                        <h1>Welcome to the LITC Grants Portal</h1>
+                        <hr style="margin-top: 5px;">
+                        <h2>Grant application forms</h2>
+                        
+                        <p>
+                            To be considered for 2026 LITC Program grant funding, all LITC New Grant Applications and Non-Competing Continuation (NCC) 
+                            Requests must be submitted by 11:59 p.m. (Eastern Time) on <b>July 14, 2025.</b> The Funding Opportunity Number for the 2026 LITC grant 
+                            is TREAS-GRANTS-042026-001. All grant applications must be submitted electronically in the LITC Grants Portal. 
+                            Any forms submitted with the application may be released under the Freedom of Information Act (FOIA). 
+                            In response to a FOIA request, the LITC Program Office will release these forms after appropriate redactions 
+                            to ensure confidentiality of taxpayer information. If you have questions about the LITC Program or grant application process, 
+                            please contact the Program Office at 202-317-4700 or by email at <a href="mailto:LITCGrants@treasury.gov" target="_blank">LITCGrants@treasury.gov</a>. 
+                        </p>
+
+                        <br/>
+                        <h2>Application forms</h2>
+                        <p>A complete LITC Grant Application consists of the following items, submitted through LITC Grants Portal and prepared in accordance with the relevant instructions provided in Publication 3319: </p>
+                        <ul style="list-style-type: disc; padding-left: 2rem; margin-top: 0.5rem">
+                            <li>Standard Form 424, Application for Federal Assistance </li>
+                            <li>IRS Form 13424-J, Detailed Budget Worksheet and Narrative Explanations </li>
+                            <li>IRS Form 13424-M, Low Income Taxpayer Clinic (LITC) Application Narrative </li>
+                        </ul>
+               
+
+                        <br/><br/>
+                        <p>Ready to get started? Click the button below to go to your applications</p>
+                 
+                    
+                        <div style="float:left">
+                            <button class="slds-button slds-button_outline-brand" onclick={handleNavApplications}>My applications</button>
+                        </div>
+          
+                    </div>
+      
+                    <div class={applications}>
+                        <h1>Applications</h1>
+                        <hr>
+
+                        <template lwc:if={isAuthorizedOfficial}>
+                            <template lwc:if={showApplication}>
+                                <lightning-button variant="brand" label="Start a new application" onclick={openCreateAppModal}></lightning-button>
+                                <br/>
+                            </template>
+                        </template>
+                        <br/>
+                  
+                        <div class="slds-box">
+                            <h2>My applications</h2>
+                            <template if:true={showApps}>
+                                <lightning-datatable
+                                    show-row-number-column
+                                    hide-checkbox-column
+                                    key-field="Id"
+                                    data={apps}
+                                    onrowaction={handleRowAction}
+                                    columns={columns}
+                                >
+                                </lightning-datatable>
+                            </template>
+                            <template if:false={showApps}>
+                                You have no applications available at this time. If your user role permits starting a new application, a 'Start Application' button will appear on this page.  If that button is not available to you, contact the individual with the Authorized Official role for assistance.
+                            </template>
+                        </div>
+                    </div>
+
+                     <div class={reports}>
+                        <c-litc-reporting-checklist my-role={role} account={accountId}></c-litc-reporting-checklist>
+                     </div>
+
+                    <div class={visits}>
+                        <c-litc-site-visits-checklist my-role={role} account={accountId}></c-litc-site-visits-checklist>
+                     </div>
+
+                    <div class={contacts}>
+                        <c-litc-contact-page my-role={role}></c-litc-contact-page>
+                    </div>
+                </div>
+
+                <div class="slds-col slds-size_1-of-1 slds-small-size_2-of-12">
+                    <div class="helpInfoBox animate__animated">
+                        <template if:false={showToggle}>
+
+                            <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+                                <lightning-accordion-section name="Help" label="Help" class="helpSection">
+                                    <p style="font-size: 12pt;">
+                                        For assistance on your submission and other questions, contact 
+                                        <br/>
+                                        <a href="mailto:LITCGrants@treasury.gov" target="_blank">LITCGrants@treasury.gov</a> 
+                                    </p>
+                                </lightning-accordion-section>
+                                <lightning-accordion-section name="Legend" label="Legend" class="helpSection">
+                                    <div style = "margin-left:7%;"> 
+                                        <lightning-icon icon-name="action:edit" size="x-small" style="background-color: #4cb5eb; border-radius: 10px;"></lightning-icon>
+                                        &emsp;Edit
+                                        <br/>   <br/>
+                                        <lightning-icon icon-name="action:preview" size="x-small" style="background-color: #083C6F;; border-radius: 10px;"></lightning-icon>
+                                        &emsp;View
+                                        <br/>   <br/>
+                                        <lightning-icon icon-name="action:download" size="x-small" style="background-color: #7c868a;; border-radius: 10px;"></lightning-icon>
+                                        &emsp;Download
+                                        <br/>   
+                                    </div>    
+                                </lightning-accordion-section>
+                            </lightning-accordion>
+                        </template>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <template if:true={showCreateAppModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeCreateAppModal} alternative-text="close"></lightning-button-icon>
+                    <h2 id="modal-heading-02" class="header">Create application</h2>
+                </header>
+                <div class="slds-modal__content slds-var-p-around_large">
+                    <p>
+                        New – A full grant application for a single year or first year of multi-year grant.<br/> 
+                        Continuation – An NCC Request for the second or third year of a multi-year grant.
+                    </p>
+                    <div class="slds-grid slds-gutters">
+                        <div class="slds-col slds-size_1-of-3">
+                            <lightning-combobox
+                                name="options"
+                                options={appOptions}
+                                value={appValue}
+                                placeholder="Application type"
+                                onchange={handleAppTypeChange}>
+                            </lightning-combobox>
+                        </div>
+                        <template lwc:if={showYearField}>
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-combobox
+                                    name="options2"
+                                    options={optionsTwo}
+                                    value={appValueTwo}
+                                    placeholder="Select year"
+                                    onchange={handleAppTypeChangeTwo}>
+                                </lightning-combobox>
+                            </div>
+                            <br/>
+                        </template>
+                    </div>
+                    <br/>
+                    <template lwc:if={isContinuation}>
+                        <label>Are you reporting major changes to your program plan?</label>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_1-of-3">
+                                <lightning-combobox
+                                    name="options3"
+                                    options={optionsThree}
+                                    value={appValueThree}
+                                    placeholder="Select option"
+                                    onchange={handleAppTypeChangeThree}>
+                                </lightning-combobox>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeCreateAppModal}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleCreateApp}>Create application</button>
+                </footer>
+            </div>
+        </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+      </template>
+
+
+    <template if:true={showFundingDecisionModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeFundingDecisionModal} alternative-text="close"></lightning-button-icon>
+                    <h2 id="modal-heading-05" class="header">Funding decision</h2>
+                </header>
+                <div class="slds-modal__content slds-var-p-around_large">
+                    <label>Funding amount</label>
+                    <br/>
+                    <lightning-formatted-number value={fundingAmount} format-style="currency" style="font-size: 1rem;"></lightning-formatted-number>
+                    <br/><br/>
+                    <label>Funding conditions</label>
+                    <br/>
+                    <lightning-formatted-text value={fundingConditions} style="font-size: 1rem;"></lightning-formatted-text>
+                    <br/> <br/>
+                    <label>Funding explanation</label>
+                    <br/>
+                    <lightning-formatted-text value={fundingExplanation} style="font-size: 1rem;"></lightning-formatted-text>
+
+                    <br/> <br/>
+                    <label>Personnel</label>
+                    <br/>
+                    <lightning-formatted-text value={fieldA} style="font-size: 1rem;"></lightning-formatted-text>
+                    
+                    <br/> <br/>
+                    <label>Fringe benefits</label>
+                    <br/>
+                    <lightning-formatted-text value={fieldB} style="font-size: 1rem;"></lightning-formatted-text>
+
+                    <br/> <br/>
+                    <label>Travel</label>
+                    <br/>
+                    <lightning-formatted-text value={fieldC} style="font-size: 1rem;"></lightning-formatted-text>
+
+                    <br/> <br/>
+                    <label>Equipment</label>
+                    <br/>
+                    <lightning-formatted-text value={fieldD} style="font-size: 1rem;"></lightning-formatted-text>
+
+                    <br/> <br/>
+                    <label>Supplies</label>
+                    <br/>
+                    <lightning-formatted-text value={fieldE} style="font-size: 1rem;"></lightning-formatted-text>
+
+                    <br/> <br/>
+                    <label>Contractual</label>
+                    <br/>
+                    <lightning-formatted-text value={fieldF} style="font-size: 1rem;"></lightning-formatted-text>
+
+                    <br/> <br/>
+                    <label>Other expenses</label>
+                    <br/>
+                    <lightning-formatted-text value={fieldG} style="font-size: 1rem;"></lightning-formatted-text>
+
+                    <br/> <br/>
+                    <label>Indirect charges</label>
+                    <br/>
+                    <lightning-formatted-text value={fieldH} style="font-size: 1rem;"></lightning-formatted-text>
+
+                    <br/> <br/>
+                    <label>Matching charges</label>
+                    <br/>
+                    <lightning-formatted-text value={fieldI} style="font-size: 1rem;"></lightning-formatted-text>
+
+
+                    <br/> <br/>
+                    
+                    <label>Make a selection below</label>
+                    <lightning-radio-group options={fundingOptions} onchange={handleOptionChange} type="radio"></lightning-radio-group>
+                    <br/>
+        
+                </div>
+                <footer class="slds-modal__footer">
+                    <button class="slds-button slds-button_neutral" onclick={closeFundingDecisionModal}>Cancel</button>
+                    <button class="slds-button slds-button_brand" onclick={handleFundingDecisionClick}>Next</button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={showFundingDecisionConfirmation}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeFundingDecisionConfirmation} alternative-text="close"></lightning-button-icon>
+                    <h2 id="modal-heading-04" class="header">Confirmation</h2>
+                </header>
+                <lightning-record-edit-form object-api-name='Application_for_Federal_Assistance__c' record-id={selectedAppId} onerror={handleError} onsubmit={handleConfirmFundingConfirmation}>
+                    <div class="slds-modal__content slds-var-p-around_large">
+                        <template lwc:if={isSelectedAmendment}>
+                            <p>
+                                You have selected the decision to <b>{fundingDecisionSelection}</b>. 
+                                This will unsubmit your application and you will need to resubmit.
+                            </p>
+                        </template>
+                        <template lwc:if={isSelectedConference}>
+                            <p>
+                                You have selected the decision to <b>{fundingDecisionSelection}</b>. 
+                                You will need to fill out the fields below.
+                            </p>
+
+                            <abbr title="required" class="slds-required">*</abbr>
+                            <label>Recipient funding explanation</label>
+                            <br/>
+                            <lightning-input-field required variant="label-hidden" field-name="Recipient_Funding_Comments__c"></lightning-input-field>
+                            <br/>
+          
+                            <label>Optional file upload label</label>
+                            <c-file-loader my-record-id={selectedAppId} file-prefix='fundingDecisionConferenceUpload' dynamic-accepted-format={dynamicAcceptedFormat}></c-file-loader>
+
+                        </template>
+            
+                        <br/>
+            
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <button class="slds-button slds-button_neutral" onclick={closeFundingDecisionConfirmation} type="button">Cancel</button>
+                        <button class="slds-button slds-button_brand" type="submit">Confirm</button>
+                    </footer>
+                </lightning-record-edit-form>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+
+    <template if:true={showFundingAwardModal}>
+        <c-litc-funding-award record-id={selectedAppId} onclosemodal={handleCloseModal}></c-litc-funding-award>
+    </template>
+</template>

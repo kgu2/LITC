@@ -1,0 +1,69 @@
+<template>
+    <!-- New Start Intake Review button -->
+     <template lwc:if={showIntakeReview}>
+        <lightning-button label="Start intake Review" onclick={openModal} variant="brand"></lightning-button>
+     </template>
+     <template lwc:if={showReviewCard}>
+        <lightning-button label="Create level 2 review card" onclick={openRCModal} variant="brand"></lightning-button>
+     </template>
+     <template lwc:if={showApproveLevelTwo}>
+        <lightning-button label="Approve technical review" onclick={approveTechnicalReview} variant="brand"></lightning-button>
+     </template>
+
+
+    <template if:true={showModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" style="min-height: 60vh;">
+            <div class="slds-modal__container" style="min-height: 60vh; margin-top: 10vh;">
+                <!-- Header with "X" Close Button -->
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                        onclick={closeModal}>
+                        <lightning-icon icon-name="utility:close" size="small"></lightning-icon>
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 class="slds-text-heading_medium">Start Intake Review</h2>
+                </header>
+
+                <!-- Modal Body -->
+                <div class="slds-modal__content slds-p-around_medium" style="min-height: 50vh;">
+                    <p>You are about to begin the intake review for the current application.</p>
+                    <p>If you are ready to proceed, please select the checkbox labeled 'Yes' and click 'Submit'.</p>
+                    <p>If you do not wish to proceed, please select 'No' and click 'Submit'.</p>
+                    <lightning-radio-group name="reviewOptions"
+                        label="Confirm Action"
+                        options={reviewOptions}
+                        value={selectedOption}
+                        onchange={handleCheckboxChange}>
+                    </lightning-radio-group>
+                </div>
+
+                <!-- Modal Footer -->
+                <footer class="slds-modal__footer">
+                    <lightning-button label="Submit" variant="brand" onclick={handleSubmit}></lightning-button>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+    </template>
+
+    <template if:true={showRCModal}>
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+            <div class="slds-modal__container">     
+                  <div class="slds-modal__content slds-var-p-around_large">
+                    <header class="slds-modal__header">
+                        <lightning-button-icon variant="brand" icon-name="utility:close" class="slds-float_right" data-modal="close" onclick={closeRCModal}></lightning-button-icon>
+                        <h2 id="modal-heading-06" class="header">Create level 2 review card</h2>
+                    </header>
+                    <div class="slds-modal__content slds-p-around_small" id="modal-content-id-6" style="max-height: 600px;">
+                        <p>You are about to initiate a Level 2 review. Please ensure that all related review cards are submitted before proceeding. All Level 1 review cards must be submitted before proceeding.</p>
+                        <br/>
+                    </div> 
+                  </div>
+                  <div class="slds-modal__footer">
+                    <lightning-button label="Confirm" type="button" variant="brand" onclick={handleCreateRC}></lightning-button> 
+                </div>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+    </template>
+</template>

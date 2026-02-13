@@ -1,0 +1,47 @@
+<template>
+    
+    <div style="margin-left: 15rem; margin-right:15rem; margin-top: 5rem; margin-bottom:5rem">
+
+        <template if:true={litc}>
+            <h1>Application Survey</h1>
+            <hr>
+            <p>Thank you for submitting your application. Please participate in the Survey below. 
+                Your feedback is greatly appreciated and will help improve the reporting process.</p>
+            <br/> <br/>
+    
+            <lightning-record-edit-form object-api-name="Application_for_Federal_Assistance__c" onsubmit={handleSubmit} onsuccess={save} onerror={handleError} record-id={recordId} class={surveyType}> 
+                <label>1. How satisfied were you with the login and navigation of the portal?</label>
+                <div style="margin-left: 2rem;">
+                    <c-survey-rating tabindex="0" onstarvaluechange={handleChange} question-number='1'></c-survey-rating>
+                </div>
+                <br/> <br/> <br/> <br/>         
+    
+                <label>2. How satisfied were you with the certification process? </label>
+                <div style="margin-left: 2rem;">
+                    <c-survey-rating tabindex="0" onstarvaluechange={handleChange} question-number='2'></c-survey-rating>
+                </div>
+                <br/> <br/> <br/> <br/> 
+        
+                <label>3. How satisfied were you with the overall reporting experience? </label>
+                <div style="margin-left: 2rem;">
+                    <c-survey-rating tabindex="0" onstarvaluechange={handleChange} question-number='3'></c-survey-rating>
+                </div>
+                <br/> <br/> <br/> <br/> 
+    
+                <label>4. What ways could IRS improve the reporting experience?</label>
+                <div class="slds-grid slds-gutters">    
+                    <div class="slds-col slds-size_3-of-8">
+                        <lightning-input-field style="font-size:16pt;" variant="label-hidden" disabled={disabledEdits} field-name="Survey_Question_Explanation__c" ></lightning-input-field>        
+                    </div>
+                </div>
+                <br/><br/><br/><br/> 
+            
+                <button class="slds-button slds-button_brand" type="submit" style="height: 30pt; width: 120pt; font-size: 14pt">Submit Survey</button>
+                <br/><br/><br/>
+                <button class="myButton" onclick={handleCancel} type="button">Cancel</button>
+            
+            </lightning-record-edit-form>
+        </template>
+
+    </div>
+</template>

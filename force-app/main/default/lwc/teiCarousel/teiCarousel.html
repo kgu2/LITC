@@ -1,0 +1,61 @@
+<template>
+  <div class="carousel section" role="region" aria-label={ariaLabel}>
+    <!-- Viewport anchors arrows/dots INSIDE -->
+    <div class="carousel-viewport"
+         style={viewportStyle}
+         tabindex="0"
+         onkeydown={handleKey}
+         onmouseenter={handleHoverIn}
+         onmouseleave={handleHoverOut}
+         onfocusin={handleHoverIn}
+         onfocusout={handleHoverOut}
+         ontouchstart={onTouchStart}
+         ontouchend={onTouchEnd}
+         aria-roledescription="carousel">
+
+      <!-- Sliding track (translateX handled via CSS var in {trackStyle}) -->
+      <div class="carousel-track" style={trackStyle}>
+        <template for:each={_images} for:item="img" for:index="i">
+            <img key={img.src} src={img.src} alt={img.alt}/>
+          <!-- <div key={img.src}
+               class="carousel-slide"
+               role="group"
+               aria-roledescription="slide"
+               aria-label={img.slideAria}>
+            <img class="carousel-img" src={img.src} alt={img.alt}/>
+            
+            <template if:true={img.caption}>
+              <div class="carousel-caption">{img.caption}</div>
+            </template>
+          </div> -->
+        </template>
+      </div>
+
+      <!-- Arrows (inside the viewport) -->
+      <template if:true={hasArrows}>
+        <button class="carousel-btn prev" onclick={prev} aria-label="Previous slide">
+          <lightning-icon icon-name="utility:chevronleft" size="x-small"></lightning-icon>
+        </button>
+        <button class="carousel-btn next" onclick={next} aria-label="Next slide">
+          <lightning-icon icon-name="utility:chevronright" size="x-small"></lightning-icon>
+        </button>
+      </template>
+
+      <!-- Dots -->
+      <template if:true={hasDots}>
+        <div class="carousel-dots" role="tablist" aria-label="Slide indicators">
+          <template for:each={_images} for:item="dot" for:index="i">
+            <button key={dot.src}
+                    class={dot.dotClass}
+                    role="tab"
+                    aria-selected={dot.active}
+                    aria-label={dot.dotAria}
+                    data-index={i}
+                    onclick={goTo}>
+            </button>
+          </template>
+        </div>
+      </template>
+    </div>
+  </div>
+</template>

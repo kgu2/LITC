@@ -1,0 +1,232 @@
+<template>
+    <template if:true={showPage}>
+
+        <div style="display: flex; justify-content: center;">
+
+            <div style="width: 190px; margin-right: 1rem;">
+                <div style="height: 2rem;"></div>
+                <img src={slfrfCard} style="margin-top: 25px;">
+                <div style="height: 2rem;"></div>
+    
+                <lightning-tabset variant="vertical" active-tab-value ={activeTab}>
+                    <lightning-tab onactive={handleOnActive} label="Introduction" value="intro">
+                    </lightning-tab>
+                    <lightning-tab onactive={handleOnActive} label="Compliance Reports" value="reports">
+                    </lightning-tab>
+                    <template if:true={showSubmissionTab}>
+                        <lightning-tab onactive={handleOnActive} label="Submissions" value="submissions">
+                        </lightning-tab>
+                    </template>
+                    <lightning-tab onactive={handleOnActive} label="Closeout reports" value="closeoutreports"></lightning-tab>
+                </lightning-tabset>
+            </div>
+    
+            <div class="columnMiddle">
+                <div class="slds-grid slds-wrap slds-gutters_direct">
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_10-of-12 container">
+                        <div class={intro} style="padding-right: 5rem; max-width: 70rem;">
+    
+                            <p style="font-size: 22pt; font-weight: 300;">
+                                Welcome to the Treasury Programs supporting State, Territory, Tribal, and Local Government as part of the 2021 American Rescue Plan.
+                            </p> 
+                            <p style="margin-top:20px; font-size: 13pt" >
+                                Depending on if you are a state, territory, local, or Tribal government, you will be eligible for
+                                different programs. Information regarding the various funds follows.
+                            </p>
+                
+                            <br/>
+                
+                            <h1 style="font-size: 20pt">
+                                <b>Compliance Process</b>
+                            </h1>
+                
+                            <p style="margin-top:20px; font-size: 13pt; border-bottom:solid #DDDBDA;">
+                                You now have a login and 24/7 access to this portal. You have two
+                                options while working on your compliance report(s) – save your progress or submit the submission. If you
+                                save, you can return and edit information as needed. To resume working on a draft submission, 
+                                click on “Compliance Reports" using the navigation to the left of the page. 
+                                This will bring you to your list of compliance reports, click “Provide Information” to continue the process.
+                                <br/><br/>
+                            </p> 
+                
+                            <br/>
+                
+                            <h2 style="font-size: 16pt"><b>State and Local Fiscal Recovery Funds (SLFRF)</b></h2>
+                            <p> $350 billion available for state, territory, Tribal, and local governments to support the public health response and lay the foundation for a strong and equitable economic recovery.</p>
+                            <br/>
+                            <h2 style="font-size: 16pt"><b>Emergency Rental Assistance (ERA)</b></h2>
+                            <p>$21.6 billion available for state, territory,
+                                and local governments to assist households that are unable to pay rent and utilities.</p>
+                            <br/>
+                            <h2 style="font-size: 16pt"><b>Homeowner Assistance Fund (HAF)</b></h2>
+                            <p>Nearly $10 billion available for state,
+                                territory, and Tribal governments to provide relief for our country’s most vulnerable
+                                homeowners.</p>
+                            <br/>
+                        
+                            <p style="margin-top:20px; font-size: 13pt">
+                            Ready to get started? Click “Go to your reports" below.
+                            </p>
+                            
+                            <br />
+                        
+                            <div style="float:left">
+                                <button class="slds-button slds-button_outline-brand" label="Go To Your Compliance Reports" onclick={handleQuarterlyReport}>Go to your reports</button>
+                            </div>
+                
+                            <br /><br /><br /><br /><br /><br />
+                
+                
+                            <template if:true={showAudit}>
+                                <h1 style="font-size: 20pt">
+                                    <b>Alternative Compliance Examination Process</b>
+                                </h1>
+                                <p style="font-size: 13pt;">
+                                    The SLFRF Compliance Supplement describes an alternative approach for SLFRF recipients that would otherwise not be required to undergo an audit pursuant to 2 CFR Part 200, Subpart F, if it was not for the expenditures of SLFRF funds directly awarded by Treasury. If you are one of the recipients required to upload this “Alternative Compliance Examination” to Treasury, you can do so by clicking the button below and following the instructions.
+                                    <br/><br/>
+                                </p> 
+                                <p style="margin-top:20px; font-size: 13pt">
+                                    <b>Ready to get started? Click “Go To Your ACEE Form" below</b>
+                                </p>
+                                <br/>
+                                <div style="float:left">
+                                    <button class="slds-button slds-button_outline-brand" onclick={gotoAudit}>Go To Your ACEE Form</button>
+                                </div>
+                            </template>
+                
+                            <br /><br /><br /><br /><br /><br />
+                        </div>
+                        <div class={reports}>
+                            <c-compliance-portal-checklist></c-compliance-portal-checklist>
+                            <br />
+                        </div>
+                        <div class={submissions}>
+                            <h1 style="font-size: 20pt;"><b>My Submissions</b></h1>
+                            <br />
+                            <template if:true={showHAF}>
+                                <c-slt-portal-haf-plan-checklist></c-slt-portal-haf-plan-checklist>
+                                <br />
+                            </template>
+                            <template if:true={showERA}>
+                                <c-slt-portal-request-reallocation-checklist></c-slt-portal-request-reallocation-checklist>
+                                <br />
+                            </template>
+                            <template if:true={showSLFRF}>
+                                <template if:true={stateRecipientId}>
+                                    <c-slfrf-award-redirect-checklist></c-slfrf-award-redirect-checklist>
+                                    <br />
+                                </template>
+                            </template>
+                        </div>
+                        <div class={closeoutReports}>
+                            <c-closeout-checklist contact-id={contactId}></c-closeout-checklist>
+                        </div>
+                    </div>
+
+                    <div class="slds-col slds-size_1-of-1 slds-small-size_2-of-12">
+                        <div class="helpInfoBox animate__animated">
+                            <template if:false={showToggle}>
+                                <div onclick={collapse} style="cursor: pointer; font-size: 11pt; margin-bottom:10px">
+                                    <lightning-icon icon-name="utility:right"></lightning-icon> 
+                                    Hide
+                                </div>
+                                <lightning-accordion allow-multiple-sections-open active-section-name={activeSections}>
+                                    <template lwc:if={showCCN}>
+                                        <div class="bubble">{countCCNs}</div>
+                                    </template>
+                                    <lightning-accordion-section name="Notifications" label="Notifications" class="helpSection">
+                                        <c-custom-notification-tab ongrabcount={handleGetCount}></c-custom-notification-tab>
+                                    </lightning-accordion-section>
+                                    <lightning-accordion-section name="Help" label="Help" class="helpSection">
+                                        <p style="font-size: 12pt;">
+                                            For assistance on your submission and other questions, contact 
+                                            <br/>
+                                            <a href="mailto:covidreliefitsupport@treasury.gov" target="_blank">Covid IT Relief Support</a> 
+                                        </p>
+                                    </lightning-accordion-section>
+                                    <lightning-accordion-section name="Legend" label="Legend" class="helpSection">
+                                        <div style = "margin-left:7%;"> 
+                                            <lightning-icon icon-name="action:edit" size="x-small" style="background-color: #4cb5eb; border-radius: 10px;"></lightning-icon>
+                                            &emsp;Provide Information
+                                            <br/>   <br/>
+                                            <lightning-icon icon-name="action:preview" size="x-small" style="background-color: #083C6F;; border-radius: 10px;"></lightning-icon>
+                                            &emsp;View
+                                            <br/>   <br/>
+                                            <lightning-icon icon-name="action:download" size="x-small" style="background-color: #7c868a;; border-radius: 10px;"></lightning-icon>
+                                            &emsp;Download
+                                            <br/>   <br/>
+                                            <lightning-icon icon-name="action:new_event" size="x-small" style="background-color: #083C6F;; border-radius: 10px;"></lightning-icon>
+                                            &emsp;Request Extension
+                                            <br/>  
+                                        </div>    
+                                    </lightning-accordion-section>
+                                </lightning-accordion>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <template if:true={showToggle}>
+                <div class="helpInfoBoxCollapsed"></div>
+                <lightning-icon icon-name="utility:left" onclick={expand} style="cursor: pointer; position: fixed; right:0; top: 9.5rem; z-index: 5;" size="medium"></lightning-icon>
+                <br/>
+                <template lwc:if={showCCN}>
+                    <div class="bubbleCollapsed">{countCCNs}</div>
+                </template>
+                <lightning-icon icon-name="utility:notification" onclick={expand} style="cursor: pointer; position: fixed; right:0; top: 12.5rem; z-index: 5;" size="medium"></lightning-icon>
+                <br>
+                <lightning-icon icon-name="utility:help" onclick={expand} style="cursor: pointer; position: fixed; right:0; top: 15.5rem; z-index: 5;" size="medium"></lightning-icon>
+                <br/>
+                <template if:true={isNotIntro}>
+                    <lightning-icon icon-name="utility:info_alt" onclick={expand} style="cursor: pointer; position: fixed; right:0; top: 18.5rem; z-index: 5;" size="medium"></lightning-icon>
+                </template>
+            </template>
+
+        </div>
+
+        <template if:true={showWelcome}>
+            <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_small" aria-labelledby="welcome-mat-101-label" aria-modal="true">
+                <div class="slds-modal__container">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" onclick={closeWelcome} style="margin-right: 2rem">
+                        <lightning-icon icon-name="utility:close"
+                        alternative-text="close"
+                        variant="inverse"
+                        size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                    </button>
+                
+                    <div class="slds-modal__content slds-var-p-around_large" style={splash}>
+                        <div style="color:#083c6f; margin-top:7rem; background-color:white; width: 85%; border-radius: 10px; padding-top:inherit; margin-left: auto; margin-right: auto;">
+                        <h2 style="text-align: center; font-size:20pt">Welcome to the Compliance Portal!</h2>
+                        <br/> 
+                        <p style="padding-left: 4rem; padding-right:4rem; font-size:12pt">You are currently logged in to Treasury’s Compliance Portal via <u><b>login.gov</b></u>, which provides access to Compliance Reporting.</p>
+                        <br/>
+                        <p style="padding-left: 4rem; padding-right:4rem; font-size:12pt">If you need to access Applications or Submissions (including ERA2 second & third tranche payments), you must log in using <u><b>ID.me</b></u>. If you do not have an ID.me account, you will need to create one.</p>
+                        <br/>
+
+                        <div style="text-align:center">
+
+                            <lightning-button
+                                style="margin-right: 1rem"
+                                variant="brand-outline"
+                                label="Continue on to Login.gov Compliance Portal"
+                                onclick={closeWelcome}>
+                            </lightning-button>
+                            <a href="https://portal.treasury.gov" class="slds-button slds-button_brand">Take me to ID.me</a>
+
+                            </div>
+                        <br/> <br/><br/>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open" role="presentation"></div>
+        </template>
+
+        <template if:true={showWarning}>
+            <c-government-warning-for-treasury-portals onclosegovwarning={handleCloseGovWarning}></c-government-warning-for-treasury-portals>
+        </template>
+
+    </template> 
+</template>

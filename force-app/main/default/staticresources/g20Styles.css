@@ -1,0 +1,805 @@
+.provide {
+    border:none;
+    color: white;
+    border-radius: 5px;
+    background-color:#0053A2;
+    padding: 7px;
+    font-size: 16px;
+    line-height: 16px;
+    text-align: center;
+    width: 12rem;
+    font-weight: bold;
+    letter-spacing: 0;
+    height: 40px;
+    margin-right: 1.75rem;
+}
+
+.provide:hover{
+	background-color: #2D8FE8;
+}
+
+.slds-modal__content {
+    overflow-y: auto !important;
+}
+
+.slds-table th, .slds-table td {
+    white-space: none;
+}
+
+::placeholder{
+	font-size: 1rem;
+	font-family: sans-serif;
+	color: #828282
+}
+
+.slds-input {
+    color: #3D3D3D;
+    font-size: 1rem;
+    letter-spacing: 0;
+    line-height: 24px;
+    box-sizing: border-box;
+    border: 1px solid lightgray;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    box-shadow: none;
+  }
+
+
+  /* background color of default tabset navbar */
+  .slds-tabs_scoped__nav{ 
+	background-color: #E0EEFD;
+  }
+
+  .slds-tabs_default__item.slds-active, .slds-tabs_default__item.slds-is-active, .slds-tabs--default__item.slds-active, .slds-tabs--default__item.slds-is-active {
+	  /* border-top: 3px solid;
+	  border-right: 1px solid;
+	  border-left: 1px solid;
+	  border-color: #0053A2; */
+  }
+  .slds-tabs_default__item.slds-active .slds-tabs_default__link, .slds-tabs_default__item.slds-active .slds-tabs--default__link, 
+  .slds-tabs_default__item.slds-is-active .slds-tabs_default__link, .slds-tabs_default__item.slds-is-active .slds-tabs--default__link, 
+  .slds-tabs--default__item.slds-active .slds-tabs_default__link, .slds-tabs--default__item.slds-active .slds-tabs--default__link, 
+  .slds-tabs--default__item.slds-is-active .slds-tabs_default__link, .slds-tabs--default__item.slds-is-active .slds-tabs--default__link {
+	  font-weight: bold;
+  }
+
+  .slds-tabs_default__item, .slds-tabs--default__item{ 
+	color: #0B2042
+  }
+
+  .slds-tabs_default__item, .slds-tabs--default__item {
+	/* border-top: 3px solid;
+	border-right: 1px solid;
+	border-left: 1px solid;
+	border-color: #AFAFAF; */
+  }
+
+  .slds-tabs_default__link, .slds-tabs--default__link {
+	font-weight: var(--lwc-tabsFontWeight,400);
+	src: url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@100&display=swap'); 
+	font-family: 'Public Sans', sans-serif;
+	font-size: 1rem;
+	color: #686868;
+  }
+
+  .slds-tabs_default__nav, .slds-tabs--default__nav {
+	  border-bottom-color: #0B2042;
+  }
+
+  .slds-tabs_default__item {
+	  position: unset;
+  }
+
+  .slds-col.slds-size_1-of-2.centered {
+	text-indent: 5vh;
+}
+
+.slds-vertical-tabs__nav-item {
+	/* border-top: var(--lwc-borderWidthThin,1px) solid var(--lwc-colorBorder,rgb(212, 212, 212)); */
+	/* border-bottom: none; */
+}
+
+.slds-text-heading_medium {
+	font-weight: bold;
+}
+
+lightning-tab {
+	padding: none;
+}
+
+
+.slds-vertical-tabs__nav {
+	border-right: none;
+}
+
+.slds-p-around_medium, .slds-p-around--medium {
+	padding: 0;
+}
+
+.slds-vertical-tabs__nav-item.slds-is-active {
+	border-left: 3.5px solid rgb(0, 83, 162);
+}
+
+.slds-vertical-tabs {
+	border: none;
+}
+
+.slfrf .slds-vertical-tabs {
+	display: block;
+  }
+
+
+.slds-tabs_default__item::after, .slds-tabs--default__item::after {
+	display: none;
+}
+
+.slds-card {
+	border: none;
+}
+
+.slds-tabs_default__item.slds-active::after, .slds-tabs_default__item.slds-is-active::after, .slds-tabs--default__item.slds-active::after, .slds-tabs--default__item.slds-is-active::after {
+	background-color: transparent;
+}
+
+
+.checkListDiv {
+	border-bottom: 1px solid; 
+	padding-bottom: 0.5rem;
+	padding-top: 0.5rem;
+}
+
+.slds-text-heading_small {
+	font-size: 32px;
+	color: #3D3D3D;
+	font-weight: bold;
+  	letter-spacing: 0;
+	src: url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@100&display=swap'); 
+	font-family: 'Public Sans', sans-serif;
+}
+
+.slds-vertical-tabs__nav {
+	color: #3D3D3D;
+	font-size: 1rem;
+	font-weight: 600;
+	letter-spacing: 0;
+}
+
+.slds-button_icon-brand {
+	background-color: #083C6F;
+}
+
+.slds-progress-ring__content{ 
+	background: #E0EEFD;
+}
+
+.slds-progress-ring__path{
+	transition: cx 1s, cy 1s;
+}
+
+.slds-popover__header{ 
+	background: #083c6f;
+	color: white
+}
+
+.slds-welcome-mat__info{ 
+	background-image: none;
+}
+
+.darkBlue {
+	background-color: #083C6F;
+	color: white;
+	pointer-events: none;
+}
+
+.noButtonClick{
+	pointer-events: none;
+}
+
+
+.lightblue .slds-button_icon-brand{
+	background-color: #4cb5eb;
+	border-color: #4cb5eb;
+	border-radius: 10px;
+}
+
+.darkblue .slds-button_icon-brand{
+	background-color: #083C6F;
+	border-color: #083C6F;
+	border-radius: 10px;
+}
+
+
+.gray .slds-button_icon-brand{
+	background-color: #7c868a;
+	border-color: #7c868a;
+	border-radius: 10px;
+}
+
+.helpSection { 
+	border: 1px #0B2042 solid;
+	border-radius: 0.25rem;
+	background-color: white;
+}
+
+.recordDetailSection{ 
+	border: 1px #0B2042 solid;
+	border-radius: 0.25rem;
+	background-color: white;
+}
+
+.errorsAccordian{ 
+	border: 1px #0B2042 solid;
+	border-radius: 0.25rem;
+	background-color:#F9D9DD;;
+}
+
+.slds-accordion__list-item:first-child.helpSection{ 
+	border: 1px #0B2042 solid;
+}
+
+html {background-color: white}
+
+
+
+/* Removing green path from lightning progress chevron */
+.nogreen .slds-path__nav .slds-is-current:first-child{ 
+	border: none;
+	background: rgb(243, 243, 243);
+	color: black;
+}
+
+.nogreen .slds-path__nav .slds-is-current .slds-path__link {
+	color: black;
+}
+
+.nogreen .slds-path__nav .slds-is-active:first-child .slds-path__link{ 
+	color: white;
+	background: rgb(1, 68, 134) ;
+}
+
+.slds-path__item:before, .slds-path__item:after {
+    position: unset;
+}
+
+.large .slds-checkbox_faux{ 
+	width: 1.5rem;
+	height: 1.5rem;
+}
+
+.large .slds-checkbox [type=checkbox]:checked+.slds-checkbox__label .slds-checkbox_faux:after{ 
+	width: 1rem;
+	height: 0.5rem;
+}
+
+/* multi select picklist  */
+.slds-listbox__item{ 
+	font-size: 01rem;
+}
+
+.large lightning-picklist .slds-form-element div .slds-form-element__control .slds-dueling-list .slds-dueling-list__column .slds-dueling-list__options{ 
+    height: 20rem !important;
+}
+
+.medium lightning-picklist .slds-form-element div .slds-form-element__control .slds-dueling-list .slds-dueling-list__column .slds-dueling-list__options{ 
+    height: 15rem !important;
+}
+.small lightning-picklist .slds-form-element div .slds-form-element__control .slds-dueling-list .slds-dueling-list__column .slds-dueling-list__options{ 
+    height: 13rem !important;
+}
+
+
+/* remove the "Upload Files" text from the button of the lightning:input type file */
+.slds-file-selector__dropzone .slds-file-selector__button{
+    font-size: 0 !important;
+}
+.slds-file-selector__dropzone .slds-file-selector__button:after{
+    content: 'Upload files' !important;
+    font-size: 1rem !important;
+    color: rgb(36, 119, 204) !important;
+}
+
+
+
+/* datatable header styling */
+.myTable table>thead .slds-cell-fixed{
+	background: #DADADA;
+  }
+
+.myTable .slds-table thead th{
+    color: black;
+    font-size: .875rem;
+}
+
+.myTable .slds-button__icon{ 
+	width: 25px;
+	height: 25px;
+}
+
+.slds-table thead th{
+    color: black;
+}
+
+
+
+/* 9/9/2024 Winter release- updated wrapped header class for datatables*/
+/* wrap-table-header does not work on datatables for some reason */
+.wrapped-header-v2 .slds-truncate{ 
+	text-wrap: wrap;
+}
+
+.swal-button--action {
+	padding: 7px 19px !important;
+	border-radius: 2px !important;
+	background-color: #4962B3 !important;
+	font-size: 12px !important;
+	border: 1px solid #3e549a !important;
+	text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3) !important;
+}
+
+.swal-button--close{
+    padding: 7px 19px !important;
+    border-radius: 2px !important;
+    background-color: #FFF !important;
+    font-size: 12px !important;
+    color: #3e549a !important;
+    border: 1px solid #3e549a !important
+  }
+
+  .swal-content__input, .swal-content__textarea{ 
+	width: auto !important;
+	display: inline-block !important;
+  }
+
+
+  /*P&E Report Specific */
+span[lightning-duallistbox_duallistbox].slds-truncate{
+	text-wrap: balance;
+}
+
+.slds-media__body .slds-truncate{
+	text-wrap: balance;
+}
+
+button[name="lockIcon"] svg{
+	height: 1.5rem;
+	width: 1.5rem;
+}
+
+tr:has(th[style="background-color:#F9F6DA;"]) {
+	background-color: #F9F6DA;
+  }
+
+
+div.slds-form-element__help[data-date-format] {
+    display: none;
+}
+
+.slds-icon-text-success{ 
+	--slds-c-icon-color-foreground: #4DA264
+}
+
+.slds-icon-text-warning{ 
+	--slds-c-icon-color-foreground: #ECA400
+}
+
+.slds-icon-action-close{ 
+	background-color: #ECA400
+}
+
+
+.slds-icon-action-edit{ 
+	background-color: #ECA400
+}
+
+.slds-icon_x-small{ 
+	
+}
+  
+
+/* ANIMATIONS */
+.slds-accordion__summary{ 
+	transition: all 0.5s ease-in-out;
+  }
+
+@keyframes slideInTop {
+0% {
+	transform: translateY(-100%);
+}
+100% {
+	transform: translateY(0);
+}
+}
+
+.forceToastMessage.slds-notify--toast{ 
+animation: 0.4s cubic-bezier(0.42, 0, 0.73, 2.57) 0s 1 slideInTop;
+}
+
+.animate .slds-progress-bar .slds-progress-bar__value{ 
+	transition: width 1.5s ease; 
+}
+
+
+/* TYPOGRAPHY */
+h1 {
+	font-family: sans-serif !important;
+	font-weight: 600 !important;
+	font-size: 2rem !important;
+}
+
+:not(.slds-modal__content, .slds-modal__header) > h1 {
+	max-width: 72ex !important;
+}
+
+h2:not(.slds-accordion__summary-heading)  {
+	font-family: sans-serif !important;
+	font-weight: 600 !important;
+	font-size: 1.5rem !important;
+}
+
+:not(.slds-modal__content, .slds-modal__header) > h2 {
+	max-width: 72ex !important;
+}
+
+h3 {
+	font-family: sans-serif !important;
+	font-weight: 600 !important;
+	font-size: 1.25rem !important;
+}
+
+:not(.slds-modal__content, .slds-modal__header) > h3 {
+	max-width: 72ex !important;
+}
+
+h4 {
+	font-family: sans-serif !important;
+	font-weight: 600 !important;
+	font-size: 1.125rem !important;
+	max-width: 72ex !important;
+}
+
+h5 {
+	font-family: sans-serif !important;
+	font-weight: 600 !important;
+	font-size: 1.0625rem !important;
+	max-width: 88ex !important;
+}
+
+h6 {
+	font-family: sans-serif !important;
+	font-weight: 500 !important;
+	font-size: .75rem !important;
+	max-width: 88ex !important;
+}
+
+p {
+	font-family: sans-serif !important;
+}
+p:not(c-omniscript-formatted-rich-text p){
+	font-size: 1rem !important;
+	margin-bottom: 1rem;
+}
+c-omniscript-formatted-rich-text p{ 
+	font-size: 1rem;
+	max-width: none !important;
+}
+
+label {
+    font-family: sans-serif !important;
+	font-size: 1rem !important;
+    /* font-size: 1rem !important; */
+	color: rgba(0, 0, 0, 0.8) !important;
+    /* color: #666 !important; */
+}
+
+:not(.slds-modal__content, .slds-modal__header) > p {
+	max-width: 1024px;
+}
+
+strong {
+	font-weight: 500px;
+}
+
+li {
+	font-family: sans-serif;
+	font-size: 1rem;
+	/* margin-bottom: .5rem; */
+	max-width: 88ex;
+  }
+
+.welcomeText {
+	font-size: 1.3rem;
+	font-weight: 300;
+	max-width: 72ex;
+	margin-bottom: 2rem;
+}
+
+.formHeader {
+    font-size: 1.25rem;
+    margin-bottom: 15px;
+}
+
+/* PAGE ELEMENTS */
+hr {
+	/* max-width: 800px; */
+    height: 6px;
+    border: none;
+    background: linear-gradient(to right, #b48902 0%, #f1eccf 25%, #b48902 50%, #efeee1 100%);
+}  
+
+.footer {
+	height: 100px;
+  }
+
+
+  lightning-helptext{ 
+	vertical-align: text-bottom;
+  }
+
+
+  /* .header{ 
+	position: absolute;
+  } */
+
+
+  .slds-box{
+	background-color:#d3dbde7a;
+	border: 1px solid #0B2042;
+	border-radius: 5px;
+	padding: 28px;
+  }
+
+
+.siteforceThemeLayoutStarter{ 
+	position: absolute;
+  }
+
+  .slds-combobox__input{ 
+	border: 1px solid lightgray;
+  }
+
+  .slds-dueling-list__options{ 
+	border: 1px solid lightgray;
+  }
+
+  lightning-output-field.white div lightning-formatted-text{ 
+	color: white
+  }
+
+/* omnistudio */
+
+  omnistudio-omniscript-block{ 
+    background-color:#2d247c0a;
+	border: 1px solid #2D247C;
+	border-radius: 5px;
+	padding: 28px;
+}
+
+runtime_omnistudio_omniscript-omniscript-block{ 
+	background-color:#2d247c0a;
+	border: 1px solid #2D247C;
+	border-radius: 5px;
+	padding: 28px;
+}
+
+.omniscript-body{ 
+	border: none;
+	padding: 0;
+	margin: 0;
+}
+
+/* testing these not surre if does anyhting */
+::slotted([omnistudio-omniscriptstep_omniscriptstep]) {
+    padding: 0;
+	margin: 0;
+}
+
+@media (min-width: 48em) {
+    .omniscript-body{
+        border: none !important;
+    }
+}
+
+.slds-textarea{ 
+	background-color: #FFFFFF !important;
+	border-color: lightgray !important;
+} 
+slot{
+    padding: 0 !important;
+}
+
+.slds-progress{ 
+	max-width: 100%;
+}
+
+/* multiselect */
+c-checkbox-group div fieldset legend span {
+	font-size: 0.9rem !important;
+	font-family: sans-serif !important;
+    /* color: #666 !important; */
+	color: rgba(0, 0, 0, 0.8) !important;
+    font-weight: normal !important;
+}
+runtime_omnistudio_common-checkbox-group div fieldset legend span {
+	font-size: 0.9rem !important;
+	font-family: sans-serif !important;
+    /* color: #666 !important; */
+	color: rgba(0, 0, 0, 0.8) !important;
+    font-weight: normal !important;
+}
+.slds-has-error .slds-checkbox [type=checkbox]+.slds-checkbox_faux, .slds-has-error .slds-checkbox [type=checkbox]+.slds-checkbox--faux, .slds-has-error .slds-checkbox [type=checkbox]~.slds-checkbox_faux, .slds-has-error .slds-checkbox [type=checkbox]~.slds-checkbox--faux, .slds-has-error .slds-checkbox [type=checkbox]+.slds-checkbox__label .slds-checkbox_faux, .slds-has-error .slds-checkbox [type=checkbox]+.slds-checkbox__label .slds-checkbox--faux{ 
+	border-color: lightgray;
+}
+c-checkbox-group .slds-has-error .slds-form-element__help{ 
+	display: none;
+}
+
+.slds-form-element__help[omnistudio-maskedinput_maskedinput_slds] {
+ display: none;
+}
+
+runtime_omnistudio_omniscript-omniscript-text[data-omni-key="Employer_Taxpayer_Number"] slot > runtime_omnistudio_common-input > div > div.slds-form-element__control input{
+	-webkit-text-security: disc !important;
+}
+omnistudio-omniscript-text[data-omni-key="Employer_Taxpayer_Number"] slot > c-input > div > div.slds-form-element__control input{
+	-webkit-text-security: disc !important;
+}
+
+
+
+
+runtime_omnistudio_omniscript-omniscript-multiselect[data-omni-key="Language_Options__c"] slot > runtime_omnistudio_common-checkbox-group div fieldset > div{ 
+	flex-wrap: wrap;
+    display: flex;
+	/* max-height: 15rem;
+	overflow-y: auto; */
+}
+runtime_omnistudio_omniscript-omniscript-multiselect[data-omni-key="Language_Options__c"] slot > runtime_omnistudio_common-checkbox-group div fieldset > div .slds-checkbox{ 
+	flex: 0 0 25%;
+}
+runtime_omnistudio_omniscript-omniscript-multiselect[data-omni-key="Language_Options__c"]{ 
+	width: 100%;
+}
+
+omnistudio-omniscript-multiselect[data-omni-key="Language_Options__c"] slot > c-checkbox-group div fieldset > div{ 
+	flex-wrap: wrap;
+    display: flex;
+	/* max-height: 15rem;
+	overflow-y: auto; */
+}
+omnistudio-omniscript-multiselect[data-omni-key="Language_Options__c"] slot > c-checkbox-group div fieldset > div .slds-checkbox{ 
+	flex: 0 0 25%;
+}
+omnistudio-omniscript-multiselect[data-omni-key="Language_Options__c"]{ 
+	width: 100%;
+}
+
+runtime_omnistudio_omniscript-omniscript-multiselect[data-omni-key="Language_Options__c"] slot > runtime_omnistudio_common-checkbox-group div fieldset > div{ 
+	flex-wrap: wrap;
+    display: flex;
+	/* max-height: 15rem;
+	overflow-y: auto; */
+}
+runtime_omnistudio_omniscript-omniscript-multiselect[data-omni-key="Languages_served_in_addition_to_English__c"] slot > runtime_omnistudio_common-checkbox-group div fieldset > div .slds-checkbox{ 
+	flex: 0 0 25%;
+}
+runtime_omnistudio_omniscript-omniscript-multiselect[data-omni-key="Languages_served_in_addition_to_English__c"]{ 
+	width: 100%;
+}
+
+omnistudio-omniscript-multiselect[data-omni-key="Languages_served_in_addition_to_English__c"] slot > c-checkbox-group div fieldset > div{ 
+	flex-wrap: wrap;
+    display: flex;
+	/* max-height: 15rem;
+	overflow-y: auto; */
+}
+omnistudio-omniscript-multiselect[data-omni-key="Languages_served_in_addition_to_English__c"] slot > c-checkbox-group div fieldset > div .slds-checkbox{ 
+	flex: 0 0 25%;
+}
+omnistudio-omniscript-multiselect[data-omni-key="Languages_served_in_addition_to_English__c"]{ 
+	width: 100%;
+}
+
+
+input[omnistudio-textarea_textarea_slds], .slds-textarea[omnistudio-textarea_textarea_slds]{ 
+	border-color: lightgray;
+}
+
+.omniscript-article .slds-file-selector__dropzone{ 
+	border: none !important;	
+}
+
+label.slds-form-element__label{ 
+	text-wrap: auto !important;	;
+}
+
+input.slds-input[disabled][omnistudio-maskedInput_maskedInput_slds]{
+	-webkit-filter: brightness(.9);
+}
+
+/* 
+runtime_omnistudio_common-checkbox-group div fieldset { 
+	max-height: 25rem;
+    overflow-y: auto;
+} */
+
+
+[data-style="false"] input.slds-input[name="Passport_Number__c"] {
+  -webkit-text-security: disc !important;
+}
+
+abbr { 
+	margin: 0;
+}
+
+
+.slds-textarea[disabled]{ 
+	background-color: rgb(243, 243, 243) !important;
+}
+
+
+.helpSection .slds-accordion__list-item{ 
+	border-color: #0B2042;
+}
+
+.slds-vertical-tabs{ 
+	overflow: hidden !important;
+}
+
+
+.slds-button{ 
+	border-radius: 8px;
+}
+.slds-button.slds-button_brand:not(:disabled){ 
+	background: #0B2042;
+}
+.slds-button.slds-button_outline-brand:not(:disabled){ 
+	border-color: #0B2042;
+	color: #0B2042;
+}
+
+.slds-vertical-tabs__nav-item.slds-is-active{ 
+	/* color: #0B2042; */
+	border-left: #0B2042;
+
+	background:#0B2042 ;
+	color: white;
+}
+
+.slds-radio .slds-form-element__label{ 
+	font-size: 1rem;
+	color: rgba(0, 0, 0, 0.8);
+}
+
+.slds-vertical-tabs__link:hover{ 
+	color: #0B2042;
+}
+
+
+.slds-vertical-tabs__nav-item:focus-within{ 
+	box-shadow: none;
+}
+
+.slds-vertical-tabs__nav-item.slds-is-active .slds-vertical-tabs__link:hover{ 
+	background:#0B2042
+}
+
+.slds-vertical-tabs__nav-item.slds-is-active a:active,
+.slds-vertical-tabs__nav-item.slds-is-active a:focus {
+    color: white
+}
+
+.slds-progress__marker_icon, .slds-progress__marker--icon{ 
+	height: 24px;
+	width: 24px;
+}
+
+.slds-max-medium-table_stacked td.fix-safari_perf {
+	border-top: var(--lwc-borderWidthThin, 1px) solid var(--slds-g-color-border-base-1, var(--lwc-colorBorder, #939393)) !important;
+}
+.slds-max-medium-table_stacked th.fix-safari_perf {
+	border-top: var(--lwc-borderWidthThin, 1px) solid var(--slds-g-color-border-base-1, var(--lwc-colorBorder, #939393)) !important;
+}
+
+/* lightning-combobox div span {
+  display: none;
+} */

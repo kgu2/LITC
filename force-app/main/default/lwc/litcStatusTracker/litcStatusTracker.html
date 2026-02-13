@@ -1,0 +1,49 @@
+<template>
+    <!-- <table style="width: 900px"> -->
+    <table>
+        <tr>
+            <!-- <td style="width: 120px; padding-right: 0.5rem; text-align:center">  -->
+            <td style="padding-right: 0.5rem; text-align:center"> 
+                <b><label style="margin-bottom: 5px; display:inline-block">Advocay analyst review</label></b>
+                <br/>
+                <template if:true={aaStatusSubmitted}>  
+                    <lightning-badge label={aaStatus} class="slds-theme_success"></lightning-badge>
+                </template>
+                <template if:true={aaStatusNotSubmitted}>  
+                    <lightning-badge label={aaStatus} class="slds-theme_warning"></lightning-badge>
+                </template>
+            </td>
+            <td style="padding-right: 0.5rem;  text-align:center">
+                <b><label style="margin-bottom: 5px; display:inline-block">Budget analyst review</label></b>
+                <br/>
+                <template if:true={baStatusSubmitted}>  
+                    <lightning-badge label={baStatus} class="slds-theme_success"></lightning-badge>
+                </template>
+                <template if:true={baStatusNotSubmitted}>  
+                    <lightning-badge label={baStatus} class="slds-theme_warning"></lightning-badge>
+                </template>
+            </td>
+            <td style=" text-align:center">
+                <b><label style="margin-bottom: 5px; display:inline-block">Reviewing official review</label></b>
+                <br/>
+                <template if:true={roStatusSubmitted}>  
+                    <lightning-badge label={roStatus} class="slds-theme_success"></lightning-badge>
+                </template>
+                <template if:true={roStatusNotSubmitted}>  
+                    <lightning-badge label={roStatus} class="slds-theme_warning"></lightning-badge>
+                </template>
+            </td>
+            <td style="text-align:center">
+                <b><label style="margin-bottom: 5px; display:inline-block">Program office review </label></b>
+                <br/>
+                <template if:true={poStatusSubmitted}>  
+                    <lightning-badge label={poStatus} class="slds-theme_success"></lightning-badge>
+                </template>
+                <template if:true={poStatusNotSubmitted}>  
+                    <lightning-badge label={poStatus} class="slds-theme_warning"></lightning-badge>
+                </template>
+            </td>
+        </tr>
+    </table>
+    <br/>
+</template>

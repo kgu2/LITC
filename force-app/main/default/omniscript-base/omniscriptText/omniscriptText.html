@@ -1,0 +1,107 @@
+<template>
+  <slot>
+    <c-input if:false={_isMasked}
+             type={_inputType}
+             class={_styleClasses.input}
+             label={_propSetMap.label}
+             onblur={handleBlur}
+             required={_propSetMap.required}
+             max-length={_maxLength}
+             min-length={_minLength}
+             pattern={_patternVal}
+             theme={_theme}
+             tab-index={tabIndex}
+             field-level-help={_handleHelpText}
+             icon-name="utility:info"
+             placeholder={_placeholder}
+             message-when-value-missing={_messageWhenValueMissing}
+             message-when-pattern-mismatch={_messageWhenPatternMismatch}
+             message-when-too-short={_messageWhenTooShort}
+             message-when-too-long={_messageWhenTooLong}
+             message-when-bad-input={_messageWhenBadInput}
+             message-when-range-overflow={_messageWhenRangeOverflow}
+             message-when-range-underflow={_messageWhenRangeUnderflow}
+             message-when-step-mismatch={_messageWhenStepMismatch}
+             message-when-type-mismatch={_messageWhenTypeMismatch}
+             value={elementValue}
+             data-omni-input>
+      <template if:true={_propSetMap.repeat}>
+        <span slot="label"
+              style="bottom:7px; right:-11px;"
+              class={_styleClasses.repeatContainer}
+              role="group">
+          <button if:true={canRepeat}
+                  class={_styleClasses.repeatAdd}
+                  onclick={handleAdd}>
+            <c-icon icon-name="utility:add"
+                    alternative-text={_repeatAlternativeText}
+                    extraclass={_styleClasses.repeatIcons}
+                    size="xx-small">
+            </c-icon>
+          </button>
+          <button if:true={canRemove}
+                  class={_styleClasses.repeatRemove}
+                  onclick={handleRemove}>
+            <c-icon icon-name="utility:close"
+                    alternative-text={_removeAlternativeText}
+                    extraclass={_styleClasses.repeatIcons}
+                    size="xx-small">
+            </c-icon>
+          </button>
+        </span>
+      </template>
+    </c-input>
+    <c-masked-input if:true={_isMasked}
+                    class={_styleClasses.input}
+                    type={_inputType}
+                    label={_propSetMap.label}
+                    onblur={handleBlur}
+                    required={_propSetMap.required}
+                    max-length={_maxLength}
+                    min-length={_minLength}
+                    pattern={_patternVal}
+                    imask={_imaskTextAttributes}
+                    theme={_theme}
+                    tab-index={tabIndex}
+                    field-level-help={_handleHelpText}
+                    placeholder={_placeholder}
+                    message-when-value-missing={_messageWhenValueMissing}
+                    message-when-pattern-mismatch={_messageWhenPatternMismatch}
+                    message-when-too-short={_messageWhenTooShort}
+                    message-when-too-long={_messageWhenTooLong}
+                    message-when-bad-input={_messageWhenBadInput}
+                    message-when-range-overflow={_messageWhenRangeOverflow}
+                    message-when-range-underflow={_messageWhenRangeUnderflow}
+                    message-when-step-mismatch={_messageWhenStepMismatch}
+                    message-when-type-mismatch={_messageWhenTypeMismatch}
+                    message-when-mask-incomplete={_messageWhenMaskIncomplete}
+                    value={elementValue}
+                    data-omni-input>
+      <template if:true={_propSetMap.repeat}>
+        <span slot="label"
+              style="bottom:7px; right:-11px;"
+              class={_styleClasses.repeatContainer}
+              role="group">
+          <button if:true={canRepeat}
+                  class={_styleClasses.repeatAdd}
+                  onclick={handleAdd}>
+            <c-icon icon-name="utility:add"
+                    alternative-text={_repeatAlternativeText}
+                    extraclass={_styleClasses.repeatIcons}
+                    size="xx-small">
+            </c-icon>
+          </button>
+          <button if:true={canRemove}
+                  class={_styleClasses.repeatRemove}
+                  onclick={handleRemove}>
+            <c-icon icon-name="utility:close"
+                    alternative-text={_removeAlternativeText}
+                    extraclass={_styleClasses.repeatIcons}
+                    size="xx-small">
+            </c-icon>
+          </button>
+        </span>
+      </template>
+    </c-masked-input>
+  </slot>
+</template>

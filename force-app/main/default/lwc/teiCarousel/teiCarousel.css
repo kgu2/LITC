@@ -1,0 +1,128 @@
+:host {
+  --bg: #0b1020;
+  --panel: #121935;
+  --panel-2: #0f1530;
+  --text: #eaf0ff;
+  --accent: #6aa7ff;
+  --accent-2: #8e7bff;
+  --radius: 14px;
+  --shadow: 0 10px 25px rgba(0,0,0,.25);
+  display: block;
+}
+
+/* Panel wrapper (your theme) */
+.carousel.section{
+  background: linear-gradient(180deg, var(--panel), var(--panel-2));
+  border: 1px solid #212a55;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 16px;
+}
+
+/* Viewport: fixed height + center content; anchors arrows/dots INSIDE */
+.carousel-viewport{
+  position: relative;
+  width: 100%;
+  /* max-height: 340px;             
+  height: 34vh;                 
+  min-height: 220px; */
+  outline: none;
+  overflow: hidden;
+  display: grid;
+}
+
+/* Track slides horizontally; translateX via CSS var --index */
+.carousel-track{
+  display: flex;
+  height: 100%;
+  width: 100%;
+  transform: translateX(calc(var(--index, 0) * -100%));
+  transition: transform .45s ease-in-out;
+}
+
+/* Each slide takes full viewport width */
+.carousel-slide{
+  flex: 0 0 100%;
+  height: 100%;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+/* Fit image WITHOUT crop/stretch */
+.carousel-img{
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;           /* full image visible */
+  background: transparent;       /* no letterbox color; set if you want */
+  filter: contrast(1.05) saturate(1.06);
+}
+
+/* Optional caption overlay */
+.carousel-caption{
+  position: absolute; left: 16px; right:16px; bottom: 12px;
+  background: linear-gradient(90deg, rgba(11,16,32,.55), rgba(11,16,32,.15));
+  border: 1px solid rgba(58,74,160,.6);
+  color: var(--text);
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0,0,0,.4);
+  backdrop-filter: blur(4px);
+}
+
+/* Arrows inside viewport */
+.carousel-btn{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  background: rgba(15,21,48,.65);
+  border: 1px solid #2a3570;
+  color: var(--text);
+  width: 40px; height: 40px;
+  border-radius: 999px;
+  display: grid; place-items: center;
+  cursor: pointer;
+  transition: transform .15s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease;
+  box-shadow: 0 8px 18px rgba(0,0,0,.35);
+}
+.carousel-btn.prev{ left: 16px; }
+.carousel-btn.next{ right: 16px; }
+.carousel-btn:hover{
+  transform: translateY(-50%) scale(1.06);
+  background: rgba(22,30,70,.78);
+  border-color: #3851b8;
+}
+.carousel-btn:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Dots */
+.carousel-dots{
+  position: absolute; left: 0; right: 0; bottom: 8px;
+  display: flex; justify-content: center; gap: 8px;
+  padding: 0 10px;
+  z-index: 3;
+}
+.carousel-dot{
+  width: 9px; height: 9px; border-radius: 999px;
+  background: rgba(170,185,255,.35);
+  border: 1px solid #2a3570;
+  cursor: pointer;
+  transition: transform .15s ease, background .2s ease;
+}
+.carousel-dot.is-active{
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transform: scale(1.1);
+}
+.carousel-dot:focus-visible{ outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Small screens: give more height */
+@media (max-width: 560px){
+  .carousel-viewport{
+    height: 40vh;
+    max-height: 380px;
+  }
+}

@@ -1,0 +1,232 @@
+<apex:page standardController="Application_for_Federal_Assistance__c" renderAs="pdf" name="SF-424.pdf" showHeader="false" sidebar="false" applyHtmlTag="false" docType="html-5.0">
+    <html>
+        <head>
+            <style type="text/css">
+                body{
+                    font-size:10pt;
+                }
+                p{
+                    font-size:10pt;
+                }
+    
+                h1{ 
+                    font-family: sans-serif;
+                    font-weight: bold;
+                    font-size: 22pt;
+                    color: rgb(80, 133, 165);
+                }
+    
+                h2{ 
+                    font-family: sans-serif;
+                    font-weight: bold;
+                    font-size: 14pt;
+                    color: rgb(80, 133, 165);
+                }
+    
+                .hr{ 
+                    width:100%; height:2px; background:#DADADA;
+                }
+    
+                .header{ 
+                    font-size: 10pt;
+                    color: #AFAFAF;
+                    font-family: sans-serif;
+                }
+                .space{ 
+                    margin-top: 20px; margin-bottom: 5px
+                }
+            </style>
+        </head>
+        <body>
+            <table>
+                <tr>
+                    <td>
+                        <apex:image url="{!$Resource.LITCPDFTitleIcon}" width="200px" height="60px"/>
+                    </td>
+                </tr>
+            </table>
+    
+            <h1><u>Form SF-424</u></h1>
+
+            <!-- <div class='hr'></div> -->
+            <table style="width: 100%; line-height: 2;">
+                <tr>
+                    <td style="width: 50%; vertical-align: top;">
+                        Type of application: <b>{!Application_for_Federal_Assistance__c.Type_of_Application__c}</b><br/>
+                    </td>
+                    <td style="width: 50%; vertical-align: top;">
+                        Project period: <b>{!Application_for_Federal_Assistance__c.Project_Period__c}</b><br/>
+                    </td>
+                </tr>
+            </table> 
+    
+            <h2>
+                Applicant information
+            </h2>
+    
+            <div class='hr'></div>
+    
+            <table style="width: 100%; line-height: 2;">
+                <tr>
+                    <td style="width: 50%; vertical-align: top;">
+                        Do you have a UEI?: <b>{!Application_for_Federal_Assistance__c.Do_you_have_a_UEI__c}</b><br/>
+                        Organizational UEI: <b>{!Application_for_Federal_Assistance__c.Organizational_UEI__c}</b><br/>
+                        Legal name: <b>{!Application_for_Federal_Assistance__c.Legal_Name__c}</b><br/>
+                        EIN/TIN: <b>{!Application_for_Federal_Assistance__c.Employer_Taxpayer_Number__c}</b><br/>
+                        Street 1: <b>{!Application_for_Federal_Assistance__c.Street_1__c}</b><br/>
+                        County: <b>{!Application_for_Federal_Assistance__c.County__c}</b><br/>
+                    </td>
+                    <td style="width: 50%; vertical-align: top;">
+                        City: <b>{!Application_for_Federal_Assistance__c.City__c}</b><br/>
+                        State: <b>{!Application_for_Federal_Assistance__c.State__c}</b><br/>
+                        Zip/Postal code: <b>{!Application_for_Federal_Assistance__c.Zip_Postal_Code__c}</b><br/>
+                        Country: <b>{!Application_for_Federal_Assistance__c.Country__c}</b><br/>
+                        Street 2: <b>{!Application_for_Federal_Assistance__c.Street_2__c}</b><br/>
+                        Province: <b>{!Application_for_Federal_Assistance__c.Province__c}</b><br/>
+                    </td>
+                </tr>
+            </table>      
+
+            <h2>
+                Organizational unit
+            </h2>
+            <p>Please provide contact information for the individual at your organization who is able to resolve issues or respond to questions the LITC Program staff may have about the application.</p>
+    
+            <div class='hr'></div>
+    
+            <table style="width: 100%; line-height: 2;">
+                <tr>
+                    <td style="width: 50%; vertical-align: top;">
+                        First name: <b>{!Application_for_Federal_Assistance__c.First_Name__c}</b><br/>
+                        Middle name: <b>{!Application_for_Federal_Assistance__c.Middle_Name__c}</b><br/>
+                        Last name: <b>{!Application_for_Federal_Assistance__c.Last_Name__c}</b><br/>
+                        Suffix: <b>{!Application_for_Federal_Assistance__c.Suffix__c}</b><br/>
+                        Title: <b>{!Application_for_Federal_Assistance__c.Organization_Unit_Title__c}</b><br/>
+                        Organizational affiliation: <b>{!Application_for_Federal_Assistance__c.Organizational_Affliation__c}</b><br/>
+                    </td>
+                    <td style="width: 50%; vertical-align: top;">
+                        Department name: <b>{!Application_for_Federal_Assistance__c.Department_Name__c}</b><br/>
+                        Division name: <b>{!Application_for_Federal_Assistance__c.Division_Name__c}</b><br/>
+                        Telephone number: <b>{!Application_for_Federal_Assistance__c.Telephone_Number__c}</b><br/>
+                        Email: <b>{!Application_for_Federal_Assistance__c.Email__c}</b><br/>
+                        Fax: <b>{!Application_for_Federal_Assistance__c.Fax__c}</b><br/>
+                    </td>
+                </tr>
+            </table>     
+
+            <h2>
+                Type of applicant
+            </h2>
+            <p>Note: Up to 3 values may be selected for Type of applicant.</p>
+    
+            <div class='hr'></div>
+    
+            <table style="width: 100%; line-height: 2;">
+                <tr>
+                    <td style="width: 100%; vertical-align: top;">
+                        Type of applicant: <b>{!Application_for_Federal_Assistance__c.Type_of_Applicant_1__c}</b><br/>
+                    </td>
+                </tr>
+            </table>   
+
+            <h2>
+                Project areas affected/ Congressional districts
+            </h2>
+    
+            <div class='hr'></div>
+
+            <div class="space">
+                Project areas affected:
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Areas_affected_by_project__c}</b>
+    
+            <div class="space">
+                Congressional districts:
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Congressional_district_by_project__c}</b> 
+    
+
+            <h2>
+                Estimated funding
+            </h2>
+    
+            <div class='hr'></div>
+
+            <table style="width: 100%; line-height: 2;">
+                <tr>
+                    <td style="width: 50%; vertical-align: top;">
+                        A. Federal: <b><apex:outputText value="{0, Number, Currency}"><apex:param value="{!Application_for_Federal_Assistance__c.Estimated_Funding_Federal__c}" /></apex:outputText></b><br/>
+                        B. Applicant: <b><apex:outputText value="{0, Number, Currency}"><apex:param value="{!Application_for_Federal_Assistance__c.Estimated_Funding_Applicant__c}" /></apex:outputText></b><br/>
+                        C. State: <br/>
+                        D. Local: <br/>
+                        E. Other: <b><apex:outputText value="{0, Number, Currency}"><apex:param value="{!Application_for_Federal_Assistance__c.Estimated_Funding_Other__c}" /></apex:outputText></b><br/>
+                        F. Program income: <b><apex:outputText value="{0, Number, Currency}"><apex:param value="{!Application_for_Federal_Assistance__c.Estimated_Funding_Program_Income__c}" /></apex:outputText></b><br/>
+                        G. Total: <b><apex:outputText value="{0, Number, Currency}"><apex:param value="{!Application_for_Federal_Assistance__c.Estimated_Funding_Total__c}" /></apex:outputText></b><br/>
+                    </td>
+                    <td style="width: 50%; vertical-align: top;">
+                       
+                        
+                        
+                    </td>
+                </tr>
+            </table>   
+            <div class="space">
+                 Is the Applicant Delinquent on any Federal Debt?
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Is_Applicant_Delinquent_on_Federal_Debt__c}</b> 
+
+            <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Federal_debt_explanation__c != null}" layout="none">
+                <div class="space">
+                    If yes, include an explanation
+                </div>
+                <b>{!Application_for_Federal_Assistance__c.Federal_debt_explanation__c}</b> 
+            </apex:outputPanel>
+
+            <h2>
+                Authorized representative
+            </h2>
+            <div class='hr'></div>
+            <table style="width: 100%; line-height: 2;">
+                <tr>
+                    <td style="width: 50%; vertical-align: top;">
+                        First name: <b>{!Application_for_Federal_Assistance__c.Auth_Rep_First_Name__c}</b><br/>
+                        Middle name: <b>{!Application_for_Federal_Assistance__c.Auth_Rep_Middle_Name__c}</b><br/>
+                        Last name: <b>{!Application_for_Federal_Assistance__c.Auth_Rep_Last_Name__c}</b><br/>
+                        Suffix: <b>{!Application_for_Federal_Assistance__c.Auth_Rep_Suffix__c}</b><br/>
+                    </td>
+                    <td style="width: 50%; vertical-align: top;">
+                        Title: <b>{!Application_for_Federal_Assistance__c.Auth_Rep_Title__c}</b><br/>
+                        Telephone number: <b>{!Application_for_Federal_Assistance__c.Auth_Rep_Number__c}</b><br/>
+                        Email: <b>{!Application_for_Federal_Assistance__c.Auth_Rep_Email__c}</b><br/>
+                        Fax: <b>{!Application_for_Federal_Assistance__c.Auth_Rep_Fax__c}</b><br/>
+                    </td>
+                </tr>
+            </table>   
+
+
+            <h2>Submission</h2>
+            <div class='hr'></div>
+
+            <p>
+                By Signing this application, I certify (1) to the statements contained in the list of certifications ** and (2) that the statements herein are true, complete and accurate to the best of my knowledge. I also provide the required assurances and agree to comply with any resulting terms if I accept an award. I am aware that any false, fictitious, or fraudulent statements or claims may subject me to criminal, civil, or administrative penalties. (U.S. Code, Title 18, Section 1001).
+                <br/><br/>
+                Check the box below to affirm that all information is complete and accurate
+                <br/><br/>
+                By checking this box, I affirm that I am the sponsoring organization's Authorizing Official and all information provided is complete and accurate.
+                <br/>   <br/>
+                The list of certifications and assurances, or an internet site where you may obtain this list, is contained in the announcement or agency specific instructions.
+            </p>
+
+            <div class="space">Submission date</div>
+            <b>
+            <apex:outputText value="{0, date, MMMM d',' yyyy}">
+                <apex:param value="{!Application_for_Federal_Assistance__c.Date_Received__c}" />
+            </apex:outputText>
+            </b>
+    
+            <!-- <div class="space">Submitted by</div>
+            <b>{!Application_for_Federal_Assistance__c.Submitted_Name__c}</b> -->
+
+        </body>
+    </html>
+</apex:page>

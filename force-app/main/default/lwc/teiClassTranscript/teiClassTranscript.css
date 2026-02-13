@@ -1,0 +1,105 @@
+/*uswds attributes*/
+/* :host{
+  --bg: #0b1020;
+  --panel: #121935;
+  --panel-2: #0f1530;
+  --text: #eaf0ff;
+  --muted: #b7c1e6;
+  --accent: #6aa7ff;
+  --accent-2: #8e7bff;
+  --radius: 14px;
+  --shadow: 0 10px 25px rgba(0,0,0,.25);
+  display:block;
+  background:
+    radial-gradient(1200px 800px at 15% -10%, #1f2a55 0%, transparent 60%),
+    radial-gradient(900px 700px at 100% 0%, #1a2350 0%, transparent 55%),
+    var(--bg);
+  color: var(--text);
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+} */
+
+.tei {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  min-height: 100vh;
+  padding: 10px 0 20px;
+}
+
+
+.page-header { margin-bottom: 8px; }
+.page-title {
+  /* font-weight: 800;
+  font-size: clamp(24px, 2.2vw, 30px); */
+  font-size: 28px;
+    line-height: 1.2;
+    font-weight: 800;
+  margin: 0 0 4px;
+  letter-spacing: 0.3px;
+  color: #1a1a1a;
+}
+  
+/* .page-title {
+  font-size: 28px;
+  line-height: 1.2;
+  font-weight: 800;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 0.3px;
+} */
+
+a {
+  color: #004080;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.usa-prose > h1,
+.usa-prose > h2,
+.usa-prose > h3,
+.usa-prose > h4,
+.usa-prose > h5,
+.usa-prose > h6 {
+  /*changed to accommodate client font-family: Source Sans Pro Web, helvetica, arial, sans-serif;*/    
+  color: #000;
+}
+
+.usa-prose > h1 {
+  font-size: 2.5rem;
+}
+.usa-prose > h1,
+.usa-prose > h2 {
+  font-family: Merriweather Web, Georgia, Cambria, Times New Roman, Times, serif;
+  /*font-weight: 700;
+  letter-spacing: -0.1rem;*/
+  line-height: 1.2;
+}
+.usa-prose > h2 {
+  font-size: 2.0rem;
+}
+
+.details {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.launch-main{
+    background: #003366;  /* #0176D3;   #003366; */
+    color: #fff;
+    border: none;
+    padding: 0.5rem 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .launch-main {
+    border-radius: 4px 0 0 4px;
+  }
+
+@media (max-width: 37.5em) {
+  .usa-prose > h2 {
+    font-size: 1.1844rem;
+  }
+}

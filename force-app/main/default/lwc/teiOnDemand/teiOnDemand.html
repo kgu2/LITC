@@ -1,0 +1,199 @@
+<!-- <template>
+    <template if:true={isLoading}>
+        <lightning-spinner alternative-text="Submitting...." size="large" variant="brand"></lightning-spinner>
+    </template>
+
+    <template if:true={showOnDemand}>
+        <div class="container">
+            <h2>On-Demand</h2>
+            <p>
+                Want to learn on your own time? These self-paced options allow you to learn whenever 
+                you want from any device. Each option includes relevant concepts and tools you can implement today.
+            </p>
+            <br/><br/><br/>
+
+            <template for:each={categories} for:item="cat">
+                <template if:true={cat.hasItems}>
+                    <section key={cat.label}>
+                        <h3>{cat.label}</h3>
+                        <div class="thumbnail-grid">
+                            <template for:each={cat.items} for:item="item">
+                                <div key={item.Id} data-id={item.Id} onclick={handleVideoNav} class="thumbnail">
+                                    <img src={item.videoThumbnail} alt="YouTube Thumbnail" />
+                                </div>
+                            </template>
+                        </div>
+                        <hr />
+                    </section>
+                </template>
+            </template>
+        </div>
+    </template>
+
+    <template if:true={showVideoPlayBack}>
+        <c-tei-video-playback record-id={targetClassId} from-where="On-Demand" contact-id={contactId} registrant-id={registrantId} onreloaddata={reloadData}></c-tei-video-playback>
+    </template>
+</template> -->
+
+<!-- <template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Loading…" size="large" variant="brand"></lightning-spinner>
+    </template>
+  
+    <template if:true={showOnDemand}>
+      <div class="container">
+    
+        <h1 class="page-title">On-Demand</h1>
+        <p class="page-sub">
+            Want to learn on your own time? These self-paced options allow you to learn whenever 
+            you want from any device. Each option includes relevant concepts and tools you can implement today.
+        </p>
+          <img src={imageUrl} alt="Video coming soon" class="responsive-img"/>
+        
+        <div class="globalContainer">
+          <template for:each={categories} for:item="cat">
+            <template if:true={cat.hasItems}>
+              <section key={cat.label} class="section">
+                <div class="section-header">
+                  <div class="section-title">{cat.label}</div>                                     
+                </div>                
+                <div class="page-sub" if:true={cat.description}>
+                    {cat.description}
+                </div>
+                <hr class="divider" />
+                <div class="grid">
+                  <template for:each={cat.items} for:item="item">
+                    <article key={item.Id}
+                             data-id={item.Id}
+                             onclick={handleNavToClass}
+                             class="card"
+                             role="button"
+                             tabindex="0"
+                             aria-label={item.Title}>
+                      <div class="thumb" if:true={item.hasVideo}>                        
+                            <img src={item.videoThumbnail} alt={item.Title} />
+                            <div class="play" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="#0b1020"><path d="M8 5v14l11-7z"></path></svg>
+                            </div>             
+                      </div> 
+                      
+                      <div if:true={item.hasDefaultimage}>
+                        <img src={imageUrl} alt="Video coming soon" class="responsive-img"/>
+                      </div>
+                      
+                      <div class="card-body">
+                        <div class="title">{item.Title}</div>
+                        <div class="meta" if:true={item.isVideo}>
+                          <span class="badge">Video</span>
+                        </div>
+                        <div class="meta" if:true={item.isClass}>
+                          <span class="badge">Class</span>
+                        </div>
+                      </div>
+                    </article>
+                  </template>
+                </div>
+              </section>
+            </template>
+          </template>
+        </div>
+      </div>
+    </template>
+  
+    <template if:true={showVideoPlayBack}>
+      <c-tei-video-playback
+        record-id={targetClassId}
+        from-where="On-Demand"
+        contact-id={contactId}
+        registrant-id={registrantId}
+        onreloaddata={reloadData}>
+      </c-tei-video-playback>
+    </template>
+  </template> -->
+
+  <template>
+    <template if:true={isLoading}>
+      <lightning-spinner alternative-text="Loading…" size="large" variant="brand"></lightning-spinner>
+    </template>
+  
+    <template if:true={showOnDemand}>
+      <div class="container">
+        <h1 class="page-title">On-Demand</h1>
+        <p class="page-sub">
+          Want to learn on your own time? These self-paced options allow you to learn whenever 
+          you want from any device. Each option includes relevant concepts and tools you can implement today.
+        </p>
+  
+        <div class="globalContainer">
+          <template for:each={categories} for:item="cat">
+            <template if:true={cat.hasItems}>
+              <section key={cat.label} class="section">
+                <div class="section-header">
+                  <div class="section-title">{cat.label}</div>
+                </div>
+  
+                <div class="page-sub" if:true={cat.description}>
+                  {cat.description}
+                </div>
+  
+                <hr class="divider" />
+  
+                <div class="grid">
+                  <template for:each={cat.displayItems} for:item="item">
+                    <article key={item.Id}
+                             data-id={item.Id}
+                             onclick={handleNavToClass}
+                             class="card"
+                             role="button"
+                             tabindex="0"
+                             aria-label={item.Title}>
+                      <div class="thumb" if:true={item.hasVideo}>
+                        <img src={item.videoThumbnail} alt={item.Title} />
+                        <div class="play" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="#0b1020">
+                            <path d="M8 5v14l11-7z"></path>
+                          </svg>
+                        </div>
+                      </div>
+  
+                      <div if:true={item.hasDefaultimage}>
+                        <img src={imageUrl} alt="Video coming soon" class="responsive-img" />
+                      </div>
+  
+                      <div class="card-body">
+                        <div class="title">{item.Title}</div>
+                        <div class="meta" if:true={item.isVideo}>
+                          <span class="badge">Video</span>
+                        </div>
+                        <div class="meta" if:true={item.isClass}>
+                          <span class="badge">Class</span>
+                        </div>
+                      </div>
+                    </article>
+                  </template>
+                </div>
+  
+                <template if:true={cat.showToggle}>
+                  <div class="show-all-container">
+                    <a href="javascript:void(0);" class="show-all-link" data-key={cat.key} onclick={toggleShowAll}>
+                      {cat.showAllLabel}
+                    </a>
+                  </div>
+                </template>
+              </section>
+            </template>
+          </template>
+        </div>
+      </div>
+    </template>
+  
+    <template if:true={showVideoPlayBack}>
+      <c-tei-video-playback
+        record-id={targetClassId}
+        from-where="On-Demand"
+        contact-id={contactId}
+        registrant-id={registrantId}
+        onreloaddata={reloadData}>
+      </c-tei-video-playback>
+    </template>
+  </template>

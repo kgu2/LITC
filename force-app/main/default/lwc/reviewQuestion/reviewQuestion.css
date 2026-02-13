@@ -1,0 +1,74 @@
+*{
+    font-family: sans-serif;
+}
+
+h1 {
+	font-family: sans-serif;
+	font-size: 2rem;
+}
+
+h2 {
+	font-family: sans-serif;
+	font-size: 1.2rem;
+}
+
+h3 {
+	font-family: sans-serif;
+	font-size: 1rem;
+}
+
+label, .c-label {
+    font-family: sans-serif;
+    font-size: .8375rem;
+    color: #666;
+}
+
+p {
+	font-family: sans-serif;
+	font-size: 1rem;
+	margin-bottom: 1rem;
+}
+
+:host{
+	--lwc-inputStaticFontSize: 1.2rem;
+	--lwc-inputStaticFontFamily: 'sans-serif';
+ }
+
+
+.score-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	background: #d3d3d366;
+	padding: 20px;
+	border-radius: 10px;
+}
+.score-label {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50px;
+	height: 45px;
+	border-radius: 50%;
+	border: 2px solid #ccc;
+	cursor: pointer;
+	font-size: 18px;
+	transition: all 0.3s;
+	background-color: white;
+}
+.score-label:hover {
+	background-color: #e0e0e0;
+}
+input[type="radio"] {
+	display: none;
+}
+input[type="radio"]:checked + .score-label {
+	background-color: #50a6f7;
+	color: white;
+	border: 2px solid #5785b7;
+}
+.selected-score {
+	margin-top: 15px;
+	font-size: 20px;
+	font-weight: bold;
+}

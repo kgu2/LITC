@@ -1,0 +1,196 @@
+<template>
+    <div class={containerStyle} if:true={showClass}>
+        
+        <!-- <div role="main" class="usa-prose"> -->
+        <!-- <header class="page-header"> -->
+        <header >
+            <h1 class="page-title">{classTitle}</h1>
+        <br/><br/>
+        </header>
+
+        <!-- <template if:true={isTranscriptView}>            
+            <div style="background-color: #003466; color: white; padding: 0.5rem 1rem; font-weight: bold; border-radius: 0.25rem;">
+                Training Details
+            </div>
+        </template> -->
+        <!-- <section class="panel"> -->
+
+        <template if:true={fromSearch}>
+            <div class="tile tile-blue" tabindex="0" onclick={handleBack} role="button" aria-label="Notify Me">
+                <span class="label">&lt; Back</span>
+            </div>
+            <br/>
+        </template>
+
+        <div class={containerClass}>
+            <div>
+                Duration: {classDuration}
+                <br/><br/>
+            </div>
+            
+            <div>
+                <lightning-formatted-rich-text value={classInfo}></lightning-formatted-rich-text>
+                <br/><br/>
+            </div>
+
+            <div if:true={hasFiles}>
+                <strong>Additional materials:</strong><br/> 
+                <!-- <div class="slds-p-around_medium"  if:true={hasFiles}>                     -->
+                    <template for:each={classFiles} for:item="file">
+                        <!-- <div key={file.documentId} class="slds-m-bottom_x-small">
+                            <a href={file.downloadUrl} target="_blank">{file.title}</a>
+                        </div> -->
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href={file.downloadUrl} key={file.documentId} target="_blank"><strong>{file.title}</strong></a>
+                        <br key={file.documentId}/>
+                    </template>
+                <!-- </div> -->
+                <br/><br/>
+            </div>
+
+            <div>
+                <!-- <a href="javascript:void(0);" onclick={navigateToTeiBehaviorPolicy}><strong>TEI Behavior Policy</strong></a> -->
+                <a href="javascript:void(0);" onclick={openBehaviorPolicy}><strong>TEI Behavior Policy</strong></a>
+                <br/><br/>
+            
+                <!-- <a href="javascript:void(0);" onclick={navigateToTeiCancellationPolicy}><strong>TEI Cancellation Policy</strong></a> -->
+                <a href="javascript:void(0);" onclick={openCancellationPolicy}><strong>TEI Cancellation Policy</strong></a>
+                <br/><br/>
+
+                {recorded}<br/><br/>
+            </div> 
+            
+            <!-- <template if:false={isTranscriptView}> 
+                <div if:false={showMore}>
+                    <a href="javascript:void(0);" onclick={openShowMoreLess}><strong><u>Show More</u></strong></a>            
+                    <br/><br/>
+                </div> 
+            </template> -->
+            <!-- <div if:true={showMore}> -->
+            <div if:false={isMobile} class="slds-grid  slds-wrap">
+                <!-- <div class="slds-col slds-size_1-of-4">Provider</div>  
+                <div class="slds-col slds-size_1-of-4">{provider}</div>
+                <div class="slds-col slds-size_2-of-4"></div>
+                <br/>  -->
+                <div class="slds-col slds-size_1-of-4 slds-text-align_left">Topic</div>  
+                <div class="slds-col slds-size_3-of-4 slds-text-align_left">{topic}</div>                    
+                <br/> 
+                <div class="slds-col slds-size_1-of-4 slds-text-align_left">Target Audience</div>  
+                <div class="slds-col slds-size_3-of-4 slds-text-align_left">{targetAudience}</div>                    
+                <br/>
+                <div class="slds-col slds-size_1-of-4 slds-text-align_left">Access Method</div>  
+                <div class="slds-col slds-size_3-of-4 slds-text-align_left">{accessMethod}</div>                    
+                <br/>
+                <div class="slds-col slds-size_1-of-4 slds-text-align_left">Contact Hours</div>  
+                <div class="slds-col slds-size_4-of-4 slds-text-align_left">{classDuration}</div>                    
+                <br/> 
+                <!-- <div class="slds-col slds-size_1-of-4">Alignment</div>  
+                <div class="slds-col slds-size_1-of-4">{alignment}</div> 
+                <div class="slds-col slds-size_2-of-4"></div>
+                <br/> -->
+            </div>  
+                
+            <div if:true={isMobile}>
+                <!-- <strong>Provider</strong><br/>{provider}<br/>  -->
+                <strong>Topic</strong><br/>{topic}<br/> 
+                <strong>Target Audience</strong><br/>{targetAudience}<br/>
+                <strong>Access Method</strong><br/>{accessMethod}<br/>
+                <strong>Contact Hours</strong><br/>{classDuration}<br/> 
+                <!-- <strong>Alignment</strong><br/>{alignment}<br/> -->
+            </div>                 
+
+        </div>
+        
+        <template if:false={isTranscriptView}>        
+            <div if:true={isSession}>
+                <div if:false={hasSessions}>
+                    <br/><strong></strong>No Sessions<strong></strong> <br/><br/> 
+                    <div if:false={inNotifyMe}> 
+                        <div if:false={isPreview}>
+                            <div is:false={isOnDemand}>                   
+                                <!-- <lightning-button variant="brand" style="width:50px" label="Notify Me" onclick={handleNotifyMe}></lightning-button> -->
+                                <div class="tile tile-blue" tabindex="0" onclick={handleNotifyMe} role="button" aria-label="Notify Me">
+                                    <span class="label">Notify Me</span>
+                                </div>
+                                <!-- <button class="button-dark"  onclick={handleNotifyMe}>Notify Me</button> -->
+                            </div>
+                        </div>    
+                    </div>
+                    <div if:true={inNotifyMe}>
+                        You will be notified by email when a session is added to the class. 
+                    </div>
+                </div>
+                <div if:true={hasSessions} class="details">
+                    <br/>Upcoming Sessions 
+                </div>
+                <br/>
+        
+                <template for:each={allSessions} for:item="session">
+                    <div key={session}>
+                        <c-tei-session
+                            title=""
+                            class-id={recordId}
+                            session-id={session.Id} 
+                            contact-id={contactId}
+                            start-time={session.Start_Time__c}
+                            end-time={session.End_Time__c}
+                            access-method={session.Access_Method__c}
+                            provider={provider}
+                            registrations-maximum={session.Capacity__c}
+                            capacity-remaining={session.Capacity_Remaining__c}
+                            allow-waitlisting={session.Allow_Waitlisting__c}
+                            waitlist-capacity-remaining={session.Waitlist_Capacity_Remaining__c}
+                            registration-deadline={session.Registration_Deadline__c} 
+                            waitlist-registration-deadline={session.Waitlist_Registration_Deadline__c}
+                            topic={session.Topic_s__c}
+                            recorded-session={session.Recorded_Session__c}
+                            target-audience={session.Target_Audience__c}
+                            training-hours={session.Training_Hours__c}
+                            training-minutes={session.Training_Minutes__c}
+                            alignment={session.Alignment__c}
+                            is-mobile={isMobile}
+                            is-series={isSeries}>
+                        </c-tei-session> 
+                        <br/>            
+                    </div>                                
+                </template>
+            </div>
+
+            <div if:true={isVideo}>
+                <div if:false={isOnDemand}>
+                    <br/> 
+                    <!-- <lightning-button variant="brand" style="width:50px" label="Launch Video" onclick={handleLaunchVideo}></lightning-button> -->
+                    <!-- <button class="button-dark" onclick={handleLaunchVideo}>Launch Video</button> -->
+                    <div class="tile tile-blue" tabindex="0" onclick={handleLaunchVideo} role="button" aria-label="Launch Video">
+                        <span class="label">Launch Video</span>
+                    </div>
+                </div>
+            </div>
+        </template>        
+    </div>
+    
+    <div if:true={showTEIBehaviorPolicy}>
+        <c-tei-behavior-policy></c-tei-behavior-policy>
+    </div>
+
+    <div if:true={showTEICancellationPolicy}>
+        <c-tei-cancellation-policy></c-tei-cancellation-policy>
+    </div>
+
+    <div if:true={showVideo}>
+        <c-tei-video-playback
+            record-id={recordId}
+            from-where="Class" 
+            registrant-id={registrantId}
+            contact-id={contactId}
+            onupdate={handleVideoUpdate}
+        ></c-tei-video-playback>
+    </div>
+
+    <div if:false={showClass} class="slds-p-around_xx-large">
+        <div if:false={showVideo}>
+            <a href="javascript:void(0);" onclick={openClass}><strong>Back to Class</strong></a>
+            <br/><br/>
+        </div>
+    </div>
+      
+</template>

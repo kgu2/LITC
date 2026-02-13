@@ -1,0 +1,219 @@
+<template>
+     <template lwc:if={activeTab}>
+        <div style="display: flex;">
+            <div style="margin-right: 2rem; width: 230px;">
+                <lightning-tabset variant="vertical" active-tab-value={activeTab}>         
+                    <template for:each={questions} for:item="group">
+                        <lightning-tab label={group.sectionName} key={group.sectionName} onactive={handleOnActive} value={group.sectionName}></lightning-tab>
+                    </template>
+                    <lightning-tab label="Submit review card" onactive={handleOnActive} value="Submit"></lightning-tab>
+                </lightning-tabset>
+            </div>
+
+            <div class="slds-grid slds-wrap slds-gutters_direct" style="width: 80%; margin-right: 230px">
+                <template for:each={questions} for:item="group">
+                    <div key={group.sectionName} class={group.tabClass} style="display: flex; flex-wrap: wrap; gap: 10px;">
+                        <template for:each={group.questions} for:item="question">
+                            <c-review-question key={question.Id} data-key={question.Question_ID__c} question={question} ongetrefresh={handleRefresh} disable-edits={disableEdits} version={version}></c-review-question>
+                        </template>    
+                        <template lwc:if={summaryAnswerId}>
+                            <div class="slds-box" style="padding: 20px; margin-right: 15px; margin-bottom: 15px; width: 350px; height: 370px">
+                                <h2>Summary</h2>      
+                                <br/>
+                                <lightning-record-edit-form object-api-name='Review_Answer__c' record-id={summaryAnswerId}>
+                                    <label>Strengths</label>
+                                    <br/>
+                                    <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Strengths__c" onchange={autosaveV2}></lightning-input-field>
+                                    <br/>
+                                    <label>Weaknesses</label>
+                                    <br/>
+                                    <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Weaknesses__c" onchange={autosaveV2}></lightning-input-field>
+                                </lightning-record-edit-form>
+                            </div>
+                        </template>              
+                    </div>
+                </template>
+
+                <div class={showSubmitTab}>
+
+                    <div style="position: relative; display: flex;">
+
+                    <div class="slds-box" style="padding: 20px; margin-right: 15px; margin-bottom: 15px; width: 45vw;">
+                        <lightning-record-edit-form object-api-name='Review_Card__c' record-id={recordId} onsubmit={handleSubmitRC} class="submitForm">
+                            <h2>Review</h2>
+                            <hr style="margin-top: 5px; max-width:52ex">
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_1-of-2">
+                                    <label>Review card status</label>
+                                    <br/>
+                                    <lightning-output-field field-name="Status__c" variant="label-hidden"></lightning-output-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_2-of-2">
+                                    <table border="1" style="border-color: #F5F5F5;">
+                                        <tr>
+                                            <th style="text-align: left;" width="30%" >
+                                                Section
+                                            </th>
+                                            <th style="text-align: left;" width="15%" >
+                                                Score
+                                            </th>
+                                            <th style="text-align: left;" width="15%" >
+                                                Max scores
+                                            </th>
+                                            <th style="text-align: left;" width="15%" >
+                                                Weights
+                                            </th>
+                                            <th style="text-align: left;" width="15%" >
+                                                Scored points
+                                                <lightning-helptext content="(Score / Max score) * weight"></lightning-helptext>
+                                            </th>
+                                        </tr>
+                                        <template for:each={questions} for:item="section">
+                                            <tr key={section.sectionName}>
+                                                <!-- <td style="text-align: left;" width="30%">{section.sectionName}</td> -->
+                                                <td style="text-align: left;" width="30%"><a onclick={handleSummarySectionClick} data-value={section.sectionName}>{section.sectionName}</a></td>
+                                                <td style="text-align: center;" width="15%">{section.totalScore}</td>
+                                                <td style="text-align: center;" width="15%">{section.maxScore}</td>
+                                                <td style="text-align: center;" width="15%"><lightning-formatted-number value={section.weight} format-style="decimal"></lightning-formatted-number>%</td>
+                                                <td style="text-align: center;">
+                                                    <lightning-formatted-number value={section.weightedScore} format-style="decimal" maximum-fraction-digits="1"></lightning-formatted-number>       
+                                                </td>
+                                            </tr>
+                                        </template>
+
+                                        <!-- <template if:true={showEditSummaryModal}>           
+                                            <section style="position: absolute; left: 10rem; margin-top: -3rem" aria-modal="true" aria-label="Dialog title" aria-describedby="popover-body-id" class="popover slds-popover slds-popover_large" role="dialog">    
+                                                <lightning-button variant="base"  icon-name="utility:close" icon-position="right" style="float: right;" class="slds-popover__close closebutton" onclick={closeEditSummaryModal}></lightning-button>
+                        
+                                                <div class="slds-popover__body popover__body_large" style="max-height: 600px; overflow-y: auto;">
+                                                    <lightning-record-edit-form object-api-name='Review_Answer__c' record-id={selectedSummaryId}>
+                                                        <label>Strengths</label>
+                                                        <br/>
+                                                        <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Strengths__c" onchange={autosaveV3}></lightning-input-field>
+                                                        <br/>
+                                                        <label>Weaknesses</label>
+                                                        <br/>
+                                                        <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Weaknesses__c" onchange={autosaveV3}></lightning-input-field>
+                                                        <br/>
+                                                    </lightning-record-edit-form>                                                    
+                                                </div>
+                                            </section>
+                                        </template> -->
+
+                                        <tr class="blue" style="font-weight: bold;">
+                                            <td style="text-align: left;" width="30%">
+                                                Totals
+                                            </td>
+                                            <td style="text-align: center;" width="15%">
+                                                <lightning-formatted-number value={totalScore} format-style="decimal"></lightning-formatted-number>
+                                            </td>
+                                            <td style="text-align: center;" width="15%">
+                                                <lightning-formatted-number value={totalMaxScore} format-style="decimal"></lightning-formatted-number>
+                                            </td>
+                                            <td style="text-align: center;" width="15%">
+                                                <lightning-formatted-number value={totalWeights} format-style="decimal"></lightning-formatted-number>%
+                                            </td>
+                                            <td style="text-align: center;" width="15%">
+                                                <lightning-formatted-number value={totalScoredPoints} format-style="decimal"></lightning-formatted-number>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_3-of-4">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Strengths</label>
+                                    <br/>
+                                    <lightning-input-field field-name="Strengths__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} required></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_3-of-4">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Weaknesses</label>
+                                    <br/>
+                                    <lightning-input-field field-name="Weaknesses__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} required></lightning-input-field>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="slds-grid slds-gutters">
+                                <div class="slds-col slds-size_3-of-4">
+                                    <abbr title="required" class="slds-required">*</abbr>
+                                    <label>Summary</label>
+                                    <br/>
+                                    <lightning-input-field field-name="Notes__c" variant="label-hidden" onchange={autosave} disabled={disableEdits} required></lightning-input-field>
+                                </div>
+                            </div>
+
+                            <template lwc:if={isNotSubmitted}>
+                                <br/>
+                                <lightning-button label="Submit" type="submit" variant="brand"></lightning-button>
+                            </template>
+                        </lightning-record-edit-form>
+                    </div>
+
+                    <template if:true={showEditSummaryModal}>           
+                        <div class="slds-box" style="height: 370px; width: 350px">
+                            <lightning-button variant="base"  icon-name="utility:close" icon-position="right" style="float: right;" class="slds-popover__close closebutton" onclick={closeEditSummaryModal}></lightning-button>
+
+                            <div class="slds-popover__body popover__body_large" style="max-height: 600px; overflow-y: auto;">
+                                <lightning-record-edit-form object-api-name='Review_Answer__c' record-id={selectedSummaryId}>
+                                    <label>Section</label>
+                                    <br/>
+                                    <b style="font-size: 1rem;"><lightning-formatted-text value={selectedSummaryName}></lightning-formatted-text></b>
+       
+                                    <br/><br/>
+
+                                    <label>Strengths</label>
+                                    <br/>
+                                    <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Strengths__c" onchange={autosaveV3}></lightning-input-field>
+                                    <br/>
+                                    <label>Weaknesses</label>
+                                    <br/>
+                                    <lightning-input-field disabled={disableEdits} variant="label-hidden" field-name="Weaknesses__c" onchange={autosaveV3}></lightning-input-field>
+                                    <br/>
+                                </lightning-record-edit-form>                                                    
+                            </div>
+                        </div>
+                    </template>
+
+                    </div>
+                </div>
+            </div>
+            
+            <div style="width: 230px; position: fixed; right: 0; margin-right:2rem; max-height: 60%; overflow-y: auto;" class="summaryPanel">
+                <template for:each={questions} for:item="group">
+                    <div key={group.sectionName} class={group.tabClass}>
+                        <template for:each={group.questions} for:item="question">
+                            <div key={group.sectionName} style="font-size: 0.9rem; margin-bottom:1rem; padding: 10px; text-align: center" class="slds-box">
+                                <a onclick={navigateToQuestion} data-key={question.Question_ID__c}>{question.Review_Question__r.Name}</a>
+                                <br/>
+                                Score - <b>{question.Score__c}</b>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+                <div style="font-size: 0.9rem; margin-bottom:1rem; padding: 10px; text-align: center">
+                    <template lwc:if={isNotFirstTab}>
+                        <lightning-button variant="brand-outline" label="Back" style="margin-right:15px" onclick={handleNav}></lightning-button>
+                    </template>
+                    <template lwc:if={isNotLastTab}>
+                        <lightning-button variant="brand-outline" label="Next" onclick={handleNav}></lightning-button>
+                    </template>
+
+                   
+                </div>
+            </div>
+        </div>
+
+    </template>
+
+    <br /> <br />
+</template>

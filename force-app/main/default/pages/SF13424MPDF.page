@@ -1,0 +1,1850 @@
+<apex:page standardController="Application_for_Federal_Assistance__c" renderAs="pdf" name="13424.pdf'}" showHeader="false" sidebar="false" applyHtmlTag="false" docType="html-5.0">
+    <head>
+        <style type="text/css">
+            body{
+                font-size:10pt;
+            }
+            p{
+                font-size:10pt;
+            }
+
+            h1{ 
+                font-family: sans-serif;
+                font-weight: bold;
+                font-size: 22pt;
+                color: rgb(80, 133, 165);
+            }
+
+            h2{ 
+                font-family: sans-serif;
+                font-weight: bold;
+                font-size: 14pt;
+                color: rgb(80, 133, 165);
+            }
+
+            .hr{ 
+                width:100%; height:2px; background:#DADADA;
+            }
+
+            .header{ 
+                font-size: 10pt;
+                color: #AFAFAF;
+                font-family: sans-serif;
+            }
+            .space{ 
+                margin-top: 20px; margin-bottom: 5px
+            }
+        </style>
+    </head>
+    <body>
+        <table>
+            <tr>
+                <td>
+                    <apex:image url="{!$Resource.LITCPDFTitleIcon}" width="200px" height="60px"/>
+                </td>
+            </tr>
+        </table>
+
+        <!-- <apex:outputPanel rendered="{!LITC_Reporting_Form__c.Clinic_Type__c == 'Standard (representation, education, advocacy)'}" layout="none">
+                        a. New cases: <b>{!LITC_Reporting_Form__c.New_Cases__c}</b><br/>
+                        b. Consultations: <b>{!LITC_Reporting_Form__c.Total_Consultations__c}</b><br/>
+                    </apex:outputPanel> -->
+
+        <h1><u>Form 13424-M</u></h1>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Applicant name: <b>{!Application_for_Federal_Assistance__c.Legal_Name__c}</b><br/>
+                    Type of application: <b>{!Application_for_Federal_Assistance__c.Type_of_Application__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    Project period: <b>{!Application_for_Federal_Assistance__c.Project_Period__c}</b><br/>
+                </td>
+            </tr>
+        </table>  
+
+        <h2>
+            Clinic information
+        </h2>
+
+        <div class='hr'></div>
+
+        <div class="space">
+           Name of clinic (this should be the name that will be used in all outreach and publicity materials and will appear in IRS publications):
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Clinic_Name__c}</b>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    <!-- Name of clinic : <b>{!Application_for_Federal_Assistance__c.Clinic_Name__c}</b><br/> -->
+                    Public telephone number: <b>{!Application_for_Federal_Assistance__c.Clinic_Public_telephone_number__c}</b><br/>
+                    Toll-Free telephone number: <b>{!Application_for_Federal_Assistance__c.Clinic_Toll_Free_tele_num_if_applicable__c}</b><br/>
+                    Fax: <b>{!Application_for_Federal_Assistance__c.Clinic_FAX_number__c}</b><br/>
+                    Website address (if applicable): <b>{!Application_for_Federal_Assistance__c.Clinic_Website_address_if_applicable__c}</b><br/>
+                    Clinic services representation model: <b>{!Application_for_Federal_Assistance__c.Representation__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    Clinic street address: <b>{!Application_for_Federal_Assistance__c.Clinic_Street__c}</b><br/>
+                    Clinic city: <b>{!Application_for_Federal_Assistance__c.Clinic_City__c}</b><br/>
+                    Clinic state: <b>{!Application_for_Federal_Assistance__c.Clinic_State__c}</b><br/>
+                    Clinic ZIP/Postal code: <b>{!Application_for_Federal_Assistance__c.Clinic_Mailing_Zip_Code__c}</b><br/>
+                    Clinic services and delivery model: <b>{!Application_for_Federal_Assistance__c.Clinic_Services_and_Delivery_Model__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <h2>
+            Background
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            Organization overview. Provide an overview of the organization that will operate the clinic. This description should include at a minimum:
+            <br/>
+            1. Number of years in operation (for organizations in operation for less than one year, include a brief explanation of what led to the creation of the organization and those involved in its creation and their background and interest in the project)
+            <br/>
+            2. Nature and purpose of the organization
+            <br/>
+            3. Size (e.g., number of offices and staff)
+            <br/>
+            4. Current service area
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Organization_Overview__c}</b>
+
+        <div class="space">
+            Service delivery. In this section and through the remainder of the application. If the applicant currently operates an LITC, the response may contain information about the broader organization to the extent it helps demonstrate the applicant’s ability to deliver LITC services but should focus on information as it relates to operation of the LITC. Briefly outline the:
+            <br/>
+            1. Type of services currently provided by the organization (if not currently an LITC, discuss whether the organization provides similar services like advice, representation before agencies or courts, education, and outreach)
+            <br/>
+            2. Total number of individuals served by type of service for the prior three years (or for the number of years in operation if less than three)
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Type_of_Services_Provided__c}</b>
+
+        <div class="space">
+            Experience. Briefly describe the organization’s experience and approach to:
+            <br/>
+            1. Providing services to low-income individuals/taxpayers
+            <br/>
+            2. Providing services to ESL/LEP individuals/taxpayers
+            <br/>
+            3. Using volunteers to deliver services
+            <br/>
+            4. Supervising staff, students, or volunteers
+            <br/>
+            5. Expanding services or responding to changes in the law or needs of the community being served
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Experience__c}</b>
+
+
+        <h2>
+            Taxpayer access, geographic area and target audience, outreach strategy
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            Language access. Describe how the needs of individuals with limited English proficiency (LEP) who need to access clinic services will be addressed. In the response consider how the taxpayer’s language needs will be assessed, when and how documents will be translated into the taxpayer's primary language, and process used to help ensure accurate interpretation or translation
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Organization_Overview__c}</b>
+
+        <div class="space">Languages served</div>
+        <b>{!Application_for_Federal_Assistance__c.Language_Options__c}</b>
+
+
+        <div class="space">Reasonable accommodations. Describe how the needs of individual(s) who may need a reasonable accommodation to access clinic services will be addressed</div>
+        <b>{!Application_for_Federal_Assistance__c.Reasonable_Accommodations__c}</b>
+
+        <div class="space">
+            Geographic area and target audience. For each of the areas listed in response to Standard Form 424 project areas affected by county, provide demographic information:
+            <br/>
+            1. Total population
+            <br/>
+            2. Number of low-income residents,
+            <br/>
+            3. Number of ESL residents,
+            <br/>
+            4. Information about languages spoken,
+            <br/>
+            5. Other relevant demographic or community specific information that may shape service delivery
+            <br/>
+            6. If the clinic will target its services to a specific group of the low-income or ESL taxpayers, describe the group(s) and provide the rationale for this focus and
+            <br/>
+            7. Provide citations including source and date (e.g.-Census data) for information supplied
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Geographic_Area_and_Target_Audience__c}</b>
+
+        <div class="space">
+            Partners and networks
+            <br/>
+            1. Identify current partners or planned partnerships with other providers, community organizations or agencies
+            <br/>
+            2. Explain how the clinic plans to network with these partners to reach and serve its target audience
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Partners_and_Networks__c}</b>
+
+        <div class="space">
+            Publicity and outreach. Describe the clinic's publicity plan, including
+            <br/>
+            1. Different methods used to identify and reach taxpayers,
+            <br/>
+            2. Types of media leveraged,
+            <br/>
+            3. Languages used in outreach materials, and
+            <br/>
+            4. Potential venues for outreach to low-income and ESL taxpayers
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Publicity_and_Outreach_Methods__c}</b>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Participation_in_Programs__c != null}" layout="none">
+            <div class="space">
+                Participation in U.S. Tax Court programs. Does the applicant currently participate in either of return calendar call/stuffer letter programs?
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Participation_in_Programs__c}</b>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Participation_Types__c != null}" layout="none">
+            <div class="space">What does the applicant participate in?</div>
+            <b>{!Application_for_Federal_Assistance__c.Participation_Types__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Future_Participation__c != null}" layout="none">
+            <div class="space">Does the applicant plan to participate in the future?</div>
+            <b>{!Application_for_Federal_Assistance__c.Future_Participation__c}</b>
+        </apex:outputPanel>
+        
+        <h2>
+            Taxpayer services
+        </h2>
+        <div class='hr'></div>
+
+        <p>The applicant should detail the applicant's approach to delivering each of these key services.</p>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Controversy_Representation_Scope__c != null}" layout="none">
+            <div class="space">
+                Representation. Describe the controversy representation services to be provided including
+                <br/>
+                1. Scope
+                <br/>
+                2. Criteria, other than income and amount in controversy, that will be considered when deciding whether to accept a case.
+                <br/>
+                3. What factors will be considered in deciding what remedy to pursue on behalf of the taxpayer
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Controversy_Representation_Scope__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Consulation_Service_to_be_provided__c != null}" layout="none">
+            <div class="space">
+                Consultation. Describe the consultation services to be provided and how they will be made available to taxpayers e.g. in person, virtually, by telephone, in writing
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Consulation_Service_to_be_provided__c}</b>
+        </apex:outputPanel>
+
+        <div class="space">
+            Taxpayer education
+            <br/>
+            1. Describe the format and venue for educational activities
+            <br/>
+            2. Discuss how tax topics will be identified and provide a list of possible topics
+            <br/>
+            3. Discuss what materials and publications will be distributed and
+            <br/>
+            4. Discuss the qualifications of the person who will draft written materials and publications for the clinic, if different from the Qualified Tax Expert identified in the application. Note: The Qualified Tax Expert does not have to draft materials, but a Qualified Tax Expert must review materials to ensure the legal accuracy of the clinic’s written materials and publications and any tax advice provided during consultations
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Taxpayer_Education__c}</b>
+
+        <div class="space">
+            Advocacy. Provide plans for advocacy which may include any number of activities
+            <br/>
+            1. Undertaken to improve tax administration for low-income or ESL taxpayers (e.g. providing comments on proposed forms, regulations, or IRS policies) or
+            <br/>
+            2. To improve overall outcomes for low-income and ESL taxpayers (e.g., mentoring other LITCs, training other professionals serving low-income or ESL taxpayers, or providing technical assistance)
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Advocacy__c}</b>
+
+        <h2>
+            Staffing
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            QTE: Has the individual who will fulfill this role been identified/hired?
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.QTE_Identified_Hired__c}</b>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    QTE Last name: <b>{!Application_for_Federal_Assistance__c.QTE_Last_name__c}</b><br/>
+                    QTE First name: <b>{!Application_for_Federal_Assistance__c.QTE_First_name__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    QTE Phone: <b>{!Application_for_Federal_Assistance__c.QTE_Telephone_number__c}</b><br/>
+                    QTE Email address: <b>{!Application_for_Federal_Assistance__c.QTE_Email_address__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <div class="space">
+            QTE: Describe the major responsibilities of this position and the qualifications including education and experience that demonstrate this person’s ability to fulfill this role
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.QTE_Responsibilities_Qualifications__c}</b>
+
+        <div class="space">
+            QTE: Provide job description for position and required qualifications for a successful candidate
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.QTE_Job_Description__c}</b>
+
+        <div class="space">
+            QTE: This staff member will also fulfill the role as Clinic Director or Qualified Business Administrator (check the appropriate box(es))
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Dual_Role__c}</b>
+
+        <div class="space">
+            Clinic director: Has the individual who will fulfill this role been identified/hired?
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Clinic_Director_Identified_Hired__c}</b>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Clinic director Last name: <b>{!Application_for_Federal_Assistance__c.Clinic_Director_Last_name__c}</b><br/>
+                    Clinic director First name: <b>{!Application_for_Federal_Assistance__c.Clinic_Director_First_name__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    Clinic director Phone: <b>{!Application_for_Federal_Assistance__c.Clinic_Director_Telephone_number__c}</b><br/>
+                    Clinic director Email address: <b>{!Application_for_Federal_Assistance__c.Clinic_Director_Email_address__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <div class="space">
+            Clinic director: Describe the major responsibilities of this position and the qualifications including education and experience that demonstrate this person’s ability to fulfill this role
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.CD_Responsibilities_Qualifications__c}</b>
+
+        <div class="space">
+            Clinic director: Provide job description for position and required qualifications for a successful candidate
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Clinic_Director_Job_Description__c}</b>
+
+        <div class="space">
+            Clinic director: Check this box if this staff member will also fulfill the role as Qualified Business Administrator
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Dual_QBA__c}</b>
+        
+        <div class="space">
+            QBA: Has the individual who will fulfill this role been identified/hired?
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.QBA_Identified_Hired__c}</b>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    QBA Last name: <b>{!Application_for_Federal_Assistance__c.QBA_Last_name__c}</b><br/>
+                    QBA First name: <b>{!Application_for_Federal_Assistance__c.QBA_First_name__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    QBA Phone: <b>{!Application_for_Federal_Assistance__c.QBA_Telephone_number__c}</b><br/>
+                    QBA Email address: <b>{!Application_for_Federal_Assistance__c.QBA_Email_address__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <div class="space">
+            QBA: Describe the major responsibilities of this position and the qualifications including education and experience that demonstrate this person’s ability to fulfill this role
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.QBA_Responsibilities_Qualifications__c}</b>
+
+        <div class="space">
+            QBA: Provide job description for position and required qualifications for a successful candidate
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.QBA_Job_Description__c}</b>
+
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    TCO Last name: <b>{!Application_for_Federal_Assistance__c.TCO_Last_name__c}</b><br/>
+                    TCO First name: <b>{!Application_for_Federal_Assistance__c.TCO_First_name__c}</b><br/>
+                    TCO Title: <b>{!Application_for_Federal_Assistance__c.TCO_Title__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    TCO Phone: <b>{!Application_for_Federal_Assistance__c.TCO_Telephone_number__c}</b><br/>
+                    TCO Email address: <b>{!Application_for_Federal_Assistance__c.TCO_Email_address__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.US_Tax_Court_Narrative__c != null}" layout="none">
+            <div class="space">
+                U.S. Tax Court
+                <br/>
+                If no staff member is currently eligible to practice before the U.S. Tax Court, discuss whether a staff member will apply for licensure and when. If the clinic will use a volunteer to provide representation before the U.S. Tax Court, provide the
+                <br/>
+                1. Practitioner’s full name,
+                <br/>
+                2. Type of licensure or accreditation and
+                <br/>
+                3. U.S. Tax Court bar number
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.US_Tax_Court_Narrative__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Student_s_Per_Semester_Type__c != null}" layout="none">
+            <div class="space">If students will be used by the clinic to provide representation, education, or advocacy, indicate the number of students per semester and type (law students, graduate accounting students, etc.)</div>
+            <b>{!Application_for_Federal_Assistance__c.Student_s_Per_Semester_Type__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Student_Special_Appearance_Authorizing__c != null}" layout="none">
+            <div class="space">Will the clinic obtain a special appearance authorizing students to represent taxpayers before the IRS</div>
+            <b>{!Application_for_Federal_Assistance__c.Student_Special_Appearance_Authorizing__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Student_Permission_to_be_Obtained__c != null}" layout="none">
+            <div class="space">Will permission be obtained from the U.S. tax court for students to practice before the court</div>
+            <b>{!Application_for_Federal_Assistance__c.Student_Permission_to_be_Obtained__c}</b>
+        </apex:outputPanel>
+
+        
+        <h2>
+            Volunteers
+        </h2>
+        <div class='hr'></div>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Volunteer_Pro_Bono_Panel__c != null}" layout="none">
+            <div class="space">
+                Pro bono panel
+                <br/>
+                1. Describe the applicant’s pro bono panel including the number and types of qualified representatives
+                <br/>
+                2. Describe the level of experience and education of panel members
+                <br/>
+                3. Describe support offered to volunteers that have accepted cases and
+                <br/>
+                4. For clinics that use a local, state, or national pro bono panel, explain the referral process and whether the clinic plans to retain supervision of cases placed.
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Volunteer_Pro_Bono_Panel__c}</b>
+        </apex:outputPanel>
+
+        <div class="space">Other volunteer recruitment. Describe volunteers that will be recruited to help with non-representation services such as interpreters, educators, administrative assistants, if any.</div>
+        <b>{!Application_for_Federal_Assistance__c.Other_Volunteer_Recruitment__c}</b>
+
+        <div class="space">
+            Volunteer recruitment and retention 
+            <br/>
+            1. Provide the clinic’s strategy for recruiting volunteers
+            <br/>
+            2. Describe how the organization promotes volunteer retention.
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Volunteer_Recruitment_and_Retention__c}</b>
+
+        <h2>
+            Clinic operations
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">Dates. Lists dates during which taxpayers or partners can reach the clinic to apply for services or to work with the clinic to schedule and plan events</div>
+        <b>{!Application_for_Federal_Assistance__c.Dates_of_Operation__c}</b>
+
+        <div class="space">Clinic expects a regular reduction in services lasting 30 days or longer</div>
+        <b>{!Application_for_Federal_Assistance__c.Reduction_in_Services__c}</b>
+
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Continuity_of_Services__c != null}" layout="none"> 
+            <div class="space">Describe how services will be reduced, for what duration and what will be done to ensure continuity of services to current clients and potential clients with emergencies.</div>
+            <b>{!Application_for_Federal_Assistance__c.Continuity_of_Services__c}</b>
+        </apex:outputPanel>
+
+        <br/><br/>
+        Hours of operation
+        <table style="width: 100%; line-height: 2;">
+            <tr>
+                <td style="width: 50%; vertical-align: top;">
+                    Monday: <b>{!Application_for_Federal_Assistance__c.Day_1_Hours__c}</b><br/>
+                    Tuesday: <b>{!Application_for_Federal_Assistance__c.Day_2_Hours__c}</b><br/>
+                    Wednesday: <b>{!Application_for_Federal_Assistance__c.Day_3_Hours__c}</b><br/>
+                    Thursday: <b>{!Application_for_Federal_Assistance__c.Day_4_Hours__c}</b><br/>
+                </td>
+                <td style="width: 50%; vertical-align: top;">
+                    Friday: <b>{!Application_for_Federal_Assistance__c.Day_5_Hours__c}</b><br/>
+                    Saturday: <b>{!Application_for_Federal_Assistance__c.Day_6_Hours__c}</b><br/>
+                    Sunday: <b>{!Application_for_Federal_Assistance__c.Day_7_Hours__c}</b><br/>
+                </td>
+            </tr>
+        </table>
+
+        <div class="space">If applications for services are only accepted during certain hours or days, list the days and hours and whether the organization will make exceptions for emergencies. </div>
+        <b>{!Application_for_Federal_Assistance__c.Hours_Exceptions_for_Emergencies__c}</b>
+
+        <div class="space">Describe whether services will be offered after hours or on weekends to accommodate schedules of clients or the clinic’s target audience.</div>
+        <b>{!Application_for_Federal_Assistance__c.After_Hours_or_Weekend_Service__c}</b>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Intake_Process__c != null}" layout="none"> 
+            <div class="space">
+                Intake. Describe the intake (i.e., application) process including
+                <br/>
+                1. Methods for completing intake,
+                <br/>
+                2. How income is determined, and
+                <br/>
+                3. Procedures for determining income when receipt of income is seasonal or irregular.
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Intake_Process__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Household_Income_Exceeding_250_of_Pover__c != null}" layout="none">
+            <div class="space">Household income exceeding 250% of poverty. Indicate whether the clinic will accept cases where household income exceeds 250% of the federal poverty level (FPL)</div>
+            <b>{!Application_for_Federal_Assistance__c.Household_Income_Exceeding_250_of_Pover__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Cases_Exceeding_250_of_FPL_Description__c != null}" layout="none">
+            <div class="space">
+                If yes, describe how the clinic will ensure that no more than 10% of cases in its new case inventory have household income that exceeds 250% of the FPL, including:
+                <br/>
+                1. Tracking method,
+                <br/>
+                2. Criteria considered when accepting these cases, and
+                <br/>
+                3. Approval process
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Cases_Exceeding_250_of_FPL_Description__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Amount_in_Controversy_Limit__c != null}" layout="none">
+            <div class="space">Amount in controversy limit. Indicate whether the clinic will accept any cases where the amount in controversy exceeds the amount specified in IRC 7463 currently $50,000</div>
+            <b>{!Application_for_Federal_Assistance__c.Amount_in_Controversy_Limit__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Cases_Exceed_Amt_in_Contro_Limit_Desc__c != null}" layout="none">
+            <div class="space">
+                If yes, describe
+                <br/>
+                1. Tracking method,
+                <br/>
+                2. Criteria considered when accepting these cases, and
+                <br/>
+                3. Approval process
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Cases_Exceed_Amt_in_Contro_Limit_Desc__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Nominal_Fee__c != null}" layout="none">
+            <div class="space">Fees. Does the clinic plan to charge a nominal fee?</div>
+            <b>{!Application_for_Federal_Assistance__c.Nominal_Fee__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Nominal_Fee_Description__c != null}" layout="none">
+            <div class="space">
+                If a fee is to be charged, discuss
+                <br/>
+                1. What factors were considered in the decision to charge a fee,
+                <br/>
+                2. How the fee amount was determined and
+                <br/>
+                3. The fee amount to be charged per taxpayer.
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Nominal_Fee_Description__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Case_Management_System__c != null}" layout="none">
+            <div class="space">
+                Case management system. Provide an overview of the system used to manage cases including
+                <br/>
+                1. How case progress will be documented, and
+                <br/>
+                2. How case deadlines are identified and addressed
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Case_Management_System__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Case_Assignment_Procedures__c != null}" layout="none">
+            <div class="space">
+                Case assignment
+                <br/>
+                1. Describe case assignment procedures and
+                <br/>
+                2. Explain any differences in approach for staff, students, or volunteers
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Case_Assignment_Procedures__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Case_Monitoring__c != null}" layout="none">
+            <div class="space">
+                Monitoring
+                <br/>
+                1. Describe how cases are monitored to ensure timely progress and provision of competent representation (this description should include who provides monitoring and how often)
+                <br/>
+                2. Explain any difference in approach for staff, students, or volunteers
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Case_Monitoring__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Time_Tracking__c != null}" layout="none">
+            <div class="space">
+                Time
+                <br/>
+                1. Describe the method used to track staff, student and volunteer time (students time that is worked in connection with receiving academic credit for a course cannot be billed as match)
+                <br/>
+                2. Note who will review and approve time
+                <br/>
+                3. Detail how the time is identified as billable to LITC federal funding or match
+                <br/>
+                4. For volunteers, discuss how the clinic will determine the correct valuation for volunteer time (there are several factors that influence the valuation of third-party in-kind services including the type of service being performed. For more information, review Publication 3319 subsection Determining the Value of Volunteer Services)
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Time_Tracking__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Collecting_Taxpayer_Information__c != null}" layout="none">
+            <div class="space">
+                Does the program plan to collect taxpayer information to facilitate referral or consultation?
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Collecting_Taxpayer_Information__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Protecting_Taxpayer_Privacy__c != null}" layout="none">
+            <div class="space">
+                Describe plans to protect taxpayer privacy and to maintain confidentiality of taxpayer information. Include a brief discussion of
+                1. Physical security, such as access to locked filing cabinets and private meeting rooms
+                2. Availability of a password protected online case management system and/or secured document portal, and
+                3. Any cybersecurity protocols used to safeguard against data loss d /provide notification procedures if a loss occurs.
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Protecting_Taxpayer_Privacy__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Complaint_Procedures__c != null}" layout="none">
+            <div class="space">
+                Complaint procedures. If not previously discussed under Monitoring, discuss what procedures the organization has in place to resolve issues raised by taxpayers and describe any difference in approach in handling complaints involving staff, students, or volunteers.
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.Complaint_Procedures__c}</b>
+        </apex:outputPanel>
+
+      
+        <h2>
+            Training and resources
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            In-house training. Describe the in-house training to be provided to clinic staff, students and volunteers and the frequency, including a description of the
+            <br/>
+            1. Type of training (e.g., administrative, skills building, substantive law),
+            <br/>
+            2. Subject matter (e.g., U.S. Tax Court rules, client eligibility criteria, confidentiality, grant guidelines), if identified, and
+            <br/>
+            3. How the clinic determines what training to provide.
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.In_house_Training__c}</b>
+
+        <div class="space">
+            External training. Describe external training that will be offered to staff, students or volunteers including
+            <br/>
+            1. Type (e.g., skills building or substantive tax law for CPE), and
+            <br/>
+            2. Specific subject matter, if known, and
+            <br/>
+            3. Sponsors.
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.External_Training__c}</b>
+
+        <div class="space">Research materials and software. Describe the clinic’s tax research resources, (physical and virtual) and software purchased or donated that will be used to help provide key taxpayer services</div>
+        <b>{!Application_for_Federal_Assistance__c.Research_Materials_and_Software__c}</b>
+
+
+        <h2>
+            Financial responsibility
+        </h2>
+        <p>In this section the applicant will describe its ability to properly spend and account for federal and matching funds</p>
+        <div class='hr'></div>
+
+        <div class="space">Experience. Describe applicant's experience in managing federal grants, if not federal, then experience managing state or significant private foundation or private grant funds</div>
+        <b>{!Application_for_Federal_Assistance__c.Experience_Managing_Grants__c}</b>
+
+        <div class="space">
+            Accounting procedures. Provide an overview of the applicant’s accounting procedures including
+            <br/>
+            1. Information about key controls
+            <br/>
+            2. A list of the accounting support staff and
+            <br/>
+            3. Their responsibilities
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Accounting_Procedures__c}</b>
+
+        <div class="space">Free tax preparation. Does the applicant offer free tax preparation?</div>
+        <b>{!Application_for_Federal_Assistance__c.Free_Tax_Preparation__c}</b>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.VITA_or_TCE_Site_Funding__c != null}" layout="none">
+            <div class="space">Does the applicant receive funding to run a VITA or a TCE site</div>
+            <b>{!Application_for_Federal_Assistance__c.VITA_or_TCE_Site_Funding__c}</b>
+        </apex:outputPanel>
+
+        <div class="space">
+            Tracking grant expenditures.
+            <br/>
+            1. Describe the method for identifying and tracking other LITC grant expenditures whether federal or match.
+            <br/>
+            2. If an expenditure of funds will benefit more than one program, briefly describe the method used to allocate the expenditures to each program.
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Tracking_Grant_Expenditures__c}</b>
+
+        <div class="space">Describe the plans for audits or financial reviews</div>
+        <b>{!Application_for_Federal_Assistance__c.Audits_or_Financial_Reviews__c}</b>
+
+        <div class="space">Information regarding financial statement submitted with this application</div>
+        <b>{!Application_for_Federal_Assistance__c.Financial_Statement_Information__c}</b>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Financial_Statement_Type__c != null}" layout="none">
+            <div class="space">Is the statement Audited or Unaudited?</div>
+            <b>{!Application_for_Federal_Assistance__c.Financial_Statement_Type__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Single_Audit_Compliance__c != null}" layout="none">
+            <div class="space">Was the audit a single audit in accordance with 2 CFR 200.501</div>
+            <b>{!Application_for_Federal_Assistance__c.Single_Audit_Compliance__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Audit_Clearinghouse_Availability__c != null}" layout="none">
+            <div class="space">Is a complete copy available on the audit clearinghouse website</div>
+            <b>{!Application_for_Federal_Assistance__c.Audit_Clearinghouse_Availability__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Legal_Services_Corporation_Funding__c != null}" layout="none">
+            <div class="space">Does the applicant organization receive funds from the Legal Services Corporation?</div>
+            <b>{!Application_for_Federal_Assistance__c.Legal_Services_Corporation_Funding__c}</b>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Year_end_Date_of_Financials__c != null}" layout="none">
+            <div class="space">Year-end date of financials submitted</div>
+            <b>{!Application_for_Federal_Assistance__c.Year_end_Date_of_Financials__c}</b>
+        </apex:outputPanel>
+
+        <h2>
+            Program evaluation and improvement
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">
+            Program evaluation
+            1. Describe how the program will define and measure success.
+            2. Include how the organization addresses client satisfaction.
+            3. Describe the method for tracking and evaluating program results (in short and long-term).
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Program_Evaluation__c}</b>
+
+        <div class="space">Improvement. Discuss how the program evaluation will be used to inform, improve, or adapt the LITC program design or delivery</div>
+        <b>{!Application_for_Federal_Assistance__c.Program_Improvement__c}</b>
+
+        <div class="space">Briefly describe the factors considered in setting the clinic’s numerical goals</div>
+        <b>{!Application_for_Federal_Assistance__c.Program_Numerical_Goals_Narrative__c}</b>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.New_Representation_Cases__c != null}" layout="none">
+            <div class="space">New representation cases to be opened in the calendar year (do not include beginning inventory)</div>
+            <b>{!Application_for_Federal_Assistance__c.New_Representation_Cases__c}</b>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Consultations_with_Low_Income_ESL__c != null}" layout="none">
+            <div class="space">Consultations with low income and ESL taxpayers</div>
+            <b>{!Application_for_Federal_Assistance__c.Consultations_with_Low_Income_ESL__c}</b>
+        </apex:outputPanel>
+        
+        <div class="space">Educational activities to low income, ESL taxpayers; and service providers of target audience</div>
+        <b>{!Application_for_Federal_Assistance__c.Educational_Activates_to_Low_Income__c}</b>
+
+        <div class="space">Low Income, ESL taxpayers and service providers to be reached in educational activities</div>
+        <b>{!Application_for_Federal_Assistance__c.Low_Income_ESL_TP_Service_Providers__c}</b>
+
+        <h2>
+            Civil rights information
+        </h2>
+        <div class='hr'></div>
+
+        <div class="space">Lawsuits or complaints. The applicant has active lawsuits or complaints to report</div>
+        <b>{!Application_for_Federal_Assistance__c.Active_Lawsuits_or_Complaints__c}</b>
+
+        <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.List_of_Active_Lawsuits_or_Complaints__c != null}" layout="none">
+            <div class="space">
+                Provide a list of active lawsuits or complaints naming the applicant which alleges discrimination on the basis of race, color, national
+                origin, age, sex, or disability with respect to service or benefits being provided. The list should include
+                <br/>
+                1. The date the lawsuit or complaint was filed,
+                <br/>
+                2. A summary of the allegation, and
+                <br/>
+                3. The status of the lawsuit or complaint, including whether the parties to a lawsuit have entered into a consent decree.
+            </div>
+            <b>{!Application_for_Federal_Assistance__c.List_of_Active_Lawsuits_or_Complaints__c}</b>
+         </apex:outputPanel>
+
+        <div class="space">Federal financial assistance. Provide a list of all pending applications for financial assistance and all financial assistance currently provided by other federal agencies</div>
+        <b>{!Application_for_Federal_Assistance__c.Federal_Financial_Assistance__c}</b>
+
+        <div class="space">
+            Civil rights review activity. Provide a summary of all civil rights compliance review activities conducted in the last three years. The summary shall include
+            <br/>
+            1. The purpose or reason for the review;
+            <br/>
+            2. A summary of the findings;
+            <br/>
+            3. Recommendations of the review; and
+            <br/>
+            4. A report on the status or disposition of such findings
+        </div>
+        <b>{!Application_for_Federal_Assistance__c.Civil_Rights_Review_Activity__c}</b>
+
+        <div class="space">Data compilation and maintenance. Does the applicant agree to compile and maintain all required records, return as appropriate, according to the agency's guidelines?</div>
+        <b>{!Application_for_Federal_Assistance__c.Data_Compilation_and_Maintenance__c}</b>
+
+        <div class="space">Public display of civil rights poster. Does the applicant agree to display Publication 4053, IRS Civil Rights Poster?</div>
+        <b>{!Application_for_Federal_Assistance__c.Public_Display_of_Civil_Rights_Poster__c}</b>
+
+  
+    </body>
+</apex:page>
+
+<!-- previous version...can delete -->
+<!-- <apex:page standardController="Application_for_Federal_Assistance__c" extensions="TypeApplicantController" renderAs="pdf" name="{!Application_for_Federal_Assistance__c.Name + ' Form424.pdf'}" showHeader="false" sidebar="false" applyHtmlTag="false" docType="html-5.0">
+    <html>
+        <head>
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 20px;
+                }
+                h1 {
+                    font-family: sans-serif;
+                    font-weight: bold;
+                    font-size: 22pt;
+                    color: rgb(80, 133, 165);                    
+                }
+                h2 {
+                    font-family: sans-serif;
+                    font-weight: bold;
+                    font-size: 14pt;
+                    color: rgb(80, 133, 165);
+                    text-decoration: underline;
+                }
+                .hr {
+                    width: 100%;
+                    height: 2px;
+                    background: #DADADA;
+                    margin: 10px 0;
+                }
+                .info-section {
+                    margin-bottom: 20px;
+                }
+                .info-section div {
+                    margin-bottom: 10px;
+                }
+                .info-section span {
+                    font-size: 10pt;
+                }
+                .info-section span:first-child {
+                    font-weight: normal;
+                    color: #555;
+                }
+                .info-section span:last-child {
+                    font-weight: bold;
+                    color: #000;
+                }
+            </style>
+        </head>
+        <body>
+                <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                 
+                    <td style="vertical-align: top; width: auto; padding-right: 10px;">
+                        <apex:image url="{!$Resource.LITCPDFTitleIcon}" />
+                    </td>
+            
+                   
+                    <td style="vertical-align: top; text-align: right;">
+                        <br> </br>
+                        OMB Approved No. XXXX-XX<br />
+                        Expiration Date: Month Day, Year<br />
+                        Submission Date: <apex:outputText value="{0,date,MM/dd/yyyy}"> &nbsp;  <apex:param value="{!Application_for_Federal_Assistance__c.Date_Received__c}"/></apex:outputText>
+                    </td>
+                </tr>
+            </table> 
+            <div style="text-align: center;">
+                <h1>SF-13424M</h1>
+            </div>
+            <div class="hr"></div>
+
+            <h2 style="text-decoration: underline;">Background</h2>
+            <div class="info-section">
+                <apex:outputPanel rendered="{!IsOrganizationOverviewPresent}" layout="none">
+                    <div>
+                        <span>Organization overview: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Organization_Overview__c}</span>
+                    </div>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IsExperiencePresent}" layout="none">
+                    <div>
+                        <span>Experience: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Experience__c}</span>
+                    </div>
+                </apex:outputPanel>
+                
+                <apex:outputPanel rendered="{!IsTypeOfServicesProvidedPresent}" layout="none">
+                    <div>
+                        <span>Type of services provided: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Type_of_Services_Provided__c}</span>
+                    </div>
+                </apex:outputPanel>
+           </div>
+            
+            <h2 style="text-decoration: underline;">Clinic information</h2>
+            <div class="info-section">
+                <apex:outputPanel rendered="{!IsClinicNamePresent}" layout="none">
+                <div>
+                    <span>Clinic name: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Name__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsClinicTollFreeNumberPresent}" layout="none">
+                <div>
+                    <span>Toll-free telephone number: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Toll_Free_tele_num_if_applicable__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsClinicWebsitePresent}" layout="none">
+                <div>
+                    <span>Website address: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Website_address_if_applicable__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsClinicStreetPresent}" layout="none">
+                <div>
+                    <span>Street: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Street__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsClinicStatePresent}" layout="none">
+                <div>
+                    <span>State: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_State__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsClinicServicesModelPresent}" layout="none">
+                <div>
+                    <span>Services and delivery model: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Services_and_Delivery_Model__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsClinicPublicPhonePresent}" layout="none">
+                <div>
+                    <span>Public telephone number: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Public_telephone_number__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsClinicFaxPresent}" layout="none">
+                <div>
+                    <span>Fax number: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_FAX_number__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsClinicCityPresent}" layout="none">
+                <div>
+                    <span>City: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_City__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsClinicZipCodePresent}" layout="none">
+                <div>
+                    <span>Zip code: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Zip_Code__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsRepresentationPresent}" layout="none">
+                <div>
+                    <span>Representation: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Representation__c}</span>
+                </div>
+            </apex:outputPanel>
+            </div>
+            
+            <h2 style="text-decoration: underline;">Clinic director information</h2>
+            <div class="info-section">
+                <apex:outputPanel rendered="{!IsClinicDirectorFirstNamePresent}" layout="none">
+                    <div>
+                        <span>First name: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Clinic_Director_First_name__c}</span>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IsClinicDirectorSuffixPresent}" layout="none">
+                    <div>
+                        <span>Suffix: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Clinic_Director_Suffix__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsClinicDirectorEmailPresent}" layout="none">
+                    <div>
+                        <span>Email address: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Clinic_Director_Email_address__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsClinicDirectorLicensesPresent}" layout="none">
+                    <div>
+                        <span>Licenses/certifications: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Clinic_Director_Licenses_Certifications__c}</span>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!IsClinicDirectorLastNamePresent}" layout="none">
+                    <div>
+                        <span>Last name: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Clinic_Director_Last_name__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsClinicDirectorMiddleInitialPresent}" layout="none">
+                    <div>
+                        <span>Middle initial: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Clinic_Director_Middle_initial__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsClinicDirectorTelephonePresent}" layout="none">
+                    <div>
+                        <span>Telephone number: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Clinic_Director_Telephone_number__c}</span>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.Clinic_Director_Other_Licenses_Cert__c != null}">
+                    <div>
+                        <span>Other licenses/certifications: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Clinic_Director_Other_Licenses_Cert__c}</span>
+                    </div>
+                </apex:outputPanel>
+            </div>
+
+            <h2 style="text-decoration: underline;">Qualified tax expert (QTE)</h2>
+            <div class="info-section">
+                <apex:outputPanel rendered="{!IsQTELastNamePresent}" layout="none">
+                    <div>
+                        <span>Last name: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QTE_Last_name__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQTESuffixPresent}" layout="none">
+                    <div>
+                        <span>Suffix: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QTE_Suffix__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQTETelephonePresent}" layout="none">
+                    <div>
+                        <span>Telephone number: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QTE_Telephone_number__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQTELicensesPresent}" layout="none">
+                    <div>
+                        <span>Licenses/certifications: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QTE_Licenses_Certifications__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQTEFirstNamePresent}" layout="none">
+                    <div>
+                        <span>First name: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QTE_First_name__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQTEMiddleInitialPresent}" layout="none">
+                    <div>
+                        <span>Middle initial: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QTE_Middle_initial__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQTEEmailPresent}" layout="none">
+                    <div>
+                        <span>Email address: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QTE_Email_address__c}</span>
+                    </div>
+                </apex:outputPanel>
+                <apex:outputPanel rendered="{!Application_for_Federal_Assistance__c.QTE_Other_Licenses_Certifications__c != null}">
+                    <div>
+                        <span>Other licenses/certifications: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QTE_Other_Licenses_Certifications__c}</span>
+                    </div>
+                </apex:outputPanel>
+            </div>
+
+            
+            <h2 style="text-decoration: underline;">Qualified business administrator (QBA)</h2>
+            <div class="info-section">
+                <apex:outputPanel rendered="{!IsQBALastNamePresent}" layout="none">
+                    <div>
+                        <span>Last name: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QBA_Last_name__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQBAEmailPresent}" layout="none">
+                    <div>
+                        <span>Email address: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QBA_Email_address__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQBASuffixPresent}" layout="none">
+                    <div>
+                        <span>Suffix: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QBA_Suffix__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQBAFirstNamePresent}" layout="none">
+                    <div>
+                        <span>First name: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QBA_First_name__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQBAMiddleInitialPresent}" layout="none">
+                    <div>
+                        <span>Middle initial: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QBA_Middle_initial__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsQBAPhonePresent}" layout="none">
+                    <div>
+                        <span>Telephone number: </span>
+                        <span>{!Application_for_Federal_Assistance__c.QBA_Telephone_number__c}</span>
+                    </div>
+                </apex:outputPanel>
+            </div>
+
+
+            <h2 style="text-decoration: underline;">Tax compliance officer</h2>
+            <div class="info-section">
+                <apex:outputPanel rendered="{!IsTCOLastNamePresent}" layout="none">
+                    <div>
+                        <span>Last name: </span>
+                        <span>{!Application_for_Federal_Assistance__c.TCO_Last_name__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsTCOSuffixPresent}" layout="none">
+                    <div>
+                        <span>Suffix: </span>
+                        <span>{!Application_for_Federal_Assistance__c.TCO_Suffix__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsTCOEmailPresent}" layout="none">
+                    <div>
+                        <span>Email address: </span>
+                        <span>{!Application_for_Federal_Assistance__c.TCO_Email_address__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsTCOFirstNamePresent}" layout="none">
+                    <div>
+                        <span>First name: </span>
+                        <span>{!Application_for_Federal_Assistance__c.TCO_First_name__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsTCOMiddleInitialPresent}" layout="none">
+                    <div>
+                        <span>Middle initial: </span>
+                        <span>{!Application_for_Federal_Assistance__c.TCO_Middle_initial__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsTCOTitlePresent}" layout="none">
+                    <div>
+                        <span>Title: </span>
+                        <span>{!Application_for_Federal_Assistance__c.TCO_Title__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsTCOTelephonePresent}" layout="none">
+                    <div>
+                        <span>Telephone number: </span>
+                        <span>{!Application_for_Federal_Assistance__c.TCO_Telephone_number__c}</span>
+                    </div>
+                </apex:outputPanel>
+            </div>
+
+
+        <h2 style="text-decoration: underline;">Taxpayer access, geographic area and target audience, outreach strategy</h2>
+            <div class="info-section">
+                <apex:outputPanel rendered="{!IsLanguageAccessPresent}" layout="none">
+                    <div>
+                        <span>Language access: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Language_Access__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsOtherLanguageOptionsPresent}" layout="none">
+                    <div>
+                        <span>Other language options: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Other_Language_Options__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <div>
+                    <span>In-person or on-staff assistance: </span>
+                    <span>{!Application_for_Federal_Assistance__c.In_Person_or_On_Staff_Assistance__c}</span>
+                </div>
+            
+                <div>
+                    <span>All other languages interpreter services: </span>
+                    <span>{!Application_for_Federal_Assistance__c.All_other_Languages_Interpreter_Services__c}</span>
+                </div>
+            
+                <div>
+                    <span>All languages other than English: </span>
+                    <span>{!Application_for_Federal_Assistance__c.All_Languages_other_than_English__c}</span>
+                </div>
+            
+                <apex:outputPanel rendered="{!IsReasonableAccommodationsPresent}" layout="none">
+                    <div>
+                        <span>Reasonable accommodations: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Reasonable_Accommodations__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsGeographicAreaPresent}" layout="none">
+                    <div>
+                        <span>Geographic area and target audience: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Geographic_Area_and_Target_Audience__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsTotalPopulationPresent}" layout="none">
+                    <div>
+                        <span>Total population: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Total_Population__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsPartnersAndNetworksPresent}" layout="none">
+                    <div>
+                        <span>Partners and networks: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Partners_and_Networks__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsPublicityAndOutreachPresent}" layout="none">
+                    <div>
+                        <span>Publicity and outreach methods: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Publicity_and_Outreach_Methods__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsParticipationInProgramsPresent}" layout="none">
+                    <div>
+                        <span>Participation in programs: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Participation_in_Programs__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsParticipationTypesPresent}" layout="none">
+                    <div>
+                        <span>Participation types: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Participation_Types__c}</span>
+                    </div>
+                </apex:outputPanel>
+            
+                <apex:outputPanel rendered="{!IsFutureParticipationPresent}" layout="none">
+                    <div>
+                        <span>Future participation: </span>
+                        <span>{!Application_for_Federal_Assistance__c.Future_Participation__c}</span>
+                    </div>
+                </apex:outputPanel>
+            </div>
+
+
+            <h2 style="text-decoration: underline;">Taxpayer services</h2>
+            <div class="info-section">
+                <apex:outputPanel rendered="{!IsControversyRepresentationScopePresent}" layout="none">
+                <div>
+                    <span>Controversy representation scope: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Controversy_Representation_Scope__c}</span>
+                </div>
+                </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsConsultationServiceProvidedPresent}" layout="none">
+                <div>
+                    <span>Consultation service to be provided: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Consulation_Service_to_be_provided__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsTaxpayerEducationPresent}" layout="none">
+                <div>
+                    <span>Taxpayer education: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Taxpayer_Education__c}</span>
+                </div>
+            </apex:outputPanel>
+
+            <apex:outputPanel rendered="{!IsAdvocacyPresent}" layout="none">
+                <div>
+                    <span>Advocacy: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Advocacy__c}</span>
+                </div>
+            </apex:outputPanel>
+            </div>
+
+        <h2 style="text-decoration: underline;">Staffing</h2>
+        <div class="info-section">
+            <apex:outputPanel rendered="{!IsQTEPositionFilledByVolunteerPresent}" layout="none">
+                <div>
+                    <span>QTE position filled by volunteer: </span>
+                    <span>{!Application_for_Federal_Assistance__c.QTE_Position_filled_by_Volunteer__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsQTEIdentifiedHiredPresent}" layout="none">
+                <div>
+                    <span>QTE identified/hired: </span>
+                    <span>{!Application_for_Federal_Assistance__c.QTE_Identified_Hired__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsQTELicenseNumberPresent}" layout="none">
+                <div>
+                    <span>QTE license number: </span>
+                    <span>{!Application_for_Federal_Assistance__c.QTE_License_Number__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsQTEUSTaxCourtNumberPresent}" layout="none">
+                <div>
+                    <span>QTE US tax court number: </span>
+                    <span>{!Application_for_Federal_Assistance__c.QTE_US_Tax_Court_Number__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <div>
+                <span>QTE application affirms: </span>
+                <span>{!Application_for_Federal_Assistance__c.QTE_Application_Affirms__c}</span>
+            </div>
+            
+            <apex:outputPanel rendered="{!IsQTEResponsibilitiesQualificationsPresent}" layout="none">
+                <div>
+                    <span>QTE responsibilities/qualifications: </span>
+                    <span>{!Application_for_Federal_Assistance__c.QTE_Responsibilities_Qualifications__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsQTEJobDescriptionPresent}" layout="none">
+                <div>
+                    <span>QTE job description: </span>
+                    <span>{!Application_for_Federal_Assistance__c.QTE_Job_Description__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <div>
+                <span>Dual CD: </span>
+                <span>{!Application_for_Federal_Assistance__c.Dual_CD__c}</span>
+            </div>
+            
+            <div>
+                <span>Dual QBA: </span>
+                <span>{!Application_for_Federal_Assistance__c.Dual_QBA__c}</span>
+            </div>
+            
+            <apex:outputPanel rendered="{!IsClinicDirectorIdentifiedHiredPresent}" layout="none">
+                <div>
+                    <span>Clinic director identified/hired: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Director_Identified_Hired__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsClinicDirectorStatesOfLicensurePresent}" layout="none">
+                <div>
+                    <span>Clinic director states of licensure: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Director_State_s_of_Licensure__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsClinicDirectorLicenseNumberPresent}" layout="none">
+                <div>
+                    <span>Clinic director license number: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Director_License_Number__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsClinicDirectorUSTaxCourtNumberPresent}" layout="none">
+                <div>
+                    <span>Clinic director US tax court number: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Director_US_Tax_Court_Number__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <div>
+                <span>Clinic director application affirms: </span>
+                <span>{!Application_for_Federal_Assistance__c.Clinic_Director_Application_Affirms__c}</span>
+            </div>
+            
+            <apex:outputPanel rendered="{!IsClinicDirectorResponsibilitiesQualificationsPresent}" layout="none">
+                <div>
+                    <span>Clinic director responsibilities/qualifications: </span>
+                    <span>{!Application_for_Federal_Assistance__c.CD_Responsibilities_Qualifications__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsClinicDirectorJobDescriptionPresent}" layout="none">
+                <div>
+                    <span>Clinic director job description: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Clinic_Director_Job_Description__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsQBALicensesCertificationsPresent}" layout="none">
+                <div>
+                    <span>QBA licenses/certifications: </span>
+                    <span>{!Application_for_Federal_Assistance__c.QBA_Licenses_Certifications__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsQBAIdentifiedHiredPresent}" layout="none">
+                <div>
+                    <span>QBA identified/hired: </span>
+                    <span>{!Application_for_Federal_Assistance__c.QBA_Identified_Hired__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsQBAResponsibilitiesQualificationsPresent}" layout="none">
+                <div>
+                    <span>QBA responsibilities/qualifications: </span>
+                    <span>{!Application_for_Federal_Assistance__c.QBA_Responsibilities_Qualifications__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsQBAJobDescriptionPresent}" layout="none">
+                <div>
+                    <span>QBA job description: </span>
+                    <span>{!Application_for_Federal_Assistance__c.QBA_Job_Description__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsUSTaxCourtNarrativePresent}" layout="none">
+                <div>
+                    <span>US tax court narrative: </span>
+                    <span>{!Application_for_Federal_Assistance__c.US_Tax_Court_Narrative__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsStudentsPerSemesterTypePresent}" layout="none">
+                <div>
+                    <span>Students per semester type: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Student_s_Per_Semester_Type__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsStudentPermissionToBeObtainedPresent}" layout="none">
+                <div>
+                    <span>Student permission to be obtained: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Student_Permission_to_be_Obtained__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsVolunteerProBonoPanelPresent}" layout="none">
+                <div>
+                    <span>Volunteer pro bono panel: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Volunteer_Pro_Bono_Panel__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!IsOtherVolunteerRecruitmentPresent}" layout="none">
+                <div>
+                    <span>Other volunteer recruitment: </span>
+                    <span>{!Application_for_Federal_Assistance__c.Other_Volunteer_Recruitment__c}</span>
+                </div>
+            </apex:outputPanel>
+            
+        </div>
+
+        <h2 style="text-decoration: underline;">Clinic operations</h2>
+        <div class="info-section">
+            <apex:outputPanel rendered="{!IsDatesOfOperationPresent}" layout="none">
+        <div>
+            <span>Dates of operation: </span>
+            <span>{!Application_for_Federal_Assistance__c.Dates_of_Operation__c}</span>
+        </div>
+        </apex:outputPanel>
+
+        <div>
+            <span>Reduction in services: </span>
+            <span>{!Application_for_Federal_Assistance__c.Reduction_in_Services__c}</span>
+        </div>
+
+        <apex:outputPanel rendered="{!IsContinuityOfServicesPresent}" layout="none">
+            <div>
+                <span>Continuity of services: </span>
+                <span>{!Application_for_Federal_Assistance__c.Continuity_of_Services__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsDay1HoursPresent}" layout="none">
+            <div>
+                <span>Day 1 hours: </span>
+                <span>{!Application_for_Federal_Assistance__c.Day_1_Hours__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsDay2HoursPresent}" layout="none">
+            <div>
+                <span>Day 2 hours: </span>
+                <span>{!Application_for_Federal_Assistance__c.Day_2_Hours__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsDay3HoursPresent}" layout="none">
+            <div>
+                <span>Day 3 hours: </span>
+                <span>{!Application_for_Federal_Assistance__c.Day_3_Hours__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsDay4HoursPresent}" layout="none">
+            <div>
+                <span>Day 4 hours: </span>
+                <span>{!Application_for_Federal_Assistance__c.Day_4_Hours__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsDay5HoursPresent}" layout="none">
+            <div>
+                <span>Day 5 hours: </span>
+                <span>{!Application_for_Federal_Assistance__c.Day_5_Hours__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsDay6HoursPresent}" layout="none">
+            <div>
+                <span>Day 6 hours: </span>
+                <span>{!Application_for_Federal_Assistance__c.Day_6_Hours__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsDay7HoursPresent}" layout="none">
+            <div>
+                <span>Day 7 hours: </span>
+                <span>{!Application_for_Federal_Assistance__c.Day_7_Hours__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsHoursExceptionsForEmergenciesPresent}" layout="none">
+            <div>
+                <span>Hours exceptions for emergencies: </span>
+                <span>{!Application_for_Federal_Assistance__c.Hours_Exceptions_for_Emergencies__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsAfterHoursOrWeekendServicePresent}" layout="none">
+            <div>
+                <span>After hours or weekend service: </span>
+                <span>{!Application_for_Federal_Assistance__c.After_Hours_or_Weekend_Service__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsIntakeProcessPresent}" layout="none">
+            <div>
+                <span>Intake process: </span>
+                <span>{!Application_for_Federal_Assistance__c.Intake_Process__c}</span>
+            </div>
+        </apex:outputPanel>
+
+        <apex:outputPanel rendered="{!IsHouseholdIncomeExceeding250Present}" layout="none">
+            <div>
+                <span>Household income exceeding 250% of poverty: </span>
+                <span>{!Application_for_Federal_Assistance__c.Household_Income_Exceeding_250_of_Pover__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsCasesExceeding250DescriptionPresent}" layout="none">
+            <div>
+                <span>Cases exceeding 250% of FPL description: </span>
+                <span>{!Application_for_Federal_Assistance__c.Cases_Exceeding_250_of_FPL_Description__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsAmountInControversyLimitPresent}" layout="none">
+            <div>
+                <span>Amount in controversy limit: </span>
+                <span>{!Application_for_Federal_Assistance__c.Amount_in_Controversy_Limit__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsCasesExceedingAmountDescriptionPresent}" layout="none">
+            <div>
+                <span>Cases exceeding amount in controversy limit description: </span>
+                <span>{!Application_for_Federal_Assistance__c.Cases_Exceed_Amt_in_Contro_Limit_Desc__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsNominalFeePresent}" layout="none">
+            <div>
+                <span>Nominal fee: </span>
+                <span>{!Application_for_Federal_Assistance__c.Nominal_Fee__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsNominalFeeDescriptionPresent}" layout="none">
+            <div>
+                <span>Nominal fee description: </span>
+                <span>{!Application_for_Federal_Assistance__c.Nominal_Fee_Description__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsCaseManagementSystemPresent}" layout="none">
+            <div>
+                <span>Case management system: </span>
+                <span>{!Application_for_Federal_Assistance__c.Case_Management_System__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsCaseAssignmentProceduresPresent}" layout="none">
+            <div>
+                <span>Case assignment procedures: </span>
+                <span>{!Application_for_Federal_Assistance__c.Case_Assignment_Procedures__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsCaseMonitoringPresent}" layout="none">
+            <div>
+                <span>Case monitoring: </span>
+                <span>{!Application_for_Federal_Assistance__c.Case_Monitoring__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsTimeTrackingPresent}" layout="none">
+            <div>
+                <span>Time tracking: </span>
+                <span>{!Application_for_Federal_Assistance__c.Time_Tracking__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsCollectingTaxpayerInformationPresent}" layout="none">
+            <div>
+                <span>Collecting taxpayer information: </span>
+                <span>{!Application_for_Federal_Assistance__c.Collecting_Taxpayer_Information__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsProtectingTaxpayerPrivacyPresent}" layout="none">
+            <div>
+                <span>Protecting taxpayer privacy: </span>
+                <span>{!Application_for_Federal_Assistance__c.Protecting_Taxpayer_Privacy__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsComplaintProceduresPresent}" layout="none">
+            <div>
+                <span>Complaint procedures: </span>
+                <span>{!Application_for_Federal_Assistance__c.Complaint_Procedures__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsTrainingAndResourcesPresent}" layout="none">
+            <div>
+                <span>Training and resources: </span>
+                <span>{!Application_for_Federal_Assistance__c.Training_and_Resources__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsInHouseTrainingPresent}" layout="none">
+            <div>
+                <span>In-house training: </span>
+                <span>{!Application_for_Federal_Assistance__c.In_house_Training__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsExternalTrainingPresent}" layout="none">
+            <div>
+                <span>External training: </span>
+                <span>{!Application_for_Federal_Assistance__c.External_Training__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsResearchMaterialsAndSoftwarePresent}" layout="none">
+            <div>
+                <span>Research materials and software: </span>
+                <span>{!Application_for_Federal_Assistance__c.Research_Materials_and_Software__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsExperienceManagingGrantsPresent}" layout="none">
+            <div>
+                <span>Experience managing grants: </span>
+                <span>{!Application_for_Federal_Assistance__c.Experience_Managing_Grants__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsAccountingProceduresPresent}" layout="none">
+            <div>
+                <span>Accounting procedures: </span>
+                <span>{!Application_for_Federal_Assistance__c.Accounting_Procedures__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsFreeTaxPreparationPresent}" layout="none">
+            <div>
+                <span>Free tax preparation: </span>
+                <span>{!Application_for_Federal_Assistance__c.Free_Tax_Preparation__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsVITAOrTCESiteFundingPresent}" layout="none">
+            <div>
+                <span>VITA or TCE site funding: </span>
+                <span>{!Application_for_Federal_Assistance__c.VITA_or_TCE_Site_Funding__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsTrackingGrantExpendituresPresent}" layout="none">
+            <div>
+                <span>Tracking grant expenditures: </span>
+                <span>{!Application_for_Federal_Assistance__c.Tracking_Grant_Expenditures__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsAuditsOrFinancialReviewsPresent}" layout="none">
+            <div>
+                <span>Audits or financial reviews: </span>
+                <span>{!Application_for_Federal_Assistance__c.Audits_or_Financial_Reviews__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsFinancialStatementInformationPresent}" layout="none">
+            <div>
+                <span>Financial statement information: </span>
+                <span>{!Application_for_Federal_Assistance__c.Financial_Statement_Information__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsFinancialStatementTypePresent}" layout="none">
+            <div>
+                <span>Financial statement type: </span>
+                <span>{!Application_for_Federal_Assistance__c.Financial_Statement_Type__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsSingleAuditCompliancePresent}" layout="none">
+            <div>
+                <span>Single audit compliance: </span>
+                <span>{!Application_for_Federal_Assistance__c.Single_Audit_Compliance__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsAuditClearinghouseAvailabilityPresent}" layout="none">
+            <div>
+                <span>Audit clearinghouse availability: </span>
+                <span>{!Application_for_Federal_Assistance__c.Audit_Clearinghouse_Availability__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsLegalServicesCorporationFundingPresent}" layout="none">
+            <div>
+                <span>Legal services corporation funding: </span>
+                <span>{!Application_for_Federal_Assistance__c.Legal_Services_Corporation_Funding__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsProgramEvaluationPresent}" layout="none">
+            <div>
+                <span>Program evaluation: </span>
+                <span>{!Application_for_Federal_Assistance__c.Program_Evaluation__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsProgramImprovementPresent}" layout="none">
+            <div>
+                <span>Program improvement: </span>
+                <span>{!Application_for_Federal_Assistance__c.Program_Improvement__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsProgramNumericalGoalsNarrativePresent}" layout="none">
+            <div>
+                <span>Program numerical goals narrative: </span>
+                <span>{!Application_for_Federal_Assistance__c.Program_Numerical_Goals_Narrative__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsNewRepresentationCasesPresent}" layout="none">
+            <div>
+                <span>New representation cases: </span>
+                <span>{!Application_for_Federal_Assistance__c.New_Representation_Cases__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsConsultationsWithLowIncomeESLPresent}" layout="none">
+            <div>
+                <span>Consultations with low-income/ESL: </span>
+                <span>{!Application_for_Federal_Assistance__c.Consultations_with_Low_Income_ESL__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsActiveLawsuitsOrComplaintsPresent}" layout="none">
+            <div>
+                <span>Active lawsuits or complaints: </span>
+                <span>{!Application_for_Federal_Assistance__c.Active_Lawsuits_or_Complaints__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsListOfActiveLawsuitsOrComplaintsPresent}" layout="none">
+            <div>
+                <span>List of active lawsuits or complaints: </span>
+                <span>{!Application_for_Federal_Assistance__c.List_of_Active_Lawsuits_or_Complaints__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsFederalFinancialAssistancePresent}" layout="none">
+            <div>
+                <span>Federal financial assistance: </span>
+                <span>{!Application_for_Federal_Assistance__c.Federal_Financial_Assistance__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsCivilRightsReviewActivityPresent}" layout="none">
+            <div>
+                <span>Civil rights review activity: </span>
+                <span>{!Application_for_Federal_Assistance__c.Civil_Rights_Review_Activity__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsDataCompilationAndMaintenancePresent}" layout="none">
+            <div>
+                <span>Data compilation and maintenance: </span>
+                <span>{!Application_for_Federal_Assistance__c.Data_Compilation_and_Maintenance__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        <apex:outputPanel rendered="{!IsPublicDisplayOfCivilRightsPosterPresent}" layout="none">
+            <div>
+                <span>Public display of civil rights poster: </span>
+                <span>{!Application_for_Federal_Assistance__c.Public_Display_of_Civil_Rights_Poster__c}</span>
+            </div>
+        </apex:outputPanel>
+        
+        </div>
+        </body>
+    </html>
+</apex:page> -->
+
